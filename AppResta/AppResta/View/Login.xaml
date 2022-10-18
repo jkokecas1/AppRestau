@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AppResta.View.Login"
+               NavigationPage.HasNavigationBar="False">
+    <ContentPage.Content>
+        <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+            
+                <Image Source="klassylogo.png"
+                   VerticalOptions="Center"
+                   HeightRequest="50"/>
+            
+            <Label Text="Ingresa tu NIP" 
+                   FontSize="30" 
+                   TextColor="Black" 
+                   FontAttributes="Bold" 
+                   HorizontalTextAlignment="Center" 
+                   Padding="40"
+                   />
+            <Entry Text="{Binding Pin}"  Placeholder="PIN" HorizontalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="450" HeightRequest="90" FontSize="40" MaxLength="4"/>
+           
+               
+            <Grid Margin="300,10,300,10"
+            RowSpacing="10"
+            ColumnSpacing="5">
+                <Button BackgroundColor="#F1F1F1" TextColor="Black"  Grid.Row="0" Grid.Column="0" Text="1"  FontSize="30" FontAttributes="Bold" Command="{ Binding Num1Command}" />
+                <Button BackgroundColor="#F1F1F1" TextColor="Black"  Grid.Row="0" Grid.Column="1" Text="2" FontSize="30" FontAttributes="Bold" Command="{ Binding Num2Command}"/>
+                <Button BackgroundColor="#F1F1F1" TextColor="Black"  Grid.Row="0" Grid.Column="2" Text="3" FontSize="30" FontAttributes="Bold" Command="{ Binding Num3Command}"/>
+                <Button BackgroundColor="#F1F1F1" TextColor="Black"  Grid.Row="1" Grid.Column="0" Text="4" FontSize="30" FontAttributes="Bold" Command="{ Binding Num4Command}"/>
+                <Button BackgroundColor="#F1F1F1" TextColor="Black"   Grid.Row="1" Grid.Column="1" Text="5" FontSize="30" FontAttributes="Bold" Command="{ Binding Num5Command}"/>
+                <Button BackgroundColor="#F1F1F1" TextColor="Black"   Grid.Row="1" Grid.Column="2" Text="6" FontSize="30" FontAttributes="Bold" Command="{ Binding Num6Command}"/>
+                <Button BackgroundColor="#F1F1F1" TextColor="Black"  Grid.Row="2" Grid.Column="0" Text="7" FontSize="30" FontAttributes="Bold" Command="{ Binding Num7Command}"/>
+                <Button BackgroundColor="#F1F1F1" TextColor="Black"   Grid.Row="2" Grid.Column="1" Text="8" FontSize="30" FontAttributes="Bold" Command="{ Binding Num8Command}"/>
+                <Button BackgroundColor="#F1F1F1" TextColor="Black"   Grid.Row="2" Grid.Column="2" Text="9" FontSize="30" FontAttributes="Bold" Command="{ Binding Num9Command}"/>
+                <Button BackgroundColor="#F1F1F1" TextColor="Black"  Grid.Row="3" Grid.Column="0" Text="Borrar" FontSize="30" FontAttributes="Bold"  Command="{ Binding BorrarCommand}" />
+                <Button BackgroundColor="#F1F1F1" TextColor="Black"   Grid.Row="3" Grid.Column="1" Text="0" FontSize="30" FontAttributes="Bold"  Command="{ Binding Num0Command}"/>
+               
+                <Button Text="Sing in" 
+                    HorizontalOptions="Center"  
+                    BackgroundColor="Blue" 
+                    FontSize="18" 
+                    Grid.Row="3" Grid.Column="2"
+                    FontAttributes="Bold" 
+                    TextColor="White" 
+                    BorderWidth="5"
+                    WidthRequest="250"
+                        HeightRequest="90"
+                   Command="{Binding NavMainCommand}"/>
+            </Grid>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

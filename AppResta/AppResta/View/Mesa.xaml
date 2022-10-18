@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AppResta.View.Mesa"
+             Title="Mesas"
+             NavigationPage.HasNavigationBar="False">
+
+    <StackLayout BackgroundColor="#D8E5DB"
+            Padding="20">
+        <Label Text="SELECCIONA LA MESA" 
+                   FontSize="27" 
+                   TextColor="Black" 
+                   FontAttributes="Bold" 
+                   HorizontalTextAlignment="Center" 
+                   Padding="40"/>
+        <Grid
+                        HorizontalOptions="CenterAndExpand"
+                        VerticalOptions="CenterAndExpand"
+                        RowSpacing="40"
+                        ColumnSpacing="40">
+            <StackLayout Grid.Row="0" Grid.Column="0">
+                <ImageButton  Source="mesa.png" BackgroundColor="Transparent"  Command="{Binding IrComandacommand}"/>
+                <Label Text="MESA 1"  HorizontalOptions="Center" FontSize="30"></Label>
+            </StackLayout>
+            <StackLayout Grid.Row="0" Grid.Column="1">
+                <ImageButton  Source="mesa.png" BackgroundColor="Transparent"  Command="{Binding IrComandacommand}"/>
+                <Label Text="MESA 2"  HorizontalOptions="Center" FontSize="30"></Label>
+            </StackLayout>
+            <StackLayout Grid.Row="0" Grid.Column="2">
+                <ImageButton  Source="mesa.png" BackgroundColor="Transparent"  Command="{Binding IrComandacommand}"/>
+                <Label Text="MESA 3"  HorizontalOptions="Center" FontSize="30"></Label>
+            </StackLayout>
+            <StackLayout Grid.Row="1" Grid.Column="0">
+                <ImageButton  Source="mesa.png" BackgroundColor="Transparent"   Command="{Binding IrComandacommand}"/>
+                <Label Text="MESA 4"  HorizontalOptions="Center" FontSize="30"></Label>
+            </StackLayout>
+            <StackLayout   Grid.Row="1" Grid.Column="1">
+                <ImageButton  Source="mesa.png" BackgroundColor="Transparent" Command="{Binding IrComandacommand}"/>
+                <Label Text="MESA 5"  HorizontalOptions="Center" FontSize="30"></Label>
+            </StackLayout>
+
+            <StackLayout Grid.Row="1" Grid.Column="2">
+                <ImageButton  Source="mesa.png" BackgroundColor="Transparent" Command="{Binding IrComandacommand}"/>
+                <Label Text="MESA 6"  HorizontalOptions="Center" FontSize="30"></Label>
+            </StackLayout>
+            
+            <StackLayout Grid.Row="2" Grid.Column="0" >
+                <ImageButton  Source="mesa.png" BackgroundColor="Transparent" Command="{Binding IrComandacommand}"/>
+                <Label Text="MESA 7"  HorizontalOptions="Center" FontSize="30"></Label>
+            </StackLayout>
+            <StackLayout Grid.Row="2" Grid.Column="1">
+                <ImageButton  Source="mesa.png" BackgroundColor="Transparent"  Command="{Binding IrComandacommand}"/>
+                <Label Text="MESA 8"  HorizontalOptions="Center" FontSize="30"></Label>
+            </StackLayout>
+            <StackLayout    Grid.Row="2" Grid.Column="2">
+                <ImageButton  Source="mesa.png" BackgroundColor="Transparent" Command="{Binding IrComandacommand}"/>
+                <Label Text="MESA 9"  HorizontalOptions="Center" FontSize="30"></Label>
+            </StackLayout>
+
+
+            
+           
+            
+            
+            
+            <!--
+            <Button CornerRadius="100" BackgroundColor="Black"
+                    Grid.Row="0" Grid.Column="0" Text="Mesa 1" Command="{Binding IrComandacommand}"/>
+            <Button CornerRadius="100" BackgroundColor="Black"
+                    Grid.Row="0" Grid.Column="1" Text="Mesa 2" />
+            <Button CornerRadius="100" BackgroundColor="Black"
+                    Grid.Row="0" Grid.Column="2" Text="Mesa 3" />
+            <Button CornerRadius="100" BackgroundColor="Black"
+                    Grid.Row="1" Grid.Column="0" Text="Mesa 4" />
+            <Button CornerRadius="100" BackgroundColor="Black"
+                    Grid.Row="1" Grid.Column="1" Text="Mesa 5"/>
+            <Button CornerRadius="100" BackgroundColor="Black"
+                    Grid.Row="1" Grid.Column="2" Text="Mesa 6"/>
+            <Button CornerRadius="100" BackgroundColor="Black"
+                    Grid.Row="2" Grid.Column="0" Text="Mesa 7"/>
+            <Button CornerRadius="100" BackgroundColor="Black"
+                    Grid.Row="2" Grid.Column="1" Text="Mesa 8"/>
+            <Button CornerRadius="100" BackgroundColor="Black"
+                    Grid.Row="2" Grid.Column="2" Text="Mesa 9"/>-->
+
+        </Grid>
+
+    </StackLayout>
+
+
+
+
+
+
+
+</ContentPage>

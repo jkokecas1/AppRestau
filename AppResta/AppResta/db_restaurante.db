@@ -1,0 +1,160 @@
+--
+-- File generated with SQLiteStudio v3.3.3 on Mon Oct 17 10:00:11 2022
+--
+-- Text encoding used: System
+--
+PRAGMA foreign_keys = off;
+BEGIN TRANSACTION;
+
+-- Table: categoria
+DROP TABLE IF EXISTS categoria;
+
+CREATE TABLE categoria (
+    id_categoria     INT          NOT NULL,
+    categoria_nombre VARCHAR (45),
+    categoria_esatdo VARCHAR (45),
+    categoriacol     VARCHAR (45),
+    PRIMARY KEY (
+        id_categoria
+    )
+);
+
+
+-- Table: clasificacion
+DROP TABLE IF EXISTS clasificacion;
+
+CREATE TABLE clasificacion (
+    id_clasificacion     INT          NOT NULL,
+    clasificacion_nombre VARCHAR (45),
+    clasificacion_estado VARCHAR (45),
+    PRIMARY KEY (
+        id_clasificacion
+    )
+);
+
+
+-- Table: empleado
+DROP TABLE IF EXISTS empleado;
+
+CREATE TABLE empleado (
+    id_empleado      INT          NOT NULL,
+    empleado_nombre  VARCHAR (45),
+    empleado_pin     VARCHAR (45),
+    id_puesto        INT,
+    empleado_email   VARCHAR (45),
+    empleado_celular VARCHAR (45),
+    empleado_estado  INT          DEFAULT 1,
+    id_restaurante   INT,
+    PRIMARY KEY (
+        id_empleado
+    )
+);
+
+
+-- Table: extra
+DROP TABLE IF EXISTS extra;
+
+CREATE TABLE extra (
+    id_esxtra    INT          NOT NULL,
+    extra_nombre VARCHAR (45),
+    extra_precio INT,
+    extra_estaus INT,
+    PRIMARY KEY (
+        id_esxtra
+    )
+);
+
+
+-- Table: platillo
+DROP TABLE IF EXISTS platillo;
+
+CREATE TABLE platillo (
+    id_platillo          INT (11)     NOT NULL,
+    platillo_nombre      VARCHAR (45) DEFAULT NULL,
+    platillo_descripcion VARCHAR (45) DEFAULT NULL,
+    platillo_precio      VARCHAR (45) DEFAULT NULL,
+    platillo_url_imagen  BLOB         DEFAULT NULL,
+    id_categoria         INT (11)     DEFAULT NULL,
+    platillo_estato      INT (11)     DEFAULT NULL,
+    id_restaurante       INT (11)     DEFAULT NULL,
+    id_clasificacion     INT (11)     DEFAULT NULL,
+    PRIMARY KEY (
+        id_platillo
+    )
+);
+
+
+-- Table: platillo_has_clasificacion
+DROP TABLE IF EXISTS platillo_has_clasificacion;
+
+CREATE TABLE platillo_has_clasificacion (
+    platillo_id_platillo           INT NOT NULL,
+    clasificacion_id_clasificacion INT NOT NULL,
+    PRIMARY KEY (
+        platillo_id_platillo,
+        clasificacion_id_clasificacion
+    )
+);
+
+
+-- Table: platillo_has_extras
+DROP TABLE IF EXISTS platillo_has_extras;
+
+CREATE TABLE platillo_has_extras (
+    platillo_id_platillo INT NOT NULL,
+    extras_id_extras     INT NOT NULL,
+    PRIMARY KEY (
+        platillo_id_platillo,
+        extras_id_extras
+    )
+);
+
+
+-- Table: puesto
+DROP TABLE IF EXISTS puesto;
+
+CREATE TABLE puesto (
+    id_puesto     INT          NOT NULL,
+    puesto_nombre VARCHAR (45),
+    puesto_estado INT,
+    PRIMARY KEY (
+        id_puesto
+    )
+);
+
+INSERT INTO puesto (id_puesto, puesto_nombre, puesto_estado) VALUES (1, 'Mesero', 1);
+INSERT INTO puesto (id_puesto, puesto_nombre, puesto_estado) VALUES (2, 'Cocinero', 1);
+INSERT INTO puesto (id_puesto, puesto_nombre, puesto_estado) VALUES (3, 'Cajero', 1);
+
+-- Table: restaurante
+DROP TABLE IF EXISTS restaurante;
+
+CREATE TABLE restaurante (
+    id_restaurante       INT          NOT NULL,
+    id_usuario           INT,
+    id_platillo          INT,
+    restaurante_nombre   VARCHAR (45),
+    restaurante_url_logo VARCHAR (45),
+    PRIMARY KEY (
+        id_restaurante
+    )
+);
+
+INSERT INTO restaurante (id_restaurante, id_usuario, id_platillo, restaurante_nombre, restaurante_url_logo) VALUES (1, 1, 1, 'Restaurante-AW', '\"Logotiopo\"');
+
+-- Table: subcategoria
+DROP TABLE IF EXISTS subcategoria;
+
+CREATE TABLE subcategoria (
+    id_subcategoria     INT          NOT NULL,
+    subcategoria_nombre VARCHAR (45),
+    subcategoria_estado INT,
+    id_categoria        INT,
+    PRIMARY KEY (
+        id_subcategoria
+    )
+);
+
+
+COMMIT TRANSACTION;
+PRAGMA foreign_keys = on;

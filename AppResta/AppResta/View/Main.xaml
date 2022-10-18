@@ -1,0 +1,141 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="AppResta.View.Main"
+     xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    NavigationPage.HasNavigationBar="False"
+    mc:Ignorable="d">
+
+    <ContentPage.Content>
+
+
+        <Grid>
+
+            <BoxView Color="#E2E2E2"
+                         CornerRadius="10"
+                         WidthRequest="1800"
+                         HeightRequest="80"
+                         Margin="10,10,10,10"
+                         VerticalOptions="Start"
+                         HorizontalOptions="Start" />
+
+            <StackLayout  Margin="18,18,10,800" Orientation="Horizontal">
+                <Image Source="klassylogo.png" VerticalOptions="Start" HorizontalOptions="Start" ></Image>
+                <Button  Text="Mesas"  HorizontalOptions="Start" Margin="200,5,10,0" Clicked="mesas" Command="{Binding Mesascommand}"></Button>
+                <Button  Text="Ordenes"  HorizontalOptions="Start" Margin="20,5,10,0"></Button>
+                <Button  Text="Histroial"  HorizontalOptions="Start" Margin="20,5,10,0"></Button>
+                <Button  Margin="820,5,5,0" Text="SALIR" FontSize="22"  Command="{Binding NavLoginCommand}"></Button>
+                <Button Margin="580,100,0,0" Text="Categorias" Clicked="returnCategorias" HorizontalOptions="Start"></Button>
+            </StackLayout>
+
+<!--
+            <Button Text="Sing in"
+                        CornerRadius="10"
+                        HorizontalOptions="End"
+                        Margin="10,18,18,800"
+                        BackgroundColor="Blue" 
+                        FontSize="18" 
+                        FontAttributes="Bold" 
+                        TextColor="White" 
+                        BorderWidth="5"
+                        WidthRequest="250"
+                        HeightRequest="50"
+                        Command="{Binding NavLoginCommand}"/>
+            -->
+
+            <BoxView Color="#E2E2E2"
+                         CornerRadius="10"
+                         WidthRequest="560"
+                         HeightRequest="760"
+                         Margin="10,100,10,10"
+                         VerticalOptions="Start"
+                         HorizontalOptions="Start" />
+
+
+
+            <StackLayout Orientation="Vertical" Margin="30,110,10,10">
+                <StackLayout Orientation="Horizontal" >
+                    <Label Text="Nombre" TextColor="Black"  FontSize="20" Margin="20,10,10,10"/>
+                    <Label Text="Cantidad" TextColor="Black"  FontSize="20" Margin="130,10,10,10"/>
+                    <Label Text="Precio" TextColor="Black" FontSize="20" Margin="10,10,10,10"/>
+                    <Label Text="Total" TextColor="Black" FontSize="20" Margin="10,10,10,10"/>
+                </StackLayout>
+                <!---LIST  VIEW-->
+                <StackLayout BackgroundColor="Black" Padding="0,3,0,0" Margin="0,530,1140,0"></StackLayout>
+                <StackLayout Orientation="Horizontal" Margin="0,20,1140,0">
+                    <Label FontSize="22" TextColor="Black"  Text="Precio Total" />
+                    <Label FontSize="22" TextColor="Black"  Text="00000.00" Margin="230,0,0,0"/>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" Margin="0,0,0,0">
+                    <Button FontSize="20" CornerRadius="10"  Text="..." Margin="30,20,10,10"/>
+                    <Button FontSize="20" CornerRadius="10" Text="imprimir" Margin="130,20,10,10"/>
+
+                    <Button FontSize="20" CornerRadius="10" TextColor="#FFFF" BackgroundColor="Green" Margin="10,20,10,10" Text="PAGAR" Command="{Binding Pagocommand}"/>
+                </StackLayout>
+            </StackLayout>
+
+
+
+
+            <Button Margin="580,100,10,730" Text="Categorias" Clicked="returnCategorias" HorizontalOptions="Start"></Button>
+            <ScrollView Margin="580,170,100,100" >
+                <ListView  x:Name="testListView" ItemSelected="select_Item">
+                    <ListView.ItemTemplate >
+                        <DataTemplate  >
+                            <ViewCell>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="0"/>
+
+                                    </Grid.RowDefinitions>
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="100"/>
+                                        <ColumnDefinition Width="300"/>
+                                        <ColumnDefinition Width="100"/>
+                                        <ColumnDefinition Width="300"/>
+                                        <ColumnDefinition Width="100"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackLayout  Grid.Column="0" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical">
+                                        <Image x:Name="imagens"></Image>
+                                    </StackLayout>
+                                    <StackLayout  Grid.Column="1" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical">
+                                        <Label Text="{Binding nombre}" FontSize="25"/>
+                                    </StackLayout>
+                                    <StackLayout  Grid.Column="2" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical">
+                                        <Label Text="{Binding precio}" FontSize="20"/>
+                                    </StackLayout>
+                                    <StackLayout  Grid.Column="3" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical">
+                                        <Label Text="{Binding descrip}" FontSize="20"/>
+                                    </StackLayout>
+                                    <StackLayout  Grid.Column="4" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical">
+                                        <Label Text="{Binding estatus}" FontSize="20"/>
+                                    </StackLayout>
+                                </Grid>
+
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </ScrollView>
+
+
+            <!--
+                <Grid  WidthRequest="1200" HeightRequest="760" Margin="580,100,10,10" RowDefinitions="*,*,*" ColumnDefinitions="*,*,*">
+                    <Button BackgroundColor="#007fff" Grid.Row="0" Grid.Column="0" Text="0,0" TextColor="White" Command="{Binding CategoriasCommand}"/>
+                    <Button BackgroundColor="#007fff" Grid.Row="0" Grid.Column="1" Text="0,1" TextColor="White"/>
+                    <Button BackgroundColor="#007fff" Grid.Row="1" Grid.Column="0" Text="1,0" TextColor="White"/>
+                    <Button BackgroundColor="#007fff" Grid.Row="1" Grid.Column="1" Text="1,1" TextColor="White"/>
+                    <Button BackgroundColor="#007fff" Grid.Row="2" Grid.Column="0" Text="2,0" TextColor="White"/>
+                    <Button BackgroundColor="#007fff" Grid.Row="2" Grid.Column="1" Text="2,1" TextColor="White"/>
+                    <Button BackgroundColor="#007fff" Grid.Row="3" Grid.Column="0" Text="3,0" TextColor="White"/>
+                    <Button BackgroundColor="#007fff" Grid.Row="3" Grid.Column="1" Text="3,1" TextColor="White"/>
+                </Grid>
+                -->
+        </Grid>
+
+
+    </ContentPage.Content>
+</ContentPage>
