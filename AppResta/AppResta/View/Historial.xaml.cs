@@ -10,12 +10,11 @@ using Xamarin.Forms.Xaml;
 namespace AppResta.View
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class Pago : ContentPage
+    public partial class Historial : ContentPage
     {
-        public Pago()
+        public Historial()
         {
             InitializeComponent();
-            
         }
     }
 }

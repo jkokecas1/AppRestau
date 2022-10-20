@@ -3,20 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using AppResta.ViewModel;
+using System.Reflection;
+using System.IO;
+using AppResta.Model;
+using System.Collections.ObjectModel;
 
 namespace AppResta.View
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class Login : ContentPage
     {
-        public Login()
+         public Login()
         {
             InitializeComponent();
             BindingContext = new ViewModel.LoginViewModel(Navigation);
-        }
+        }  
     }
 }

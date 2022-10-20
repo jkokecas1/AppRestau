@@ -4,6 +4,7 @@ using System.Text;
 
 namespace AppResta.Model
 {
+    
     public class UserInfo
     {
         public string PIN { get; set; }
