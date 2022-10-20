@@ -1,12 +1,127 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="AppResta.View.Pago">
+             x:Class="AppResta.View.Pago"   NavigationPage.HasNavigationBar="False">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
+        <Grid BackgroundColor="LightGray">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <StackLayout 
+                BackgroundColor="Gray"
+                Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" >
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button 
+                        Grid.Row="0" Grid.Column="0"
+                        HorizontalOptions="Start"
+                        BackgroundColor="Transparent" TextColor="White" Text="Cancelar" Command="{Binding Cancelarcommand}" />
+                    <Label 
+                        Padding="10"
+                        FontSize="Body"
+                        Grid.Row="0" Grid.Column="1" Text="TICKET" TextColor="White"/>
+                    <Button Grid.Row="0" Grid.Column="2" HorizontalOptions="End" Text="Cerrar sesion"/>
+                </Grid>
+            </StackLayout>
+
+            <Grid BackgroundColor="LightGray" Grid.Row="1" Grid.Column="0" Padding="20,20,20,20">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button x:Name="btn7" BackgroundColor="White" Grid.Row="0" Grid.Column="0" Text="7" TextColor="Black" FontSize="Body" />
+                    <Button x:Name="btn8" BackgroundColor="White" Grid.Row="0" Grid.Column="1" Text="8" TextColor="Black" FontSize="Body"/>
+                    <Button x:Name="btn9" BackgroundColor="White" Grid.Row="0" Grid.Column="2" Text="9" TextColor="Black" FontSize="Body"/>
+                    <Button x:Name="btn4" BackgroundColor="White" Grid.Row="1" Grid.Column="0" Text="4" TextColor="Black" FontSize="Body"/>
+                    <Button x:Name="btn5" BackgroundColor="White" Grid.Row="1" Grid.Column="1" Text="5" TextColor="Black" FontSize="Body"/>
+                    <Button x:Name="btn6" BackgroundColor="White" Grid.Row="1" Grid.Column="2" Text="6" TextColor="Black" FontSize="Body"/>
+                    <Button x:Name="btn1" BackgroundColor="White" Grid.Row="2" Grid.Column="0" Text="1" TextColor="Black" FontSize="Body"/>
+                    <Button x:Name="btn2" BackgroundColor="White" Grid.Row="2" Grid.Column="1" Text="2" TextColor="Black" FontSize="Body"/>
+                    <Button x:Name="btn3" BackgroundColor="White" Grid.Row="2" Grid.Column="2" Text="3" TextColor="Black" FontSize="Body"/>
+                    <Button x:Name="btnpunto" BackgroundColor="White" Grid.Row="3" Grid.Column="0" Text="." TextColor="Black" FontSize="Body"/>
+                    <Button x:Name="btn0" BackgroundColor="White" Grid.Row="3" Grid.Column="1" Text="0" TextColor="Black" FontSize="Body"/>
+                    <Button x:Name="btnBorrar" BackgroundColor="White" Grid.Row="3" Grid.Column="2" Text="Borrar" TextColor="Black" FontSize="9"/>
+                </Grid>
+            </Grid>
+
+
+            <Frame Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Padding="5,5,5,5" CornerRadius="20">
+                <Grid BackgroundColor="White"  Padding="30,30,30,30">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+
+                        </Grid.ColumnDefinitions>
+
+                        <Grid Grid.Row="0" Grid.Column="0" >
+                            <Label Grid.Row="0" Grid.Column="0" Text="Propina:" TextColor="Black"/>
+                            <Entry Grid.Row="0" Grid.Column="1" HorizontalOptions="End" Placeholder="0" IsReadOnly="true" FontSize="Body" PlaceholderColor="Black"/>
+                        </Grid>
+
+
+                        <Grid Grid.Row="1" Grid.Column="0">
+                            <Label Grid.Row="0" Grid.Column="0" Text="Efectivo:" TextColor="Black"/>
+                            <Entry Grid.Row="0" Grid.Column="1" HorizontalOptions="End" Placeholder="0" IsReadOnly="true" FontSize="Body" PlaceholderColor="Black"/>
+                        </Grid>
+
+
+                        <Grid Grid.Row="2" Grid.Column="0">
+                            <Label Grid.Row="0" Grid.Column="0" Text="Tarjeta:" TextColor="Black"/>
+                            <Entry Grid.Row="0" Grid.Column="1" HorizontalOptions="End" Placeholder="0" IsReadOnly="True" FontSize="Body" PlaceholderColor="Black"/>
+                        </Grid>
+
+
+                        <Grid Grid.Row="3" Grid.Column="0">
+                            <Label Grid.Row="0" Grid.Column="0" Text="Imprimir recibo" TextColor="Black"/>
+                            <Switch Grid.Row="0" Grid.Column="1" HorizontalOptions="End" IsToggled="True" OnColor="Green" ThumbColor="Gray"/>
+                        </Grid>
+
+                        <Grid Grid.Row="4" Grid.Column="0">
+                            <Label Grid.Row="0" Grid.Column="0" Text="Subtotal:" FontSize="Body" FontAttributes="Bold" TextColor="Black"/>
+                            <Entry Grid.Row="0" Grid.Column="1" HorizontalOptions="End" Placeholder="0" IsReadOnly="true" FontSize="Body" PlaceholderColor="Black"/>
+                        </Grid>
+
+                        <Grid Grid.Row="5" Grid.Column="0" >
+                            <Button CornerRadius="10" Grid.Row="0" Grid.Column="0" Text="Cerrar sin pagar" FontSize="Body" TextColor="White"                                    
+                            BackgroundColor="Red" WidthRequest="200"/>
+                            <Button CornerRadius="10" Grid.Row="0" Grid.Column="1" Text="Pagar" FontSize="25" TextColor="White"
+                            BackgroundColor="Green" WidthRequest="200" />
+                        </Grid>
+
+                    </Grid>
+                </Grid>
+            </Frame>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

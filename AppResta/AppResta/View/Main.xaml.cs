@@ -7,9 +7,9 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+
 
 namespace AppResta.View
 {
@@ -17,10 +17,14 @@ namespace AppResta.View
     public partial class Main : ContentPage
     {
         int band = 0;
+
+        List<Model.Cart> cart = new List<Model.Cart>();
+        Model.Cart cartItem = new Model.Cart();
         public Main(bool _Token)
         {
 
-
+            
+           
             if (_Token == false)
             {
                 Navigation.PushAsync(new Login());
@@ -33,57 +37,84 @@ namespace AppResta.View
 
                 
                 testListView.ItemsSource = Categorias2();
+                //test2ListView.ItemsSource = Platillos("");
                 BindingContext = new MainViewModel(Navigation, _Token);
 
             }
 
         }
-        public void select_Item(object sender, SelectedItemChangedEventArgs e)
+        
+        public void select_Item(object sender, SelectionChangedEventArgs e)
         {
+            UpdateSelectionData(e.PreviousSelection, e.CurrentSelection);
+        }
+
+        void UpdateSelectionData(IEnumerable<object> previousSelectedContact, IEnumerable<object> currentSelectedContact)
+        {
+           
             if (band == 0)
             {
-                var i = e.SelectedItemIndex; // Obtenemos el indice de la lista
-                var categoria = e.SelectedItem as Model.Categorias;
+                var i = currentSelectedContact.FirstOrDefault(); // Obtenemos el indice de la lista
+                var categoria = currentSelectedContact.FirstOrDefault() as Model.Categorias;
 
                 if (SubCategorias(categoria.id) != null)
                 {
-
                     testListView.ItemsSource = SubCategorias(categoria.id);
                     
-                }
-                else {
-                    
-                    //var i = e.SelectedItemIndex; // Obtenemos el indice de la lista
-                    var platillo = e.SelectedItem as Model.Platillos;
 
-                    testListView.ItemsSource = Platillos();
-                    
                 }
+                else
+                {
+
+                    //var i = e.SelectedItemIndex; // Obtenemos el indice de la lista
+                    var platillo = currentSelectedContact.FirstOrDefault() as Model.Platillos;
+
+                    testListView.ItemsSource = Platillos("&idcate="+ categoria.nombre);
+
+                    //imagens.Source = platillo.url;
+                }
+
+
 
             }
             else if (band == 1)
             {
-                var i = e.SelectedItemIndex; // Obtenemos el indice de la lista
-                var platillo = e.SelectedItem as Model.Platillos;
+                var subcategoria = currentSelectedContact.FirstOrDefault() as Model.SubCategorias;
+                var i = currentSelectedContact.FirstOrDefault(); // Obtenemos el indice de la lista
+                var platillo = currentSelectedContact.FirstOrDefault() as Model.Platillos;
 
-                testListView.ItemsSource = Platillos();
-                
+                testListView.ItemsSource = Platillos("&idsub="+subcategoria.nombre);
+
 
             }
             else if (band == 2)
             {
-                DisplayAlert("Sourcces", "Agregar", "Ok");
+                
+                var platillo = currentSelectedContact.FirstOrDefault() as Model.Platillos;
 
+                DisplayAlert("Sourcces", "Agregar \n Nombre:" + platillo.nombre + "\n Precio :" + platillo.precio + "\n Categoria:" + platillo.categoria, "Ok");
+
+                cartItem.platillo = platillo.nombre;
+                cartItem.cantidad =1;
+                cartItem.precio = Convert.ToDouble(platillo.precio);
+                cartItem.total = (int)(cartItem.precio * cartItem.cantidad);
+                
+                cart.Add(cartItem);
+                cart.Add(cartItem);
+                cart.Add(cartItem);
+                cart.Add(cartItem);
+                cart.Add(cartItem);
+                test2ListView.ItemsSource = cart;
+                                
             }
+            
+        }
 
-        }
-        public void mesas(object sender, EventArgs e)
-        {
-            Navigation.PushAsync(new Mesa());
-        }
+  
         public void returnCategorias(object sender, EventArgs e) { 
             band = 0;
             testListView.ItemsSource = Categorias2();
+            
         }
 
         public List<Model.Categorias> Categorias2()
@@ -173,14 +204,14 @@ namespace AppResta.View
 
 
         //public List<Model.Platillos> Platillos(int idCategoria, int idSbCategoria)
-        public List<Model.Platillos> Platillos()
+        public List<Model.Platillos> Platillos(string opc)
         {
             band = 2;
             Model.Platillos platillo;
             var sub = new List<Model.Platillos>();
             var client = new HttpClient();
 
-            client.BaseAddress = new Uri("http://192.168.1.112/resta/admin/mysql/Platillo/index.php?op=obtenerPlatillos");
+            client.BaseAddress = new Uri("http://192.168.1.112/resta/admin/mysql/Platillo/index.php?op=obtenerPlatillos"+opc);
             HttpResponseMessage response = client.GetAsync(client.BaseAddress).Result;
             if (response.IsSuccessStatusCode)
             {
@@ -201,7 +232,7 @@ namespace AppResta.View
                     string categoria = item["categoria"].ToString();
                     string clasificacion = item["clasificacion"].ToString();
                     string subcategoria =item["subcategoria"].ToString();
-                    Console.WriteLine(urls);
+                    //Console.WriteLine(urls);
                     var byteArray = Convert.FromBase64String(urls);
                     Stream stream = new MemoryStream(byteArray);
                     var imageSource = ImageSource.FromStream(() => stream);
@@ -220,9 +251,6 @@ namespace AppResta.View
                     sub.Add(platillo);
                    
                 }
-                
-                //userInfo.Add(categoria);
-                //testListView.ItemsSource = userInfo
                 return sub;
             }
             else

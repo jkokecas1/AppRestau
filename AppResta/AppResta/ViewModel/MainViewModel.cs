@@ -73,6 +73,16 @@ namespace AppResta.ViewModel
             await Navigation.PushAsync(new Mesa());
 
         }
+        public async Task Orden()
+        {
+            await Navigation.PushAsync(new Ordenes());
+
+        }
+        public async Task Historial()
+        {
+            await Navigation.PushAsync(new Historial());
+
+        }
         public void ProcesoSimple()
         {
             if (_Token == true)
@@ -90,6 +100,8 @@ namespace AppResta.ViewModel
         public ICommand NavLoginCommand => new Command(ProcesoSimple);
         public ICommand Pagocommand => new Command(async () => await Pago());
         public ICommand Mesascommand => new Command(async () => await Mesas());
+        public ICommand Ordencommand => new Command(async () => await Orden());
+        public ICommand Historialcommand => new Command(async () => await Historial());
         public ICommand ValidarToken => new Command(ProcesoSimple);
         #endregion
     }
