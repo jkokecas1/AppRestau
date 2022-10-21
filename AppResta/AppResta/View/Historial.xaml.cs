@@ -15,6 +15,7 @@ namespace AppResta.View
         public Historial()
         {
             InitializeComponent();
+            BindingContext = new ViewModel.HistorialViewModel(Navigation);
         }
     }
 }

@@ -8,14 +8,14 @@ using Xamarin.Forms;
 
 namespace AppResta.ViewModel
 {
-    public class MesaViewModel : BaseViewModel
+    public class HistorialViewModel : BaseViewModel
     {
         #region VARIABLES
         string _Numero;
         #endregion
 
         #region CONSTRUCTOR
-        public MesaViewModel(INavigation navigation)
+        public HistorialViewModel(INavigation navigation)
         {
             Navigation = navigation;
         }
@@ -31,6 +31,11 @@ namespace AppResta.ViewModel
 
         #region PROCESOS
 
+        public async Task Mesas()
+        {
+            await Navigation.PushAsync(new Mesa());
+
+        }
         public async Task Orden()
         {
             await Navigation.PushAsync(new Ordenes());
@@ -39,6 +44,11 @@ namespace AppResta.ViewModel
         public async Task Historial()
         {
             await Navigation.PushAsync(new Historial());
+
+        }
+
+        public async Task ProcesoAsyncrono()
+        {
 
         }
         public async Task IrComanda()
@@ -59,7 +69,9 @@ namespace AppResta.ViewModel
 
 
         #region COMANDOS
+        public ICommand ProcesoAsyncommand => new Command(async () => await ProcesoAsyncrono());
         public ICommand IrComandacommand => new Command(async () => await IrComanda());
+        public ICommand Mesascommand => new Command(async () => await Mesas());
         public ICommand Ordencommand => new Command(async () => await Orden());
         public ICommand Historialcommand => new Command(async () => await Historial());
         public ICommand ProcesoSimpCommand => new Command(ProcesoSimple);

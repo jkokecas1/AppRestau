@@ -15,6 +15,7 @@ namespace AppResta.View
         public Ordenes()
         {
             InitializeComponent();
+            BindingContext = new ViewModel.OrdenesViewModel(Navigation);
         }
     }
 }

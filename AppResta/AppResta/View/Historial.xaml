@@ -24,11 +24,11 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                
+
                 <Image Source="klassylogo.png" VerticalOptions="Start" Grid.Row="0" Grid.Column="0"></Image>
-                <Button Text="Mesas"  Command="{Binding Mesascommand}"  Grid.Row="0" Grid.Column="1" CornerRadius="10"></Button>
-                <Button Text="Ordenes" Grid.Row="0" Grid.Column="2" CornerRadius="10" ></Button>
-                <Button Text="Historial" Grid.Row="0" Grid.Column="3" CornerRadius="10"></Button>
+                <Button Text="Mesas"  Command="{Binding Mesascommand}" Grid.Row="0" Grid.Column="1" CornerRadius="10"></Button>
+                <Button Text="Ordenes" Command="{Binding Ordencommand}" Grid.Row="0" Grid.Column="2" CornerRadius="10" ></Button>
+                <Button Text="Historial" Command="{Binding Historialcommand}" Grid.Row="0" Grid.Column="3" CornerRadius="10"></Button>
                 <Button Text="SALIR"  Command="{Binding NavLoginCommand}" Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="3" HorizontalOptions="End" CornerRadius="10"></Button>
             </Grid>
 
