@@ -19,9 +19,18 @@ namespace AppResta.View
         int band = 0;
 
         List<Model.Cart> cart = new List<Model.Cart>();
+<<<<<<< HEAD
         Model.Cart cartItem;
         public Main(bool _Token)
         {
+=======
+        Model.Cart cartItem = new Model.Cart();
+        public Main(bool _Token)
+        {
+
+            
+           
+>>>>>>> f08c6908ad7f3725157b187e463ea7e9acb1cfab
             if (_Token == false)
             {
                 Navigation.PushAsync(new Login());
@@ -40,15 +49,25 @@ namespace AppResta.View
             }
 
         }
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> f08c6908ad7f3725157b187e463ea7e9acb1cfab
         public void select_Item(object sender, SelectionChangedEventArgs e)
         {
             UpdateSelectionData(e.PreviousSelection, e.CurrentSelection);
         }
 
+<<<<<<< HEAD
         async void UpdateSelectionData(IEnumerable<object> previousSelectedContact, IEnumerable<object> currentSelectedContact)
         {
 
+=======
+        void UpdateSelectionData(IEnumerable<object> previousSelectedContact, IEnumerable<object> currentSelectedContact)
+        {
+           
+>>>>>>> f08c6908ad7f3725157b187e463ea7e9acb1cfab
             if (band == 0)
             {
                 var i = currentSelectedContact.FirstOrDefault(); // Obtenemos el indice de la lista
@@ -57,25 +76,49 @@ namespace AppResta.View
                 if (SubCategorias(categoria.id) != null)
                 {
                     testListView.ItemsSource = SubCategorias(categoria.id);
+<<<<<<< HEAD
+=======
+                    
+>>>>>>> f08c6908ad7f3725157b187e463ea7e9acb1cfab
 
                 }
                 else
                 {
+<<<<<<< HEAD
                     var platillo = currentSelectedContact.FirstOrDefault() as Model.Platillos;
                     testListView.ItemsSource = Platillos("&idcate=" + categoria.nombre);
                 }
+=======
+
+                    //var i = e.SelectedItemIndex; // Obtenemos el indice de la lista
+                    var platillo = currentSelectedContact.FirstOrDefault() as Model.Platillos;
+
+                    testListView.ItemsSource = Platillos("&idcate="+ categoria.nombre);
+
+                    //imagens.Source = platillo.url;
+                }
+
+
+
+>>>>>>> f08c6908ad7f3725157b187e463ea7e9acb1cfab
             }
             else if (band == 1)
             {
                 var subcategoria = currentSelectedContact.FirstOrDefault() as Model.SubCategorias;
                 var i = currentSelectedContact.FirstOrDefault(); // Obtenemos el indice de la lista
                 var platillo = currentSelectedContact.FirstOrDefault() as Model.Platillos;
+<<<<<<< HEAD
+=======
+
+                testListView.ItemsSource = Platillos("&idsub="+subcategoria.nombre);
+>>>>>>> f08c6908ad7f3725157b187e463ea7e9acb1cfab
 
 
                 testListView.ItemsSource = Platillos("&idsub=" + subcategoria.nombre);
             }
             else if (band == 2)
             {
+<<<<<<< HEAD
                 var platillo = currentSelectedContact.FirstOrDefault() as Model.Platillos;
 
                 DisplayAlert("Sourcces", "Agregar \n ID:" + platillo.id + "\n Nombre :" + platillo.nombre + "\n Categoria:" + platillo.categoria, "Ok");
@@ -129,9 +172,30 @@ namespace AppResta.View
                 Console.WriteLine(totalpay);
                 totalpago.Text = totalpay.ToString();
 
+=======
+                
+                var platillo = currentSelectedContact.FirstOrDefault() as Model.Platillos;
+>>>>>>> f08c6908ad7f3725157b187e463ea7e9acb1cfab
 
+                DisplayAlert("Sourcces", "Agregar \n Nombre:" + platillo.nombre + "\n Precio :" + platillo.precio + "\n Categoria:" + platillo.categoria, "Ok");
+
+                cartItem.platillo = platillo.nombre;
+                cartItem.cantidad =1;
+                cartItem.precio = Convert.ToDouble(platillo.precio);
+                cartItem.total = (int)(cartItem.precio * cartItem.cantidad);
+                
+                cart.Add(cartItem);
+                cart.Add(cartItem);
+                cart.Add(cartItem);
+                cart.Add(cartItem);
+                cart.Add(cartItem);
+                test2ListView.ItemsSource = cart;
+                                
             }
+            
+        }
 
+<<<<<<< HEAD
         }
 
         public void returnCategorias(object sender, EventArgs e)
@@ -140,6 +204,13 @@ namespace AppResta.View
             testListView.ItemsSource = Categorias2();
 
 
+=======
+  
+        public void returnCategorias(object sender, EventArgs e) { 
+            band = 0;
+            testListView.ItemsSource = Categorias2();
+            
+>>>>>>> f08c6908ad7f3725157b187e463ea7e9acb1cfab
         }
 
         public List<Model.Categorias> Categorias2()
@@ -237,10 +308,14 @@ namespace AppResta.View
             var sub = new List<Model.Platillos>();
             var client = new HttpClient();
 
+<<<<<<< HEAD
 
             client.BaseAddress = new Uri("http://192.168.1.112/resta/admin/mysql/Platillo/index.php?op=obtenerPlatillos" + opc);
 
 
+=======
+            client.BaseAddress = new Uri("http://192.168.1.112/resta/admin/mysql/Platillo/index.php?op=obtenerPlatillos"+opc);
+>>>>>>> f08c6908ad7f3725157b187e463ea7e9acb1cfab
             HttpResponseMessage response = client.GetAsync(client.BaseAddress).Result;
             if (response.IsSuccessStatusCode)
             {
@@ -260,10 +335,14 @@ namespace AppResta.View
                     int estatus = Int32.Parse(item["estatus"].ToString());
                     string categoria = item["categoria"].ToString();
                     string clasificacion = item["clasificacion"].ToString();
+<<<<<<< HEAD
 
                     string subcategoria = item["subcategoria"].ToString();
 
 
+=======
+                    string subcategoria =item["subcategoria"].ToString();
+>>>>>>> f08c6908ad7f3725157b187e463ea7e9acb1cfab
                     //Console.WriteLine(urls);
                     var byteArray = Convert.FromBase64String(urls);
                     Stream stream = new MemoryStream(byteArray);

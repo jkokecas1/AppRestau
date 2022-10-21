@@ -112,7 +112,11 @@
 
                     <Grid BackgroundColor="Bisque" Grid.Row="3" Grid.Column="0" Padding="20,0,20,0">
                         <Label Grid.Row="0" Grid.Column="0" FontSize="Body" TextColor="Black"  Text="Precio Total" />
+<<<<<<< HEAD
                         <Label Grid.Row="0" Grid.Column="1" HorizontalOptions="End" FontSize="Body" TextColor="Black" x:Name="totalpago" Text=""/>
+=======
+                        <Label Grid.Row="0" Grid.Column="1" HorizontalOptions="End" FontSize="Body" TextColor="Black"  Text="{Binding totalItem}" />
+>>>>>>> f08c6908ad7f3725157b187e463ea7e9acb1cfab
                     </Grid>
 
 
@@ -156,13 +160,18 @@
                         </CollectionView.ItemsLayout>
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
+<<<<<<< HEAD
                                 <Grid Padding="5">
+=======
+                                <Grid Padding="10">
+>>>>>>> f08c6908ad7f3725157b187e463ea7e9acb1cfab
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="150"/>
                                     </Grid.RowDefinitions>
+<<<<<<< HEAD
                                     <Frame HasShadow="True" Padding="5,5,5,5" CornerRadius="10">
                                         <Grid>
                                             <Grid.RowDefinitions >
@@ -197,6 +206,27 @@
                                         </Grid>
 
 
+=======
+                                    <Frame HasShadow="True" Padding="5" CornerRadius="15">
+                                        <Grid >
+                                            <Grid.RowDefinitions >
+                                                <RowDefinition Height="*"/>
+                                                <RowDefinition Height="*"/>
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="60"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <Image Grid.Row="0"  Grid.Column="0" Grid.RowSpan="2" Source="{Binding url}" Aspect="AspectFill"/>
+
+                                            <Label Grid.Row="0"  Grid.Column="1" Text="{Binding nombre}" VerticalOptions="CenterAndExpand" FontSize="Body" FontAttributes="Bold" TextColor="Black"/>
+
+                                            <Label Grid.Row="1"  Grid.Column="1" Text="{Binding precio}" FontSize="Body"  TextColor="Black" FontAttributes="Italic"/>
+
+                                        </Grid>
+
+>>>>>>> f08c6908ad7f3725157b187e463ea7e9acb1cfab
                                     </Frame>
 
                                 </Grid>

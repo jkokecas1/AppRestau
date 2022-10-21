@@ -37,7 +37,11 @@
                 </Grid>
             </StackLayout>
 
+<<<<<<< HEAD
             <Grid BackgroundColor="LightGray" Grid.Row="1" Grid.Column="0" Padding="30,30,30,30">
+=======
+            <Grid BackgroundColor="LightGray" Grid.Row="1" Grid.Column="0" Padding="20,20,20,20">
+>>>>>>> f08c6908ad7f3725157b187e463ea7e9acb1cfab
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
@@ -68,8 +72,13 @@
             </Grid>
 
 
+<<<<<<< HEAD
             <Frame Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Padding="5,5,5,5" CornerRadius="20" Margin="10,10,10,10">
                 <Grid BackgroundColor="White"  Padding="10,10,10,10">
+=======
+            <Frame Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Padding="5,5,5,5" CornerRadius="20">
+                <Grid BackgroundColor="White"  Padding="30,30,30,30">
+>>>>>>> f08c6908ad7f3725157b187e463ea7e9acb1cfab
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>

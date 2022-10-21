@@ -7,7 +7,11 @@
 
     <Grid RowSpacing="0" ColumnSpacing="0">
         <Grid.RowDefinitions>
+<<<<<<< HEAD
             <RowDefinition Height="*"/>
+=======
+            <RowDefinition Height="50"/>
+>>>>>>> f08c6908ad7f3725157b187e463ea7e9acb1cfab
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -20,12 +24,20 @@
                    TextColor="Black" 
                    FontAttributes="Bold" 
                    HorizontalTextAlignment="Center" 
+<<<<<<< HEAD
                    Padding="20,50,20,0"/>
+=======
+                   Padding="0"/>
+>>>>>>> f08c6908ad7f3725157b187e463ea7e9acb1cfab
         </StackLayout>
 
 
 
+<<<<<<< HEAD
         <Grid BackgroundColor="#D8E5DB" Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" Padding="60,0,60,0">
+=======
+        <Grid BackgroundColor="#D8E5DB" Grid.Row="1" Grid.Column="0" Padding="60,10,60,20">
+>>>>>>> f08c6908ad7f3725157b187e463ea7e9acb1cfab
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
@@ -43,11 +55,19 @@
                 <StackLayout  Grid.Row="0" Grid.Column="0" HorizontalOptions="Center">
                     <Grid>
                         <Grid.RowDefinitions>
+<<<<<<< HEAD
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
+=======
+                            <RowDefinition Height="60"/>
+                            <RowDefinition Height="40"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="90"/>
+>>>>>>> f08c6908ad7f3725157b187e463ea7e9acb1cfab
                         </Grid.ColumnDefinitions>
                         <ImageButton Grid.Row="0" Grid.Column="0" Source="mesa.png" BackgroundColor="Transparent" Command="{Binding IrComandacommand}"/>
                         <Label Grid.Row="1" Grid.Column="0" Text="MESA 1" TextColor="Black" HorizontalOptions="Center" FontSize="Body"></Label>
@@ -57,11 +77,19 @@
                 <StackLayout Grid.Row="0" Grid.Column="1" HorizontalOptions="Center">
                     <Grid>
                         <Grid.RowDefinitions>
+<<<<<<< HEAD
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
+=======
+                            <RowDefinition Height="60"/>
+                            <RowDefinition Height="40"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="90"/>
+>>>>>>> f08c6908ad7f3725157b187e463ea7e9acb1cfab
                         </Grid.ColumnDefinitions>
 
                         <ImageButton Grid.Row="0" Grid.Column="0" Source="mesa.png" BackgroundColor="Transparent"  Command="{Binding IrComandacommand}"/>
@@ -73,11 +101,19 @@
                 <StackLayout  Grid.Row="0" Grid.Column="2" HorizontalOptions="Center">
                     <Grid>
                         <Grid.RowDefinitions>
+<<<<<<< HEAD
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
+=======
+                            <RowDefinition Height="60"/>
+                            <RowDefinition Height="40"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="90"/>
+>>>>>>> f08c6908ad7f3725157b187e463ea7e9acb1cfab
                         </Grid.ColumnDefinitions>
 
                         <ImageButton Grid.Row="0" Grid.Column="0" Source="mesa.png" BackgroundColor="Transparent"  Command="{Binding IrComandacommand}"/>
@@ -87,11 +123,19 @@
                 <StackLayout Grid.Row="1" Grid.Column="0" HorizontalOptions="Center">
                     <Grid>
                         <Grid.RowDefinitions>
+<<<<<<< HEAD
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
+=======
+                            <RowDefinition Height="60"/>
+                            <RowDefinition Height="40"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="90"/>
+>>>>>>> f08c6908ad7f3725157b187e463ea7e9acb1cfab
                         </Grid.ColumnDefinitions>
 
                         <ImageButton Grid.Row="0" Grid.Column="0" Source="mesa.png" BackgroundColor="Transparent"  Command="{Binding IrComandacommand}"/>
@@ -101,11 +145,19 @@
                 <StackLayout Grid.Row="1" Grid.Column="1" HorizontalOptions="Center">
                     <Grid>
                         <Grid.RowDefinitions>
+<<<<<<< HEAD
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
+=======
+                            <RowDefinition Height="60"/>
+                            <RowDefinition Height="40"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="90"/>
+>>>>>>> f08c6908ad7f3725157b187e463ea7e9acb1cfab
                         </Grid.ColumnDefinitions>
 
                         <ImageButton Grid.Row="0" Grid.Column="0" Source="mesa.png" BackgroundColor="Transparent"  Command="{Binding IrComandacommand}"/>
@@ -115,11 +167,19 @@
                 <StackLayout Grid.Row="1" Grid.Column="2" HorizontalOptions="Center">
                     <Grid>
                         <Grid.RowDefinitions>
+<<<<<<< HEAD
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
+=======
+                            <RowDefinition Height="60"/>
+                            <RowDefinition Height="40"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="90"/>
+>>>>>>> f08c6908ad7f3725157b187e463ea7e9acb1cfab
                         </Grid.ColumnDefinitions>
 
                         <ImageButton Grid.Row="0" Grid.Column="0" Source="mesa.png" BackgroundColor="Transparent"  Command="{Binding IrComandacommand}"/>
@@ -130,11 +190,19 @@
                 <StackLayout Grid.Row="2" Grid.Column="0" HorizontalOptions="Center">
                     <Grid>
                         <Grid.RowDefinitions>
+<<<<<<< HEAD
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
+=======
+                            <RowDefinition Height="60"/>
+                            <RowDefinition Height="40"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="90"/>
+>>>>>>> f08c6908ad7f3725157b187e463ea7e9acb1cfab
                         </Grid.ColumnDefinitions>
 
                         <ImageButton Grid.Row="0" Grid.Column="0" Source="mesa.png" BackgroundColor="Transparent"  Command="{Binding IrComandacommand}"/>
@@ -144,11 +212,19 @@
                 <StackLayout Grid.Row="2" Grid.Column="1" HorizontalOptions="Center">
                     <Grid>
                         <Grid.RowDefinitions>
+<<<<<<< HEAD
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
+=======
+                            <RowDefinition Height="60"/>
+                            <RowDefinition Height="40"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="90"/>
+>>>>>>> f08c6908ad7f3725157b187e463ea7e9acb1cfab
                         </Grid.ColumnDefinitions>
 
                         <ImageButton Grid.Row="0" Grid.Column="0" Source="mesa.png" BackgroundColor="Transparent"  Command="{Binding IrComandacommand}"/>
@@ -158,11 +234,19 @@
                 <StackLayout Grid.Row="2" Grid.Column="2" HorizontalOptions="Center">
                     <Grid>
                         <Grid.RowDefinitions>
+<<<<<<< HEAD
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
+=======
+                            <RowDefinition Height="60"/>
+                            <RowDefinition Height="40"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="90"/>
+>>>>>>> f08c6908ad7f3725157b187e463ea7e9acb1cfab
                         </Grid.ColumnDefinitions>
 
                         <ImageButton Grid.Row="0" Grid.Column="0" Source="mesa.png" BackgroundColor="Transparent"  Command="{Binding IrComandacommand}"/>

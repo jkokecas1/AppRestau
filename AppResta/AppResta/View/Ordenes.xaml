@@ -7,7 +7,11 @@
         <Grid BackgroundColor="White" Margin="0,0,0,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="60"/>
+<<<<<<< HEAD
                 <RowDefinition Height="60"/>
+=======
+                <RowDefinition Height="30"/>
+>>>>>>> f08c6908ad7f3725157b187e463ea7e9acb1cfab
                 <RowDefinition Height="*"/>
                 
 
@@ -41,6 +45,7 @@
 
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
+<<<<<<< HEAD
                     <ColumnDefinition Width="90"/>
                     <ColumnDefinition Width="190"/>
                     <ColumnDefinition Width="90"/>
@@ -54,6 +59,21 @@
                 <Label BackgroundColor="Orange" Text="Estatus" Grid.Row="0" Grid.Column="3" TextColor="Black" FontSize="Title"/>
                 <Label BackgroundColor="Pink" Grid.Row="0" Grid.Column="4" FontSize="Title"/>
                 <Label BackgroundColor="Green" Text="Total" Grid.Row="0" Grid.Column="5" TextColor="Black" FontSize="Title"/>
+=======
+                    <ColumnDefinition Width="70"/>
+                    <ColumnDefinition Width="120"/>
+                    <ColumnDefinition Width="70"/>
+                    <ColumnDefinition Width="70"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="70"/>
+                </Grid.ColumnDefinitions>
+                <Label BackgroundColor="Red" Text="Abierto" Grid.Row="0" Grid.Column="0" TextColor="Black"/>
+                <Label BackgroundColor="Blue" Text="Hora de entrega" Grid.Row="0" Grid.Column="1" TextColor="Black"/>
+                <Label BackgroundColor="Violet" Text="Orden" Grid.Row="0" Grid.Column="2" TextColor="Black"/>
+                <Label BackgroundColor="Orange" Text="Estatus" Grid.Row="0" Grid.Column="3" TextColor="Black"/>
+                <Label BackgroundColor="Pink" Grid.Row="0" Grid.Column="4"/>
+                <Label BackgroundColor="Green" Text="Total" Grid.Row="0" Grid.Column="5" TextColor="Black"/>
+>>>>>>> f08c6908ad7f3725157b187e463ea7e9acb1cfab
             </Grid>
             
             <Grid Grid.Row="2" Grid.Column="0" BackgroundColor="Gray">
