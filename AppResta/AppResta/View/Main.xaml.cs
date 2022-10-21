@@ -19,12 +19,9 @@ namespace AppResta.View
         int band = 0;
 
         List<Model.Cart> cart = new List<Model.Cart>();
-        Model.Cart cartItem = new Model.Cart();
+        Model.Cart cartItem;
         public Main(bool _Token)
         {
-
-
-
             if (_Token == false)
             {
                 Navigation.PushAsync(new Login());
@@ -49,7 +46,7 @@ namespace AppResta.View
             UpdateSelectionData(e.PreviousSelection, e.CurrentSelection);
         }
 
-        void UpdateSelectionData(IEnumerable<object> previousSelectedContact, IEnumerable<object> currentSelectedContact)
+        async void UpdateSelectionData(IEnumerable<object> previousSelectedContact, IEnumerable<object> currentSelectedContact)
         {
 
             if (band == 0)
@@ -61,21 +58,12 @@ namespace AppResta.View
                 {
                     testListView.ItemsSource = SubCategorias(categoria.id);
 
-
                 }
                 else
                 {
-
-                    //var i = e.SelectedItemIndex; // Obtenemos el indice de la lista
                     var platillo = currentSelectedContact.FirstOrDefault() as Model.Platillos;
-
                     testListView.ItemsSource = Platillos("&idcate=" + categoria.nombre);
-
-                    //imagens.Source = platillo.url;
                 }
-
-
-
             }
             else if (band == 1)
             {
@@ -83,38 +71,74 @@ namespace AppResta.View
                 var i = currentSelectedContact.FirstOrDefault(); // Obtenemos el indice de la lista
                 var platillo = currentSelectedContact.FirstOrDefault() as Model.Platillos;
 
+
                 testListView.ItemsSource = Platillos("&idsub=" + subcategoria.nombre);
-
-
             }
             else if (band == 2)
             {
-
                 var platillo = currentSelectedContact.FirstOrDefault() as Model.Platillos;
 
-                DisplayAlert("Sourcces", "Agregar \n Nombre:" + platillo.nombre + "\n Precio :" + platillo.precio + "\n Categoria:" + platillo.categoria, "Ok");
-
-                cartItem.platillo = platillo.nombre;
-                cartItem.cantidad = 1;
-                cartItem.precio = Convert.ToDouble(platillo.precio);
-                cartItem.total = (int)(cartItem.precio * cartItem.cantidad);
-
-                cart.Add(cartItem);
-                for (int i = 0; i < cart.Count; i++) {
+                DisplayAlert("Sourcces", "Agregar \n ID:" + platillo.id + "\n Nombre :" + platillo.nombre + "\n Categoria:" + platillo.categoria, "Ok");
+                
+                cartItem = new Model.Cart();
+                
+                if (cart.Count == 0) // Caso 1: Carrito vacio
+                {
                     
-                    Console.WriteLine("Index"+cart.Count+", Valor:"+cart[i].platillo);
+                    cartItem.id = platillo.id;
+                    cartItem.platillo = platillo.nombre;
+                    cartItem.cantidad = 1;
+                    cartItem.precio = Convert.ToDouble(platillo.precio);
+                    cartItem.total = (int)(cartItem.precio * cartItem.cantidad);
+
+                    cart.Add(cartItem);
+                    //Console.WriteLine("Entra a primer elemento del carrito");
                 }
+                else // Caso 2: Cariito con al menuos un platillo
+                {
+                    int band = 0;
+                    for (int i = 0; i < cart.Count; i++)
+                    {
+                       // Console.WriteLine("IdCart " + cart[i].id + " platillo id: " + platillo.id);
+                        if (cart[i].id == platillo.id) // Caso 2.1: El platillo existe
+                        {
+                            //Console.WriteLine("Es igual suma 1");
+                            cart[i].cantidad += 1;
+                            band = 1;
+                            break;
+                        }
+                    }
+                    if (band == 0) {
+                        Console.WriteLine("Ya exite un platillo y se agrega el otro");
+                        cartItem.id = platillo.id;
+                        cartItem.platillo = platillo.nombre;
+                        cartItem.cantidad = 1;
+                        cartItem.precio = Convert.ToDouble(platillo.precio);
+                        cartItem.total = (int)(cartItem.precio * cartItem.cantidad);
+                        cart.Add(cartItem);
+                    }
+                }
+                test2ListView.ItemsSource = null;
                 test2ListView.ItemsSource = cart;
+                test2ListView.IsRefreshing = false;
+                int totalpay = 0;
+                for (int i = 0; i < cart.Count; i++)
+                {
+                    totalpay += cart[i].total;
+                }
+                Console.WriteLine(totalpay);
+                totalpago.Text = totalpay.ToString();
 
 
             }
-        }
 
+        }
 
         public void returnCategorias(object sender, EventArgs e)
         {
             band = 0;
             testListView.ItemsSource = Categorias2();
+
 
         }
 
@@ -213,7 +237,10 @@ namespace AppResta.View
             var sub = new List<Model.Platillos>();
             var client = new HttpClient();
 
+
             client.BaseAddress = new Uri("http://192.168.1.112/resta/admin/mysql/Platillo/index.php?op=obtenerPlatillos" + opc);
+
+
             HttpResponseMessage response = client.GetAsync(client.BaseAddress).Result;
             if (response.IsSuccessStatusCode)
             {
@@ -233,7 +260,10 @@ namespace AppResta.View
                     int estatus = Int32.Parse(item["estatus"].ToString());
                     string categoria = item["categoria"].ToString();
                     string clasificacion = item["clasificacion"].ToString();
+
                     string subcategoria = item["subcategoria"].ToString();
+
+
                     //Console.WriteLine(urls);
                     var byteArray = Convert.FromBase64String(urls);
                     Stream stream = new MemoryStream(byteArray);

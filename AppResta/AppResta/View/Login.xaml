@@ -7,7 +7,7 @@
 
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="150"/>
+                <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
@@ -16,8 +16,8 @@
 
             <Grid Grid.Row="0" Grid.Column="0">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="50"/>
-                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="200"/>
+                    <RowDefinition Height="1"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
@@ -26,23 +26,23 @@
 
                 <Image Grid.Row="0" Grid.Column="0" BackgroundColor="Transparent" Source="klassylogo.png" VerticalOptions="Center"/>
                 <Label Grid.Row="1" Grid.Column="0" Text="Ingresa tu NIP" FontSize="Body" TextColor="Black" FontAttributes="Bold" HorizontalTextAlignment="Center" Padding="5,0,0,0"/>
-                <Entry Grid.Row="2" Grid.Column="0" Text="{Binding Pin}" IsReadOnly="True" Placeholder="PIN" HorizontalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="300" FontSize="20" MaxLength="4"/>
+                <Entry Grid.Row="2" Grid.Column="0" Text="{Binding Pin}" IsReadOnly="True" Placeholder="PIN" HorizontalOptions="Center" HorizontalTextAlignment="Center" WidthRequest="300" FontSize="20" MaxLength="4" />
 
             </Grid>
 
 
-            <Grid Grid.Row="1" Grid.Column="0" Padding="50,5,50,5">
-                <Button BackgroundColor="#F1F1F1" TextColor="Black" CornerRadius="50" Grid.Row="0" Grid.Column="0" Text="1"  FontSize="Body" FontAttributes="Bold" Command="{ Binding Num1Command}" />
-                <Button BackgroundColor="#F1F1F1" TextColor="Black" CornerRadius="50" Grid.Row="0" Grid.Column="1" Text="2" FontSize="Body" FontAttributes="Bold" Command="{ Binding Num2Command}"/>
-                <Button BackgroundColor="#F1F1F1" TextColor="Black" CornerRadius="50" Grid.Row="0" Grid.Column="2" Text="3" FontSize="Body" FontAttributes="Bold" Command="{ Binding Num3Command}"/>
-                <Button BackgroundColor="#F1F1F1" TextColor="Black" CornerRadius="50" Grid.Row="1" Grid.Column="0" Text="4" FontSize="Body" FontAttributes="Bold" Command="{ Binding Num4Command}"/>
-                <Button BackgroundColor="#F1F1F1" TextColor="Black" CornerRadius="50" Grid.Row="1" Grid.Column="1" Text="5" FontSize="Body" FontAttributes="Bold" Command="{ Binding Num5Command}"/>
-                <Button BackgroundColor="#F1F1F1" TextColor="Black" CornerRadius="50" Grid.Row="1" Grid.Column="2" Text="6" FontSize="Body" FontAttributes="Bold" Command="{ Binding Num6Command}"/>
-                <Button BackgroundColor="#F1F1F1" TextColor="Black" CornerRadius="50" Grid.Row="2" Grid.Column="0" Text="7" FontSize="Body" FontAttributes="Bold" Command="{ Binding Num7Command}"/>
-                <Button BackgroundColor="#F1F1F1" TextColor="Black" CornerRadius="50" Grid.Row="2" Grid.Column="1" Text="8" FontSize="Body" FontAttributes="Bold" Command="{ Binding Num8Command}"/>
-                <Button BackgroundColor="#F1F1F1" TextColor="Black" CornerRadius="50" Grid.Row="2" Grid.Column="2" Text="9" FontSize="Body" FontAttributes="Bold" Command="{ Binding Num9Command}"/>
-                <Button BackgroundColor="#F1F1F1" TextColor="Black" CornerRadius="50" Grid.Row="3" Grid.Column="0" Text="Borrar" FontSize="Body" FontAttributes="Bold"  Command="{ Binding BorrarCommand}" />
-                <Button BackgroundColor="#F1F1F1" TextColor="Black" CornerRadius="50" Grid.Row="3" Grid.Column="1" Text="0" FontSize="Body" FontAttributes="Bold"  Command="{ Binding Num0Command}"/>
+            <Grid Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" Padding="60,0,60,10" Scale=".6">
+                <Button BackgroundColor="#F1F1F1" TextColor="Black" CornerRadius="40" Grid.Row="0" Grid.Column="0" Text="1"  FontSize="Body" FontAttributes="Bold" Command="{ Binding Num1Command}" Padding="0,0,0,0" />
+                <Button BackgroundColor="#F1F1F1" TextColor="Black" CornerRadius="40" Grid.Row="0" Grid.Column="1" Text="2" FontSize="Body" FontAttributes="Bold" Command="{ Binding Num2Command}" Padding="0,0,0,0"/>
+                <Button BackgroundColor="#F1F1F1" TextColor="Black" CornerRadius="40" Grid.Row="0" Grid.Column="2" Text="3" FontSize="Body" FontAttributes="Bold" Command="{ Binding Num3Command}"/>
+                <Button BackgroundColor="#F1F1F1" TextColor="Black" CornerRadius="40" Grid.Row="1" Grid.Column="0" Text="4" FontSize="Body" FontAttributes="Bold" Command="{ Binding Num4Command}"/>
+                <Button BackgroundColor="#F1F1F1" TextColor="Black" CornerRadius="40" Grid.Row="1" Grid.Column="1" Text="5" FontSize="Body" FontAttributes="Bold" Command="{ Binding Num5Command}"/>
+                <Button BackgroundColor="#F1F1F1" TextColor="Black" CornerRadius="40" Grid.Row="1" Grid.Column="2" Text="6" FontSize="Body" FontAttributes="Bold" Command="{ Binding Num6Command}"/>
+                <Button BackgroundColor="#F1F1F1" TextColor="Black" CornerRadius="40" Grid.Row="2" Grid.Column="0" Text="7" FontSize="Body" FontAttributes="Bold" Command="{ Binding Num7Command}"/>
+                <Button BackgroundColor="#F1F1F1" TextColor="Black" CornerRadius="40" Grid.Row="2" Grid.Column="1" Text="8" FontSize="Body" FontAttributes="Bold" Command="{ Binding Num8Command}"/>
+                <Button BackgroundColor="#F1F1F1" TextColor="Black" CornerRadius="40" Grid.Row="2" Grid.Column="2" Text="9" FontSize="Body" FontAttributes="Bold" Command="{ Binding Num9Command}"/>
+                <Button BackgroundColor="#F1F1F1" TextColor="Black" CornerRadius="40" Grid.Row="3" Grid.Column="0" Text="Borrar" FontSize="Body" FontAttributes="Bold"  Command="{ Binding BorrarCommand}" />
+                <Button BackgroundColor="#F1F1F1" TextColor="Black" CornerRadius="40" Grid.Row="3" Grid.Column="1" Text="0" FontSize="Body" FontAttributes="Bold"  Command="{ Binding Num0Command}"/>
 
                 <Button Text="Sing in" CornerRadius="50" HorizontalOptions="Center" BackgroundColor="Blue" FontSize="Body" 
                     Grid.Row="3" Grid.Column="2"
