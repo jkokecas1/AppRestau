@@ -1,7 +1,10 @@
 ﻿using AppResta.View;
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Text;
+
+using Newtonsoft.Json.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -36,9 +39,9 @@ namespace AppResta.ViewModel
             await Navigation.PushAsync(new Mesa());
 
         }
-        public async Task Orden()
+        public async Task Pagar()
         {
-            await Navigation.PushAsync(new Ordenes());
+            await Navigation.PushAsync(new Pago());
 
         }
         public async Task Historial()
@@ -49,27 +52,20 @@ namespace AppResta.ViewModel
 
         public async Task IrComanda()
         {
-
-            await Navigation.PushAsync(new Main(true));
-
-        }
-        public void ProcesoSimple()
-        {
+            //Object[] datos = { false, "", "", "" };
+            await Navigation.PushAsync(new Main(false));
 
         }
-        public void Alerta()
-        {
 
-        }
         #endregion
 
 
         #region COMANDOS
         public ICommand IrComandacommand => new Command(async () => await IrComanda());
         public ICommand Mesascommand => new Command(async () => await Mesas());
-        public ICommand Ordencommand => new Command(async () => await Orden());
+        public ICommand Pagarcommand => new Command(async () => await Pagar());
         public ICommand Historialcommand => new Command(async () => await Historial());
-        public ICommand ProcesoSimpCommand => new Command(ProcesoSimple);
+        
         #endregion
     }
 }

@@ -10,6 +10,7 @@ namespace AppResta
         public App()
         {
             InitializeComponent();
+            //Object[] datos = { false, "", "" };
 
             MainPage = new NavigationPage(new Main(false));
         }

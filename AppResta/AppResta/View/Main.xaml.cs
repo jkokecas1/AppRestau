@@ -23,7 +23,8 @@ namespace AppResta.View
         Model.Cart cartItem = new Model.Cart();
 
 
-        public Main(bool _Token)
+        public Main(bool _Token, int idOrden = 0, string nombre="", string mesa = "MES-0")
+        //public Main(Object[] datos)
         {
             if (_Token == false)
             {
@@ -37,9 +38,16 @@ namespace AppResta.View
 
 
                 testListView.ItemsSource = Categorias2();
-                //test2ListView.ItemsSource = Platillos("");
-                BindingContext = new MainViewModel(Navigation, _Token);
+                //int idOrden = Int32.Parse((string)datos[3]);
+                if (idOrden < 0) {
+                    //test2ListView.ItemsSource = ;
+                }
 
+                
+                BindingContext = new MainViewModel(Navigation, _Token);
+                //OrdenTexto.Text = idOrden.ToString();
+                MesaTexto.Text = mesa;
+                NombTexto.Text = nombre;
             }
 
         }
@@ -192,8 +200,7 @@ namespace AppResta.View
 
             client.BaseAddress = new Uri("http://192.168.1.112/resta/admin/mysql/categoria/index.php?op=obtenerSubCategorias&id=" + id);
 
-            Console.WriteLine("http://192.168.1.112/resta/admin/mysql/categoria/index.php?op=obtenerSubCategorias&id=" + id);
-            HttpResponseMessage response = client.GetAsync(client.BaseAddress).Result;
+             HttpResponseMessage response = client.GetAsync(client.BaseAddress).Result;
             if (response.IsSuccessStatusCode)
             {
                 var content = response.Content.ReadAsStringAsync().Result;
@@ -290,6 +297,57 @@ namespace AppResta.View
             }
         }
 
+
+        public List<Model.Cart> Cart(string opc)
+        {
+            band = 2;
+            Model.Cart cart;
+            var sub = new List<Model.Cart>();
+            var client = new HttpClient();
+
+            client.BaseAddress = new Uri("http://192.168.1.112/resta/admin/mysql/Platillo/index.php?op=obtenerPlatillos" + opc);
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                var content = response.Content.ReadAsStringAsync().Result;
+                string json = content.ToString();
+                ;
+                var jsonArray = JArray.Parse(json.ToString());
+
+                foreach (var item in jsonArray)
+                {
+                   /* cart = new Model.Cart();
+                    int id = Int32.Parse(item["id"].ToString());
+                    string nombre = item["nombre"].ToString();
+                    string descrip = item["descrip"].ToString();
+                    string precio = item["precio"].ToString();
+                    string urls = item["url"].ToString().Remove(0, 23);
+                    int estatus = Int32.Parse(item["estatus"].ToString());
+                    string categoria = item["categoria"].ToString();
+                    string clasificacion = item["clasificacion"].ToString();
+                    string subcategoria = item["subcategoria"].ToString();
+
+                    //Console.WriteLine(urls);
+                    var byteArray = Convert.FromBase64String(urls);
+                    Stream stream = new MemoryStream(byteArray);
+                    var imageSource = ImageSource.FromStream(() => stream);
+                    //MyImage.Source = imageSource;
+                    cart.id = id;
+                    cart. = nombre;
+                    cart.descrip = descrip;
+                    cart.precio = precio;
+
+                    */
+                    //sub.Add(platillo);
+
+                }
+                return sub;
+            }
+            else
+            {
+                return null;
+            }
+        }
     }
 
 

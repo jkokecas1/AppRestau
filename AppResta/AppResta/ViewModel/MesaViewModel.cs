@@ -12,6 +12,7 @@ namespace AppResta.ViewModel
     {
         #region VARIABLES
         string _Numero;
+        string _NumMesa;
         #endregion
 
         #region CONSTRUCTOR
@@ -27,6 +28,7 @@ namespace AppResta.ViewModel
             get { return _Numero; }
             set { SetValue(ref _Numero, value); }
         }
+        
         #endregion
 
         #region PROCESOS
@@ -43,13 +45,15 @@ namespace AppResta.ViewModel
         }
         public async Task IrComanda()
         {
-
-            await Navigation.PushAsync(new Main(true));
+            //Object[] datos = { false, "", "","" };
+            await Navigation.PushAsync(new Main(false));
 
         }
-        public void ProcesoSimple()
+        public void Logout()
         {
-
+          
+           Navigation.PopAsync();
+            
         }
         public void Alerta()
         {
@@ -62,7 +66,7 @@ namespace AppResta.ViewModel
         public ICommand IrComandacommand => new Command(async () => await IrComanda());
         public ICommand Ordencommand => new Command(async () => await Orden());
         public ICommand Historialcommand => new Command(async () => await Historial());
-        public ICommand ProcesoSimpCommand => new Command(ProcesoSimple);
+        public ICommand NavLoginCommand => new Command(Logout);
         #endregion
     }
 }

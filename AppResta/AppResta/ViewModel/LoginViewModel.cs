@@ -101,7 +101,7 @@ namespace AppResta.ViewModel
 
         }
 
-
+        string nombre;
         public async Task IsExisteAcount()
         {
             if (Pin == null)
@@ -110,12 +110,15 @@ namespace AppResta.ViewModel
 
             }
 
-            UserInfo userInfo = await _loginRespository.Login(Pin);
-           
-            if (userInfo != null)
+            List <UserInfo> empleado = _loginRespository.Login(Pin);
+            
+            if (empleado != null)
             {
-                //Console.Write(userInfo);
-                await Navigation.PushAsync(new Mesa());
+                foreach (UserInfo item in empleado)
+                {
+                    nombre =  item.Nombre;
+                }
+                await Navigation.PushAsync(new Mesa(nombre: nombre));
             }
             else
             {

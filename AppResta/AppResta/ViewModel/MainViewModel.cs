@@ -70,12 +70,12 @@ namespace AppResta.ViewModel
         }
         public async Task Mesas()
         {
-            await Navigation.PushAsync(new Mesa());
-
+            //await Navigation.PushAsync(new Mesa());
+            await Navigation.PopAsync();
         }
         public async Task Orden()
         {
-            await Navigation.PushAsync(new Ordenes());
+            await Navigation.PushAsync(new View.Ordenes());
 
         }
         public async Task Historial()

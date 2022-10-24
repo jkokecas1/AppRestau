@@ -29,7 +29,6 @@
                 </Grid.ColumnDefinitions>
                 <Image Source="klassylogo.png" VerticalOptions="Start" Grid.Row="0" Grid.Column="0"></Image>
                 <Button Text="Mesas"  Command="{Binding Mesascommand}" Grid.Row="0" Grid.Column="1" CornerRadius="10"></Button>
-                <Button Text="Ordenes" Command="{Binding Ordencommand}" Grid.Row="0" Grid.Column="2" CornerRadius="10" ></Button>
                 <Button Text="Historial" Command="{Binding Historialcommand}" Grid.Row="0" Grid.Column="3" CornerRadius="10"></Button>
                 <Button Text="SALIR"  Command="{Binding NavLoginCommand}" Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="3" HorizontalOptions="End" CornerRadius="10"></Button>
             </Grid>
@@ -58,8 +57,39 @@
 
             <Grid Grid.Row="2" Grid.Column="0" BackgroundColor="Gray">
                 <ScrollView>
-                    <ListView>
+                    <ListView BackgroundColor="Pink"  x:Name="ordenesListView"  ItemSelected="select_Item">
+                        <ListView.ItemTemplate >
+                            <DataTemplate  >
+                                <ViewCell >
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="10"/>
+                                        </Grid.RowDefinitions>
 
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="200"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <StackLayout  Grid.Column="0" Grid.Row="1"  HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical">
+                                            <Label Text="{Binding id_carts_cart}" TextColor="Black" FontSize="22"/>
+                                        </StackLayout>
+                                        <StackLayout  Grid.Column="1" Grid.Row="1" HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical">
+                                            <Label Text="{Binding carts_cartco_date_addedl}" TextColor="Black" FontSize="22"/>
+                                        </StackLayout>
+                                        <StackLayout  Grid.Column="2" Grid.Row="1" HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical">
+                                            <Label Text="{Binding carts_cart_estado}" TextColor="Black" FontSize="22"/>
+                                        </StackLayout>
+                                        <StackLayout  Grid.Column="3" Grid.Row="1" HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical">
+                                            <Button Text="Pagar" Command="{Binding Pagarcommand}" CornerRadius="10" FontSize="22"></Button>
+                                        </StackLayout>
+                                    </Grid>
+
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
                     </ListView>
                 </ScrollView>
             </Grid>

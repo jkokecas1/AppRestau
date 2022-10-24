@@ -8,6 +8,6 @@ namespace AppResta.Services
 {
     public interface iLoginRespository
     {
-        Task<UserInfo> Login(String pin);
+        List<UserInfo> Login(String pin);
     }
 }

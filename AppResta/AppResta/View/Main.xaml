@@ -36,12 +36,16 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Image Source="klassylogo.png" VerticalOptions="Start" Grid.Row="0" Grid.Column="0"></Image>
                     <Button Text="Mesas"  Command="{Binding Mesascommand}" Grid.Row="0" Grid.Column="1" CornerRadius="10"></Button>
                     <Button Text="Ordenes" Command="{Binding Ordencommand}" Grid.Row="0" Grid.Column="2" CornerRadius="10" ></Button>
                     <Button Text="Historial" Command="{Binding Historialcommand}" Grid.Row="0" Grid.Column="3" CornerRadius="10"></Button>
-                    <Button Text="SALIR"  Command="{Binding NavLoginCommand}" Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="3" HorizontalOptions="End" CornerRadius="10"></Button>
+                    <Label x:Name="NombTexto" FontSize="20" TextColor="#FFFF" Grid.Row="0" Grid.Column="4"></Label>
+                    <Label x:Name="MesaTexto" Grid.Row="0" Grid.Column="5"  FontSize="20" TextColor="#FFFF"></Label>
+                    <Button Text="SALIR"  Command="{Binding NavLoginCommand}" Grid.Row="0" Grid.Column="6" Grid.ColumnSpan="3" HorizontalOptions="End" CornerRadius="10"></Button>
                 </Grid>
             </Grid>
 
@@ -89,16 +93,16 @@
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
 
-                                        <StackLayout BackgroundColor="Green" Grid.Column="0" Grid.Row="1"  HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical">
+                                        <StackLayout  Grid.Column="0" Grid.Row="1"  HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical">
                                             <Label Text="{Binding platillo}" TextColor="Black" FontSize="15"/>
                                         </StackLayout>
-                                        <StackLayout BackgroundColor="Violet" Grid.Column="1" Grid.Row="1" HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical">
+                                        <StackLayout  Grid.Column="1" Grid.Row="1" HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical">
                                             <Label Text="{Binding cantidad}" TextColor="Black" FontSize="15"/>
                                         </StackLayout>
-                                        <StackLayout BackgroundColor="Violet" Grid.Column="2" Grid.Row="1" HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical">
+                                        <StackLayout  Grid.Column="2" Grid.Row="1" HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical">
                                             <Label Text="{Binding precio}" TextColor="Black" FontSize="15"/>
                                         </StackLayout>
-                                        <StackLayout BackgroundColor="Violet" Grid.Column="3" Grid.Row="1" HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical">
+                                        <StackLayout  Grid.Column="3" Grid.Row="1" HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical">
                                             <Label Text="{Binding total}" TextColor="Black" FontSize="15"/>
                                         </StackLayout>
                                     </Grid>
@@ -129,7 +133,7 @@
                         </Grid.ColumnDefinitions>
 
                         <Button Padding="0,0,0,0" Grid.Row="0" Grid.Column="0" HorizontalOptions="Start" FontSize="Body" CornerRadius="10"  Text="..." />
-                        <Button Padding="0,0,0,0" HorizontalOptions="End" Grid.Row="0" Grid.Column="2" FontSize="Body" CornerRadius="10" TextColor="#FFFF" BackgroundColor="Green" Text="PAGAR" Command="{Binding Pagocommand}"/>
+                        <Button Padding="0,0,0,0" HorizontalOptions="End" Grid.Row="0" Grid.Column="2" FontSize="Body" CornerRadius="10" TextColor="#FFFF" BackgroundColor="Green" Text="Ordenar" Command="{Binding Ordencommand}"/>
                     </Grid>
 
                 </Grid>
