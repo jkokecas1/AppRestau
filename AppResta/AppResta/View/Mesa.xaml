@@ -12,7 +12,7 @@
     <ContentPage.Content>
 
 
-        <Grid BackgroundColor="LightGray">
+        <Grid BackgroundColor="LightGray" RowSpacing="0">
 
             <!--#START HEADER -->
             <Grid.RowDefinitions>
@@ -25,7 +25,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" BackgroundColor="Blue" Padding="5,10,5,10">
+            <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" BackgroundColor="AliceBlue" Padding="5,10,5,0">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
@@ -33,29 +33,29 @@
 
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100"/>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="50"/>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="10"/>
+
                     </Grid.ColumnDefinitions>
                     <Image Source="klassylogo.png" VerticalOptions="Start" Grid.Row="0" Grid.Column="0"></Image>
-                    
-                    <Button Text="Ordenes" Command="{Binding Ordencommand}" Grid.Row="0" Grid.Column="2" CornerRadius="10" ></Button>
-                    <Button Text="Historial" Command="{Binding Historialcommand}" Grid.Row="0" Grid.Column="3" CornerRadius="10"></Button>
-                    <Label x:Name="OrdenTexto" FontSize="10" TextColor="#FFFF" Grid.Row="0" Grid.Column="4"></Label>
-                    <Label x:Name="nombreEmpl" Grid.Row="0" Grid.Column="5"  FontSize="20" TextColor="#FFFF"></Label>
-                    <Button Text="SALIR"  Command="{Binding NavLoginCommand}" Grid.Row="0" Grid.Column="6" Grid.ColumnSpan="3" HorizontalOptions="End" CornerRadius="10"></Button>
+                    <Button Text="Mesas" Command="{Binding Ordencommand}" Grid.Row="0" Grid.Column="1" CornerRadius="0" BackgroundColor="LightGray" TextColor="#000"></Button>
+                    <Button Text="Ordenes" Command="{Binding Ordencommand}" Grid.Row="0" Grid.Column="2" CornerRadius="0" BackgroundColor="DimGray" TextColor="#FFF"></Button>
+                    <Button Text="Historial" Command="{Binding Historialcommand}" Grid.Row="0" Grid.Column="3" CornerRadius="0" BackgroundColor="DimGray" TextColor="#FFF"></Button>
+                    <Label x:Name="nombreEmpl" Grid.Row="0" Grid.Column="4"  FontSize="20" TextColor="Black"></Label>
+                    <Button Text="SALIR"  Command="{Binding NavLoginCommand}" Grid.Row="0" Grid.Column="5" Grid.ColumnSpan="3" HorizontalOptions="End" CornerRadius="0" BackgroundColor="DimGray" TextColor="#FFF"></Button>
                 </Grid>
             </Grid>
 
             <!--#END HEADER-->
 
-            <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" BackgroundColor="WhiteSmoke">
+            <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" BackgroundColor="LightGray" Padding="10,10,10,10" ColumnSpacing="5">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="40"/>
                     <RowDefinition Height="*"/>
+                  
 
 
                 </Grid.RowDefinitions>
@@ -63,22 +63,23 @@
                     <ColumnDefinition Width="*"/>
 
                 </Grid.ColumnDefinitions>
-                
-                <ScrollView Grid.Row="1" Grid.Column="0" >
+
+                <Frame Grid.Row="0" Grid.Column="0" Padding="0,0,0,0" CornerRadius="15">
+                <ScrollView >
                     <CollectionView x:Name="mesasListView" SelectionMode="Single"  SelectionChanged="select_Item">
                         <CollectionView.ItemsLayout>
                             <GridItemsLayout Orientation="Vertical" Span="3"/>
                         </CollectionView.ItemsLayout>
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
-                                <Grid Padding="100">
+                                <Grid Padding="50,50,50,50">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="150" />
+                                        <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="150"/>
+                                        <RowDefinition Height="*"/>
                                     </Grid.RowDefinitions>
-                                    <Frame HasShadow="True" Padding="5" CornerRadius="10" HorizontalOptions="Center">
+                                        <Frame Grid.Row="0" Grid.Column="0" Padding="0,0,0,0" CornerRadius="15" BorderColor="{Binding orden}">
                                         <Grid>
                                             <Grid.RowDefinitions >
                                                 <RowDefinition Height="*"/>
@@ -105,6 +106,7 @@
                     </CollectionView>
 
                 </ScrollView>
+                </Frame>
             </Grid>
         </Grid>
 

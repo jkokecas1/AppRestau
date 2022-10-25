@@ -35,19 +35,28 @@ namespace AppResta.View
             {
 
                 InitializeComponent();
-
-
                 testListView.ItemsSource = Categorias2();
-                //int idOrden = Int32.Parse((string)datos[3]);
-                if (idOrden < 0) {
-                    //test2ListView.ItemsSource = ;
+                double totalpay = 0.0;
+
+                if (idOrden != 0)
+                {
+                    test2ListView.ItemsSource = CartMesa(idOrden.ToString());
+                    test2ListView.ItemsSource = null;
+                    test2ListView.ItemsSource = cart;
+                    test2ListView.IsRefreshing = false;
+                    Console.WriteLine(cart.Count);
+                    for (int i = 0; i < cart.Count; i++)
+                    {
+                        totalpay += cart[i].total;
+                    }
+                    totalpago.Text = totalpay.ToString();
                 }
 
-                
+
                 BindingContext = new MainViewModel(Navigation, _Token);
-                //OrdenTexto.Text = idOrden.ToString();
-                MesaTexto.Text = mesa;
-                NombTexto.Text = nombre;
+                MesaTexto.Text = "# Mesa:" + mesa;
+                NombTexto.Text = "Mesero: " + nombre;
+                OrdenTexto.Text = "# Orden: " + idOrden.ToString();
             }
 
         }
@@ -272,6 +281,7 @@ namespace AppResta.View
 
                     //Console.WriteLine(urls);
                     var byteArray = Convert.FromBase64String(urls);
+                   
                     Stream stream = new MemoryStream(byteArray);
                     var imageSource = ImageSource.FromStream(() => stream);
                     //MyImage.Source = imageSource;
@@ -298,50 +308,43 @@ namespace AppResta.View
         }
 
 
-        public List<Model.Cart> Cart(string opc)
+        public List<Model.Cart> CartMesa(string id)
         {
-            band = 2;
-            Model.Cart cart;
+
             var sub = new List<Model.Cart>();
             var client = new HttpClient();
 
-            client.BaseAddress = new Uri("http://192.168.1.112/resta/admin/mysql/Platillo/index.php?op=obtenerPlatillos" + opc);
+            client.BaseAddress = new Uri("http://192.168.1.112/resta/admin/mysql/orden/index.php?op=obtenerCarrito&idOrden=" + id);
             HttpResponseMessage response = client.GetAsync(client.BaseAddress).Result;
             if (response.IsSuccessStatusCode)
             {
                 var content = response.Content.ReadAsStringAsync().Result;
                 string json = content.ToString();
-                ;
                 var jsonArray = JArray.Parse(json.ToString());
 
                 foreach (var item in jsonArray)
                 {
-                   /* cart = new Model.Cart();
-                    int id = Int32.Parse(item["id"].ToString());
+                    cartItem = new Model.Cart();
+
+
+                    int ids = Int32.Parse(item["id"].ToString());
                     string nombre = item["nombre"].ToString();
-                    string descrip = item["descrip"].ToString();
-                    string precio = item["precio"].ToString();
-                    string urls = item["url"].ToString().Remove(0, 23);
-                    int estatus = Int32.Parse(item["estatus"].ToString());
-                    string categoria = item["categoria"].ToString();
-                    string clasificacion = item["clasificacion"].ToString();
-                    string subcategoria = item["subcategoria"].ToString();
+                    int cantidad = Int32.Parse(item["cantidad"].ToString());
+                    double precio = Convert.ToDouble(item["precio"].ToString().Replace(",", "."));
+                    double total = (double)(precio * cantidad);
 
-                    //Console.WriteLine(urls);
-                    var byteArray = Convert.FromBase64String(urls);
-                    Stream stream = new MemoryStream(byteArray);
-                    var imageSource = ImageSource.FromStream(() => stream);
-                    //MyImage.Source = imageSource;
-                    cart.id = id;
-                    cart. = nombre;
-                    cart.descrip = descrip;
-                    cart.precio = precio;
 
-                    */
-                    //sub.Add(platillo);
+                    cartItem.id = ids;
+                    cartItem.platillo = nombre;
+                    cartItem.cantidad = cantidad;
+                    cartItem.precio = precio;
+                    cartItem.total = total;
+
+
+                    cart.Add(cartItem);
 
                 }
-                return sub;
+                return cart;
             }
             else
             {

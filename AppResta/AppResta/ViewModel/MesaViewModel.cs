@@ -35,18 +35,19 @@ namespace AppResta.ViewModel
 
         public async Task Orden()
         {
-            await Navigation.PushAsync(new Ordenes());
+            await Navigation.PushAsync(new Ordenes(), false);
 
         }
         public async Task Historial()
         {
-            await Navigation.PushAsync(new Historial());
+            await Navigation.PushAsync(new Historial(), false);
 
         }
         public async Task IrComanda()
         {
             //Object[] datos = { false, "", "","" };
-            await Navigation.PushAsync(new Main(false));
+            //Navigation.RemovePage(Login());
+            await Navigation.PushAsync(new Main(false), false);
 
         }
         public void Logout()

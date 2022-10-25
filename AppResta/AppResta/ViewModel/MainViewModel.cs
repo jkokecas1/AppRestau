@@ -65,7 +65,7 @@ namespace AppResta.ViewModel
 
         public async Task Pago()
         {
-            await Navigation.PushAsync(new Pago());
+            await Navigation.PushAsync(new Pago(), false);
        
         }
         public async Task Mesas()
@@ -75,12 +75,12 @@ namespace AppResta.ViewModel
         }
         public async Task Orden()
         {
-            await Navigation.PushAsync(new View.Ordenes());
+            await Navigation.PushAsync(new View.Ordenes(), false);
 
         }
         public async Task Historial()
         {
-            await Navigation.PushAsync(new Historial());
+            await Navigation.PushAsync(new Historial(), false);
 
         }
         public void ProcesoSimple()

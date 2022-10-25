@@ -15,35 +15,33 @@ namespace AppResta.View
     public partial class Mesa : ContentPage
     {
         string nomb = "";
+       
         public Mesa(string nombre = "NA")
         {
+
             InitializeComponent();
             BindingContext = new ViewModel.MesaViewModel(Navigation);
             nomb = nombre;
             nombreEmpl.Text = "Bienvenido : "+nombre;
             mesasListView.ItemsSource = Mesas();
+           
             Navigation.RemovePage(new Login());
         }
         public void select_Item(object sender, SelectionChangedEventArgs e)
         {
-            UpdateSelectionData(e.PreviousSelection, e.CurrentSelection);
+            var mesas = e.CurrentSelection.FirstOrDefault() as Model.Mesas;
+
+            Navigation.PushAsync(new Main(true, idOrden: Int32.Parse(mesas.id_orden), nomb, mesas.mesa));
+           
         }
 
-        public void UpdateSelectionData(IEnumerable<object> previousSelectedContact, IEnumerable<object> currentSelectedContact)
-        {
-            var mesas = currentSelectedContact.FirstOrDefault() as Model.Mesas;
-
-
-            //Object[] datos = { false, nomb, mesas.mesa };
-            Navigation.PushAsync(new Main(true,idOrden:0, nomb, mesas.mesa));
-        }
         public List<Model.Mesas> Mesas()
         {
             Model.Mesas mesa;
 
             var mesas = new List<Model.Mesas>();
             var client = new HttpClient();
-
+            
             client.BaseAddress = new Uri("http://192.168.1.112/resta/admin/mysql/empleados/index.php?op=obtenerMesas");
             HttpResponseMessage response = client.GetAsync(client.BaseAddress).Result;
             
@@ -52,15 +50,24 @@ namespace AppResta.View
                 var content = response.Content.ReadAsStringAsync().Result;
                 string json = content.ToString();
                 var jsonArray = JArray.Parse(json.ToString());
-
+                string[] array = new string[2];
                 foreach (var item in jsonArray)
                 {
                     mesa = new Model.Mesas();
                     int id = Int32.Parse(item["id"].ToString());
                     string nombre = item["mesa"].ToString();
-
+                    array = OrdenInMesas(nombre);
                     mesa.id = id;
                     mesa.mesa = nombre;
+                    if (array[0] != null)
+                    {
+                        mesa.orden = array[0];
+                        mesa.id_orden = array[1];
+                    }
+                    else {
+                        mesa.orden ="0";
+                        mesa.id_orden = "0";
+                    }
                     mesas.Add(mesa);
                 }
 
@@ -70,6 +77,38 @@ namespace AppResta.View
             {
                 return null;
             }
+        }
+
+        //VALIDA SI LA MESA TINE ORDEN ACTIVA
+        public string[] OrdenInMesas(string mesa)
+        {
+            var client = new HttpClient();
+            string[] array = new string[2];
+            client.BaseAddress = new Uri("http://192.168.1.112/resta/admin/mysql/orden/index.php?op=obtenerOrdenMesas&mesa=" + mesa);
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress).Result;
+
+            if (response.IsSuccessStatusCode)
+            {
+                var content = response.Content.ReadAsStringAsync().Result;
+                string json = content.ToString();
+                var jsonArray = JArray.Parse(json.ToString());
+                foreach (var item in jsonArray)
+                {
+                    if (Int32.Parse(item["cont"].ToString()) == 1)
+                    {
+                        array[0] = "Orange";
+                        array[1] = item["id_orden"].ToString();
+                    }
+
+                }
+                
+            }
+            else
+            {
+                return null;
+            }
+
+            return array;
         }
     }
 }

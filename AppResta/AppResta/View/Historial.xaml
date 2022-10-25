@@ -4,7 +4,7 @@
              x:Class="AppResta.View.Historial"
                        NavigationPage.HasNavigationBar="False">
     <ContentPage.Content>
-        <Grid BackgroundColor="Blue" RowSpacing="0" ColumnSpacing="0">
+        <Grid  RowSpacing="0" ColumnSpacing="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="60"/>
                 <RowDefinition Height="*"/>
@@ -12,55 +12,82 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            
-            
-            <Grid Grid.Row="0" Grid.Column="0" BackgroundColor="Blue" Padding="5,10,5,5">
+
+
+            <Grid Grid.Row="0" Grid.Column="0" BackgroundColor="AliceBlue" Padding="5,10,5,0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="200"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="10"/>
+
                 </Grid.ColumnDefinitions>
 
-                <Image Source="klassylogo.png" VerticalOptions="Start" Grid.Row="0" Grid.Column="0"></Image>
-                <Button Text="Mesas"  Command="{Binding Mesascommand}" Grid.Row="0" Grid.Column="1" CornerRadius="10"></Button>
-                <Button Text="Ordenes" Command="{Binding Ordencommand}" Grid.Row="0" Grid.Column="2" CornerRadius="10" ></Button>
-                <Button Text="Historial" Command="{Binding Historialcommand}" Grid.Row="0" Grid.Column="3" CornerRadius="10"></Button>
-                <Button Text="SALIR"  Command="{Binding NavLoginCommand}" Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="3" HorizontalOptions="End" CornerRadius="10"></Button>
+                <Image Source="klassylogo.png" VerticalOptions="Start" Grid.Row="0" Grid.Column="0" Margin="5"></Image>
+                <Button Text="Mesas"  Command="{Binding Mesascommand}" Grid.Row="0" Grid.Column="1" CornerRadius="0" BackgroundColor="DimGray" TextColor="#FFF"></Button>
+                <Button Text="Ordenes" Command="{Binding Ordencommand}" Grid.Row="0" Grid.Column="2" CornerRadius="0" BackgroundColor="DimGray" TextColor="#FFF"></Button>
+                <Button Text="Historial" Command="{Binding Historialcommand}" Grid.Row="0" Grid.Column="3" CornerRadius="0" BackgroundColor="LightGray" TextColor="Black"></Button>
+                <Label x:Name="nombreEmpl" Grid.Row="0" Grid.Column="4"  FontSize="20" TextColor="Black"></Label>
+                <Button Text="SALIR"  Command="{Binding NavLoginCommand}" Grid.Row="0" Grid.Column="5" Grid.ColumnSpan="3" HorizontalOptions="End" CornerRadius="0" BackgroundColor="DimGray" TextColor="#FFF"></Button>
             </Grid>
 
-            <Grid Grid.Row="1" Grid.Column="0" BackgroundColor="White">
+
+            <Grid Grid.Row="1" Grid.Column="0" BackgroundColor="LightGray" Padding="10,10,10,10" ColumnSpacing="5">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
+
+
+
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
+
                 </Grid.ColumnDefinitions>
 
-                <Grid Grid.Row="0" Grid.Column="0" BackgroundColor="LightGray">
-                    <ScrollView>
-                        <ListView>
-                            
-                        </ListView>
-                    </ScrollView>
-                </Grid>
+                <Frame Grid.Row="0" Grid.Column="0" Padding="0,0,0,0" CornerRadius="15">
 
-                <Grid Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" BackgroundColor="White">
-                    <ScrollView>
-                        <ListView>
-                            
-                        </ListView>
-                    </ScrollView>
+
+                <Grid >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+
+
+                    <Grid Grid.Row="0" Grid.Column="0" BackgroundColor="DimGray">
+                        <ScrollView>
+                            <ListView>
+
+                            </ListView>
+                        </ScrollView>
+                    </Grid>
+
+                    <Grid Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" BackgroundColor="White">
+                        <ScrollView>
+                            <ListView>
+
+                            </ListView>
+                        </ScrollView>
+                    </Grid>
                 </Grid>
+            </Frame>
+
+
             </Grid>
 
 
 
 
         </Grid>
+
     </ContentPage.Content>
 </ContentPage>

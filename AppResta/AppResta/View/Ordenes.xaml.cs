@@ -25,8 +25,6 @@ namespace AppResta.View
         {
             var orden = e.SelectedItem as Model.Ordenes;
             
-            DisplayAlert("Sourcces", "Agregar \n ID:"+ orden.carts_cartco_date_addedl , "Ok");
-            //Object[] datos = { true, "", "", orden.id_carts_cart };
             Navigation.PushAsync(new Main(false, idOrden: orden.id_carts_cart));
         }
 
@@ -36,7 +34,7 @@ namespace AppResta.View
             var ordenList = new List<Model.Ordenes>();
             var client = new HttpClient();
 
-            client.BaseAddress = new Uri("http://192.168.1.12/resta/admin/mysql/orden/index.php?op=obtenerOrden");
+            client.BaseAddress = new Uri("http://192.168.1.112/resta/admin/mysql/orden/index.php?op=obtenerOrden");
             HttpResponseMessage response = client.GetAsync(client.BaseAddress).Result;
             if (response.IsSuccessStatusCode)
             {
@@ -50,10 +48,11 @@ namespace AppResta.View
                     int id = Int32.Parse(item["id_carts_cart"].ToString());
                     string fecha = item["carts_cartco_date_addedl"].ToString();
                     string estado = Int32.Parse(item["carts_cart_estado"].ToString()) == 1 ? "En proceso" : "Terminado";
-                    
+                    string mesa = item["carts_cart_mesa"].ToString();
                     orden.id_carts_cart = id;
                     orden.carts_cartco_date_addedl = fecha;
                     orden.carts_cart_estado = estado;
+                    orden.mesa = mesa;
                     ordenList.Add(orden);
                 }
                 return ordenList;
