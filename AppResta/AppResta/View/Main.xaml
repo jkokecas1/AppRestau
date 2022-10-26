@@ -29,7 +29,6 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
 
-
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="100"/>
@@ -42,12 +41,13 @@
                     </Grid.ColumnDefinitions>
                     <Image Source="klassylogo.png" VerticalOptions="Start" Grid.Row="0" Grid.Column="0"></Image>
                     <Button Text="Mesas"  Command="{Binding Mesascommand}" Grid.Row="0" Grid.Column="1" CornerRadius="0" BackgroundColor="DimGray" TextColor="#FFF"></Button>
-                    <Button Text="Ordenes" Command="{Binding Ordencommand}" Grid.Row="0" Grid.Column="2" CornerRadius="0" BackgroundColor="DimGray"  TextColor="#FFF"></Button>
-                    <Button Text="Historial" Command="{Binding Historialcommand}" Grid.Row="0" Grid.Column="3" CornerRadius="0" BackgroundColor="DimGray" TextColor="#FFF"></Button>
+                    <Button Text="Comanda" Command="{Binding Ordencommand}" Grid.Row="0" Grid.Column="2" CornerRadius="0" BackgroundColor="LightGray"  TextColor="#FFF"></Button>
                     <Label x:Name="OrdenTexto" FontSize="20" TextColor="#000" Grid.Row="0" Grid.Column="4"></Label>
                     <Label x:Name="NombTexto" FontSize="20" TextColor="#000" Grid.Row="0" Grid.Column="5"></Label>
                     <Label x:Name="MesaTexto" Grid.Row="0" Grid.Column="6"  FontSize="20" TextColor="Black" ></Label>
                     <Button Text="SALIR"  Command="{Binding NavLoginCommand}" Grid.Row="0" Grid.Column="7" Grid.ColumnSpan="3" HorizontalOptions="End" CornerRadius="0" TextColor="#000"></Button>
+                    <Button Grid.Row="0" Grid.Column="7" Text="Show PopUp" Clicked="ShowPopUp"></Button>
+
                 </Grid>
             </Grid>
 

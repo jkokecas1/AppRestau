@@ -1,5 +1,6 @@
 ﻿using AppResta.ViewModel;
 using Newtonsoft.Json.Linq;
+using Rg.Plugins.Popup.Services;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -26,6 +27,7 @@ namespace AppResta.View
         public Main(bool _Token, int idOrden = 0, string nombre="", string mesa = "MES-0")
         //public Main(Object[] datos)
         {
+            
             if (_Token == false)
             {
                 Navigation.PushAsync(new Login());
@@ -59,11 +61,21 @@ namespace AppResta.View
                 OrdenTexto.Text = "# Orden: " + idOrden.ToString();
             }
 
+            
+            
+
+        }
+
+        private async void ShowPopUp(object sender, EventArgs e)
+        {
+           // await PopupNavigation.Instance.PushAsync(new ItemPlatillo());
         }
 
         public void select_Item(object sender, SelectionChangedEventArgs e)
         {
             UpdateSelectionData(e.PreviousSelection, e.CurrentSelection);
+            
+            
         }
 
         public void UpdateSelectionData(IEnumerable<object> previousSelectedContact, IEnumerable<object> currentSelectedContact)
@@ -97,11 +109,13 @@ namespace AppResta.View
             else if (band == 2)
             {
                 var platillo = currentSelectedContact.FirstOrDefault() as Model.Platillos;
-               
-                DisplayAlert("Sourcces", "Agregar \n ID:" + platillo.id + "\n Nombre :" + platillo.precio + "\n Categoria:" + platillo.categoria, "Ok");
-
                 cartItem = new Model.Cart();
+                 //DisplayAlert(platillo.nombre, " Nombre :" + platillo.precio + "\n Categoria:" + platillo.descrip,"Cancelar", "Ok");
 
+                // LLama a ventana emergente y selecciona los parametros;
+                PopupNavigation.Instance.PushAsync(new ItemPlatillo(platillo));
+
+                /*
                 if (cart.Count == 0) // Caso 1: Carrito vacio
                 {
 
@@ -132,7 +146,7 @@ namespace AppResta.View
                     }
                     if (band == 0)
                     {
-                        Console.WriteLine("Ya exite un platillo y se agrega el otro");
+                        //Console.WriteLine("Ya exite un platillo y se agrega el otro");
                         cartItem.id = platillo.id;
                         cartItem.platillo = platillo.nombre;
                         cartItem.cantidad = 1;
@@ -140,7 +154,7 @@ namespace AppResta.View
                         cartItem.total = (double)(cartItem.precio * cartItem.cantidad);
                         cart.Add(cartItem);
                     }
-                }
+                }*/
 
             }
             test2ListView.ItemsSource = null;
@@ -153,6 +167,7 @@ namespace AppResta.View
             }
             //Console.WriteLine(totalpay);
             totalpago.Text = totalpay.ToString();
+            
         }
 
 
@@ -160,6 +175,7 @@ namespace AppResta.View
         {
             band = 0;
             testListView.ItemsSource = Categorias2();
+            
         }
 
 

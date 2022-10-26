@@ -36,8 +36,8 @@ namespace AppResta.ViewModel
 
         public async Task Mesas()
         {
-            await Navigation.PushAsync(new Mesa());
-
+            //await Navigation.PushAsync(new Mesa());
+            await Navigation.PopAsync(false);
         }
         public async Task Pagar()
         {
@@ -46,7 +46,7 @@ namespace AppResta.ViewModel
         }
         public async Task Historial()
         {
-            await Navigation.PushAsync(new Historial());
+            await Navigation.PushAsync(new Historial(),false);
 
         }
 

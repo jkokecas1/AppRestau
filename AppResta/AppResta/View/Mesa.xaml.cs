@@ -22,19 +22,23 @@ namespace AppResta.View
             InitializeComponent();
             BindingContext = new ViewModel.MesaViewModel(Navigation);
             nomb = nombre;
-            nombreEmpl.Text = "Bienvenido : "+nombre;
+            nombreEmpl.Text = "Bienvenido :"+nombre;
+         
             mesasListView.ItemsSource = Mesas();
            
             Navigation.RemovePage(new Login());
         }
+
         public void select_Item(object sender, SelectionChangedEventArgs e)
         {
             var mesas = e.CurrentSelection.FirstOrDefault() as Model.Mesas;
-
-            Navigation.PushAsync(new Main(true, idOrden: Int32.Parse(mesas.id_orden), nomb, mesas.mesa));
-           
+            
+            Navigation.PushAsync(new Main(true, idOrden: Int32.Parse(mesas.id_orden), nomb, mesas.mesa),false);
+            mesasListView.ItemsSource = null;
+            mesasListView.ItemsSource = Mesas();
+            //mesasListView.IsRefreshing = false;
         }
-
+ 
         public List<Model.Mesas> Mesas()
         {
             Model.Mesas mesa;

@@ -71,7 +71,7 @@ namespace AppResta.ViewModel
         public async Task Mesas()
         {
             //await Navigation.PushAsync(new Mesa());
-            await Navigation.PopAsync();
+            await Navigation.PopAsync(false);
         }
         public async Task Orden()
         {
@@ -92,8 +92,6 @@ namespace AppResta.ViewModel
             }
         }
 
-
-       
         #endregion
         #region COMAND
 

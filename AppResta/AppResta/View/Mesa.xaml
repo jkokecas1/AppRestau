@@ -88,13 +88,15 @@
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="*"/>
                                             </Grid.ColumnDefinitions>
-
-                                            <Grid Grid.Row="0"  Grid.Column="0">
+                                            <!--
+                                                <Grid Grid.Row="0"  Grid.Column="0">
                                                 <Image  Source="mesa.png" Aspect="AspectFit"/>
                                             </Grid>
 
+                                            -->
+                                            
                                             <Grid Grid.Row="1"  Grid.Column="0">
-                                                <Label Text="{Binding mesa}" HorizontalOptions="CenterAndExpand" FontSize="12" FontAttributes="Bold" TextColor="Black"/>
+                                                <Label Text="{Binding mesa}" HorizontalOptions="CenterAndExpand" FontSize="22" FontAttributes="Bold" TextColor="Black"/>
                                             </Grid>
                                         </Grid>
 
