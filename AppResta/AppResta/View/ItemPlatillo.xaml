@@ -1,69 +1,98 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <popup:PopupPage
+ x:Name="popup"
+ CloseWhenBackgroundIsClicked="False"
 xmlns="http://xamarin.com/schemas/2014/forms"
 xmlns:popup="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+xmlns:input="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.InputKit"
   x:Class="AppResta.View.ItemPlatillo">
-    
-    <Frame BackgroundColor="WhiteSmoke" Padding="20,20,20,20" Margin="100,20,100,20" CornerRadius="20">
-        <Grid >
+
+    <Frame BackgroundColor="WhiteSmoke" Padding="20,20,20,20" Margin="200,10,200,10" CornerRadius="20">
+        <Grid RowSpacing="0">
 
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="50"/>
-                <RowDefinition Height="50"/>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="40"/>
+                <RowDefinition Height="60"/>
 
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
+
             </Grid.ColumnDefinitions>
 
 
-            <Grid Grid.Row="0" Grid.Column="0">
-                <Label x:Name="nombPlatillo"  TextColor="Black"/>
-            </Grid>
-            <Grid Grid.Row="1" Grid.Column="0">
-                <Label x:Name="descPlatillo" TextColor="Black"/>
+            <Grid Grid.Row="0" Grid.Column="0" BackgroundColor="WhiteSmoke" Padding="8,8,8,8">
+                <Label Grid.Row="0" Grid.Column="0" x:Name="nombPlatillo"  TextColor="Black" FontAttributes="Bold" FontSize="25"/>
+                <Button Grid.Row="0" Grid.Column="1" Clicked="cerrarPop" HorizontalOptions="End"  Text="X"/>
+
             </Grid>
 
-            <Grid Grid.Row="2" Grid.Column="0">
+
+
+
+            <Grid Grid.Row="1" Grid.Column="0" Padding="8,8,8,8">
                 <ScrollView>
-                    <ListView BackgroundColor="WhiteSmoke" Grid.Row="1" Grid.Column="0"  x:Name="extrasListView">
-                        <ListView.ItemTemplate >
-                            <DataTemplate  >
-                                <ViewCell >
-                                    <Grid>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="*"/>
-                                        </Grid.RowDefinitions>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="300"/>
+                            <RowDefinition Height="100"/>
 
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="*"/>
-                                        </Grid.ColumnDefinitions>
 
-                                        <StackLayout  Grid.Column="0" Grid.Row="0"  HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical">
-                                            <Label Text="{Binding extra_nombre}" TextColor="Black" FontSize="15"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+
+                        </Grid.ColumnDefinitions>
+
+                        <Grid Grid.Row="0" Grid.Column="0" >
+                            <Label x:Name="descPlatillo" TextColor="Black" BackgroundColor="WhiteSmoke" Padding="8,8,8,8" FontSize="20"/>
+                        </Grid>
+
+                        <ListView Grid.Row="0" Grid.Column="1" BackgroundColor="WhiteSmoke" x:Name="extrasListView" SelectionMode="None" SelectedItem="false">
+                            <ListView.ItemTemplate >
+                                <DataTemplate  >
+                                    <ViewCell >
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*"/>
+                                            </Grid.RowDefinitions>
+
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+
+                                           <StackLayout  Grid.Column="0" Grid.Row="0"  HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical">
+                                            <input:CheckBox Text="{Binding extra_nombre}"/>
+                                            
                                         </StackLayout>
 
-                                        <StackLayout  Grid.Column="1" Grid.Row="1" HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical">
-                                            <Label x:Name="cantidad" Text="{Binding extra_precio}" TextColor="Black" FontSize="15"/>
-                                        </StackLayout>
+                                            <StackLayout  Grid.Column="1" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical">
+                                                <Label x:Name="cantidad" Text="{Binding extra_precio}" TextColor="Black" FontSize="15"/>
+                                            </StackLayout>
 
-                                    </Grid>
+                                        </Grid>
 
-                                </ViewCell>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+
+
+                        <Entry BackgroundColor="LightGray" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Placeholder="Comentarios" TextColor="Black"/>
+
+                    </Grid>
                 </ScrollView>
             </Grid>
 
-            <Grid Grid.Row="3" Grid.Column="0">
-                <Stepper Grid.Row="0" Grid.Column="0"></Stepper>
-                <Button Grid.Row="0" Grid.Column="1" Text="agregar" TextColor="Black" />
+            <Grid Grid.Row="2" Grid.Column="0" BackgroundColor="WhiteSmoke" Padding="8,8,8,8">
+                <Label  Grid.Row="0" Grid.Column="1" x:Name="valCantidad" Text="0" FontSize="Large"></Label>
+                <Stepper Grid.Row="0" Grid.Column="0" ValueChanged="cantidadPlatillo"></Stepper>
+                <Button Grid.Row="0" Grid.Column="2" Text="agregar" TextColor="Black" BackgroundColor="Green" />
             </Grid>
 
 

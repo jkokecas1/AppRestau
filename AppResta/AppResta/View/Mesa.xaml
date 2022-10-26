@@ -33,12 +33,12 @@
 
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="200"/>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="290"/>
                         <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="10"/>
 
                     </Grid.ColumnDefinitions>
                     <Image Source="klassylogo.png" VerticalOptions="Start" Grid.Row="0" Grid.Column="0"></Image>
@@ -46,7 +46,7 @@
                     <Button Text="Ordenes" Command="{Binding Ordencommand}" Grid.Row="0" Grid.Column="2" CornerRadius="0" BackgroundColor="DimGray" TextColor="#FFF"></Button>
                     <Button Text="Historial" Command="{Binding Historialcommand}" Grid.Row="0" Grid.Column="3" CornerRadius="0" BackgroundColor="DimGray" TextColor="#FFF"></Button>
                     <Label x:Name="nombreEmpl" Grid.Row="0" Grid.Column="4"  FontSize="20" TextColor="Black"></Label>
-                    <Button Text="SALIR"  Command="{Binding NavLoginCommand}" Grid.Row="0" Grid.Column="5" Grid.ColumnSpan="3" HorizontalOptions="End" CornerRadius="0" BackgroundColor="DimGray" TextColor="#FFF"></Button>
+                    <Button Text="SALIR"  Command="{Binding NavLoginCommand}" Grid.Row="0" Grid.Column="5" HorizontalOptions="End" CornerRadius="0" BackgroundColor="DimGray" TextColor="#FFF"></Button>
                 </Grid>
             </Grid>
 
@@ -72,18 +72,18 @@
                         </CollectionView.ItemsLayout>
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
-                                <Grid Padding="50,50,50,50">
+                                <Grid Padding="20,20,20,20">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="*"/>
                                     </Grid.RowDefinitions>
-                                        <Frame Grid.Row="0" Grid.Column="0" Padding="0,0,0,0" CornerRadius="15" BorderColor="{Binding orden}">
-                                        <Grid>
+                                        <Frame Grid.Row="0" Grid.Column="0" Padding="10,10,10,10" CornerRadius="15" BorderColor="{Binding orden}">
+                                        <Grid RowSpacing="1" ColumnSpacing="1" >
                                             <Grid.RowDefinitions >
-                                                <RowDefinition Height="*"/>
-                                                <RowDefinition Height="35"/>
+                                               
+                                                <RowDefinition Height="60"/>
                                             </Grid.RowDefinitions>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="*"/>
@@ -95,8 +95,8 @@
 
                                             -->
                                             
-                                            <Grid Grid.Row="1"  Grid.Column="0">
-                                                <Label Text="{Binding mesa}" HorizontalOptions="CenterAndExpand" FontSize="22" FontAttributes="Bold" TextColor="Black"/>
+                                            <Grid Grid.Row="0"  Grid.Column="0">
+                                                <Label Text="{Binding mesa}" HorizontalOptions="CenterAndExpand" VerticalOptions="Center" FontSize="22" FontAttributes="Bold" TextColor="Black"/>
                                             </Grid>
                                         </Grid>
 

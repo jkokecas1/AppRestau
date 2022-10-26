@@ -118,6 +118,7 @@ namespace AppResta.ViewModel
                 {
                     nombre =  item.Nombre;
                 }
+                
                 await Navigation.PushAsync(new Mesa(nombre: nombre),false);
             }
             else

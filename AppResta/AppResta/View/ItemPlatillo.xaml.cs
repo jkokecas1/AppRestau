@@ -16,24 +16,45 @@ namespace AppResta.View
     {
 
         Model.Extras extra = new Model.Extras();
+        Model.Platillos platillos;
         public ItemPlatillo(Model.Platillos platillo)
         {
             InitializeComponent();
-
-            nombPlatillo.Text = platillo.nombre;
-            descPlatillo.Text = platillo.descrip;
-            extrasListView.ItemsSource = Extras(platillo.id);
+            platillos = platillo;
+            nombPlatillo.Text = platillos.nombre;
+            descPlatillo.Text = platillos.descrip;
+            extrasListView.ItemsSource = Extras(platillos.id);
         }
 
 
 
-        private void addPlatillo(object sender, EventArgs e)
+        private void cerrarPop(object sender, EventArgs e)
         {
-             
+            
+            Rg.Plugins.Popup.Services.PopupNavigation.Instance.PopAsync();
         }
-        
 
-        
+        public void cantidadPlatillo(object sender, ValueChangedEventArgs e) {
+            var value = e.NewValue;
+            valCantidad.Text = value.ToString();
+        }
+
+        public void agregarItemCart()
+        {
+
+            var client = new HttpClient();
+
+            client.BaseAddress = new Uri("http://192.168.1.112/resta/admin/mysql/Platillo/index.php?op=obtenerExtras&id=");
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                Rg.Plugins.Popup.Services.PopupNavigation.Instance.PopAsync();
+            }
+            else {
+                DisplayAlert("Error", "Fallo el registro \n Intentalo de nuevo", "OK");
+            
+            }
+        }
         public List<Model.Extras> Extras(int id)
         {
             List<Model.Extras> extras = new List<Model.Extras>();
@@ -52,15 +73,12 @@ namespace AppResta.View
                 {
                     extra = new Model.Extras();
 
-
                     int idplatillo = Int32.Parse(item["platillo_id_platillo"].ToString());
                     string nombrePlatillo = item["nombre"].ToString();
                     int idextra = Int32.Parse(item["id_esxtra"].ToString());
                     string nombreExtra = item["extra_nombre"].ToString();
                     double precioExtra = Convert.ToDouble(item["extra_precio"].ToString().Replace(",", "."));
                    
-
-
                     extra.platillo_id_platillo = idplatillo;
                     extra.nombre = nombrePlatillo;
                     extra.id_esxtra = idextra;

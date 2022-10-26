@@ -21,7 +21,7 @@ namespace AppResta.View
 
         List<Model.Cart> cart = new List<Model.Cart>();
 
-        Model.Cart cartItem = new Model.Cart();
+        public Model.Cart cartItem = new Model.Cart();
 
 
         public Main(bool _Token, int idOrden = 0, string nombre="", string mesa = "MES-0")
@@ -66,10 +66,7 @@ namespace AppResta.View
 
         }
 
-        private async void ShowPopUp(object sender, EventArgs e)
-        {
-           // await PopupNavigation.Instance.PushAsync(new ItemPlatillo());
-        }
+        
 
         public void select_Item(object sender, SelectionChangedEventArgs e)
         {
@@ -114,6 +111,7 @@ namespace AppResta.View
 
                 // LLama a ventana emergente y selecciona los parametros;
                 PopupNavigation.Instance.PushAsync(new ItemPlatillo(platillo));
+                
 
                 /*
                 if (cart.Count == 0) // Caso 1: Carrito vacio

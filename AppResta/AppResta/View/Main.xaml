@@ -24,14 +24,14 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" BackgroundColor="AliceBlue" Padding="5,10,5,0">
+            <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="AliceBlue" Padding="5,10,5,0">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
 
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="200"/>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
@@ -41,12 +41,12 @@
                     </Grid.ColumnDefinitions>
                     <Image Source="klassylogo.png" VerticalOptions="Start" Grid.Row="0" Grid.Column="0"></Image>
                     <Button Text="Mesas"  Command="{Binding Mesascommand}" Grid.Row="0" Grid.Column="1" CornerRadius="0" BackgroundColor="DimGray" TextColor="#FFF"></Button>
-                    <Button Text="Comanda" Command="{Binding Ordencommand}" Grid.Row="0" Grid.Column="2" CornerRadius="0" BackgroundColor="LightGray"  TextColor="#FFF"></Button>
+                    <Button Text="Comanda" Grid.Row="0" Grid.Column="2" CornerRadius="0" BackgroundColor="LightGray"  TextColor="Black"></Button>
                     <Label x:Name="OrdenTexto" FontSize="20" TextColor="#000" Grid.Row="0" Grid.Column="4"></Label>
                     <Label x:Name="NombTexto" FontSize="20" TextColor="#000" Grid.Row="0" Grid.Column="5"></Label>
                     <Label x:Name="MesaTexto" Grid.Row="0" Grid.Column="6"  FontSize="20" TextColor="Black" ></Label>
                     <Button Text="SALIR"  Command="{Binding NavLoginCommand}" Grid.Row="0" Grid.Column="7" Grid.ColumnSpan="3" HorizontalOptions="End" CornerRadius="0" TextColor="#000"></Button>
-                    <Button Grid.Row="0" Grid.Column="7" Text="Show PopUp" Clicked="ShowPopUp"></Button>
+                    
 
                 </Grid>
             </Grid>
@@ -100,7 +100,7 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="45"/>
                         <RowDefinition Height="*"/>
-                        <RowDefinition Height="5"/>
+                        <RowDefinition Height="2"/>
                         <RowDefinition Height="40"/>
                         <RowDefinition Height="60"/>
                     </Grid.RowDefinitions>
@@ -109,14 +109,14 @@
                     </Grid.ColumnDefinitions>
 
 
-                            <Grid BackgroundColor="WhiteSmoke" Grid.Row="0" Grid.Column="0" Padding="20,0,20,0">
+                            <Grid BackgroundColor="WhiteSmoke" Grid.Row="0" Grid.Column="0" Padding="20,10,20,0">
                         <Label Grid.Row="0" Grid.Column="0" Text="Nombre" TextColor="Black"  FontSize="Body"/>
                         <Label Grid.Row="0" Grid.Column="1" HorizontalOptions="End" Text="Cantidad" TextColor="Black"  FontSize="Body"/>
                         <Label Grid.Row="0" Grid.Column="2" HorizontalOptions="End" Text="Precio" TextColor="Black" FontSize="Body"/>
                         <Label Grid.Row="0" Grid.Column="3" HorizontalOptions="End" Text="Total" TextColor="Black" FontSize="Body"/>
                     </Grid>
                     <!---LIST  VIEW-->
-                    <ListView BackgroundColor="Pink" Grid.Row="1" Grid.Column="0"  x:Name="test2ListView">
+                    <ListView BackgroundColor="WhiteSmoke" Grid.Row="1" Grid.Column="0"  x:Name="test2ListView">
                         <ListView.ItemTemplate >
                             <DataTemplate  >
                                 <ViewCell >
@@ -153,9 +153,9 @@
                     <!--END LIST  x:Name="test2ListView"-->
 
 
-                    <StackLayout BackgroundColor="Black" Grid.Row="2" Grid.Column="0"></StackLayout>
+                    <StackLayout BackgroundColor="Gray" Grid.Row="2" Grid.Column="0"></StackLayout>
 
-                    <Grid BackgroundColor="White" Grid.Row="3" Grid.Column="0" Padding="20,0,20,0">
+                    <Grid BackgroundColor="White" Grid.Row="3" Grid.Column="0" Padding="20,10,20,0">
                         <Label Grid.Row="0" Grid.Column="0" FontSize="Body" TextColor="Black"  Text="Precio Total" />
                         <Label Grid.Row="0" Grid.Column="1" HorizontalOptions="End" FontSize="Body" TextColor="Black" x:Name="totalpago" />
                     </Grid>
@@ -183,9 +183,9 @@
 
 
 
-            <Grid Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" BackgroundColor="WhiteSmoke">
+            <Grid Grid.Row="1" Grid.Column="1" BackgroundColor="WhiteSmoke" Padding="5,5,10,10">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="50"/>
                     <RowDefinition Height="*"/>
 
 
@@ -194,7 +194,7 @@
                     <ColumnDefinition Width="*"/>
 
                 </Grid.ColumnDefinitions>
-                <Button Text="Categorias" Clicked="returnCategorias" Grid.Row="0" Grid.Column="0" HorizontalOptions="Start" />
+                <Button Padding="20,0,0,0" Text="Categorias" Clicked="returnCategorias" Grid.Row="0" TextColor="White" BackgroundColor="DimGray" Grid.Column="0" />
                 <ScrollView Grid.Row="1" Grid.Column="0" >
                     <CollectionView x:Name="testListView" SelectionMode="Single" SelectionChanged="select_Item">
                         <CollectionView.ItemsLayout>
@@ -207,29 +207,24 @@
                                         <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="150"/>
+                                        <RowDefinition Height="100"/>
                                     </Grid.RowDefinitions>
                                     <Frame HasShadow="True" Padding="5" CornerRadius="10">
-                                        <Grid>
+                                        <Grid BackgroundColor="WhiteSmoke" RowSpacing="0" Padding="9,9,9,9">
                                             <Grid.RowDefinitions >
                                                 <RowDefinition Height="*"/>
-                                                <RowDefinition Height="35"/>
                                                 <RowDefinition Height="20"/>
                                             </Grid.RowDefinitions>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="*"/>
                                             </Grid.ColumnDefinitions>
 
-                                            <Grid Grid.Row="0"  Grid.Column="0">
-                                                <Image  Source="{Binding url}" Aspect="AspectFit"/>
+                                            <Grid Grid.Row="0"  Grid.Column="0"  BackgroundColor="WhiteSmoke" Padding="0,0,0,0">
+                                                <Label Text="{Binding nombre}" HorizontalOptions="Center" VerticalOptions="Center" FontSize="20" FontAttributes="Bold" TextColor="Black"/>
                                             </Grid>
 
-                                            <Grid Grid.Row="1"  Grid.Column="0">
-                                                <Label Text="{Binding nombre}" HorizontalOptions="CenterAndExpand" FontSize="12" FontAttributes="Bold" TextColor="Black"/>
-                                            </Grid>
-
-                                            <Grid Grid.Row="2"  Grid.Column="0" HorizontalOptions="Center" Padding="0,0,0,0">
-                                                <Label Text="{Binding precio}" FontSize="Body"  TextColor="Black" FontAttributes="Bold" HorizontalOptions="Center" Padding="0,0,0,0"/>
+                                            <Grid Grid.Row="1"  Grid.Column="0" BackgroundColor="WhiteSmoke" HorizontalOptions="Center" Padding="0,0,0,0">
+                                                <Label Text="{Binding precio}" FontSize="20"  TextColor="Black" FontAttributes="Bold" HorizontalOptions="Center" Padding="0,0,0,0"/>
                                             </Grid>
 
 
