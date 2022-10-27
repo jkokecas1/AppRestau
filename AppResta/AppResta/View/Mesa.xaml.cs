@@ -22,7 +22,7 @@ namespace AppResta.View
             InitializeComponent();
             BindingContext = new ViewModel.MesaViewModel(Navigation);
             nomb = nombre;
-            nombreEmpl.Text = "Bienvenido :"+nombre;
+            nombreEmpl.Text = "Bienvenido: "+nombre;
          
             mesasListView.ItemsSource = Mesas();
            
@@ -100,9 +100,14 @@ namespace AppResta.View
                 {
                     if (Int32.Parse(item["cont"].ToString()) == 1)
                     {
-                        array[0] = "Orange";
+                        array[0] = "#E62C2C";
                         array[1] = item["id_orden"].ToString();
                     }
+                    /*
+                    if(Int32.Parse(item["cont"].ToString()) == 0)
+                    {
+                        array[0] = "#02B942";
+                    }*/
 
                 }
                 

@@ -6,11 +6,13 @@ namespace AppResta.Model
 {
     public class Cart
     {
+        public int idItem { get; set; }
         public int id { get; set; }
         public string platillo { get; set; }
         public int cantidad { get; set; }
         public double precio { get; set; }
         public double total { get; set; }
+        public string extras { get; set; }
         public string estado { get; set; }
       
 

@@ -18,7 +18,7 @@ namespace AppResta.View
     public partial class Main : ContentPage
     {
         int band = 0;
-
+        string mesaglb;
         List<Model.Cart> cart = new List<Model.Cart>();
 
         public Model.Cart cartItem = new Model.Cart();
@@ -27,7 +27,7 @@ namespace AppResta.View
         public Main(bool _Token, int idOrden = 0, string nombre="", string mesa = "MES-0")
         //public Main(Object[] datos)
         {
-            
+            mesaglb = mesa;
             if (_Token == false)
             {
                 Navigation.PushAsync(new Login());
@@ -66,13 +66,19 @@ namespace AppResta.View
 
         }
 
-        
+        private void SwipeItem_Invoked(object sender, EventArgs e)
+        {
+            DisplayAlert("Borrar", "Borrar producto", "OK");
+        }
+
+        private void SwipeItem_Invoked_1(object sender, EventArgs e)
+        {
+            DisplayAlert("Editar", "Editar producto", "OK");
+        }
 
         public void select_Item(object sender, SelectionChangedEventArgs e)
         {
             UpdateSelectionData(e.PreviousSelection, e.CurrentSelection);
-            
-            
         }
 
         public void UpdateSelectionData(IEnumerable<object> previousSelectedContact, IEnumerable<object> currentSelectedContact)
@@ -107,10 +113,41 @@ namespace AppResta.View
             {
                 var platillo = currentSelectedContact.FirstOrDefault() as Model.Platillos;
                 cartItem = new Model.Cart();
-                 //DisplayAlert(platillo.nombre, " Nombre :" + platillo.precio + "\n Categoria:" + platillo.descrip,"Cancelar", "Ok");
+                //DisplayAlert(platillo.nombre, " Nombre :" + platillo.precio + "\n Categoria:" + platillo.descrip,"Cancelar", "Ok");
 
-                // LLama a ventana emergente y selecciona los parametros;
-                PopupNavigation.Instance.PushAsync(new ItemPlatillo(platillo));
+                if (cart.Count == 0) // Caso 0: Carrito vacio
+                {
+                    PopupNavigation.Instance.PushAsync(new ItemPlatillo(platillo, mesaglb,0));
+                }
+                else { // Caso 1
+
+                    int band = 0;
+                    int index = 0; 
+                    for (int i = 0; i < cart.Count; i++)
+                    {
+                        // Console.WriteLine("IdCart " + cart[i].id + " platillo id: " + platillo.id);
+                        if (cart[i].id == platillo.id) // Caso 2.1: El platillo existe
+                        {
+                            //Console.WriteLine("Es igual suma 1");
+                            
+                            index = i;
+                            band = 1;
+                            break;
+                        }
+                    }
+
+                    if (band == 1) { // CASO 1.1
+                        PopupNavigation.Instance.PushAsync(new ItemPlatillo(platillo, mesaglb, 1, cart[index].idItem, cart[index].cantidad));
+                        
+                    }
+                    else if (band == 0) // CASO 1.2
+                    {
+                        //Console.WriteLine("Ya exite un platillo y se agrega el otro");
+                        PopupNavigation.Instance.PushAsync(new ItemPlatillo(platillo, mesaglb,2, cart[index].idItem, cart[index].cantidad));
+                    }
+                   
+                }
+               
                 
 
                 /*
@@ -342,6 +379,7 @@ namespace AppResta.View
 
 
                     int ids = Int32.Parse(item["id"].ToString());
+                    int iditem = Int32.Parse(item["idItem"].ToString());
                     string nombre = item["nombre"].ToString();
                     int cantidad = Int32.Parse(item["cantidad"].ToString());
                     double precio = Convert.ToDouble(item["precio"].ToString().Replace(",", "."));
@@ -349,6 +387,7 @@ namespace AppResta.View
 
 
                     cartItem.id = ids;
+                    cartItem.idItem = iditem;
                     cartItem.platillo = nombre;
                     cartItem.cantidad = cantidad;
                     cartItem.precio = precio;
@@ -365,6 +404,8 @@ namespace AppResta.View
                 return null;
             }
         }
+
+
     }
 
 

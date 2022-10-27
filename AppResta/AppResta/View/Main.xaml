@@ -37,15 +37,17 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="160"/>
                     </Grid.ColumnDefinitions>
                     <Image Source="klassylogo.png" VerticalOptions="Start" Grid.Row="0" Grid.Column="0"></Image>
                     <Button Text="Mesas"  Command="{Binding Mesascommand}" Grid.Row="0" Grid.Column="1" CornerRadius="0" BackgroundColor="DimGray" TextColor="#FFF"></Button>
-                    <Button Text="Comanda" Grid.Row="0" Grid.Column="2" CornerRadius="0" BackgroundColor="LightGray"  TextColor="Black"></Button>
-                    <Label x:Name="OrdenTexto" FontSize="20" TextColor="#000" Grid.Row="0" Grid.Column="4"></Label>
-                    <Label x:Name="NombTexto" FontSize="20" TextColor="#000" Grid.Row="0" Grid.Column="5"></Label>
-                    <Label x:Name="MesaTexto" Grid.Row="0" Grid.Column="6"  FontSize="20" TextColor="Black" ></Label>
-                    <Button Text="SALIR"  Command="{Binding NavLoginCommand}" Grid.Row="0" Grid.Column="7" Grid.ColumnSpan="3" HorizontalOptions="End" CornerRadius="0" TextColor="#000"></Button>
+                    <Grid Grid.Row="0" Grid.Column="2" BackgroundColor="LightGray" Padding="0,0,0,0" Margin="0,0,0,0">
+                        <Label Text="COMANDA" BackgroundColor="LightGray" HorizontalOptions="Center" VerticalOptions="Center" TextColor="Black"></Label>
+                    </Grid>
+                    <Label  x:Name="OrdenTexto" FontSize="20" TextColor="#000" Grid.Row="0" Grid.Column="3"></Label>
+                    <Label  x:Name="NombTexto" FontSize="20" TextColor="#000" Grid.Row="0" Grid.Column="4"></Label>
+                    <Label  x:Name="MesaTexto" Grid.Row="0" Grid.Column="5"  FontSize="20" TextColor="Black" ></Label>
+                    <Button Text="SALIR"  Command="{Binding NavLoginCommand}" Grid.Row="0" Grid.Column="6" HorizontalOptions="End" BackgroundColor="Red" CornerRadius="0" TextColor="#000"></Button>
                     
 
                 </Grid>
@@ -115,36 +117,54 @@
                         <Label Grid.Row="0" Grid.Column="2" HorizontalOptions="End" Text="Precio" TextColor="Black" FontSize="Body"/>
                         <Label Grid.Row="0" Grid.Column="3" HorizontalOptions="End" Text="Total" TextColor="Black" FontSize="Body"/>
                     </Grid>
+                    
                     <!---LIST  VIEW-->
-                    <ListView BackgroundColor="WhiteSmoke" Grid.Row="1" Grid.Column="0"  x:Name="test2ListView">
+                            <ListView BackgroundColor="WhiteSmoke" Grid.Row="1" Grid.Column="0"  x:Name="test2ListView" SelectionMode="None" >
                         <ListView.ItemTemplate >
                             <DataTemplate  >
-                                <ViewCell >
-                                    <Grid>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="0"/>
-                                        </Grid.RowDefinitions>
+                                <ViewCell  >
+                                            <!--<ViewCell.ContextActions>
+                                                <MenuItem Clicked="MenuItem_Clicked"
+                                                CommandParameter="{Binding .}"
+                                                Text="More" />        
+                                                <MenuItem Clicked="MenuItem_Clicked_1"
+                                                CommandParameter="{Binding .}"
+                                                Text="Delete" IsDestructive="True" />
+                                            </ViewCell.ContextActions>-->
 
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="200"/>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="*"/>
-                                        </Grid.ColumnDefinitions>
 
-                                        <StackLayout  Grid.Column="0" Grid.Row="1"  HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical">
-                                            <Label Text="{Binding platillo}" TextColor="Black" FontSize="15"/>
-                                        </StackLayout>
-                                        <StackLayout  Grid.Column="1" Grid.Row="1" HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical">
-                                            <Label Text="{Binding cantidad}" TextColor="Black" FontSize="15"/>
-                                        </StackLayout>
-                                        <StackLayout  Grid.Column="2" Grid.Row="1" HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical">
-                                            <Label Text="{Binding precio}" TextColor="Black" FontSize="15"/>
-                                        </StackLayout>
-                                        <StackLayout  Grid.Column="3" Grid.Row="1" HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical">
-                                            <Label Text="{Binding total}" TextColor="Black" FontSize="15"/>
-                                        </StackLayout>
-                                    </Grid>
+                                            <Grid Padding="0,0,0,0" BackgroundColor="WhiteSmoke">
+                                                    <SwipeView>
+                                                        <SwipeView.RightItems>
+                                                            <SwipeItems  SwipeBehaviorOnInvoked="Close">
+                                                                <SwipeItem Text="Editar"                                                                            
+                                                                           IconImageSource="editar.png"
+                                                                           BackgroundColor="Green"
+                                                                           Invoked="SwipeItem_Invoked_1"/>
+                                                                <SwipeItem Text="Borrar"
+                                                                           IconImageSource="borrar.png"
+                                                                           BackgroundColor="Red"
+                                                                           Invoked="SwipeItem_Invoked"/>                                                                
+                                                            </SwipeItems>
+                                                        </SwipeView.RightItems>
+                                                        <Grid Padding="20,0,0,0">
+                                                            <StackLayout  Grid.Column="0" Grid.Row="0"  HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical">
+                                                                <Label Text="{Binding platillo}" TextColor="Black" FontSize="15"/>
+                                                            </StackLayout>
+                                                            <StackLayout  Grid.Column="1" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical">
+                                                                <Label Text="{Binding cantidad}" TextColor="Black" FontSize="15"/>
+                                                            </StackLayout>
+                                                            <StackLayout  Grid.Column="2" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical">
+                                                                <Label Text="{Binding precio}" TextColor="Black" FontSize="15"/>
+                                                            </StackLayout>
+                                                            <StackLayout  Grid.Column="3" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical">
+                                                                <Label Text="{Binding total}" TextColor="Black" FontSize="15"/>
+                                                            </StackLayout>
+                                                        </Grid>
+                                                    </SwipeView>                                                    
+                                                </Grid>
+                                        
+                                   
 
                                 </ViewCell>
                             </DataTemplate>
@@ -155,9 +175,18 @@
 
                     <StackLayout BackgroundColor="Gray" Grid.Row="2" Grid.Column="0"></StackLayout>
 
-                    <Grid BackgroundColor="White" Grid.Row="3" Grid.Column="0" Padding="20,10,20,0">
-                        <Label Grid.Row="0" Grid.Column="0" FontSize="Body" TextColor="Black"  Text="Precio Total" />
-                        <Label Grid.Row="0" Grid.Column="1" HorizontalOptions="End" FontSize="Body" TextColor="Black" x:Name="totalpago" />
+                    <Grid BackgroundColor="White" Grid.Row="3" Grid.Column="0" Padding="20,10,20,10">
+                                <Grid.RowDefinitions>
+                                   
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="60"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Row="0" Grid.Column="0" FontSize="Body" TextColor="Black"  Text="Precio Total" />
+                                <Image Source="dinero.png" Grid.Row="0" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center"/>
+                        <Label Grid.Row="0" Grid.Column="2" HorizontalOptions="End" FontSize="Body" TextColor="Black" x:Name="totalpago" />
                     </Grid>
 
 
@@ -170,8 +199,9 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
+                                
 
-                        <Button Padding="0,0,0,0" Grid.Row="0" Grid.Column="0" HorizontalOptions="Start" FontSize="Body" CornerRadius="10"  Text="..." />
+                                <Button Padding="0,0,0,0" Grid.Row="0" Grid.Column="0" HorizontalOptions="Start" FontSize="Body" CornerRadius="10"  Text="..." />
                         <Button Padding="0,0,0,0" HorizontalOptions="End" Grid.Row="0" Grid.Column="2" FontSize="Body" CornerRadius="10" TextColor="#FFFF" BackgroundColor="Green" Text="Ordenar" Command="{Binding Ordencommand}"/>
                     </Grid>
 
@@ -194,7 +224,9 @@
                     <ColumnDefinition Width="*"/>
 
                 </Grid.ColumnDefinitions>
-                <Button Padding="20,0,0,0" Text="Categorias" Clicked="returnCategorias" Grid.Row="0" TextColor="White" BackgroundColor="DimGray" Grid.Column="0" />
+                <Button TextColor="White"  Text="Categorias" Clicked="returnCategorias" ImageSource="regresar.png" Padding="10,0,330,0" Grid.Column="0" Grid.Row="0" BackgroundColor="DimGray" >
+                    
+                </Button>
                 <ScrollView Grid.Row="1" Grid.Column="0" >
                     <CollectionView x:Name="testListView" SelectionMode="Single" SelectionChanged="select_Item">
                         <CollectionView.ItemsLayout>

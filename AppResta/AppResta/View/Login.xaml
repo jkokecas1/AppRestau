@@ -38,7 +38,7 @@
                 </Grid>
 
                 <Grid Grid.Row="2" Grid.Column="0">
-                    <Entry Text="{Binding Pin}" IsReadOnly="True" TextColor="Black" Placeholder="PIN" WidthRequest="270"  HorizontalOptions="Center" HorizontalTextAlignment="Center" FontSize="40" MaxLength="4" />
+                    <Entry Text="{Binding Pin}" IsReadOnly="True" TextColor="Black" Placeholder="PIN" WidthRequest="270" IsPassword="True" HorizontalOptions="Center" ReturnType="Send" ClearButtonVisibility="WhileEditing" HorizontalTextAlignment="Center" FontSize="40" CharacterSpacing="10" MaxLength="4" />
 
                 </Grid>
 
@@ -58,7 +58,7 @@
                 <Button BackgroundColor="#F1F1F1" TextColor="Black" CornerRadius="40" Grid.Row="2" Grid.Column="2" Text="9" FontSize="40" FontAttributes="Bold" Command="{ Binding Num9Command}"/>
                 <Button BackgroundColor="#F1F1F1" TextColor="Black" CornerRadius="40" Grid.Row="3" Grid.Column="0" Text="Borrar" FontSize="40" FontAttributes="Bold"  Command="{ Binding BorrarCommand}" />
                 <Button BackgroundColor="#F1F1F1" TextColor="Black" CornerRadius="40" Grid.Row="3" Grid.Column="1" Text="0" FontSize="40" FontAttributes="Bold"  Command="{ Binding Num0Command}"/>
-                <Button BackgroundColor="Blue" TextColor="White" CornerRadius="40" Grid.Row="3" Grid.Column="2" Text="Sing in" FontSize="40" FontAttributes="Bold" Command="{Binding NavMainCommand}"/>
+                <Button BackgroundColor="Blue" TextColor="White" CornerRadius="40" Grid.Row="3" Grid.Column="2" Text="Entrar" FontSize="40" FontAttributes="Bold" Command="{Binding NavMainCommand}"/>
             </Grid>
         </Grid>
 
