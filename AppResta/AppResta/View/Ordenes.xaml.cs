@@ -25,15 +25,15 @@ namespace AppResta.View
         {
             var orden = e.SelectedItem as Model.Ordenes;
             
-            Navigation.PushAsync(new Main(false, idOrden: orden.id_carts_cart));
+            //Navigation.PushAsync(new Main(false, idOrden: orden.id));
         }
 
         public List<Model.Ordenes> Ordene()
         {
             Model.Ordenes orden;
-            var ordenList = new List<Model.Ordenes>();
+            List<Model.Ordenes> ordenList = new List<Model.Ordenes>();
             var client = new HttpClient();
-
+          
             client.BaseAddress = new Uri("http://192.168.1.112/resta/admin/mysql/orden/index.php?op=obtenerOrden");
             HttpResponseMessage response = client.GetAsync(client.BaseAddress).Result;
             if (response.IsSuccessStatusCode)
@@ -41,18 +41,24 @@ namespace AppResta.View
                 var content = response.Content.ReadAsStringAsync().Result;
                 string json = content.ToString();
                 var jsonArray = JArray.Parse(json.ToString());
-
+               // Console.WriteLine(jsonArray);
                 foreach (var item in jsonArray)
                 {
                     orden = new Model.Ordenes();
-                    int id = Int32.Parse(item["id_carts_cart"].ToString());
-                    string fecha = item["carts_cartco_date_addedl"].ToString();
-                    string estado = Int32.Parse(item["carts_cart_estado"].ToString()) == 1 ? "En proceso" : "Terminado";
-                    string mesa = item["carts_cart_mesa"].ToString();
-                    orden.id_carts_cart = id;
-                    orden.carts_cartco_date_addedl = fecha;
-                    orden.carts_cart_estado = estado;
+                    int id = Int32.Parse(item["id"].ToString());
+                    string fecha_orden = item["fecha_orden"].ToString();
+                    string fecha_cerrado = item["fecha_cerada"].ToString();
+                    string mesa = item["mesa"].ToString();
+                    string total = item["total"].ToString();
+                    int pago = Int32.Parse(item["pago"].ToString());
+                    int mesero = Int32.Parse(item["mesero"].ToString());
+                    orden.id = id;
+                    orden.fecha_orden = fecha_orden;
+                    orden.fecha_cerada = fecha_cerrado;
+                    orden.mesero = mesero;
                     orden.mesa = mesa;
+                    orden.total = total;
+                    orden.pago = pago;
                     ordenList.Add(orden);
                 }
                 return ordenList;

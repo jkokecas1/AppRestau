@@ -8,7 +8,7 @@ xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 xmlns:input="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.InputKit"
   x:Class="AppResta.View.ItemPlatillo">
 
-    <Frame BackgroundColor="WhiteSmoke" Padding="20,20,20,20" Margin="200,10,200,10" CornerRadius="20">
+    <Frame BackgroundColor="WhiteSmoke" Padding="20,20,20,20" Margin="150,10,150,10" CornerRadius="20">
         <Grid RowSpacing="0">
 
 
@@ -26,7 +26,7 @@ xmlns:input="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.Input
 
             <Grid Grid.Row="0" Grid.Column="0" BackgroundColor="WhiteSmoke" Padding="8,8,8,8">
                 <Label Grid.Row="0" Grid.Column="0" x:Name="nombPlatillo"  TextColor="Black" FontAttributes="Bold" FontSize="25"/>
-                <Button Grid.Row="0" Grid.Column="1" Clicked="cerrarPop" HorizontalOptions="End"  Text="X"/>
+                <ImageButton Grid.Row="0" Grid.Column="1" Clicked="cerrarPop" HorizontalOptions="End"  Source="cerrar.png"/>
 
             </Grid>
 
@@ -35,7 +35,7 @@ xmlns:input="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.Input
 
             <Grid Grid.Row="1" Grid.Column="0" Padding="8,8,8,8">
                 <ScrollView>
-                    
+
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="300"/>
@@ -54,18 +54,18 @@ xmlns:input="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.Input
                         </Grid>
                         <CollectionView Grid.Row="0" Grid.Column="1" x:Name="extrasListView" SelectionMode="Multiple" SelectionChanged="selectmultiple" >
                             <CollectionView.ItemsLayout>
-                                <GridItemsLayout Orientation="Vertical" Span="3"/>
+                                <GridItemsLayout Orientation="Vertical" Span="2"/>
                             </CollectionView.ItemsLayout>
                             <CollectionView.ItemTemplate>
                                 <DataTemplate>
-                                    <Grid Padding="5">
+                                    <Grid Padding="2">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*" />
                                         </Grid.ColumnDefinitions>
                                         <Grid.RowDefinitions>
-                                            <RowDefinition Height="100"/>
+                                            <RowDefinition Height="70"/>
                                         </Grid.RowDefinitions>
-                                        <Frame HasShadow="True" Padding="5" CornerRadius="10">
+                                        <Frame HasShadow="True" Padding="2" CornerRadius="10">
                                             <Grid BackgroundColor="WhiteSmoke" RowSpacing="0" Padding="9,9,9,9">
                                                 <Grid.RowDefinitions >
                                                     <RowDefinition Height="*"/>
@@ -77,9 +77,9 @@ xmlns:input="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.Input
 
 
                                                 <StackLayout  Grid.Column="0" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical">
-                                                    <Label x:Name="nombre" Text="{Binding extra_nombre}" TextColor="Black" FontSize="15"/>
+                                                    <Label x:Name="nombre" Text="{Binding extra_nombre}" TextColor="Black" FontSize="15" FontAttributes="Bold"/>
                                                 </StackLayout>
-                                                <StackLayout  Grid.Column="1" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical">
+                                                <StackLayout  Grid.Column="0" Grid.Row="1" HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical">
                                                     <Label x:Name="cantidad" Text="{Binding extra_precio}" TextColor="Black" FontSize="15"/>
                                                 </StackLayout>
 
@@ -130,15 +130,17 @@ xmlns:input="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.Input
                         <Entry BackgroundColor="LightGray" x:Name="comentTxt" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Placeholder="Comentarios" TextColor="Black"/>
 
                     </Grid>
-   
-                   
+
+
                 </ScrollView>
             </Grid>
 
             <Grid Grid.Row="2" Grid.Column="0" BackgroundColor="WhiteSmoke" Padding="8,8,8,8">
-                <Label  Grid.Row="0" Grid.Column="1" x:Name="valCantidad" Text="0" FontSize="Large"></Label>
-                <Stepper Grid.Row="0" Grid.Column="0" ValueChanged="cantidadPlatillo"></Stepper>
-                <Button Grid.Row="0" Grid.Column="2" Clicked="agregarItemCart" Text="agregar" TextColor="Black" BackgroundColor="Green" />
+                <Grid Grid.Row="0" Grid.Column="0">
+                    <Label Grid.Row="0" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" x:Name="valCantidad" Text="0" FontSize="Large"></Label>
+                    <Stepper Grid.Row="0" Grid.Column="0" ValueChanged="cantidadPlatillo"></Stepper>
+                </Grid>
+                <Button Grid.Row="0" Grid.Column="1" Clicked="agregarItemCart" Text="agregar" TextColor="Black" BackgroundColor="Green" />
             </Grid>
 
 

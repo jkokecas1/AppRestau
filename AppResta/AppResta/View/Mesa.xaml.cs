@@ -29,6 +29,13 @@ namespace AppResta.View
             Navigation.RemovePage(new Login());
         }
 
+        private void RefreshMesas_Refreshing(object sender, EventArgs e)
+        {
+            Task.Delay(700);
+            mesasListView.ItemsSource = Mesas();
+            RefreshMesas.IsRefreshing = false;
+        }
+
         public void select_Item(object sender, SelectionChangedEventArgs e)
         {
             var mesas = e.CurrentSelection.FirstOrDefault() as Model.Mesas;
@@ -100,8 +107,16 @@ namespace AppResta.View
                 {
                     if (Int32.Parse(item["cont"].ToString()) == 1)
                     {
-                        array[0] = "#E62C2C";
-                        array[1] = item["id_orden"].ToString();
+                        if (Int32.Parse(item["estado"].ToString()) == 0)
+                        {
+                            array[0] = "#2C67E6 ";
+                            array[1] = item["id_orden"].ToString();
+                        }
+                        else {
+                            array[0] = "#E62C2C";
+                            array[1] = item["id_orden"].ToString();
+                        }
+                        
                     }
                     /*
                     if(Int32.Parse(item["cont"].ToString()) == 0)
@@ -119,5 +134,7 @@ namespace AppResta.View
 
             return array;
         }
+
+       
     }
 }

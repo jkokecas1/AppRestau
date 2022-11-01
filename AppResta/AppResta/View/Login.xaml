@@ -5,61 +5,69 @@
                NavigationPage.HasNavigationBar="False">
     <ContentPage.Content>
 
-        <Grid BackgroundColor="White" ColumnSpacing="0" RowSpacing="0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="200"/>
 
+        <Grid  RowSpacing="0" ColumnSpacing="0" BackgroundColor="LightGray">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="70"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Grid Grid.Row="0" Grid.Column="0" RowSpacing="0" ColumnSpacing="0">
+
+            <Grid Grid.Row="0" Grid.Column="0" BackgroundColor="AliceBlue" Padding="0,0,0,0">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="75"/>
-                    <RowDefinition Height="73"/>
+                                     
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+
                 </Grid.ColumnDefinitions>
 
-
-
-                <Grid Grid.Row="0" Grid.Column="0" Padding="0,10,0,0" RowSpacing="0" ColumnSpacing="0">
-                    <Image Grid.Row="0" Grid.Column="0" BackgroundColor="Transparent" Source="klassylogo.png" VerticalOptions="Center" Aspect="AspectFit"/>
+                <Grid Grid.Row="0" Grid.Column="0">
+                    <Image Grid.Row="0" Grid.Column="0" BackgroundColor="Transparent" Source="klassylogo.png" VerticalOptions="Center"  Aspect="AspectFit"/>
 
                 </Grid>
 
-                <Grid Grid.Row="1" Grid.Column="0">
-                    <Label  Text="Ingresa tu NIP" FontSize="40" TextColor="Black" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+                <Grid Grid.Row="0" Grid.Column="1">
+                    <Label  Text="Ingresa tu NIP" FontSize="40" TextColor="Black" FontAttributes="Bold" HorizontalTextAlignment="Center" VerticalOptions="Center"/>
 
                 </Grid>
 
-                <Grid Grid.Row="2" Grid.Column="0">
-                    <Entry Text="{Binding Pin}" IsReadOnly="True" TextColor="Black" Placeholder="PIN" WidthRequest="270" IsPassword="True" HorizontalOptions="Center" ReturnType="Send" ClearButtonVisibility="WhileEditing" HorizontalTextAlignment="Center" FontSize="40" CharacterSpacing="10" MaxLength="4" />
-
-                </Grid>
+                
 
 
             </Grid>
 
+            <Frame Grid.Row="1" Grid.Column="0" CornerRadius="10" Padding="10,10,10,10" Margin="10,10,10,10">
+                <Grid> 
+                    <Grid Grid.Row="0" Grid.Column="0">
+                        <Entry Text="{Binding Pin}" IsReadOnly="True" TextColor="Black" Placeholder="PIN" WidthRequest="270" HeightRequest="70" IsPassword="True" HorizontalOptions="Center" VerticalOptions="Center" ReturnType="Send" ClearButtonVisibility="WhileEditing" HorizontalTextAlignment="Center" FontSize="50" CharacterSpacing="10" MaxLength="4" />
 
-            <Grid Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" Padding="60,0,60,10" Scale=".8" >
-                <Button BackgroundColor="#F1F1F1" TextColor="Black" CornerRadius="40" Grid.Row="0" Grid.Column="0" Text="1"  FontSize="40" FontAttributes="Bold" Command="{ Binding Num1Command}" Padding="0,0,0,0" />
-                <Button BackgroundColor="#F1F1F1" TextColor="Black" CornerRadius="40" Grid.Row="0" Grid.Column="1" Text="2" FontSize="40" FontAttributes="Bold" Command="{ Binding Num2Command}" Padding="0,0,0,0"/>
-                <Button BackgroundColor="#F1F1F1" TextColor="Black" CornerRadius="40" Grid.Row="0" Grid.Column="2" Text="3" FontSize="40" FontAttributes="Bold" Command="{ Binding Num3Command}"/>
-                <Button BackgroundColor="#F1F1F1" TextColor="Black" CornerRadius="40" Grid.Row="1" Grid.Column="0" Text="4" FontSize="40" FontAttributes="Bold" Command="{ Binding Num4Command}"/>
-                <Button BackgroundColor="#F1F1F1" TextColor="Black" CornerRadius="40" Grid.Row="1" Grid.Column="1" Text="5" FontSize="40" FontAttributes="Bold" Command="{ Binding Num5Command}"/>
-                <Button BackgroundColor="#F1F1F1" TextColor="Black" CornerRadius="40" Grid.Row="1" Grid.Column="2" Text="6" FontSize="40" FontAttributes="Bold" Command="{ Binding Num6Command}"/>
-                <Button BackgroundColor="#F1F1F1" TextColor="Black" CornerRadius="40" Grid.Row="2" Grid.Column="0" Text="7" FontSize="40" FontAttributes="Bold" Command="{ Binding Num7Command}"/>
-                <Button BackgroundColor="#F1F1F1" TextColor="Black" CornerRadius="40" Grid.Row="2" Grid.Column="1" Text="8" FontSize="40" FontAttributes="Bold" Command="{ Binding Num8Command}"/>
-                <Button BackgroundColor="#F1F1F1" TextColor="Black" CornerRadius="40" Grid.Row="2" Grid.Column="2" Text="9" FontSize="40" FontAttributes="Bold" Command="{ Binding Num9Command}"/>
-                <Button BackgroundColor="#F1F1F1" TextColor="Black" CornerRadius="40" Grid.Row="3" Grid.Column="0" Text="Borrar" FontSize="40" FontAttributes="Bold"  Command="{ Binding BorrarCommand}" />
-                <Button BackgroundColor="#F1F1F1" TextColor="Black" CornerRadius="40" Grid.Row="3" Grid.Column="1" Text="0" FontSize="40" FontAttributes="Bold"  Command="{ Binding Num0Command}"/>
-                <Button BackgroundColor="Blue" TextColor="White" CornerRadius="40" Grid.Row="3" Grid.Column="2" Text="Entrar" FontSize="40" FontAttributes="Bold" Command="{Binding NavMainCommand}"/>
-            </Grid>
+                    </Grid>
+
+
+                    <Grid Grid.Row="1" Grid.Column="0" Grid.RowSpan="4" Padding="60,0,60,10" Scale=".9" >
+                        <Button BackgroundColor="#F1F1F1" TextColor="Black" CornerRadius="40" Grid.Row="0" Grid.Column="0" Text="1"  FontSize="40" FontAttributes="Bold" Command="{ Binding Num1Command}" Padding="0,0,0,0" />
+                        <Button BackgroundColor="#F1F1F1" TextColor="Black" CornerRadius="40" Grid.Row="0" Grid.Column="1" Text="2" FontSize="40" FontAttributes="Bold" Command="{ Binding Num2Command}" Padding="0,0,0,0"/>
+                        <Button BackgroundColor="#F1F1F1" TextColor="Black" CornerRadius="40" Grid.Row="0" Grid.Column="2" Text="3" FontSize="40" FontAttributes="Bold" Command="{ Binding Num3Command}"/>
+                        <Button BackgroundColor="#F1F1F1" TextColor="Black" CornerRadius="40" Grid.Row="1" Grid.Column="0" Text="4" FontSize="40" FontAttributes="Bold" Command="{ Binding Num4Command}"/>
+                        <Button BackgroundColor="#F1F1F1" TextColor="Black" CornerRadius="40" Grid.Row="1" Grid.Column="1" Text="5" FontSize="40" FontAttributes="Bold" Command="{ Binding Num5Command}"/>
+                        <Button BackgroundColor="#F1F1F1" TextColor="Black" CornerRadius="40" Grid.Row="1" Grid.Column="2" Text="6" FontSize="40" FontAttributes="Bold" Command="{ Binding Num6Command}"/>
+                        <Button BackgroundColor="#F1F1F1" TextColor="Black" CornerRadius="40" Grid.Row="2" Grid.Column="0" Text="7" FontSize="40" FontAttributes="Bold" Command="{ Binding Num7Command}"/>
+                        <Button BackgroundColor="#F1F1F1" TextColor="Black" CornerRadius="40" Grid.Row="2" Grid.Column="1" Text="8" FontSize="40" FontAttributes="Bold" Command="{ Binding Num8Command}"/>
+                        <Button BackgroundColor="#F1F1F1" TextColor="Black" CornerRadius="40" Grid.Row="2" Grid.Column="2" Text="9" FontSize="40" FontAttributes="Bold" Command="{ Binding Num9Command}"/>
+                        <Button BackgroundColor="#F1F1F1" TextColor="Black" CornerRadius="40" Grid.Row="3" Grid.Column="0" Text="Borrar" FontSize="40" FontAttributes="Bold"  Command="{ Binding BorrarCommand}" />
+                        <Button BackgroundColor="#F1F1F1" TextColor="Black" CornerRadius="40" Grid.Row="3" Grid.Column="1" Text="0" FontSize="40" FontAttributes="Bold"  Command="{ Binding Num0Command}"/>
+                        <Button BackgroundColor="Blue" TextColor="White" CornerRadius="40" Grid.Row="3" Grid.Column="2" Text="Entrar" FontSize="40" FontAttributes="Bold" Command="{Binding NavMainCommand}"/>
+                    </Grid>
+
+                </Grid>
+            </Frame>
+            
         </Grid>
 
     </ContentPage.Content>

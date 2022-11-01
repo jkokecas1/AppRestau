@@ -3,13 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AppResta.View.Ordenes"
              NavigationPage.HasNavigationBar="False">
-    
-    
-    
-    
-    
+
+
+
+
+
     <ContentPage.Content>
-        
+
         <Grid  RowSpacing="0" ColumnSpacing="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="60"/>
@@ -18,14 +18,14 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            
+
             <Grid Grid.Row="0" Grid.Column="0"  BackgroundColor="AliceBlue" Padding="5,10,5,0">
                 <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
 
 
-                </Grid.RowDefinitions>
+                    </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="200"/>
                         <ColumnDefinition Width="*"/>
@@ -38,12 +38,12 @@
 
                     <Image Source="klassylogo.png" VerticalOptions="Start" Grid.Row="0" Grid.Column="0"></Image>
                     <Button Text="Mesas"  Command="{Binding Mesascommand}" Grid.Row="0" Grid.Column="1" CornerRadius="0" BackgroundColor="DimGray" TextColor="#FFF"></Button>
-                <Button Text="Ordenes" Command="{Binding Ordencommand}" Grid.Row="0" Grid.Column="2" CornerRadius="0" BackgroundColor="LightGray"></Button>
+                    <Button Text="Ordenes" Command="{Binding Ordencommand}" Grid.Row="0" Grid.Column="2" CornerRadius="0" BackgroundColor="LightGray"></Button>
                     <Button Text="Historial" Command="{Binding Historialcommand}" Grid.Row="0" Grid.Column="3" CornerRadius="0" BackgroundColor="DimGray" TextColor="#FFF"></Button>
                     <Label x:Name="nombreEmpl" Grid.Row="0" Grid.Column="4"  FontSize="20" TextColor="Black"></Label>
-                    <Button Text="SALIR"  Command="{Binding NavLoginCommand}" Grid.Row="0" Grid.Column="5" HorizontalOptions="End" CornerRadius="0" BackgroundColor="DimGray" TextColor="#FFF"></Button>
+                    <Button Text="SALIR"  Command="{Binding NavLoginCommand}" Grid.Row="0" Grid.Column="5" HorizontalOptions="End" CornerRadius="0" BackgroundColor="Red" TextColor="#FFF"></Button>
                 </Grid>
-                </Grid>
+            </Grid>
 
 
             <Grid Grid.Row="1" Grid.Column="0" BackgroundColor="LightGray" Padding="10,10,10,10" ColumnSpacing="5">
@@ -70,71 +70,74 @@
 
 
 
-                        <Grid Grid.Row="0" Grid.Column="0" RowSpacing="0" ColumnSpacing="0" BackgroundColor="White" Padding="10,10,10,10">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
+                        <Grid Grid.Row="0" Grid.Column="0" RowSpacing="0" ColumnSpacing="0" BackgroundColor="White" Padding="80,10,10,10">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
 
 
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="70"/>
-                    <ColumnDefinition Width="120"/>
-                    <ColumnDefinition Width="70"/>
-                    <ColumnDefinition Width="70"/>
-                    <ColumnDefinition Width="70"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="70"/>
-                </Grid.ColumnDefinitions>
-                <Label Text="Abierto" Grid.Row="0" Grid.Column="0" TextColor="Black"/>
-                <Label Text="Hora de entrega" Grid.Row="0" Grid.Column="1" TextColor="Black"/>
-                <Label Text="Orden" Grid.Row="0" Grid.Column="2" TextColor="Black"/>
-                <Label Text="Estatus" Grid.Row="0" Grid.Column="3" TextColor="Black"/>
-                <Label Text="Mesa" Grid.Row="0" Grid.Column="3" TextColor="Black"/>
-                <Label Grid.Row="0" Grid.Column="4"/>
-                <Label Text="Total" Grid.Row="0" Grid.Column="5" TextColor="Black"/>
-            </Grid>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="140"/>
+                                <ColumnDefinition Width="190"/>
+                                <ColumnDefinition Width="270"/>
+                                <ColumnDefinition Width="150"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Text="Orden" Grid.Row="0" Grid.Column="0" TextColor="Black"/>
+                            <Label Text="Abierto" Grid.Row="0" Grid.Column="1" TextColor="Black"/>
+                            <Label Text="Hora de entrega" Grid.Row="0" Grid.Column="2" TextColor="Black"/>
+                            <Label Text="Mesa" Grid.Row="0" Grid.Column="3" TextColor="Black"/>
+                            <Label Grid.Row="0" Grid.Column="4"/>
+                            <Label Text="Total" Grid.Row="0" Grid.Column="5" TextColor="Black"/>
+                        </Grid>
 
-            <Grid Grid.Row="1" Grid.Column="0" BackgroundColor="WhiteSmoke">
-                <ScrollView>
-                    <ListView x:Name="ordenesListView"  ItemSelected="select_Item">
-                        <ListView.ItemTemplate >
-                            <DataTemplate  >
-                                <ViewCell >
-                                    <Grid>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="10"/>
-                                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="1" Grid.Column="0" BackgroundColor="WhiteSmoke" >
+                            <ScrollView>
+                                <ListView x:Name="ordenesListView"  ItemSelected="select_Item">
+                                    <ListView.ItemTemplate >
+                                        <DataTemplate  >
+                                            <ViewCell >
+                                                <Grid Padding="0,8,0,10">
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="10"/>
+                                                    </Grid.RowDefinitions>
 
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="200"/>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="*"/>
-                                        </Grid.ColumnDefinitions>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                    </Grid.ColumnDefinitions>
 
-                                        <StackLayout  Grid.Column="0" Grid.Row="0"  HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical">
-                                            <Label Text="{Binding id_carts_cart}" TextColor="Black" FontSize="22"/>
-                                        </StackLayout>
-                                        <StackLayout  Grid.Column="1" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical">
-                                            <Label Text="{Binding carts_cartco_date_addedl}" TextColor="Black" FontSize="22"/>
-                                        </StackLayout>
-                                        <StackLayout  Grid.Column="2" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical">
-                                            <Label Text="{Binding carts_cart_estado}" TextColor="Black" FontSize="22"/>
-                                        </StackLayout>
-                                        <StackLayout  Grid.Column="3" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical">
-                                            <Button Text="Pagar" Command="{Binding Pagarcommand}" CornerRadius="10" FontSize="22" Scale=".8"></Button>
-                                        </StackLayout>
-                                    </Grid>
+                                                    <StackLayout  Grid.Column="0" Grid.Row="0"  HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical">
+                                                        <Label Text="{Binding id}" TextColor="Black" FontSize="22"/>
+                                                    </StackLayout>
+                                                    <StackLayout  Grid.Column="1" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical">
+                                                        <Label Text="{Binding fecha_orden}" TextColor="Black" FontSize="22"/>
+                                                    </StackLayout>
+                                                    <StackLayout  Grid.Column="2" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical">
+                                                        <Label Text="{Binding fecha_cerada}" TextColor="Black" FontSize="22"/>
+                                                    </StackLayout>
+                                                    <StackLayout  Grid.Column="3" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical">
+                                                        <Label Text="{Binding mesa}" TextColor="Black" FontSize="22"/>
+                                                    </StackLayout>
+                                                    <StackLayout Padding="0,0,0,5" Grid.Column="4" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical">
+                                                        <Button Text="Pagar" Command="{Binding Pagarcommand}" CornerRadius="10" FontSize="22" Scale=".9"></Button>
+                                                    </StackLayout>
+                                                </Grid>
 
-                                </ViewCell>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                </ScrollView>
+                                            </ViewCell>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </ScrollView>
                         </Grid>
                     </Grid>
                 </Frame>
-                    </Grid>
             </Grid>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

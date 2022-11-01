@@ -17,16 +17,16 @@ namespace AppResta.View
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class Main : ContentPage
     {
-        int band = 0;
+        int band = 0, ordenID;
         string mesaglb;
-        List<Model.Cart> cart = new List<Model.Cart>();
+        public List<Model.Cart> cart = new List<Model.Cart>();
 
         public Model.Cart cartItem = new Model.Cart();
-
 
         public Main(bool _Token, int idOrden = 0, string nombre="", string mesa = "MES-0")
         //public Main(Object[] datos)
         {
+            ordenID = idOrden;
             mesaglb = mesa;
             if (_Token == false)
             {
@@ -37,16 +37,18 @@ namespace AppResta.View
             {
 
                 InitializeComponent();
+                // Refreshplatillos.IsRefreshing = true;
                 testListView.ItemsSource = Categorias2();
                 double totalpay = 0.0;
 
                 if (idOrden != 0)
                 {
-                    test2ListView.ItemsSource = CartMesa(idOrden.ToString());
+                    
+                    test2ListView.ItemsSource = CartMesa(idOrden.ToString(), mesaglb);
                     test2ListView.ItemsSource = null;
                     test2ListView.ItemsSource = cart;
                     test2ListView.IsRefreshing = false;
-                    Console.WriteLine(cart.Count);
+                    //Console.WriteLine(cart.Count);
                     for (int i = 0; i < cart.Count; i++)
                     {
                         totalpay += cart[i].total;
@@ -59,21 +61,131 @@ namespace AppResta.View
                 MesaTexto.Text = "# Mesa:" + mesa;
                 NombTexto.Text = "Mesero: " + nombre;
                 OrdenTexto.Text = "# Orden: " + idOrden.ToString();
+                
+            }   
+
+        }
+        //----- REFRESCA EL CONTENIDO DE LA LISTA DE CARRITO ------//
+        private void RefreshCart_Refreshing(object sender, EventArgs e)
+        {
+            Task.Delay(700);
+            ordenID = Int32.Parse(IdOrden(mesaglb));
+           
+            cart.Clear();
+            cart = CartMesa(ordenID + "", mesaglb);
+
+            test2ListView.ItemsSource = null;
+            test2ListView.ItemsSource = cart;
+            RefreshCart.IsRefreshing = false;
+        }
+        //----- REFRESCA EL CONTENIDO DE LA LISTA DE CATEGORIA ------//
+        private void RefreshMesas_Refreshing(object sender, EventArgs e)
+        {
+            Task.Delay(700);
+            band = 0;
+            testListView.ItemsSource = Categorias2();
+
+           // Refreshplatillos.IsRefreshing = false;
+
+        }
+
+        //----- REFRESCA EL CONTENIDO DE LA LISTA DE CARRITO ------//
+        private void SwipeItem_Editar(object sender, EventArgs e)
+        {
+            
+            string carito = ((MenuItem)sender).CommandParameter.ToString() ;
+            Model.Platillos platillo = new Model.Platillos();
+            for (int i = 0; i < cart.Count; i++)
+            {
+                if (cart[i].platillo == carito) // Caso 2.1: El platillo existe
+                {
+
+                    // 
+                    Console.WriteLine("http://192.168.1.112/resta/admin/mysql/Platillo/index.php?op=obtenerPlatillos&idPlatillo=" + cart[i].platillo.Replace(" ", "%20"));
+                  
+                    var sub = new List<Model.Platillos>();
+                    var client = new HttpClient();
+
+                    client.BaseAddress = new Uri("http://192.168.1.112/resta/admin/mysql/Platillo/index.php?op=obtenerPlatillos&idPlatillo="+ cart[i].platillo.Replace(" ", "%20"));
+                    HttpResponseMessage response = client.GetAsync(client.BaseAddress).Result;
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var content = response.Content.ReadAsStringAsync().Result;
+                        string json = content.ToString();
+
+                        var jsonArray = JArray.Parse(json.ToString());
+
+                        foreach (var item in jsonArray)
+                        {
+                            
+                            int id = Int32.Parse(item["id"].ToString());
+                            string nombre = item["nombre"].ToString();
+                            string descrip = item["descrip"].ToString();
+                            string precio = item["precio"].ToString();
+                            string urls = item["url"].ToString().Remove(0, 23);
+                            int estatus = Int32.Parse(item["estatus"].ToString());
+                            string categoria = item["categoria"].ToString();
+                            string clasificacion = item["clasificacion"].ToString();
+                            string subcategoria = item["subcategoria"].ToString();
+
+                            //Console.WriteLine(urls);
+                            var byteArray = Convert.FromBase64String(urls);
+
+                            Stream stream = new MemoryStream(byteArray);
+                            var imageSource = ImageSource.FromStream(() => stream);
+                            //MyImage.Source = imageSource;
+                            platillo.id = id;
+                            platillo.nombre = nombre;
+                            platillo.descrip = descrip;
+                            platillo.precio = precio;
+                            platillo.url = imageSource;
+                            platillo.estatus = estatus;
+                            platillo.categoria = categoria;
+                            platillo.clasificacion = clasificacion;
+                            platillo.subcategoria = subcategoria;
+                        }
+                        break;
+                    }
+                  
+                }
+            }
+                                                                                    // Bandera null
+            PopupNavigation.Instance.PushAsync(new ItemPlatillo(platillo, mesaglb, bandera: 6, cart, test2ListView));
+        }
+
+        private void SwipeItem_Eliminar(object sender, EventArgs e)
+        {
+
+            var carito = ((MenuItem)sender).CommandParameter.ToString();
+
+
+            DisplayAlert("Estas seguro de Eliminarlo", "OK", "CANCELAR");
+            for (int i = 0; i < cart.Count; i++)
+            {
+                if (cart[i].idItem == Int32.Parse(carito)) // Caso 2.1: El platillo existe
+                {
+                    cart.RemoveAt(i);
+                    //Console.WriteLine("http://192.168.1.112/resta/admin/mysql/orden/index.php?op=updateItems&estado=" + carito);
+                    GET_DATOS("http://192.168.1.112/resta/admin/mysql/orden/index.php?op=updateItems&estado=" + carito);
+                    
+                }
             }
 
-            
-            
+            test2ListView.ItemsSource = null;
+            test2ListView.ItemsSource = cart;
+
+            // Actualizar el estado del item seleccionado
 
         }
 
-        private void SwipeItem_Invoked(object sender, EventArgs e)
-        {
-            DisplayAlert("Borrar", "Borrar producto", "OK");
-        }
 
-        private void SwipeItem_Invoked_1(object sender, EventArgs e)
+        private void Oredenar_orden(object sender, EventArgs e)
         {
-            DisplayAlert("Editar", "Editar producto", "OK");
+            
+            GET_DATOS("http://192.168.1.112/resta/admin/mysql/orden/index.php?op=updateEstadoOrdenMesas&estado=1&id="+ordenID);
+
+
+            Navigation.PushAsync(new View.Ordenes(), false);
         }
 
         public void select_Item(object sender, SelectionChangedEventArgs e)
@@ -84,6 +196,8 @@ namespace AppResta.View
         public void UpdateSelectionData(IEnumerable<object> previousSelectedContact, IEnumerable<object> currentSelectedContact)
         {
             double totalpay = 0.0;
+
+           
             if (band == 0)
             {
                 var i = currentSelectedContact.FirstOrDefault(); // Obtenemos el indice de la lista
@@ -115,9 +229,31 @@ namespace AppResta.View
                 cartItem = new Model.Cart();
                 //DisplayAlert(platillo.nombre, " Nombre :" + platillo.precio + "\n Categoria:" + platillo.descrip,"Cancelar", "Ok");
 
+                //ItemPlatillo itemPlatillo = new ItemPlatillo(platillo, mesaglb, 0);
+
+                //PopupNavigation.Instance.PushAsync(itemPlatillo);
+
+                /*
+                * CASO 1: CREO EL CARRITO Y AGREGO EL ITEM SELECCIONADO
+                * CASO 2: EL CARRITO EXITE, Y EL ITEM EXISTE, EL ITEME AUMENTA SU CANTIDAD
+                * CASO 3: EL CARRRITO EXISTE, EL ITEM NO ESTA EN EL CARRITO, SE AGREGA
+                * 
+                *  1 - INSERT CARTS, INSERT EL ITEM, SELECT CARTS, INSERTAR LA RELACCION(ITEM,CART)
+                *  2 - UPDATE CANTIDAD ITEM
+                *  3 - INSERTAMOS ITEM,SELECT CARTS, INSERT RELACION(ITEM, CART)
+                */
+                ItemPlatillo itemPlatillo;
                 if (cart.Count == 0) // Caso 0: Carrito vacio
                 {
-                    PopupNavigation.Instance.PushAsync(new ItemPlatillo(platillo, mesaglb,0));
+                     itemPlatillo = new ItemPlatillo(platillo, mesaglb, bandera:0,cart, test2ListView);
+
+                    PopupNavigation.Instance.PushAsync(itemPlatillo);
+                    /*
+                    this.cart = itemPlatillo.cart;
+                    test2ListView.ItemsSource = null;
+                    test2ListView.ItemsSource = cart;
+                    */
+                    
                 }
                 else { // Caso 1
 
@@ -125,11 +261,8 @@ namespace AppResta.View
                     int index = 0; 
                     for (int i = 0; i < cart.Count; i++)
                     {
-                        // Console.WriteLine("IdCart " + cart[i].id + " platillo id: " + platillo.id);
-                        if (cart[i].id == platillo.id) // Caso 2.1: El platillo existe
+                        if (cart[i].id == platillo.id && platillo != null) // Caso 2.1: El platillo existe
                         {
-                            //Console.WriteLine("Es igual suma 1");
-                            
                             index = i;
                             band = 1;
                             break;
@@ -137,59 +270,18 @@ namespace AppResta.View
                     }
 
                     if (band == 1) { // CASO 1.1
-                        PopupNavigation.Instance.PushAsync(new ItemPlatillo(platillo, mesaglb, 1, cart[index].idItem, cart[index].cantidad));
-                        
+                         itemPlatillo = new ItemPlatillo(platillo, mesaglb, bandera: 1, cart, test2ListView);
+                        PopupNavigation.Instance.PushAsync(itemPlatillo);
                     }
                     else if (band == 0) // CASO 1.2
                     {
                         //Console.WriteLine("Ya exite un platillo y se agrega el otro");
-                        PopupNavigation.Instance.PushAsync(new ItemPlatillo(platillo, mesaglb,2, cart[index].idItem, cart[index].cantidad));
+                        itemPlatillo = new ItemPlatillo(platillo, mesaglb, bandera: 2, cart, test2ListView);
+                        PopupNavigation.Instance.PushAsync(itemPlatillo);
+                        
                     }
                    
                 }
-               
-                
-
-                /*
-                if (cart.Count == 0) // Caso 1: Carrito vacio
-                {
-
-                    cartItem.id = platillo.id;
-                    cartItem.platillo = platillo.nombre;
-                    cartItem.cantidad = 1;
-                    cartItem.precio = Convert.ToDouble(platillo.precio.Replace(",","."));
-                    cartItem.total = (int)(cartItem.precio * cartItem.cantidad);
-
-                    cart.Add(cartItem);
-                    //Console.WriteLine("Entra a primer elemento del carrito");
-                }
-                else // Caso 2: Cariito con al menuos un platillo
-                {
-                    int band = 0;
-                    for (int i = 0; i < cart.Count; i++)
-                    {
-                        // Console.WriteLine("IdCart " + cart[i].id + " platillo id: " + platillo.id);
-                        if (cart[i].id == platillo.id) // Caso 2.1: El platillo existe
-                        {
-                            //Console.WriteLine("Es igual suma 1");
-                            cart[i].cantidad += 1;
-                            cart[i].total = (double)(cart[i].precio * cart[i].cantidad);
-                          
-                            band = 1;
-                            break;
-                        }
-                    }
-                    if (band == 0)
-                    {
-                        //Console.WriteLine("Ya exite un platillo y se agrega el otro");
-                        cartItem.id = platillo.id;
-                        cartItem.platillo = platillo.nombre;
-                        cartItem.cantidad = 1;
-                        cartItem.precio = Convert.ToDouble(platillo.precio.Replace(",", "."));
-                        cartItem.total = (double)(cartItem.precio * cartItem.cantidad);
-                        cart.Add(cartItem);
-                    }
-                }*/
 
             }
             test2ListView.ItemsSource = null;
@@ -205,6 +297,7 @@ namespace AppResta.View
             
         }
 
+        
 
         public void returnCategorias(object sender, EventArgs e)
         {
@@ -213,8 +306,19 @@ namespace AppResta.View
             
         }
 
-
-            public List<Model.Categorias> Categorias2()
+        
+        public void GET_DATOS(string c)
+        {
+            var client = new HttpClient();
+            client.BaseAddress = new Uri(c);
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress).Result;
+            if (response.IsSuccessStatusCode)
+            {
+               // DisplayAlert("Eliminado","", "OK");
+            }
+           
+        }
+        public List<Model.Categorias> Categorias2()
         {
             Model.Categorias categoria;
             var userInfo = new List<Model.Categorias>();
@@ -314,7 +418,7 @@ namespace AppResta.View
             {
                 var content = response.Content.ReadAsStringAsync().Result;
                 string json = content.ToString();
-                ;
+             
                 var jsonArray = JArray.Parse(json.ToString());
 
                 foreach (var item in jsonArray)
@@ -359,13 +463,14 @@ namespace AppResta.View
         }
 
 
-        public List<Model.Cart> CartMesa(string id)
+        public List<Model.Cart> CartMesa(string id,string mesa)
         {
 
             var sub = new List<Model.Cart>();
             var client = new HttpClient();
 
-            client.BaseAddress = new Uri("http://192.168.1.112/resta/admin/mysql/orden/index.php?op=obtenerCarrito&idOrden=" + id);
+            client.BaseAddress = new Uri("http://192.168.1.112/resta/admin/mysql/orden/index.php?op=obtenerCarrito&idOrden=" + id+"&mesa="+mesa);
+
             HttpResponseMessage response = client.GetAsync(client.BaseAddress).Result;
             if (response.IsSuccessStatusCode)
             {
@@ -405,6 +510,29 @@ namespace AppResta.View
             }
         }
 
+       
+        public string IdOrden(string mesa)
+        {
+
+            var client = new HttpClient();
+            string ordenID = "";
+            client.BaseAddress = new Uri("http://192.168.1.112/resta/admin/mysql/orden/index.php?op=obtenerCarritoOrden&mesa=" + mesa);
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                var content = response.Content.ReadAsStringAsync().Result;
+                string json = content.ToString();
+                var jsonArray = JArray.Parse(json.ToString());
+
+                foreach (var item in jsonArray)
+                {
+                    ordenID = item["ordern"].ToString();
+
+                }
+               
+            }
+            return ordenID;
+        }
 
     }
 

@@ -65,49 +65,52 @@
                 </Grid.ColumnDefinitions>
 
                 <Frame Grid.Row="0" Grid.Column="0" Padding="0,0,0,0" CornerRadius="15">
-                <ScrollView >
-                    <CollectionView x:Name="mesasListView" SelectionMode="Single"  SelectionChanged="select_Item">
-                        <CollectionView.ItemsLayout>
-                            <GridItemsLayout Orientation="Vertical" Span="3"/>
-                        </CollectionView.ItemsLayout>
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate>
-                                <Grid Padding="20,20,20,20">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="*"/>
-                                    </Grid.RowDefinitions>
-                                        <Frame Grid.Row="0" Grid.Column="0" Padding="10,10,10,10" CornerRadius="15" BorderColor="{Binding orden}">
-                                        <Grid RowSpacing="1" ColumnSpacing="1" >
-                                            <Grid.RowDefinitions >
-                                               
-                                                <RowDefinition Height="60"/>
-                                            </Grid.RowDefinitions>
+                    <RefreshView x:Name="RefreshMesas" Refreshing="RefreshMesas_Refreshing">
+                        
+                            <CollectionView x:Name="mesasListView" SelectionMode="Single"  SelectionChanged="select_Item">
+                                <CollectionView.ItemsLayout>
+                                    <GridItemsLayout Orientation="Vertical" Span="3"/>
+                                </CollectionView.ItemsLayout>
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid Padding="20,20,20,20">
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*" />
                                             </Grid.ColumnDefinitions>
-                                            <!--
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*"/>
+                                            </Grid.RowDefinitions>
+                                            <Frame Grid.Row="0" Grid.Column="0" Padding="10,10,10,10" CornerRadius="15" BorderColor="{Binding orden}">
+                                                <Grid RowSpacing="1" ColumnSpacing="1" >
+                                                    <Grid.RowDefinitions >
+
+                                                        <RowDefinition Height="60"/>
+                                                    </Grid.RowDefinitions>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <!--
                                                 <Grid Grid.Row="0"  Grid.Column="0">
                                                 <Image  Source="mesa.png" Aspect="AspectFit"/>
                                             </Grid>
 
                                             -->
-                                            
-                                            <Grid Grid.Row="0"  Grid.Column="0">
-                                                <Label Text="{Binding mesa}" HorizontalOptions="CenterAndExpand" VerticalOptions="Center" FontSize="22" FontAttributes="Bold" TextColor="Black"/>
-                                            </Grid>
+
+                                                    <Grid Grid.Row="0"  Grid.Column="0">
+                                                        <Label Text="{Binding mesa}" HorizontalOptions="CenterAndExpand" VerticalOptions="Center" FontSize="22" FontAttributes="Bold" TextColor="Black"/>
+                                                    </Grid>
+                                                </Grid>
+
+                                            </Frame>
+
                                         </Grid>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
 
-                                    </Frame>
-
-                                </Grid>
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                    </CollectionView>
-
-                </ScrollView>
+                     
+                    </RefreshView>
+                    
                 </Frame>
             </Grid>
         </Grid>

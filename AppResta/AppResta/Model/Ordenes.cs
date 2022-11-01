@@ -6,9 +6,12 @@ namespace AppResta.Model
 {
     public class Ordenes
     {
-        public int id_carts_cart { get; set; }
-        public string carts_cartco_date_addedl { get; set; }
-        public string carts_cart_estado { get; set; }
+        public int id { get; set; }
+        public string fecha_orden { get; set; }
+        public string fecha_cerada { get; set; }
         public string mesa { get; set; }
+        public string total { get; set; }
+        public int mesero { get; set; }
+        public int pago { get; set; }
     }
 }
