@@ -31,7 +31,7 @@ namespace AppResta.View
             if (_Token == false)
             {
                 Navigation.PushAsync(new Login());
-                Console.WriteLine("No token");
+                //Console.WriteLine("No token");
             }
             else
             {
@@ -94,22 +94,21 @@ namespace AppResta.View
         {
             
             string carito = ((MenuItem)sender).CommandParameter.ToString() ;
-            Model.Platillos platillo = new Model.Platillos();
+           // Console.WriteLine(carito);
+           //int idItem = Int32.Parse(((MenuItem)sender).CommandParameter.ToString());
+            Model.Platillos platillo = new Model.Platillos(); ;
+            int index = 0;
             for (int i = 0; i < cart.Count; i++)
             {
                 if (cart[i].platillo == carito) // Caso 2.1: El platillo existe
                 {
-
-                    // 
-                    Console.WriteLine("http://192.168.1.112/resta/admin/mysql/Platillo/index.php?op=obtenerPlatillos&idPlatillo=" + cart[i].platillo.Replace(" ", "%20"));
-                  
-                    var sub = new List<Model.Platillos>();
                     var client = new HttpClient();
-
+                    index = i;
                     client.BaseAddress = new Uri("http://192.168.1.112/resta/admin/mysql/Platillo/index.php?op=obtenerPlatillos&idPlatillo="+ cart[i].platillo.Replace(" ", "%20"));
                     HttpResponseMessage response = client.GetAsync(client.BaseAddress).Result;
                     if (response.IsSuccessStatusCode)
                     {
+                        
                         var content = response.Content.ReadAsStringAsync().Result;
                         string json = content.ToString();
 
@@ -117,40 +116,30 @@ namespace AppResta.View
 
                         foreach (var item in jsonArray)
                         {
-                            
-                            int id = Int32.Parse(item["id"].ToString());
-                            string nombre = item["nombre"].ToString();
-                            string descrip = item["descrip"].ToString();
-                            string precio = item["precio"].ToString();
-                            string urls = item["url"].ToString().Remove(0, 23);
-                            int estatus = Int32.Parse(item["estatus"].ToString());
-                            string categoria = item["categoria"].ToString();
-                            string clasificacion = item["clasificacion"].ToString();
-                            string subcategoria = item["subcategoria"].ToString();
 
-                            //Console.WriteLine(urls);
-                            var byteArray = Convert.FromBase64String(urls);
+                            if (item["nombre"].ToString() == carito)
+                            {
+                                //Console.WriteLine("eNTRE "+carito);
+                                platillo.id = Int32.Parse(item["id"].ToString());
+                                platillo.nombre = item["nombre"].ToString();
+                                platillo.descrip = item["descrip"].ToString();
+                                platillo.precio = item["precio"].ToString();
+                                platillo.url = item["url"].ToString().Remove(0, 23);
+                                platillo.estatus = Int32.Parse(item["estatus"].ToString());
+                                platillo.categoria = item["categoria"].ToString();
+                                platillo.clasificacion = item["clasificacion"].ToString();
+                                platillo.subcategoria = item["subcategoria"].ToString();
 
-                            Stream stream = new MemoryStream(byteArray);
-                            var imageSource = ImageSource.FromStream(() => stream);
-                            //MyImage.Source = imageSource;
-                            platillo.id = id;
-                            platillo.nombre = nombre;
-                            platillo.descrip = descrip;
-                            platillo.precio = precio;
-                            platillo.url = imageSource;
-                            platillo.estatus = estatus;
-                            platillo.categoria = categoria;
-                            platillo.clasificacion = clasificacion;
-                            platillo.subcategoria = subcategoria;
+                            }
                         }
                         break;
                     }
                   
                 }
             }
-                                                                                    // Bandera null
-            PopupNavigation.Instance.PushAsync(new ItemPlatillo(platillo, mesaglb, bandera: 6, cart, test2ListView));
+            
+
+           PopupNavigation.Instance.PushAsync(new ItemPlatillo(platillo, mesaglb, bandera: 1, cart, test2ListView, cart[index].idItem));
         }
 
         private void SwipeItem_Eliminar(object sender, EventArgs e)
@@ -159,7 +148,7 @@ namespace AppResta.View
             var carito = ((MenuItem)sender).CommandParameter.ToString();
 
 
-            DisplayAlert("Estas seguro de Eliminarlo", "OK", "CANCELAR");
+            DisplayAlert("Estas seguro de Eliminarlo"+carito, "OK", "CANCELAR");
             for (int i = 0; i < cart.Count; i++)
             {
                 if (cart[i].idItem == Int32.Parse(carito)) // Caso 2.1: El platillo existe
@@ -197,7 +186,7 @@ namespace AppResta.View
         {
             double totalpay = 0.0;
 
-           
+
             if (band == 0)
             {
                 var i = currentSelectedContact.FirstOrDefault(); // Obtenemos el indice de la lista
@@ -242,23 +231,16 @@ namespace AppResta.View
                 *  2 - UPDATE CANTIDAD ITEM
                 *  3 - INSERTAMOS ITEM,SELECT CARTS, INSERT RELACION(ITEM, CART)
                 */
-                ItemPlatillo itemPlatillo;
                 if (cart.Count == 0) // Caso 0: Carrito vacio
                 {
-                     itemPlatillo = new ItemPlatillo(platillo, mesaglb, bandera:0,cart, test2ListView);
+                    PopupNavigation.Instance.PushAsync(new ItemPlatillo(platillo, mesaglb, bandera: 0, cart, test2ListView));
 
-                    PopupNavigation.Instance.PushAsync(itemPlatillo);
-                    /*
-                    this.cart = itemPlatillo.cart;
-                    test2ListView.ItemsSource = null;
-                    test2ListView.ItemsSource = cart;
-                    */
-                    
+
                 }
                 else { // Caso 1
 
                     int band = 0;
-                    int index = 0; 
+                    int index = 0;
                     for (int i = 0; i < cart.Count; i++)
                     {
                         if (cart[i].id == platillo.id && platillo != null) // Caso 2.1: El platillo existe
@@ -270,20 +252,21 @@ namespace AppResta.View
                     }
 
                     if (band == 1) { // CASO 1.1
-                         itemPlatillo = new ItemPlatillo(platillo, mesaglb, bandera: 1, cart, test2ListView);
-                        PopupNavigation.Instance.PushAsync(itemPlatillo);
+                                     // itemPlatillo = new ItemPlatillo(platillo, mesaglb, bandera: 1, cart, test2ListView);
+                        PopupNavigation.Instance.PushAsync(new ItemPlatillo(platillo, mesaglb, bandera: 1, cart, test2ListView));
                     }
                     else if (band == 0) // CASO 1.2
                     {
+
                         //Console.WriteLine("Ya exite un platillo y se agrega el otro");
-                        itemPlatillo = new ItemPlatillo(platillo, mesaglb, bandera: 2, cart, test2ListView);
-                        PopupNavigation.Instance.PushAsync(itemPlatillo);
-                        
+                        // itemPlatillo = new ItemPlatillo(platillo, mesaglb, bandera: 2, cart, test2ListView);
+                        PopupNavigation.Instance.PushAsync(new ItemPlatillo(platillo, mesaglb, bandera: 2, cart, test2ListView));
+
                     }
-                   
+
                 }
 
-            }
+            } 
             test2ListView.ItemsSource = null;
             test2ListView.ItemsSource = cart;
             test2ListView.IsRefreshing = false;
@@ -444,7 +427,7 @@ namespace AppResta.View
                     platillo.nombre = nombre;
                     platillo.descrip = descrip;
                     platillo.precio = precio;
-                    platillo.url = imageSource;
+                    platillo.url = urls;
                     platillo.estatus = estatus;
                     platillo.categoria = categoria;
                     platillo.clasificacion = clasificacion;

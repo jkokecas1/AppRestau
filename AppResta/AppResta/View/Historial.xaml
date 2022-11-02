@@ -29,7 +29,7 @@
                 </Grid.ColumnDefinitions>
 
                 <Image Source="klassylogo.png" VerticalOptions="Start" Grid.Row="0" Grid.Column="0" Margin="5"></Image>
-                <Button Text="Mesas"  Command="{Binding Mesascommand}" Grid.Row="0" Grid.Column="1" CornerRadius="0" BackgroundColor="DimGray" TextColor="#FFF"></Button>
+
                 <Button Text="Ordenes" Command="{Binding Ordencommand}" Grid.Row="0" Grid.Column="2" CornerRadius="0" BackgroundColor="DimGray" TextColor="#FFF"></Button>
                 <Button Text="Historial" Command="{Binding Historialcommand}" Grid.Row="0" Grid.Column="3" CornerRadius="0" BackgroundColor="LightGray" TextColor="Black"></Button>
                 <Label x:Name="nombreEmpl" Grid.Row="0" Grid.Column="4"  FontSize="20" TextColor="Black"></Label>
@@ -101,8 +101,9 @@
 
                         <Grid Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" BackgroundColor="White" Padding="25,5,20,10">
 
-                            <Grid>
+                            <Grid RowSpacing="2" >
                                 <Grid.RowDefinitions>
+                                    <RowDefinition Height="60"/>
                                     <RowDefinition Height="80"/>
                                     <RowDefinition Height="*"/>
 
@@ -112,71 +113,81 @@
                                 </Grid.ColumnDefinitions>
 
 
-                                <Grid Grid.Row="0" Grid.Column="0" >
-                                    <Label x:Name="NombTicket" TextColor="Black" FontAttributes="Bold" FontSize="30" VerticalOptions="Center"/>
+                                <Grid Grid.Row="0" Grid.Column="0" BackgroundColor="White">
+                                    <StackLayout Grid.Row="0" Grid.Column="0" VerticalOptions="Center" >
+                                        <Label x:Name="NombTicket" TextColor="Black" FontAttributes="Bold" FontSize="30"/>
+                                    </StackLayout>
+
+                                    <StackLayout Grid.Row="0" Grid.Column="1" VerticalOptions="Center" >
+                                        <Label x:Name="NumMesa" TextColor="Black" FontSize="20"/>
+                                    </StackLayout>
+
+                                    <StackLayout Grid.Row="0" Grid.Column="2" VerticalOptions="Center" >
+                                        <Label x:Name="NombMesero" TextColor="Black" FontSize="20"/>
+                                    </StackLayout>
+
+
+
                                 </Grid>
-                                <ScrollView Grid.Row="1" Grid.Column="0">
-                                    <Grid>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="40"/>
-                                            <RowDefinition Height="40"/>
-                                            <RowDefinition Height="40"/>
-                                            <RowDefinition Height="40"/>
-                                            <RowDefinition Height="200"/>
-                                            <RowDefinition Height="2"/>
-                                            <RowDefinition Height="40"/>
-                                            <RowDefinition Height="40"/>
-                                            <RowDefinition Height="40"/>
-                                            <RowDefinition Height="2"/>
-                                            <RowDefinition Height="40"/>
-                                            <RowDefinition Height="40"/>
 
-                                        </Grid.RowDefinitions>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                        </Grid.ColumnDefinitions>
-                                        <Grid Grid.Row="0" Grid.Column="0">
-                                            <Label x:Name="NombMesero" TextColor="Black" FontSize="20"/>
-                                        </Grid>
-                                        <Grid Grid.Row="1" Grid.Column="0">
-                                            <Label x:Name="FechaAbierto" TextColor="Black" FontSize="20"/>
-                                        </Grid>
-                                        <Grid Grid.Row="2" Grid.Column="0">
-                                            <Label x:Name="FechaCerrada" TextColor="Black" FontSize="20"/>
-                                        </Grid>
-                                        <Grid Grid.Row="3" Grid.Column="0">
-                                            <Label x:Name="NumMesa" TextColor="Black" FontSize="20"/>
-                                        </Grid>
+                                <Grid Grid.Row="1" Grid.Column="0" BackgroundColor="White">
 
-                                        <ListView x:Name="productos" IsVisible="false" Grid.Row="4" Grid.Column="0" BackgroundColor="WhiteSmoke">
+                                    <StackLayout Grid.Row="0" Grid.Column="0" VerticalOptions="Center" >
+                                        <Label x:Name="FechaAbierto" TextColor="Black" FontSize="20"/>
+                                    </StackLayout>
 
-                                        </ListView>
+                                    <StackLayout Grid.Row="0" Grid.Column="1" VerticalOptions="Center" >
+                                        <Label x:Name="TP" TextColor="Black" FontSize="20"/>
+                                    </StackLayout>
 
-                                        <Frame x:Name="linea1" Grid.Row="5" Grid.Column="0" BackgroundColor="LightGray" IsVisible="false"></Frame>
+                                    <StackLayout Grid.Row="0" Grid.Column="2" VerticalOptions="Center" >
+                                        <Label x:Name="FechaCerada" TextColor="Black" FontSize="20"/>
+                                    </StackLayout>
 
-                                        <Grid Grid.Row="6" Grid.Column="0">
-                                            <Label x:Name="Pago" TextColor="Black" FontSize="20" FontAttributes="Bold"/>
-                                        </Grid>
 
-                                        <Grid Grid.Row="7" Grid.Column="0">
-                                            <Label x:Name="Efectivo" TextColor="Black" FontSize="20"/>
-                                        </Grid>
-                                        <Grid Grid.Row="8" Grid.Column="0">
 
-                                            <Label x:Name="Tarjeta" TextColor="Black" FontSize="20"/>
-                                        </Grid>
+                                </Grid>
 
-                                        <Frame x:Name="linea2" Grid.Row="9" Grid.Column="0" BackgroundColor="LightGray" IsVisible="false"></Frame>
 
-                                        <Grid Grid.Row="10" Grid.Column="0">
-                                            <Label x:Name="Total" TextColor="Black" FontSize="20" FontAttributes="Bold"/>
-                                        </Grid>
-                                        <Grid Grid.Row="11" Grid.Column="0">
 
-                                            <Label x:Name="PagoTotal" TextColor="Black" FontSize="20"/>
-                                        </Grid>
+
+                                <Grid Grid.Row="2" Grid.Column="0"  BackgroundColor="White">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="2"/>
+                                        <RowDefinition Height="200"/>
+                                        <RowDefinition Height="2"/>
+                                        <RowDefinition Height="*"/>
+
+
+
+
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+
+                                    <Frame x:Name="linea2" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="LightGray" IsVisible="false"></Frame>
+                                    <ListView x:Name="productos" IsVisible="false" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="WhiteSmoke">
+
+                                    </ListView>
+
+                                    <Frame x:Name="linea1" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="LightGray" IsVisible="false"></Frame>
+
+                                    <Grid Grid.Row="3" Grid.Column="0">
+                                        <Label Grid.Row="0" Grid.Column="0" x:Name="Monto" TextColor="Black" FontSize="20" FontAttributes="Bold"/>
+                                        <Label Grid.Row="1" Grid.Column="0" x:Name="PagoTotal" TextColor="Black" FontSize="20"/>
                                     </Grid>
-                                </ScrollView>
+
+                                    <Grid Grid.Row="3" Grid.Column="1">
+                                        <Label Grid.Row="0" Grid.Column="0" x:Name="Pago" TextColor="Black" FontSize="20" FontAttributes="Bold"/>
+                                        <Label Grid.Row="1" Grid.Column="0" x:Name="Efectivo" TextColor="Black" FontSize="20"/>
+                                        <Label Grid.Row="2" Grid.Column="0" x:Name="Tarjeta" TextColor="Black" FontSize="20"/>
+                                    </Grid>
+
+
+                                </Grid>
+
                             </Grid>
 
                         </Grid>

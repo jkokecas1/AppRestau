@@ -38,7 +38,7 @@ namespace AppResta.ViewModel
         }
         public async Task Orden()
         {
-            await Navigation.PushAsync(new Ordenes());
+            await Navigation.PopAsync(false);
 
         }
         public async Task Historial()

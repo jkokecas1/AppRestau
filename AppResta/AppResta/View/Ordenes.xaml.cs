@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using AppResta.Model;
 using Newtonsoft.Json.Linq;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -13,21 +14,34 @@ namespace AppResta.View
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class Ordenes : ContentPage
     {
+
+        List<Model.Ordenes> ordenList;
         public Ordenes()
         {
             InitializeComponent();
             BindingContext = new ViewModel.OrdenesViewModel(Navigation);
+            //btnNotification.Clicked += BtnNotification_Clicked;
+            init();
+        }
 
-            ordenesListView.ItemsSource = Ordene();
+        async void init() {
+             ordenList = Ordene();
+            ordenesListView.ItemsSource = ordenList;//await App.Database.GetOrdenesAsync(); //
+        }
+
+        private void Button_Pagar(object sender, EventArgs e)
+        {
+            //Navigation.PushAsync(new Pago(ordenList),false);
         }
 
         public void select_Item(object sender, SelectedItemChangedEventArgs e)
         {
             var orden = e.SelectedItem as Model.Ordenes;
-            
-            //Navigation.PushAsync(new Main(false, idOrden: orden.id));
-        }
 
+            //Navigation.PushAsync(new Main(false, idOrden: orden.id));
+            
+        }
+      
         public List<Model.Ordenes> Ordene()
         {
             Model.Ordenes orden;
@@ -45,20 +59,14 @@ namespace AppResta.View
                 foreach (var item in jsonArray)
                 {
                     orden = new Model.Ordenes();
-                    int id = Int32.Parse(item["id"].ToString());
-                    string fecha_orden = item["fecha_orden"].ToString();
-                    string fecha_cerrado = item["fecha_cerada"].ToString();
-                    string mesa = item["mesa"].ToString();
-                    string total = item["total"].ToString();
-                    int pago = Int32.Parse(item["pago"].ToString());
-                    int mesero = Int32.Parse(item["mesero"].ToString());
-                    orden.id = id;
-                    orden.fecha_orden = fecha_orden;
-                    orden.fecha_cerada = fecha_cerrado;
-                    orden.mesero = mesero;
-                    orden.mesa = mesa;
-                    orden.total = total;
-                    orden.pago = pago;
+                  
+                    orden.id = Int32.Parse(item["id"].ToString());
+                    orden.fecha_orden = item["fecha_orden"].ToString().Substring(11);
+                    orden.fecha_cerada = item["fecha_cerada"].ToString().Substring(11);
+                    orden.mesero = Int32.Parse(item["mesero"].ToString());
+                    orden.mesa = item["mesa"].ToString();
+                    orden.total = item["total"].ToString();
+                    orden.pago = Int32.Parse(item["pago"].ToString());
                     ordenList.Add(orden);
                 }
                 return ordenList;
@@ -68,5 +76,6 @@ namespace AppResta.View
                 return null;
             }
         }
+
     }
 }

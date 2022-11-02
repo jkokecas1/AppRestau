@@ -41,15 +41,16 @@ namespace AppResta.View
             NombTicket.Text = "Ticket  Nº " + orden.id;
             NombMesero.Text = "Mesero                                            " + orden.mesero;
             FechaAbierto.Text = "Abierto                                            " + orden.fecha_orden;
-            FechaCerrada.Text = "Cuenta cerrada                                " + orden.fecha_cerada;
+            FechaCerada.Text = "Cuenta cerrada                                " + orden.fecha_cerada;
             NumMesa.Text = "Mesa n0                                         " + orden.mesa;
-            PagoTotal.Text = "Total **********************************               " + orden.total;
-            Efectivo.Text = "Efectivo *******************************           " + orden.pago;
-            Tarjeta.Text = "Tarjeta *********************************           " + orden.pago;
+            PagoTotal.Text = "Total ***************  " + orden.total;
+            Efectivo.Text = "Efectivo **************  " + orden.pago;
+            Tarjeta.Text = "Tarjeta ***************  " + orden.pago;
             Pago.Text = "Pago";
-            Total.Text = "Total";
+            Monto.Text = "Monto";
+            TP.Text = "Tiempo  25 MIN";
 
-            productos.ItemsSource = CartMesa(orden.id + "", orden.mesa); ;
+            productos.ItemsSource = CartMesa(orden.id + "", orden.mesa);
         }
 
         public List<Model.Ordenes> Ordene()
@@ -58,7 +59,7 @@ namespace AppResta.View
             var ordenList = new List<Model.Ordenes>();
             var client = new HttpClient();
 
-            client.BaseAddress = new Uri("http://192.168.1.112/resta/admin/mysql/orden/index.php?op=obtenerOrden");
+            client.BaseAddress = new Uri("http://192.168.1.112/resta/admin/mysql/orden/index.php?op=obtenerOrdenHistorial");
             HttpResponseMessage response = client.GetAsync(client.BaseAddress).Result;
             if (response.IsSuccessStatusCode)
             {
@@ -68,22 +69,26 @@ namespace AppResta.View
 
                 foreach (var item in jsonArray)
                 {
-                    orden = new Model.Ordenes();
-                    int id = Int32.Parse(item["id"].ToString());
-                    string fecha_orden = item["fecha_orden"].ToString();
-                    string fecha_cerrado = item["fecha_cerada"].ToString();
-                    string mesa = item["mesa"].ToString();
-                    string total = item["total"].ToString();
-                    int pago = Int32.Parse(item["pago"].ToString());
-                    int mesero = Int32.Parse(item["mesero"].ToString());
-                    orden.id = id;
-                    orden.fecha_orden = fecha_orden;
-                    orden.fecha_cerada = fecha_cerrado;
-                    orden.mesero = mesero;
-                    orden.mesa = mesa;
-                    orden.total = total;
-                    orden.pago = pago;
-                    ordenList.Add(orden);
+                    if (Int32.Parse(item["pago"].ToString()) != 0)
+                    {
+                        orden = new Model.Ordenes();
+                        int id = Int32.Parse(item["id"].ToString());
+                        string fecha_orden = item["fecha_orden"].ToString();
+                        string fecha_cerrado = item["fecha_cerada"].ToString();
+                        string mesa = item["mesa"].ToString();
+                        string total = item["total"].ToString();
+                        int pago = Int32.Parse(item["pago"].ToString());
+                        int mesero = Int32.Parse(item["mesero"].ToString());
+                        orden.id = id;
+                        orden.fecha_orden = fecha_orden;
+                        orden.fecha_cerada = fecha_cerrado;
+                        orden.mesero = mesero;
+                        orden.mesa = mesa;
+                        orden.total = total;
+                        orden.pago = pago;
+                        ordenList.Add(orden);
+                    }
+
                 }
                 return ordenList;
             }

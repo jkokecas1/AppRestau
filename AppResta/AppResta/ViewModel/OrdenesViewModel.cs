@@ -41,7 +41,7 @@ namespace AppResta.ViewModel
         }
         public async Task Pagar()
         {
-            await Navigation.PushAsync(new Pago());
+            //await Navigation.PushAsync(new Pago());
 
         }
         public async Task Historial()

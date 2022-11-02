@@ -65,7 +65,7 @@ namespace AppResta.ViewModel
 
         public async Task Pago()
         {
-            await Navigation.PushAsync(new Pago(), false);
+            //await Navigation.PushAsync(new Pago(), false);
        
         }
         public async Task Mesas()

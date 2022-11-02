@@ -10,20 +10,11 @@ using Xamarin.Forms.Xaml;
 namespace AppResta.View
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class Pago : ContentPage
+    public partial class PopUp : Rg.Plugins.Popup.Pages.PopupPage
     {
-        List<Model.Ordenes> orden;
-        public Pago(List<Model.Ordenes> orden)
+        public PopUp()
         {
-            this.orden = orden;
             InitializeComponent();
-            init();
-        }
-
-        public void init() 
-        {
-
-            
         }
     }
 }

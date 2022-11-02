@@ -13,62 +13,65 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <StackLayout 
-                BackgroundColor="Gray"
-                Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" >
-                <Grid>
+            <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="AliceBlue" Padding="5,10,5,0">
+                <Grid Padding="0,0,6,0">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="100"/>
-                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Button 
                         Grid.Row="0" Grid.Column="0"
                         HorizontalOptions="Start"
-                        BackgroundColor="Transparent" TextColor="White" Text="Cancelar" Command="{Binding Cancelarcommand}" />
+                        BackgroundColor="DimGray" TextColor="White" Text="Cancelar" CornerRadius="0" Command="{Binding Cancelarcommand}" />
                     <Label 
+                        BackgroundColor="Transparent"
                         Padding="10"
                         FontSize="Body"
-                        Grid.Row="0" Grid.Column="1" Text="TICKET" TextColor="White"/>
-                    <Button Grid.Row="0" Grid.Column="2" HorizontalOptions="End" Text="Cerrar sesion"/>
-                </Grid>
-            </StackLayout>
+                        Grid.Row="0" Grid.Column="1" Text="TICKET" TextColor="Black"/>
 
-            <Grid BackgroundColor="LightGray" Grid.Row="1" Grid.Column="0" Padding="30,30,30,30">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <Button x:Name="btn7" BackgroundColor="White" Grid.Row="0" Grid.Column="0" Text="7" TextColor="Black" FontSize="Body" />
-                    <Button x:Name="btn8" BackgroundColor="White" Grid.Row="0" Grid.Column="1" Text="8" TextColor="Black" FontSize="Body"/>
-                    <Button x:Name="btn9" BackgroundColor="White" Grid.Row="0" Grid.Column="2" Text="9" TextColor="Black" FontSize="Body"/>
-                    <Button x:Name="btn4" BackgroundColor="White" Grid.Row="1" Grid.Column="0" Text="4" TextColor="Black" FontSize="Body"/>
-                    <Button x:Name="btn5" BackgroundColor="White" Grid.Row="1" Grid.Column="1" Text="5" TextColor="Black" FontSize="Body"/>
-                    <Button x:Name="btn6" BackgroundColor="White" Grid.Row="1" Grid.Column="2" Text="6" TextColor="Black" FontSize="Body"/>
-                    <Button x:Name="btn1" BackgroundColor="White" Grid.Row="2" Grid.Column="0" Text="1" TextColor="Black" FontSize="Body"/>
-                    <Button x:Name="btn2" BackgroundColor="White" Grid.Row="2" Grid.Column="1" Text="2" TextColor="Black" FontSize="Body"/>
-                    <Button x:Name="btn3" BackgroundColor="White" Grid.Row="2" Grid.Column="2" Text="3" TextColor="Black" FontSize="Body"/>
-                    <Button x:Name="btnpunto" BackgroundColor="White" Grid.Row="3" Grid.Column="0" Text="." TextColor="Black" FontSize="Body"/>
-                    <Button x:Name="btn0" BackgroundColor="White" Grid.Row="3" Grid.Column="1" Text="0" TextColor="Black" FontSize="Body"/>
-                    <Button x:Name="btnBorrar" BackgroundColor="White" Grid.Row="3" Grid.Column="2" Text="Borrar" TextColor="Black" FontSize="9"/>
                 </Grid>
             </Grid>
 
 
-            <Frame Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Padding="5,5,5,5" CornerRadius="20" Margin="10,10,10,10">
+
+            <Frame BackgroundColor="White" Grid.Row="1" Grid.Column="0" Padding="30,30,30,30" CornerRadius="15" Margin="10,5,0,10">
+                <Grid >
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Button x:Name="btn7" BackgroundColor="LightGray" Grid.Row="0" Grid.Column="0" Text="7" TextColor="Black" FontSize="25" />
+                        <Button x:Name="btn8" BackgroundColor="LightGray" Grid.Row="0" Grid.Column="1" Text="8" TextColor="Black" FontSize="25"/>
+                        <Button x:Name="btn9" BackgroundColor="LightGray" Grid.Row="0" Grid.Column="2" Text="9" TextColor="Black" FontSize="25"/>
+                        <Button x:Name="btn4" BackgroundColor="LightGray" Grid.Row="1" Grid.Column="0" Text="4" TextColor="Black" FontSize="25"/>
+                        <Button x:Name="btn5" BackgroundColor="LightGray" Grid.Row="1" Grid.Column="1" Text="5" TextColor="Black" FontSize="25"/>
+                        <Button x:Name="btn6" BackgroundColor="LightGray" Grid.Row="1" Grid.Column="2" Text="6" TextColor="Black" FontSize="25"/>
+                        <Button x:Name="btn1" BackgroundColor="LightGray" Grid.Row="2" Grid.Column="0" Text="1" TextColor="Black" FontSize="25"/>
+                        <Button x:Name="btn2" BackgroundColor="LightGray" Grid.Row="2" Grid.Column="1" Text="2" TextColor="Black" FontSize="25"/>
+                        <Button x:Name="btn3" BackgroundColor="LightGray" Grid.Row="2" Grid.Column="2" Text="3" TextColor="Black" FontSize="25"/>
+                        <Button x:Name="btnpunto" BackgroundColor="LightGray" Grid.Row="3" Grid.Column="0" Text="." TextColor="Black" FontSize="25"/>
+                        <Button x:Name="btn0" BackgroundColor="LightGray" Grid.Row="3" Grid.Column="1" Text="0" TextColor="Black" FontSize="25"/>
+                        <Button x:Name="btnBorrar" BackgroundColor="LightGray" Grid.Row="3" Grid.Column="2" Text="Borrar" TextColor="Black" FontSize="25"/>
+                    </Grid>
+                </Grid>
+            </Frame>
+
+
+            <Frame Grid.Row="1" Grid.Column="1" Padding="15,10,15,10" CornerRadius="15" Margin="0,5,10,10" >
                 <Grid BackgroundColor="White"  Padding="10,10,10,10">
                     <Grid>
                         <Grid.RowDefinitions>
@@ -85,31 +88,31 @@
                         </Grid.ColumnDefinitions>
 
                         <Grid Grid.Row="0" Grid.Column="0" >
-                            <Label Grid.Row="0" Grid.Column="0" Text="Propina:" TextColor="Black"/>
-                            <Entry Grid.Row="0" Grid.Column="1" HorizontalOptions="End" Placeholder="0" IsReadOnly="true" FontSize="Body" PlaceholderColor="Black"/>
+                            <Label Grid.Row="0" Grid.Column="0" Text="Propina:" TextColor="Black" FontSize="25"/>
+                            <Label Grid.Row="0" Grid.Column="1" HorizontalOptions="End" Text="0" FontSize="25" />
                         </Grid>
 
 
                         <Grid Grid.Row="1" Grid.Column="0">
-                            <Label Grid.Row="0" Grid.Column="0" Text="Efectivo:" TextColor="Black"/>
-                            <Entry Grid.Row="0" Grid.Column="1" HorizontalOptions="End" Placeholder="0" IsReadOnly="true" FontSize="Body" PlaceholderColor="Black"/>
+                            <Label Grid.Row="0" Grid.Column="0" Text="Efectivo:" TextColor="Black" FontSize="25"/>
+                            <Label Grid.Row="0" Grid.Column="1" HorizontalOptions="End" Text="0" FontSize="25" />
                         </Grid>
 
 
                         <Grid Grid.Row="2" Grid.Column="0">
-                            <Label Grid.Row="0" Grid.Column="0" Text="Tarjeta:" TextColor="Black"/>
-                            <Entry Grid.Row="0" Grid.Column="1" HorizontalOptions="End" Placeholder="0" IsReadOnly="True" FontSize="Body" PlaceholderColor="Black"/>
+                            <Label Grid.Row="0" Grid.Column="0" Text="Tarjeta:" TextColor="Black" FontSize="25"/>
+                            <Label Grid.Row="0" Grid.Column="1" HorizontalOptions="End" Text="0" FontSize="25" />
                         </Grid>
 
 
                         <Grid Grid.Row="3" Grid.Column="0">
-                            <Label Grid.Row="0" Grid.Column="0" Text="Imprimir recibo" TextColor="Black"/>
+                            <Label Grid.Row="0" Grid.Column="0" Text="Imprimir recibo" TextColor="Black" FontSize="25"/>
                             <Switch Grid.Row="0" Grid.Column="1" HorizontalOptions="End" IsToggled="True" OnColor="Green" ThumbColor="Gray"/>
                         </Grid>
 
                         <Grid Grid.Row="4" Grid.Column="0">
-                            <Label Grid.Row="0" Grid.Column="0" Text="Subtotal:" FontSize="Body" FontAttributes="Bold" TextColor="Black"/>
-                            <Entry Grid.Row="0" Grid.Column="1" HorizontalOptions="End" Placeholder="0" IsReadOnly="true" FontSize="Body" PlaceholderColor="Black"/>
+                            <Label Grid.Row="0" Grid.Column="0" Text="Subtotal:" FontAttributes="Bold" TextColor="Black" FontSize="25"/>
+                            <Label Grid.Row="0" Grid.Column="1" HorizontalOptions="End" Text="0" FontSize="25"/>
                         </Grid>
 
                         <Grid Grid.Row="5" Grid.Column="0" >

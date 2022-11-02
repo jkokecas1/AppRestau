@@ -105,6 +105,7 @@ namespace AppResta.View
                 var jsonArray = JArray.Parse(json.ToString());
                 foreach (var item in jsonArray)
                 {
+                    Console.WriteLine(item["estado"]);
                     if (Int32.Parse(item["cont"].ToString()) == 1)
                     {
                         if (Int32.Parse(item["estado"].ToString()) == 0)

@@ -52,44 +52,7 @@
                 </Grid>
             </Grid>
 
-            <!--#END HEADER
-                <Grid  RowSpacing="0" ColumnSpacing="0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="60"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-
-            <Grid Grid.Row="0" Grid.Column="0"  BackgroundColor="AliceBlue" Padding="5,10,5,0">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-
-
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="100"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="100"/>
-                        <ColumnDefinition Width="100"/>
-                        <ColumnDefinition Width="15"/>
-                    </Grid.ColumnDefinitions> 
-                    <Image Source="klassylogo.png" VerticalOptions="Start" Grid.Row="0" Grid.Column="0"></Image>
-                    <Button Text="Mesas"  Command="{Binding Mesascommand}" Grid.Row="0" Grid.Column="1" CornerRadius="0" BackgroundColor="DimGray"></Button>
-                    <Button Text="Ordenes" Command="{Binding Ordencommand}" Grid.Row="0" Grid.Column="2" CornerRadius="0" BackgroundColor="DimGray"></Button>
-                    <Button Text="Historial" Command="{Binding Historialcommand}" Grid.Row="0" Grid.Column="3" CornerRadius="0" BackgroundColor="DimGray"></Button>
-                    <Label x:Name="NombTexto" FontSize="20" TextColor="Black" Grid.Row="0" Grid.Column="4" ></Label>
-                    <Label x:Name="MesaTexto" Grid.Row="0" Grid.Column="5"  FontSize="20" TextColor="Black"  BackgroundColor="LightGray" ></Label>
-                    <Button Text="SALIR"  Command="{Binding NavLoginCommand}" Grid.Row="0" Grid.Column="6" Grid.ColumnSpan="2" CornerRadius="0" BackgroundColor="DimGray"></Button>
-                </Grid>
-            </Grid>
-            
-            
-            -->
+        
 
 
                 <Frame  Grid.Row="1" Grid.Column="0" Padding="5,0,5,0" CornerRadius="5" Margin="10,0,0,0">
@@ -155,7 +118,7 @@
                                                                            BackgroundColor="Green"
                                                                            Invoked="SwipeItem_Editar"/>
                                                             <SwipeItem Text="Borrar"
-                                                                           CommandParameter="{Binding platillo}"
+                                                                           CommandParameter="{Binding idItem}"
                                                                            IconImageSource="borrar.png"
                                                                            BackgroundColor="Red"
                                                                            Invoked="SwipeItem_Eliminar"/>

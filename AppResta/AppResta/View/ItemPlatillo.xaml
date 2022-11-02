@@ -91,41 +91,7 @@ xmlns:input="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.Input
                                 </DataTemplate>
                             </CollectionView.ItemTemplate>
                         </CollectionView>
-                        <!--
-                        <ListView Grid.Row="0" Grid.Column="1" BackgroundColor="WhiteSmoke" x:Name="extrasListView"  SelectedItem="select_extra">
-                            <ListView.ItemTemplate >
-                                <DataTemplate  >
-                                    <ViewCell >
-                                        <Grid>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="*"/>
-                                            </Grid.RowDefinitions>
-
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="*"/>
-                                                <ColumnDefinition Width="*"/>
-
-                                                <ColumnDefinition Width="*"/>
-                                            </Grid.ColumnDefinitions>
-
-                                           <StackLayout  Grid.Column="0" Grid.Row="0"  HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical">
-                                                <input:CheckBox/> 
-                                                <CheckBox CheckedChanged="OnCheckBoxCheckedChanged" />
-                                            </StackLayout>
-                                            <StackLayout  Grid.Column="1" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical">
-                                                <Label x:Name="nombre" Text="{Binding extra_nombre}" TextColor="Black" FontSize="15"/>
-                                            </StackLayout>
-                                            <StackLayout  Grid.Column="2" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical">
-                                                <Label x:Name="cantidad" Text="{Binding extra_precio}" TextColor="Black" FontSize="15"/>
-                                            </StackLayout>
-
-                                        </Grid>
-
-                                    </ViewCell>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
-                         -->
+                       
 
                         <Entry BackgroundColor="LightGray" x:Name="comentTxt" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Placeholder="Comentarios" TextColor="Black"/>
 

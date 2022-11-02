@@ -24,19 +24,15 @@ namespace AppResta.View
         Model.Extras extra = new Model.Extras();
         Model.Platillos platillos;
         string mesasGlb;
-        int band = 0, cant; 
+        int band = 0, cant, item = 0; 
        
         List<Model.Extras> listExtra;
 
-
-        
-
-        
-
-        public ItemPlatillo(Model.Platillos platillo, string mesa, int bandera, List<Model.Cart> cart, ListView carrito = null)
+        public ItemPlatillo(Model.Platillos platillo, string mesa, int bandera, List<Model.Cart> cart, ListView carrito = null, int item =0)
         {
             listExtra = new List<Model.Extras>();
             mesasGlb = mesa;
+            this.item = item;
             //idItems = cart[index].idItem;
             //cant = cantidad;
             this.cart = cart;
@@ -47,12 +43,15 @@ namespace AppResta.View
             nombPlatillo.Text = platillos.nombre;
             descPlatillo.Text = platillos.descrip;
 
-            
+            foreach (Model.Cart cartItem in cart) {
+                if (cartItem.idItem == item) {
+                    valCantidad.Text = cartItem.cantidad.ToString();
+                }
+            }
 
             extrasListView.ItemsSource = Extras(platillos.id);
 
         }
-
 
         private void cerrarPop(object sender, EventArgs e)
         {
@@ -141,25 +140,27 @@ namespace AppResta.View
             carrito.ItemsSource = cart;
             cant = cart[index].cantidad;
 
+
             if (band == 0) // CASO 0: SI EL CARITO PARA ESA MESA NO EXITE 
             {
-                cadena = "http://192.168.1.112/resta/admin/mysql/Orden/index.php?op=insertItemPlatillo&idplatillo=" + idplatillo.ToString() + "&cantidad=" + cantidad.ToString() + "&fecha=" + hora+ "&mesa=" + mesasGlb.ToString() + "&total=" + total.ToString() + "&comen=" + comentario;
+                cadena = "http://192.168.1.112/resta/admin/mysql/Orden/index.php?op=insertItemPlatillo&idplatillo=" + idplatillo.ToString() + "&cantidad=" + cantidad.ToString() + "&fecha=" + hora + "&mesa=" + mesasGlb.ToString() + "&total=" + total.ToString() + "&comen=" + comentario;
                 popAgregar(cadena);
                 Console.WriteLine("CASO 0: " + cadena);
             }
             else if (band == 1) // CASO 1: SI LE CARRITO EXISTE, Y ES EL MISMO PRODUCTO
             {
-                cadena = "http://192.168.1.112/resta/admin/mysql/Orden/index.php?op=updateItemPlatillo&cantidad=" + (cant+cantidad) + "&idPlatillo=" + platillos.id + "&idItem=" + cart[index].idItem;
+                cadena = "http://192.168.1.112/resta/admin/mysql/Orden/index.php?op=updateItemPlatillo&cantidad=" + (cant + cantidad) + "&idPlatillo=" + platillos.id + "&idItem=" + cart[index].idItem;
                 popAgregar(cadena);
                 Console.WriteLine("CASO 1: " + cadena);
             }
             else if (band == 2) // CASP 2: SI EL CARRITO EXISTE, Y NO ES EL MISMO PLATILLO
             {
-                cadena = "http://192.168.1.112/resta/admin/mysql/Orden/index.php?op=insertarItems&cantidad=" + cantidad + "&idPlatillo=" + platillos.id +"&mesa="+ mesasGlb;
+                cadena = "http://192.168.1.112/resta/admin/mysql/Orden/index.php?op=insertarItems&cantidad=" + cantidad + "&idPlatillo=" + platillos.id + "&mesa=" + mesasGlb;
                 popAgregar(cadena);
-                Console.WriteLine("CASO 2: "+ cadena);
+                Console.WriteLine("CASO 2: " + cadena);
 
             }
+            
 
             if (listExtra.ToArray().Length != 0) // CASO Extras: EN CASO DE QUE AGREGE EXTRAS 
             {
