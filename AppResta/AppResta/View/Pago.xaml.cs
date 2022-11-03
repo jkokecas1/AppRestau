@@ -102,8 +102,7 @@ namespace AppResta.View
                 pago.monto = Double.Parse(Efectivo.Text + "");
                 pago.tipoPago = "EFECTIVO";
                 pago.propina = propina.Text;
-                if (pago.monto < Double.Parse(Subtotal.Text))
-                {
+                if (pago.monto < Double.Parse(Subtotal.Text))                {
                     DisplayAlert("INCORRECTO", "EL monto es menor al subtotal", "Ok");
                 }
             }
