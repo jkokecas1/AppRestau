@@ -16,14 +16,14 @@ namespace AppResta.View
     {
         string nomb = "";
        
-        public Mesa(string nombre = "NA")
+        public Mesa(Model.Empleado empleado = null)
         {
 
             InitializeComponent();
             BindingContext = new ViewModel.MesaViewModel(Navigation);
-            nomb = nombre;
-            nombreEmpl.Text = "Bienvenido: "+nombre;
-         
+            nomb = empleado.nombre;
+            nombreEmpl.Text = "Bienvenido: "+empleado.nombre;
+            puestoEmpl.Text = empleado.puesto;
             mesasListView.ItemsSource = Mesas();
            
             Navigation.RemovePage(new Login());
@@ -43,6 +43,8 @@ namespace AppResta.View
             Navigation.PushAsync(new Main(true, idOrden: Int32.Parse(mesas.id_orden), nomb, mesas.mesa),false);
             mesasListView.ItemsSource = null;
             mesasListView.ItemsSource = Mesas();
+
+
             //mesasListView.IsRefreshing = false;
         }
  
@@ -67,6 +69,7 @@ namespace AppResta.View
                     mesa = new Model.Mesas();
                     int id = Int32.Parse(item["id"].ToString());
                     string nombre = item["mesa"].ToString();
+                    string mesero = item["mesa"].ToString();
                     array = OrdenInMesas(nombre);
                     mesa.id = id;
                     mesa.mesa = nombre;

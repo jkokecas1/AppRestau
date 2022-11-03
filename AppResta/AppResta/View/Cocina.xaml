@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AppResta.View.Cocina"
+             NavigationPage.HasNavigationBar="False">
+    <ContentPage.Content>
+        <Grid  RowSpacing="0" ColumnSpacing="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Row="0" Grid.Column="0"  BackgroundColor="AliceBlue" Padding="0,10,5,0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+
+
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+
+
+                    </Grid.ColumnDefinitions>
+
+                    <Image Source="klassylogo.png"  Grid.Row="0" Grid.Column="0"></Image>
+                    <Label x:Name="nombreEmpl" Text="COCINA" Grid.Row="0" Grid.Column="1"  FontSize="20" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center"></Label>
+                    <Button Text="SALIR"  Command="{Binding NavLoginCommand}" Grid.Row="0" Grid.Column="2" HorizontalOptions="End" CornerRadius="0" BackgroundColor="Red" TextColor="#FFF"></Button>
+                </Grid>
+            </Grid>
+
+
+            <Grid Grid.Row="1" Grid.Column="0" BackgroundColor="LightGray" Padding="10,10,10,10" ColumnSpacing="5">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Frame Grid.Row="0" Grid.Column="0" Padding="30,30,30,30" CornerRadius="15">
+
+
+
+                    <Grid>
+                        
+                        
+                        
+                        <RefreshView Grid.Row="0" Grid.Column="0">
+                            <CollectionView SelectionMode="Single" x:Name="cocinaListView" SelectionChanged="cocinaListView_SelectionChanged" >
+                                <CollectionView.ItemsLayout>
+                                    <GridItemsLayout Orientation="Vertical" Span="3"/>
+                                </CollectionView.ItemsLayout>
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate>                                            
+                                            <Grid BackgroundColor="Yellow" Padding="5">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="100"/>
+                                                </Grid.RowDefinitions>
+                                                <Frame HasShadow="True" Padding="5" CornerRadius="10">
+                                                    <Grid BackgroundColor="White" RowSpacing="0" Padding="9,9,9,9">
+                                                        <Grid.RowDefinitions >
+                                                            <RowDefinition Height="*"/>
+                                                            <RowDefinition Height="20"/>
+                                                        </Grid.RowDefinitions>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="*"/>
+                                                        </Grid.ColumnDefinitions>
+
+                                                        <Grid Grid.Row="0"  Grid.Column="0"  BackgroundColor="White" Padding="0,0,0,0">
+                                                            <Label Text="ORDEN #" HorizontalOptions="Center" VerticalOptions="Center" FontSize="20" FontAttributes="Bold" TextColor="Black"/>
+                                                        </Grid>
+
+                                                        <Grid Grid.Row="1"  Grid.Column="0" BackgroundColor="White" HorizontalOptions="Center" Padding="0,0,0,0">
+                                                        <Label Text="{Binding id}"  FontSize="20"  TextColor="Black" FontAttributes="Bold" HorizontalOptions="Center" Padding="0,0,0,0"/>
+                                                        </Grid>
+
+
+                                                    </Grid>
+
+                                                </Frame>
+                                            </Grid>
+                                        </DataTemplate>
+                                </CollectionView.ItemTemplate>
+
+                            </CollectionView>
+                        </RefreshView>
+                    </Grid>
+
+                </Frame>
+
+            </Grid>
+
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

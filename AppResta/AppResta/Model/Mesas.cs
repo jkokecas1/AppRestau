@@ -10,5 +10,6 @@ namespace AppResta.Model
         public string mesa { get; set; }
         public string id_orden { get; set; }
         public string orden { get; set; }
+        public string mesero { get; set; }
     }
 }

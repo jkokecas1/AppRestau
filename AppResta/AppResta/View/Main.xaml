@@ -93,7 +93,7 @@
                             <!---LIST  VIEW-->
                         <Grid Grid.Row="1" Grid.Column="0" >
                             <RefreshView x:Name="RefreshCart" Refreshing="RefreshCart_Refreshing">
-                                <ListView BackgroundColor="WhiteSmoke" x:Name="test2ListView" >
+                                <ListView BackgroundColor="WhiteSmoke" x:Name="test2ListView" ItemSelected="SelectItem" >
                                     <ListView.ItemTemplate >
                                         <DataTemplate  >
                                             <ViewCell  >
@@ -136,6 +136,9 @@
                                                         </StackLayout>
                                                         <StackLayout  Grid.Column="3" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical">
                                                             <Label Text="{Binding total}" TextColor="Black" FontSize="15"/>
+                                                        </StackLayout>
+                                                        <StackLayout Grid.Column="0" Grid.Row="1" HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical">
+                                                            <Label Text="Nombre" IsVisible="{Binding visible}" ></Label>
                                                         </StackLayout>
                                                     </Grid>
                                                 </SwipeView>

@@ -101,50 +101,63 @@
                                     <ListView.ItemTemplate >
                                         <DataTemplate  >
                                             <ViewCell >
-                                                <Grid Padding="0,0,0,0">
-                                                    <Grid.RowDefinitions>
-                                                        <RowDefinition Height="*"/>
 
-                                                    </Grid.RowDefinitions>
+                                                <SwipeView Threshold="50">
+                                                    <SwipeView.RightItems>
+                                                        <SwipeItems  SwipeBehaviorOnInvoked="Close" Mode="Execute" >
+                                                            <SwipeItem Text="PAGAR"                                                                     
+                                                                       CommandParameter="{Binding id}"
+                                                                       BackgroundColor="Green"
+                                                                       Invoked="Button_Pagar"/>
 
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="40"/>
-                                                        <ColumnDefinition Width="80"/>
-                                                        <ColumnDefinition Width="220"/>
-                                                        <ColumnDefinition Width="110"/>
-                                                        <ColumnDefinition Width="220"/>
-                                                        <ColumnDefinition Width="*"/>
-                                                        <ColumnDefinition Width="80"/>
-                                                    </Grid.ColumnDefinitions>
+                                                        </SwipeItems>
+                                                    </SwipeView.RightItems>
 
-                                                    <StackLayout  Grid.Column="0" Grid.Row="0"  HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical" Padding="0,10,0,0">
-                                                        <Label Text="{Binding id}" TextColor="Black" FontSize="22"/>
-                                                    </StackLayout>
-                                                    <StackLayout  Grid.Column="1" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical" Padding="0,10,0,0">
 
-                                                        <Label Text="{Binding mesa}" TextColor="Black" FontSize="22"/>
-                                                    </StackLayout>
-                                                    <StackLayout  Grid.Column="2" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical" Padding="0,10,0,0">
+                                                    <Grid Padding="0,0,0,0">
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition Height="*"/>
 
-                                                        <Label Text="{Binding fecha_orden}" TextColor="Black" FontSize="22"/>
-                                                    </StackLayout>
+                                                        </Grid.RowDefinitions>
 
-                                                    <StackLayout Grid.Column="3" Grid.Row="0" Padding="0,10,0,0">
-                                                        <Label x:Name="hora"
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="40"/>
+                                                            <ColumnDefinition Width="80"/>
+                                                            <ColumnDefinition Width="220"/>
+                                                            <ColumnDefinition Width="110"/>
+                                                            <ColumnDefinition Width="220"/>
+                                                            <ColumnDefinition Width="*"/>
+                                                            <ColumnDefinition Width="80"/>
+                                                        </Grid.ColumnDefinitions>
+
+                                                        <StackLayout  Grid.Column="0" Grid.Row="0"  HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical" Padding="0,10,0,0">
+                                                            <Label Text="{Binding id}" TextColor="Black" FontSize="22"/>
+                                                        </StackLayout>
+                                                        <StackLayout  Grid.Column="1" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical" Padding="0,10,0,0">
+
+                                                            <Label Text="{Binding mesa}" TextColor="Black" FontSize="22"/>
+                                                        </StackLayout>
+                                                        <StackLayout  Grid.Column="2" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical" Padding="0,10,0,0">
+
+                                                            <Label Text="{Binding fecha_orden}" TextColor="Black" FontSize="22"/>
+                                                        </StackLayout>
+
+                                                        <StackLayout Grid.Column="3" Grid.Row="0" Padding="0,10,0,0">
+                                                            <Label x:Name="hora"
                                                                        FontSize="Large"
                                                                        FontAttributes="Bold"
                                                                        VerticalOptions="Start" 
                                                                        HorizontalOptions="CenterAndExpand" 
-                                                                       Text="{Binding Hora}"/>
-                                                    </StackLayout>
+                                                                       Text="{Binding total}"/>
+                                                        </StackLayout>
 
-                                                    <StackLayout  Grid.Column="4" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical" Padding="0,10,0,0">
-                                                        <Label Text="{Binding fecha_cerada}" TextColor="Black" FontSize="22"/>
-                                                    </StackLayout>
-                                                    <StackLayout Padding="0,0,0,0" Grid.Column="5" Grid.Row="0" >
-                                                        <Button  Text="Pagar" Clicked="Button_Pagar" CornerRadius="10" FontSize="22"></Button>
-                                                    </StackLayout>
-                                                </Grid>
+                                                        <StackLayout  Grid.Column="4" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical" Padding="0,10,0,0">
+                                                            <Label Text="{Binding fecha_cerada}" TextColor="Black" FontSize="22"/>
+                                                        </StackLayout>
+
+                                                    </Grid>
+
+                                                </SwipeView>
 
                                             </ViewCell>
                                         </DataTemplate>

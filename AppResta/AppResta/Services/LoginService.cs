@@ -12,14 +12,14 @@ namespace AppResta.Services
 {
     public class LoginService : iLoginRespository
     {
-        public List<UserInfo> Login(string pin)
+        public List<Empleado> Login(string pins)
         {
-            Model.UserInfo usuario;
+            Model.Empleado usuario;
 
-            var empelado = new List<UserInfo>();
+            var empelado = new List<Empleado>();
             var client = new HttpClient();
 
-            client.BaseAddress = new Uri("http://192.168.1.112/resta/admin/mysql/empleados/index.php?op=obtenerPIN&pin=" + pin);
+            client.BaseAddress = new Uri("http://192.168.1.112/resta/admin/mysql/empleados/index.php?op=obtenerPIN&pin=" + pins);
             HttpResponseMessage response = client.GetAsync(client.BaseAddress).Result;
             /* if (response.IsSuccessStatusCode)
              {
@@ -41,13 +41,16 @@ namespace AppResta.Services
 
                 foreach (var item in jsonArray)
                 {
-                    usuario = new Model.UserInfo();
-                    string pinE = item["pin"].ToString();
-                    string nombre = item["nombre"].ToString();
+                    usuario = new Model.Empleado();
 
-                    // Console.WriteLine(item["nombre"].ToString());
-                    usuario.PIN = pinE;
-                    usuario.Nombre = nombre;
+                    //id":1,"nombre":"Joreg M","pin":"1112","puesto":"Cajero","email":"(871) 736-2020","celular":"Jorge@resta.mz","estatus":1}
+                 
+                    usuario.id = Int32.Parse(item["id"].ToString());
+                    usuario.nombre = item["nombre"].ToString();
+                    usuario.pin = item["pin"].ToString();
+                    usuario.puesto = item["puesto"].ToString();
+                    usuario.email = item["email"].ToString();
+                    usuario.celular = item["celular"].ToString();
                     empelado.Add(usuario);
                 }
 

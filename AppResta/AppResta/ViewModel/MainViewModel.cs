@@ -19,6 +19,8 @@ namespace AppResta.ViewModel
         int _id;
         string _Nombre;
         string _Estado;
+        string _expand;
+
         public List<Categorias> categoria;
         #endregion
 
@@ -53,6 +55,13 @@ namespace AppResta.ViewModel
         {
             get { return _Estado; }
             set { SetValue(ref _Estado, value); }
+
+        }
+
+        public string Expand
+        {
+            get { return _expand; }
+            set { SetValue(ref _expand, value); }
 
         }
         #endregion

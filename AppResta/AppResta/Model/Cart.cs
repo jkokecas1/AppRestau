@@ -14,7 +14,7 @@ namespace AppResta.Model
         public double total { get; set; }
         public string extras { get; set; }
         public string estado { get; set; }
-      
+        public string visible { get; set; }
 
     }
 }

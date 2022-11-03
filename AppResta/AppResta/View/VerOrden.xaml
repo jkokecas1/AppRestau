@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<popup:PopupPage
+xmlns="http://xamarin.com/schemas/2014/forms"
+xmlns:popup="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:combobox="clr-namespace:Syncfusion.XForms.ComboBox;assembly=Syncfusion.SfComboBox.XForms"
+x:Class="AppResta.View.VerOrden">
+
+
+
+
+    <Frame BackgroundColor="WhiteSmoke" Padding="20,20,20,20" Margin="150,10,150,10" CornerRadius="20">
+        <Grid RowSpacing="0">
+
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="60"/>
+
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+
+            </Grid.ColumnDefinitions>
+
+
+            <Grid Grid.Row="0" Grid.Column="0" BackgroundColor="WhiteSmoke" Padding="8,8,8,8">
+                <Label Grid.Row="0" Grid.Column="0" x:Name="numeroOrden" TextColor="Black" FontAttributes="Bold" FontSize="25"/>
+                <Grid Grid.Row="0" Grid.Column="1">
+                    <Picker Title="SELECIONA EL TIEMPO">
+                        <Picker.Items>
+                            <x:String>5 min</x:String>
+                            <x:String>10min</x:String>
+                            <x:String>15 min</x:String>
+                            <x:String>20 min</x:String>
+                            <x:String>25 min</x:String>
+                            <x:String>30 min</x:String>
+                            <x:String>35 min</x:String>
+                            <x:String>40 min</x:String>
+                            <x:String>55 min</x:String>
+                        </Picker.Items>
+                    </Picker>
+                </Grid>
+
+                <ImageButton Grid.Row="0" Grid.Column="2" Clicked="cerrarPop" HorizontalOptions="End"  Source="cerrar.png"/>
+
+            </Grid>
+
+
+
+
+            <Grid Grid.Row="1" Grid.Column="0" Padding="8,8,8,8">
+                <ListView BackgroundColor="Blue">
+
+
+
+
+
+
+                </ListView>
+            </Grid>
+
+            <Grid Grid.Row="2" Grid.Column="0" BackgroundColor="WhiteSmoke" Padding="8,8,8,8">
+                <Button Grid.Row="0" Grid.Column="0"  Text="Iniciar" TextColor="Black" BackgroundColor="Green" />
+
+                <Button Grid.Row="0" Grid.Column="1"  Text="Finalizar" TextColor="Black" BackgroundColor="Red" />
+            </Grid>
+
+
+        </Grid>
+    </Frame>
+</popup:PopupPage>

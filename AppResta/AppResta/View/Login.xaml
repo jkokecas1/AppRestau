@@ -5,7 +5,7 @@
                NavigationPage.HasNavigationBar="False">
     <ContentPage.Content>
 
-
+        
         <Grid  RowSpacing="0" ColumnSpacing="0" BackgroundColor="LightGray">
             <Grid.RowDefinitions>
                 <RowDefinition Height="70"/>
@@ -33,18 +33,27 @@
                 </Grid>
 
                 <Grid Grid.Row="0" Grid.Column="1">
+                   
+                    
                     <Label  Text="Ingresa tu NIP" FontSize="40" TextColor="Black" FontAttributes="Bold" HorizontalTextAlignment="Center" VerticalOptions="Center"/>
 
                 </Grid>
-
+                
                 
 
 
             </Grid>
-
+            
             <Frame Grid.Row="1" Grid.Column="0" CornerRadius="10" Padding="10,10,10,10" Margin="10,10,10,10">
+                
                 <Grid> 
                     <Grid Grid.Row="0" Grid.Column="0">
+                        <StackLayout Orientation="Vertical">
+                            <Label Text="ROL: CAJERO, NIP: 1112" FontSize="25"></Label>
+                            <Label Text="ROL: MESERO, NIP: 7894" FontSize="25"></Label>
+                            <Label Text="ROL: COCINERO, NIP: 8785" FontSize="25"></Label>
+
+                        </StackLayout>
                         <Entry Text="{Binding Pin}" IsReadOnly="True" TextColor="Black" Placeholder="PIN" WidthRequest="270" HeightRequest="70" IsPassword="True" HorizontalOptions="Center" VerticalOptions="Center" ReturnType="Send" ClearButtonVisibility="WhileEditing" HorizontalTextAlignment="Center" FontSize="50" CharacterSpacing="10" MaxLength="4" />
 
                     </Grid>

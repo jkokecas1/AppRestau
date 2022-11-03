@@ -110,16 +110,36 @@ namespace AppResta.ViewModel
 
             }
 
-            List <UserInfo> empleado = _loginRespository.Login(Pin);
-            
+            List <Empleado> empleado = _loginRespository.Login(Pin);
+            Model.Empleado emp = new Empleado(); ;
             if (empleado != null)
             {
-                foreach (UserInfo item in empleado)
+                foreach (Empleado item in empleado)
                 {
-                    nombre =  item.Nombre;
+                    emp.id = item.id;
+                    emp.nombre = item.nombre;
+                    emp.pin = item.pin;
+                    emp.puesto = item.puesto;
+                    emp.email = item.email;
+                    emp.celular = item.celular;
                 }
-                
-                await Navigation.PushAsync(new Mesa(nombre: nombre),false);
+
+                if (emp.puesto == "Cajero")
+                {
+                    //Cajero
+                    await Navigation.PushAsync(new Mesa(empleado: emp), false);
+                }
+                else if (emp.puesto == "Mesero") {
+                    await Navigation.PushAsync(new Mesa(empleado: emp), false);
+                } else if (emp.puesto == "Cocinero") {
+                    //Cocinero
+                    await Navigation.PushAsync(new Cocina(), false);
+                } else if (emp.puesto == "Barra") {
+                    // Barra
+                    await Navigation.PushAsync(new Mesa(empleado: emp), false);
+                }
+
+
             }
             else
             {

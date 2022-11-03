@@ -26,7 +26,7 @@ namespace AppResta.View
         string mesasGlb;
         int band = 0, cant, item = 0; 
        
-        List<Model.Extras> listExtra;
+        List<Model.Extras> listExtra, listaExtraItems;
 
         public ItemPlatillo(Model.Platillos platillo, string mesa, int bandera, List<Model.Cart> cart, ListView carrito = null, int item =0)
         {
@@ -46,6 +46,9 @@ namespace AppResta.View
             foreach (Model.Cart cartItem in cart) {
                 if (cartItem.idItem == item) {
                     valCantidad.Text = cartItem.cantidad.ToString();
+                    stepper.Value = cartItem.cantidad;
+                    btn_agregar.Text = "ACTUALIZAR";
+                    //listaExtraItems = Extras2(platillo.id);
                 }
             }
 
@@ -61,7 +64,7 @@ namespace AppResta.View
 
         public void cantidadPlatillo(object sender, ValueChangedEventArgs e) {
             var value = e.NewValue;
-            valCantidad.Text = value.ToString();
+            valCantidad.Text =  value.ToString();
         }
 
         void selectmultiple(object sender, SelectionChangedEventArgs e)
@@ -76,6 +79,7 @@ namespace AppResta.View
         public void agregarItemCart(object sender, EventArgs e)
         {
 
+            int valSteper = Int32.Parse(stepper.Value+"");
             int index= 0;
             int idplatillo = platillos.id;
             int cantidad = Int32.Parse(valCantidad.Text);
@@ -112,8 +116,8 @@ namespace AppResta.View
                     // Console.WriteLine("IdCart " + cart[i].id + " platillo id: " + platillo.id);
                     if (cart[i].id == platillos.id) // Caso 2.1: El platillo existe
                     {
-                        //Console.WriteLine("Es igual suma 1");
-                        cart[i].cantidad += cantidad;
+                        Console.WriteLine("Es igual suma 1: "+valSteper);
+                        cart[i].cantidad = valSteper;
                         cart[i].total = (double)(cart[i].precio * cart[i].cantidad);
                         index = i;
                         band = 1;
@@ -149,13 +153,21 @@ namespace AppResta.View
             }
             else if (band == 1) // CASO 1: SI LE CARRITO EXISTE, Y ES EL MISMO PRODUCTO
             {
-                cadena = "http://192.168.1.112/resta/admin/mysql/Orden/index.php?op=updateItemPlatillo&cantidad=" + (cant + cantidad) + "&idPlatillo=" + platillos.id + "&idItem=" + cart[index].idItem;
+                cadena = "http://192.168.1.112/resta/admin/mysql/Orden/index.php?op=updateItemPlatillo&cantidad=" + (cant ) + "&idPlatillo=" + platillos.id + "&idItem=" + cart[index].idItem;
                 popAgregar(cadena);
                 Console.WriteLine("CASO 1: " + cadena);
             }
             else if (band == 2) // CASP 2: SI EL CARRITO EXISTE, Y NO ES EL MISMO PLATILLO
             {
-                cadena = "http://192.168.1.112/resta/admin/mysql/Orden/index.php?op=insertarItems&cantidad=" + cantidad + "&idPlatillo=" + platillos.id + "&mesa=" + mesasGlb;
+                cadena = "http://192.168.1.112/resta/admin/mysql/Orden/index.php?op=insertarItems&cantidad=" + cantidad + "&idPlatillo=" + platillos.id + "&mesa=" + mesasGlb + "&total="+ total.ToString() ;
+                foreach (var item in cart) {
+                    if (item.platillo == platillos.nombre) {
+                        //cadena = cadena + item.id;
+                        Console.WriteLine(item.idItem);
+                        break;
+                    }
+                }
+                
                 popAgregar(cadena);
                 Console.WriteLine("CASO 2: " + cadena);
 
@@ -211,18 +223,12 @@ namespace AppResta.View
                 foreach (var item in jsonArray)
                 {
                     extra = new Model.Extras();
-
-                    int idplat = Int32.Parse(item["platillo_id_platillo"].ToString());
-                    string nombrePlatillo = item["nombre"].ToString();
-                    int idextra = Int32.Parse(item["id_esxtra"].ToString());
-                    string nombreExtra = item["extra_nombre"].ToString();
-                    double precioExtra = Convert.ToDouble(item["extra_precio"].ToString().Replace(",", "."));
                    
-                    extra.platillo_id_platillo = idplat;
-                    extra.nombre = nombrePlatillo;
-                    extra.id_esxtra = idextra;
-                    extra.extra_nombre = nombreExtra;
-                    extra.extra_precio = precioExtra;
+                    extra.platillo_id_platillo = Int32.Parse(item["platillo_id_platillo"].ToString());
+                    extra.nombre = item["nombre"].ToString();
+                    extra.id_esxtra = Int32.Parse(item["id_esxtra"].ToString());
+                    extra.extra_nombre = item["extra_nombre"].ToString(); 
+                    extra.extra_precio = Convert.ToDouble(item["extra_precio"].ToString().Replace(",", "."));
 
 
                     extras.Add(extra);
@@ -235,5 +241,7 @@ namespace AppResta.View
                 return null;
             }
         }
+
+       
     }
 }

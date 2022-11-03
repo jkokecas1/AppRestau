@@ -26,12 +26,15 @@ namespace AppResta.View
 
         async void init() {
              ordenList = Ordene();
+            
             ordenesListView.ItemsSource = ordenList;//await App.Database.GetOrdenesAsync(); //
         }
 
         private void Button_Pagar(object sender, EventArgs e)
         {
-            //Navigation.PushAsync(new Pago(ordenList),false);
+
+            int id = Int32.Parse(((MenuItem)sender).CommandParameter.ToString());
+            Navigation.PushAsync(new Pago(ordenList,id),false);
         }
 
         public void select_Item(object sender, SelectedItemChangedEventArgs e)

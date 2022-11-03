@@ -46,7 +46,7 @@
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
-
+                            <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
@@ -54,18 +54,19 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-                        <Button x:Name="btn7" BackgroundColor="LightGray" Grid.Row="0" Grid.Column="0" Text="7" TextColor="Black" FontSize="25" />
-                        <Button x:Name="btn8" BackgroundColor="LightGray" Grid.Row="0" Grid.Column="1" Text="8" TextColor="Black" FontSize="25"/>
-                        <Button x:Name="btn9" BackgroundColor="LightGray" Grid.Row="0" Grid.Column="2" Text="9" TextColor="Black" FontSize="25"/>
-                        <Button x:Name="btn4" BackgroundColor="LightGray" Grid.Row="1" Grid.Column="0" Text="4" TextColor="Black" FontSize="25"/>
-                        <Button x:Name="btn5" BackgroundColor="LightGray" Grid.Row="1" Grid.Column="1" Text="5" TextColor="Black" FontSize="25"/>
-                        <Button x:Name="btn6" BackgroundColor="LightGray" Grid.Row="1" Grid.Column="2" Text="6" TextColor="Black" FontSize="25"/>
-                        <Button x:Name="btn1" BackgroundColor="LightGray" Grid.Row="2" Grid.Column="0" Text="1" TextColor="Black" FontSize="25"/>
-                        <Button x:Name="btn2" BackgroundColor="LightGray" Grid.Row="2" Grid.Column="1" Text="2" TextColor="Black" FontSize="25"/>
-                        <Button x:Name="btn3" BackgroundColor="LightGray" Grid.Row="2" Grid.Column="2" Text="3" TextColor="Black" FontSize="25"/>
-                        <Button x:Name="btnpunto" BackgroundColor="LightGray" Grid.Row="3" Grid.Column="0" Text="." TextColor="Black" FontSize="25"/>
-                        <Button x:Name="btn0" BackgroundColor="LightGray" Grid.Row="3" Grid.Column="1" Text="0" TextColor="Black" FontSize="25"/>
-                        <Button x:Name="btnBorrar" BackgroundColor="LightGray" Grid.Row="3" Grid.Column="2" Text="Borrar" TextColor="Black" FontSize="25"/>
+                        <Button x:Name="btn7" BackgroundColor="LightGray" Grid.Row="0" Grid.Column="0" Text="7" TextColor="Black" Clicked="OnClicked_Num7" FontSize="25" />
+                        <Button x:Name="btn8" BackgroundColor="LightGray" Grid.Row="0" Grid.Column="1" Text="8" TextColor="Black" Clicked="OnClicked_Num8" FontSize="25"/>
+                        <Button x:Name="btn9" BackgroundColor="LightGray" Grid.Row="0" Grid.Column="2" Text="9" TextColor="Black" Clicked="OnClicked_Num9" FontSize="25"/>
+                        <Button x:Name="btn4" BackgroundColor="LightGray" Grid.Row="1" Grid.Column="0" Text="4" TextColor="Black" Clicked="OnClicked_Num4" FontSize="25"/>
+                        <Button x:Name="btn5" BackgroundColor="LightGray" Grid.Row="1" Grid.Column="1" Text="5" TextColor="Black" Clicked="OnClicked_Num5" FontSize="25"/>
+                        <Button x:Name="btn6" BackgroundColor="LightGray" Grid.Row="1" Grid.Column="2" Text="6" TextColor="Black" Clicked="OnClicked_Num6" FontSize="25"/>
+                        <Button x:Name="btn1" BackgroundColor="LightGray" Grid.Row="2" Grid.Column="0" Text="1" TextColor="Black" Clicked="OnClicked_Num1" FontSize="25"/>
+                        <Button x:Name="btn2" BackgroundColor="LightGray" Grid.Row="2" Grid.Column="1" Text="2" TextColor="Black" Clicked="OnClicked_Num2"  FontSize="25"/>
+                        <Button x:Name="btn3" BackgroundColor="LightGray" Grid.Row="2" Grid.Column="2" Text="3" TextColor="Black" Clicked="OnClicked_Num3"  FontSize="25"/>
+                        <Button x:Name="btnpunto" BackgroundColor="LightGray" Grid.Row="3" Grid.Column="0" Text="." TextColor="Black" Command="{ Binding NumPCommand}" FontSize="25"/>
+                        <Button x:Name="btn0" BackgroundColor="LightGray" Grid.Row="3" Grid.Column="1" Text="0" TextColor="Black" Clicked="OnClicked_Num0" FontSize="25"/>
+                        <Button x:Name="btnBorrar" BackgroundColor="LightGray" Grid.Row="3" Grid.Column="2" Text="Borrar" TextColor="Black" Clicked="OnClicked_NumBorrar" FontSize="25"/>
+                        <Button x:Name="btnSiguiente" BackgroundColor="LightGray" Grid.Row="4" Grid.Column="2" Text=">" TextColor="Black" Clicked="OnClicked_NumNext" FontSize="25"/>
                     </Grid>
                 </Grid>
             </Frame>
@@ -80,46 +81,73 @@
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
-
+                            <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
 
                         </Grid.ColumnDefinitions>
 
-                        <Grid Grid.Row="0" Grid.Column="0" >
-                            <Label Grid.Row="0" Grid.Column="0" Text="Propina:" TextColor="Black" FontSize="25"/>
-                            <Label Grid.Row="0" Grid.Column="1" HorizontalOptions="End" Text="0" FontSize="25" />
-                        </Grid>
+                        <StackLayout Orientation="Horizontal" Grid.Row="0" Grid.Column="0" HorizontalOptions="Center">
+                            <Label Text="Propina:" TextColor="Black" FontSize="25"/>
+                            <Picker x:Name="piker_propina" Title="SELECCIONA OPCION" FontSize="25" SelectedIndexChanged="OnPickerSelectedIndexChanged"  HorizontalOptions="Center">
+                                <!--
+                                <Picker.Items>
+                                    
+                                    <x:String>10</x:String>
+                                    <x:String>15</x:String>
+                                    <x:String>20</x:String>
+                                </Picker.Items>
+                                -->
 
+                            </Picker>
+                            <Label Text="%" TextColor="Black" FontSize="25"/>
+                            <Label x:Name="propina"  TextColor="Black" FontSize="25"/>
+                        </StackLayout>
+                        <!-- DIVICION DE CUENTA 
+                        <StackLayout Orientation="Horizontal" Grid.Row="1" Grid.Column="0" HorizontalOptions="Center">
+                            <Label Grid.Row="0" Grid.Column="0" Text="Dividir cuenta" TextColor="Black" FontSize="25"/>
+                            <Switch Grid.Row="0" Grid.Column="1" HorizontalOptions="Center" IsToggled="false" OnColor="Green" ThumbColor="Gray"/>
+                            <StackLayout IsVisible="false">
+                                <Label  Text="1"></Label>
+                                <Stepper ></Stepper>
+                            </StackLayout>
+                            
 
-                        <Grid Grid.Row="1" Grid.Column="0">
-                            <Label Grid.Row="0" Grid.Column="0" Text="Efectivo:" TextColor="Black" FontSize="25"/>
-                            <Label Grid.Row="0" Grid.Column="1" HorizontalOptions="End" Text="0" FontSize="25" />
-                        </Grid>
-
-
+                        </StackLayout>
+                        -->
+                        
+                        
                         <Grid Grid.Row="2" Grid.Column="0">
-                            <Label Grid.Row="0" Grid.Column="0" Text="Tarjeta:" TextColor="Black" FontSize="25"/>
-                            <Label Grid.Row="0" Grid.Column="1" HorizontalOptions="End" Text="0" FontSize="25" />
+                            <Label Grid.Row="0" Grid.Column="0" Text="Efectivo:" TextColor="Black" FontSize="25"/>
+                            <Label x:Name="Efectivo" Grid.Row="0" Grid.Column="1" HorizontalOptions="Center"  FontSize="25" />
                         </Grid>
 
 
                         <Grid Grid.Row="3" Grid.Column="0">
-                            <Label Grid.Row="0" Grid.Column="0" Text="Imprimir recibo" TextColor="Black" FontSize="25"/>
-                            <Switch Grid.Row="0" Grid.Column="1" HorizontalOptions="End" IsToggled="True" OnColor="Green" ThumbColor="Gray"/>
+                            <Label Grid.Row="0" Grid.Column="0" Text="Tarjeta:" TextColor="Black" FontSize="25"/>
+                            <Label x:Name="Tarjeta" Grid.Row="0" Grid.Column="1" HorizontalOptions="Center"  FontSize="25" />
                         </Grid>
+
 
                         <Grid Grid.Row="4" Grid.Column="0">
+                            <Label Grid.Row="0" Grid.Column="0" Text="Imprimir recibo" TextColor="Black" FontSize="25"/>
+                            <Switch Grid.Row="0" Grid.Column="1" HorizontalOptions="Center" IsToggled="True" OnColor="Green" ThumbColor="Gray"/>
+                        </Grid>
+                        <Grid Grid.Row="5" Grid.Column="0">
+                            <Label Grid.Row="0" Grid.Column="0" Text="Total:" FontAttributes="Bold" TextColor="Black" FontSize="25"/>
+                            <Label x:Name="total" Grid.Row="0" Grid.Column="1" HorizontalOptions="Center"  FontSize="25"/>
+                        </Grid>
+                        <Grid Grid.Row="6" Grid.Column="0">
                             <Label Grid.Row="0" Grid.Column="0" Text="Subtotal:" FontAttributes="Bold" TextColor="Black" FontSize="25"/>
-                            <Label Grid.Row="0" Grid.Column="1" HorizontalOptions="End" Text="0" FontSize="25"/>
+                            <Label x:Name="Subtotal" Grid.Row="0" Grid.Column="1" HorizontalOptions="Center"  FontSize="25"/>
                         </Grid>
 
-                        <Grid Grid.Row="5" Grid.Column="0" >
+                        <Grid Grid.Row="7" Grid.Column="0" >
                             <Button CornerRadius="10" Grid.Row="0" Grid.Column="0" Text="Cerrar sin pagar" FontSize="Body" TextColor="White"                                    
                             BackgroundColor="Red" WidthRequest="200"/>
                             <Button CornerRadius="10" Grid.Row="0" Grid.Column="1" Text="Pagar" FontSize="25" TextColor="White"
-                            BackgroundColor="Green" WidthRequest="200" />
+                            BackgroundColor="Green" WidthRequest="200" Clicked="OnClicked_Pagar" />
                         </Grid>
 
                     </Grid>

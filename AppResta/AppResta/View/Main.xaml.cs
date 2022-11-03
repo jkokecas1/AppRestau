@@ -61,8 +61,17 @@ namespace AppResta.View
                 MesaTexto.Text = "# Mesa:" + mesa;
                 NombTexto.Text = "Mesero: " + nombre;
                 OrdenTexto.Text = "# Orden: " + idOrden.ToString();
+
                 
             }   
+
+        }
+
+        public void SelectItem(object sender, SelectedItemChangedEventArgs e) {
+            var itme = e.SelectedItem as Model.Cart;
+            Console.WriteLine(itme.id);
+                
+
 
         }
         //----- REFRESCA EL CONTENIDO DE LA LISTA DE CARRITO ------//
@@ -74,6 +83,7 @@ namespace AppResta.View
             cart.Clear();
             cart = CartMesa(ordenID + "", mesaglb);
 
+            
             test2ListView.ItemsSource = null;
             test2ListView.ItemsSource = cart;
             RefreshCart.IsRefreshing = false;
@@ -179,6 +189,7 @@ namespace AppResta.View
 
         public void select_Item(object sender, SelectionChangedEventArgs e)
         {
+
             UpdateSelectionData(e.PreviousSelection, e.CurrentSelection);
         }
 
@@ -199,6 +210,7 @@ namespace AppResta.View
                 }
                 else
                 {
+                    
                     //var platillo = currentSelectedContact.FirstOrDefault() as Model.Platillos;
                     testListView.ItemsSource = Platillos("&idcate=" + categoria.nombre);
                 }
@@ -214,6 +226,7 @@ namespace AppResta.View
             }
             else if (band == 2)
             {
+                
                 var platillo = currentSelectedContact.FirstOrDefault() as Model.Platillos;
                 cartItem = new Model.Cart();
                 //DisplayAlert(platillo.nombre, " Nombre :" + platillo.precio + "\n Categoria:" + platillo.descrip,"Cancelar", "Ok");
@@ -233,6 +246,7 @@ namespace AppResta.View
                 */
                 if (cart.Count == 0) // Caso 0: Carrito vacio
                 {
+                    
                     PopupNavigation.Instance.PushAsync(new ItemPlatillo(platillo, mesaglb, bandera: 0, cart, test2ListView));
 
 
@@ -480,7 +494,7 @@ namespace AppResta.View
                     cartItem.cantidad = cantidad;
                     cartItem.precio = precio;
                     cartItem.total = total;
-
+                    cartItem.visible = "false";
 
                     cart.Add(cartItem);
 

@@ -46,6 +46,7 @@
                     <Button Text="Ordenes" Command="{Binding Ordencommand}" Grid.Row="0" Grid.Column="2" CornerRadius="0" BackgroundColor="DimGray" TextColor="#FFF"></Button>
                     <Button Text="Historial" Command="{Binding Historialcommand}" Grid.Row="0" Grid.Column="3" CornerRadius="0" BackgroundColor="DimGray" TextColor="#FFF"></Button>
                     <Label x:Name="nombreEmpl" Grid.Row="0" Grid.Column="4"  FontSize="20" TextColor="Black"></Label>
+                    <Label x:Name="puestoEmpl" Grid.Row="0" Grid.Column="5"  FontSize="20" TextColor="Black"></Label>
                     <Button Text="SALIR"  Command="{Binding NavLoginCommand}" Grid.Row="0" Grid.Column="5" HorizontalOptions="End" CornerRadius="0" BackgroundColor="Red" TextColor="#FFF"></Button>
                 </Grid>
             </Grid>
