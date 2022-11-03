@@ -88,21 +88,21 @@
                             </Grid.ColumnDefinitions>
                             <Label Text="Orden" Grid.Row="0" Grid.Column="0" TextColor="Black"/>
                             <Label Text="Mesa" Grid.Row="0" Grid.Column="1" TextColor="Black"/>
-                            <Label Text="Inicio" Grid.Row="0" Grid.Column="2" TextColor="Black"/>
-                            <Label Text="Tiempo de preparacion" Grid.Row="0" Grid.Column="3" TextColor="Black"/>
-                            <Label Text="Fin" Grid.Row="0" Grid.Column="4" TextColor="Black"/>
+                            <Label Text="Hora inicio" Grid.Row="0" Grid.Column="2" TextColor="Black"/>
+                            <Label Text="Estado" Grid.Row="0" Grid.Column="3" TextColor="Black"/>
+                            <Label Text="Tiempo de estimado" Grid.Row="0" Grid.Column="4" TextColor="Black"/>
                             <Label Grid.Row="0" Grid.Column="5"/>
                             <Label Text="Total" Grid.Row="0" Grid.Column="6" TextColor="Black"/>
                         </Grid>
 
                         <Grid Grid.Row="1" Grid.Column="0" BackgroundColor="WhiteSmoke" >
                             <ScrollView>
-                                <ListView x:Name="ordenesListView" SelectionMode="None"  ItemSelected="select_Item">
+                                <ListView x:Name="ordenesListView" SelectionMode="None"  ItemSelected="select_Item" RowHeight="60">
                                     <ListView.ItemTemplate >
                                         <DataTemplate  >
                                             <ViewCell >
 
-                                                <SwipeView Threshold="50">
+                                                <SwipeView Threshold="150">
                                                     <SwipeView.RightItems>
                                                         <SwipeItems  SwipeBehaviorOnInvoked="Close" Mode="Execute" >
                                                             <SwipeItem Text="PAGAR"                                                                     
@@ -142,13 +142,9 @@
                                                             <Label Text="{Binding fecha_orden}" TextColor="Black" FontSize="22"/>
                                                         </StackLayout>
 
-                                                        <StackLayout Grid.Column="3" Grid.Row="0" Padding="0,10,0,0">
-                                                            <Label x:Name="hora"
-                                                                       FontSize="Large"
-                                                                       FontAttributes="Bold"
-                                                                       VerticalOptions="Start" 
-                                                                       HorizontalOptions="CenterAndExpand" 
-                                                                       Text="{Binding total}"/>
+                                                        <StackLayout  Grid.Column="3" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical" Padding="0,10,0,0">
+
+                                                            <Label Text="{Binding estado}" TextColor="Black" FontSize="22"/>
                                                         </StackLayout>
 
                                                         <StackLayout  Grid.Column="4" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical" Padding="0,10,0,0">

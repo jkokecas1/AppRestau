@@ -37,20 +37,15 @@ namespace AppResta.View
                 foreach (var item in jsonArray)
                 {
                     orden = new Model.Ordenes();
-                    int id = Int32.Parse(item["id"].ToString());
-                    string fecha_orden = item["fecha_orden"].ToString();
-                    string fecha_cerrado = item["fecha_cerada"].ToString();
-                    string mesa = item["mesa"].ToString();
-                    string total = item["total"].ToString();
-                    int pago = Int32.Parse(item["pago"].ToString());
-                    int mesero = Int32.Parse(item["mesero"].ToString());
-                    orden.id = id;
-                    orden.fecha_orden = fecha_orden;
-                    orden.fecha_cerada = fecha_cerrado;
-                    orden.mesero = mesero;
-                    orden.mesa = mesa;
-                    orden.total = total;
-                    orden.pago = pago;
+                   
+                    orden.id = Int32.Parse(item["id"].ToString());
+                    orden.fecha_orden = item["fecha_orden"].ToString();
+                    orden.fecha_start = item["fecha_start"].ToString();
+                    orden.fecha_cerada = item["fecha_cerada"].ToString();
+                    orden.mesero = Int32.Parse(item["mesero"].ToString());
+                    orden.mesa = item["mesa"].ToString();
+                    orden.total = item["total"].ToString();
+                    orden.pago = Int32.Parse(item["pago"].ToString());
                     ordenList.Add(orden);
                 }
                 return ordenList;

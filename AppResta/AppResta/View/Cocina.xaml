@@ -80,12 +80,13 @@
                                                             <Label Text="ORDEN #" HorizontalOptions="Center" VerticalOptions="Center" FontSize="20" FontAttributes="Bold" TextColor="Black"/>
                                                         </Grid>
 
-                                                        <Grid Grid.Row="1"  Grid.Column="0" BackgroundColor="White" HorizontalOptions="Center" Padding="0,0,0,0">
+                                                        <Grid Grid.Row="0"  Grid.Column="1" BackgroundColor="White" HorizontalOptions="Center" Padding="0,0,0,0">
                                                         <Label Text="{Binding id}"  FontSize="20"  TextColor="Black" FontAttributes="Bold" HorizontalOptions="Center" Padding="0,0,0,0"/>
                                                         </Grid>
-
-
+                                                    <Grid Grid.Row="1"  Grid.Column="0" BackgroundColor="White" HorizontalOptions="Center" Padding="0,0,0,0">
+                                                        <Label Text="{Binding fecha_start}"  FontSize="20"  TextColor="Black" FontAttributes="Bold" HorizontalOptions="Center" Padding="0,0,0,0"/>
                                                     </Grid>
+                                                </Grid>
 
                                                 </Frame>
                                             </Grid>

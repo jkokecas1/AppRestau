@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Rg.Plugins.Popup.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -28,8 +29,8 @@ namespace AppResta.View
 
         public void init()
         {
-            Efectivo.Text = "";
-            Tarjeta.Text = "";
+            Efectivo.Text = "0";
+            Tarjeta.Text = "0";
             foreach (Model.Ordenes orden in orden)
             {
                 if (orden.id == id)
@@ -74,7 +75,7 @@ namespace AppResta.View
 
                 propina.Text = ((Int32.Parse(Ordenes.total) * Int32.Parse(picker.SelectedItem.ToString())) / 100) + "";
                 total.Text = Ordenes.total;
-                Subtotal.Text = Int32.Parse(propina.Text.ToString()) + Int32.Parse(total.Text.ToString()) +""; 
+                Subtotal.Text = Int32.Parse(propina.Text.ToString()) + Int32.Parse(total.Text.ToString()) + "";
                 //Console.WriteLine( Ordenes.total);
             }
         }
@@ -86,15 +87,22 @@ namespace AppResta.View
 
             if (Efectivo.Text == "" && Tarjeta.Text == "")
             {
-                DisplayAlert("Incorrecto", " Verifica los campos", "OK");
+                PopupNavigation.Instance.PushAsync(new PrePago());
             }
             else if (Tarjeta.Text != "" && Efectivo.Text == "")
             {
                 pago.monto = Double.Parse(Tarjeta.Text + "");
                 pago.tipoPago = "TARJETA";
                 pago.propina = propina.Text;
-                if (pago.monto < Double.Parse(Subtotal.Text)) {
-                    DisplayAlert("INCORRECTO", "EL monto es menor al subtotal", "Ok");
+                if (pago.monto < Double.Parse(Subtotal.Text))
+                {
+
+
+                    PopupNavigation.Instance.PushAsync(new PrePago());
+                }
+                else
+                {
+                    PopupNavigation.Instance.PushAsync(new ConfirmarPago());
                 }
             }
             else if (Efectivo.Text != "" && Tarjeta.Text == "")
@@ -104,7 +112,11 @@ namespace AppResta.View
                 pago.propina = propina.Text;
                 if (pago.monto < Double.Parse(Subtotal.Text))
                 {
-                    DisplayAlert("INCORRECTO", "EL monto es menor al subtotal", "Ok");
+                    PopupNavigation.Instance.PushAsync(new PrePago());
+                }
+                else
+                {
+                    PopupNavigation.Instance.PushAsync(new ConfirmarPago());
                 }
             }
             else if (Efectivo.Text != "" && Tarjeta.Text != "")
@@ -112,11 +124,15 @@ namespace AppResta.View
                 int monto = Int32.Parse(Efectivo.Text + "") + Int32.Parse(Tarjeta.Text + "");
                 Console.WriteLine(monto);
                 pago.monto = Double.Parse(monto.ToString());
-                pago.tipoPago = "EFECTIVO";
+                pago.tipoPago = "EFECTIVO Y TARJETA";
                 pago.propina = propina.Text;
                 if (pago.monto <= Double.Parse(Subtotal.Text))
                 {
-                    DisplayAlert("INCORRECTO", "EL monto es menor al subtotal", "Ok");
+                    PopupNavigation.Instance.PushAsync(new PrePago());
+                }
+                else
+                {
+                    PopupNavigation.Instance.PushAsync(new ConfirmarPago());
                 }
             }
 
@@ -127,7 +143,7 @@ namespace AppResta.View
         void OnClicked_Num3(object sender, EventArgs e) { _ = pagos == false ? Efectivo.Text += "3" : Tarjeta.Text += "3"; }
         void OnClicked_Num4(object sender, EventArgs e) { _ = pagos == false ? Efectivo.Text += "4" : Tarjeta.Text += "4"; }
         void OnClicked_Num5(object sender, EventArgs e) { _ = pagos == false ? Efectivo.Text += "5" : Tarjeta.Text += "5"; }
-        void OnClicked_Num6(object sender, EventArgs e) { _ = pagos == false ? Efectivo.Text += "6" : Tarjeta.Text += "6"; ; }
+        void OnClicked_Num6(object sender, EventArgs e) { _ = pagos == false ? Efectivo.Text += "6" : Tarjeta.Text += "6"; }
         void OnClicked_Num7(object sender, EventArgs e) { _ = pagos == false ? Efectivo.Text += "7" : Tarjeta.Text += "7"; }
         void OnClicked_Num8(object sender, EventArgs e) { _ = pagos == false ? Efectivo.Text += "8" : Tarjeta.Text += "8"; }
         void OnClicked_Num9(object sender, EventArgs e) { _ = pagos == false ? Efectivo.Text += "9" : Tarjeta.Text += "9"; }
@@ -142,31 +158,37 @@ namespace AppResta.View
                     Efectivo.Text = Efectivo.Text.Remove(Efectivo.Text.Length - 1, 1);
                 }
             }
-            else {
+            else
+            {
                 if (Tarjeta.Text.Length < 0 || Tarjeta.Text != "")
                 {
                     Tarjeta.Text = Tarjeta.Text.Remove(Tarjeta.Text.Length - 1, 1);
                 }
             }
-            
+
 
         }
         void OnClicked_NumNext(object sender, EventArgs e)
         {
             if (pagos == false)
             {
-                Efectivo.BackgroundColor = Color.White;
+
                 pagos = true;
-                Tarjeta.BackgroundColor = Color.Aqua;
+                Tarjeta.TextColor = Color.Black;
+                Efectivo.Opacity = 0.3;
+                Tarjeta.Opacity = 1;
+
             }
             else
             {
-                Tarjeta.BackgroundColor = Color.White;
+
                 pagos = false;
-                Efectivo.BackgroundColor = Color.Aqua;
-                
+                Efectivo.TextColor = Color.Black;
+                Efectivo.Opacity = 1;
+                Tarjeta.Opacity = 0.3;
+
             }
-            
+
         }
 
     }

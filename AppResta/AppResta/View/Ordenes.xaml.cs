@@ -65,7 +65,17 @@ namespace AppResta.View
                   
                     orden.id = Int32.Parse(item["id"].ToString());
                     orden.fecha_orden = item["fecha_orden"].ToString().Substring(11);
-                    orden.fecha_cerada = item["fecha_cerada"].ToString().Substring(11);
+                   
+
+                    if (item["fecha_cerada"].ToString().Substring(11) == "00:00:00") {
+                        orden.estado = "En lista...";
+                        orden.fecha_cerada = "Pendiente";
+                    }else
+                    {
+                        orden.fecha_cerada = "Preparado...";
+                        orden.fecha_cerada = item["fecha_cerada"].ToString().Substring(11);
+                    }
+                    
                     orden.mesero = Int32.Parse(item["mesero"].ToString());
                     orden.mesa = item["mesa"].ToString();
                     orden.total = item["total"].ToString();
