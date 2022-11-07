@@ -20,6 +20,7 @@ namespace AppResta.Services
             var client = new HttpClient();
 
             client.BaseAddress = new Uri("http://192.168.1.112/resta/admin/mysql/empleados/index.php?op=obtenerPIN&pin=" + pins);
+            //client.BaseAddress = new Uri("http://apprestaurante871.000webhostapp.com/mysql/empleados/index.php?op=obtenerPIN&pin=" + pins);
             HttpResponseMessage response = client.GetAsync(client.BaseAddress).Result;
             /* if (response.IsSuccessStatusCode)
              {
