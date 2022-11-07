@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AppResta.Model;
 using Newtonsoft.Json.Linq;
+using Rg.Plugins.Popup.Services;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -24,7 +25,7 @@ namespace AppResta.View
             init();
         }
 
-        async void init() {
+        public void init() {
              ordenList = Ordene();
             
             ordenesListView.ItemsSource = ordenList;//await App.Database.GetOrdenesAsync(); //
@@ -34,7 +35,21 @@ namespace AppResta.View
         {
 
             int id = Int32.Parse(((MenuItem)sender).CommandParameter.ToString());
-            Navigation.PushAsync(new Pago(ordenList,id),false);
+            foreach (Model.Ordenes orden in ordenList) {
+                if (orden.id == id) {
+                    Console.WriteLine(orden.estado);
+                    if (orden.estado == "! Terminado !")
+                    {
+                        Navigation.PushAsync(new Pago(ordenList, id), false);
+                    }
+                    else {
+                        PopupNavigation.Instance.PushAsync(new PopError("LA ORDEN AUN NO SE ESTA LISATA"));
+                    }
+                }
+
+
+            }
+            
         }
 
         public void select_Item(object sender, SelectedItemChangedEventArgs e)
@@ -62,10 +77,21 @@ namespace AppResta.View
                 foreach (var item in jsonArray)
                 {
                     orden = new Model.Ordenes();
-                  
+
                     orden.id = Int32.Parse(item["id"].ToString());
-                    orden.fecha_orden = item["fecha_orden"].ToString().Substring(11);
-                    orden.fecha_cerada = item["fecha_cerada"].ToString().Substring(11);
+                    orden.fecha_orden = item["fecha_orden"].ToString();
+                    if (item["fecha_start"].ToString() != "") { 
+                        orden.fecha_start = item["fecha_start"].ToString().Remove(0,10);
+                        orden.fecha_estimada = item["fecha_estimada"].ToString().Remove(0, 10);
+                     }
+                    
+                    orden.fecha_cerada = item["fecha_cerada"].ToString();
+                    switch (item["estado"].ToString())
+                    {
+                        case "1": orden.estado = "En espera"; break;
+                        case "2": orden.estado = "Preparando..."; break;
+                        case "3": orden.estado = "! Terminado !"; break;
+                    }
                     orden.mesero = Int32.Parse(item["mesero"].ToString());
                     orden.mesa = item["mesa"].ToString();
                     orden.total = item["total"].ToString();

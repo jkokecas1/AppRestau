@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<popup:PopupPage
+xmlns="http://xamarin.com/schemas/2014/forms"
+xmlns:popup="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+  
+x:Class="AppResta.View.PopError">
+
+
+
+
+    <Frame BackgroundColor="WhiteSmoke" Padding="20,20,20,20" Margin="340,250,340,250" CornerRadius="20">
+        <Grid RowSpacing="10">
+            <Grid Grid.Row="0" Grid.Column="0">
+                <Label Grid.Row="0" Grid.Column="0" Text="Incorrecto" TextColor="Black" HorizontalOptions="Start" FontAttributes="Bold" FontSize="30"/>
+                <ImageButton Grid.Row="0" Grid.Column="1" Clicked="cerrarPop" HorizontalOptions="End"  Source="cerrar.png" BackgroundColor="Transparent"/>
+            </Grid>
+
+            <Grid Grid.Row="1" Grid.Column="0">
+                <Label Grid.Row="0" Grid.Column="0" x:Name="mensaje" TextColor="Black" FontSize="20" HorizontalOptions="Center"/>
+
+            </Grid>
+        </Grid>
+    </Frame>
+</popup:PopupPage>

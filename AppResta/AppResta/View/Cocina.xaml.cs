@@ -37,21 +37,28 @@ namespace AppResta.View
                 foreach (var item in jsonArray)
                 {
                     orden = new Model.Ordenes();
-                    int id = Int32.Parse(item["id"].ToString());
-                    string fecha_orden = item["fecha_orden"].ToString();
-                    string fecha_cerrado = item["fecha_cerada"].ToString();
-                    string mesa = item["mesa"].ToString();
-                    string total = item["total"].ToString();
-                    int pago = Int32.Parse(item["pago"].ToString());
-                    int mesero = Int32.Parse(item["mesero"].ToString());
-                    orden.id = id;
-                    orden.fecha_orden = fecha_orden;
-                    orden.fecha_cerada = fecha_cerrado;
-                    orden.mesero = mesero;
-                    orden.mesa = mesa;
-                    orden.total = total;
-                    orden.pago = pago;
-                    ordenList.Add(orden);
+                    if (item["estado"].ToString() != "3") {
+                        orden.id = Int32.Parse(item["id"].ToString());
+                        orden.fecha_orden = item["fecha_orden"].ToString();
+                        orden.fecha_start = item["fecha_start"].ToString();
+                        orden.fecha_estimada = item["fecha_estimada"].ToString();
+                        orden.fecha_cerada = item["fecha_cerada"].ToString();
+                        switch (item["estado"].ToString())
+                        {
+                            case "1": orden.estado = "En espera"; break;
+                            case "2": orden.estado = "Preparando..."; break;
+                            case "3": orden.estado = "! Terminado !"; break;
+                        }
+                        orden.mesero = Int32.Parse(item["mesero"].ToString());
+                        orden.mesa = item["mesa"].ToString();
+                        orden.total = item["total"].ToString();
+                        orden.pago = Int32.Parse(item["pago"].ToString());
+
+
+                        ordenList.Add(orden);
+
+                    }
+                   
                 }
                 return ordenList;
             }
@@ -68,7 +75,7 @@ namespace AppResta.View
         public void UpdateSelectionData(IEnumerable<object> previousSelectedContact, IEnumerable<object> currentSelectedContact)
 
         {
-
+           
             Model.Ordenes ord = new Model.Ordenes();
             var idorden = currentSelectedContact.FirstOrDefault() as Model.Ordenes;
 
@@ -79,31 +86,47 @@ namespace AppResta.View
 
                 if (item.id == idorden.id)
                 {
+                    ord.id = Int32.Parse(item.id.ToString());
+                    ord.fecha_orden = item.fecha_orden.ToString();
 
-                    int id = Int32.Parse(item.id.ToString());
-                    string fecha_orden = item.fecha_orden.ToString();
-                    string fecha_cerrado = item.fecha_cerada.ToString();
-                    string mesa = item.mesa.ToString();
-                    string total = item.total.ToString();
-                    int pago = Int32.Parse(item.pago.ToString());
-                    int mesero = Int32.Parse(item.mesero.ToString());
-                    ord.id = id;
-                    ord.fecha_orden = fecha_orden;
-                    ord.fecha_cerada = fecha_cerrado;
-                    ord.mesero = mesero;
-                    ord.mesa = mesa;
-                    ord.total = total;
-                    ord.pago = pago;
+                    Console.WriteLine(item.fecha_start.ToString());
+                    if (item.fecha_start.ToString() != "") {
+                        if(!item.fecha_start.ToString().Equals("0000-00-00 00:00:00"))
+                            ord.fecha_start = item.fecha_start.ToString().Remove(0, 10);
+                    }
+                    else {
+                        ord.fecha_start = item.fecha_start.ToString();
+                    }
+
+                    if (item.fecha_estimada.ToString() != "" )
+                    {
+                        if (!item.fecha_estimada.ToString().Equals("0000-00-00 00:00:00"))
+                            ord.fecha_estimada = item.fecha_estimada.ToString().Remove(0, 10);
+                    }
+                    else
+                    {
+                        
+                        ord.fecha_estimada = item.fecha_estimada.ToString();
+                    }
+                    switch (ord.estado) {
+                        case "1": ord.estado = "En espera"; break;
+                        case "2": ord.estado = "Preparando..."; break;
+                        case "3": ord.estado = "! Terminado !"; break;
+                    }
+                    ord.fecha_cerada = item.fecha_cerada.ToString();
+                    ord.mesero = Int32.Parse(item.mesero.ToString());
+                    ord.mesa = item.mesa.ToString();
+                    ord.total = item.total.ToString();
+                    ord.pago = Int32.Parse(item.pago.ToString());
+
                 }
+
             }
 
-
-            PopupNavigation.Instance.PushAsync(new VerOrden(ord));
+                List<Model.Ordenes> auxList = Ordene();
+                PopupNavigation.Instance.PushAsync(new VerOrden(ord, auxList, cocinaListView));
 
         }
-
-
-
 
     }
 }

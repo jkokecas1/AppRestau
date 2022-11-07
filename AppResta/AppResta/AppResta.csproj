@@ -46,4 +46,10 @@
   <ItemGroup>
     <Folder Include="Data\Empleado\" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="View\PopError.xaml.cs">
+      <DependentUpon>PopError.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
 </Project>

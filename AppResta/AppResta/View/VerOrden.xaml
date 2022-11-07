@@ -3,17 +3,17 @@
 xmlns="http://xamarin.com/schemas/2014/forms"
 xmlns:popup="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:combobox="clr-namespace:Syncfusion.XForms.ComboBox;assembly=Syncfusion.SfComboBox.XForms"
 x:Class="AppResta.View.VerOrden">
 
 
 
 
-    <Frame BackgroundColor="WhiteSmoke" Padding="20,20,20,20" Margin="150,10,150,10" CornerRadius="20">
+    <Frame BackgroundColor="WhiteSmoke" Padding="20,20,20,20" Margin="100,10,100,10" CornerRadius="20">
         <Grid RowSpacing="0">
 
 
             <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="60"/>
@@ -25,46 +25,116 @@ x:Class="AppResta.View.VerOrden">
             </Grid.ColumnDefinitions>
 
 
-            <Grid Grid.Row="0" Grid.Column="0" BackgroundColor="WhiteSmoke" Padding="8,8,8,8">
-                <Label Grid.Row="0" Grid.Column="0" x:Name="numeroOrden" TextColor="Black" FontAttributes="Bold" FontSize="25"/>
-                <Grid Grid.Row="0" Grid.Column="1">
-                    <Picker Title="SELECIONA EL TIEMPO">
-                        <Picker.Items>
-                            <x:String>5 min</x:String>
-                            <x:String>10min</x:String>
-                            <x:String>15 min</x:String>
-                            <x:String>20 min</x:String>
-                            <x:String>25 min</x:String>
-                            <x:String>30 min</x:String>
-                            <x:String>35 min</x:String>
-                            <x:String>40 min</x:String>
-                            <x:String>55 min</x:String>
-                        </Picker.Items>
-                    </Picker>
+            <Grid Grid.Row="0" Grid.Column="0" BackgroundColor="WhiteSmoke" Padding="4,8,4,8" >
+                <Label Grid.Row="0" Grid.Column="0" Text="Orden" TextColor="Black" FontSize="25" HorizontalOptions="Center" FontAttributes="Bold" BackgroundColor="Transparent" />
+                <Label Grid.Row="0" Grid.Column="1" Text="Hora inicio" TextColor="Black" FontSize="20" FontAttributes="Bold" BackgroundColor="Transparent"/>
+                <Label Grid.Row="0" Grid.Column="3" Text="Hora estimada" TextColor="Black" FontSize="20" FontAttributes="Bold" BackgroundColor="Transparent"/>
+                <ImageButton Grid.Row="0" Grid.Column="4" Clicked="cerrarPop" HorizontalOptions="End"  Source="cerrar.png" BackgroundColor="Transparent"/>
+
+            </Grid>
+
+            <Grid Grid.Row="1" Grid.Column="0" Padding="4,8,4,8">
+                <Label Grid.Row="0" Grid.Column="0" x:Name="numeroOrden" HorizontalOptions="Center" TextColor="Black" FontAttributes="Bold" FontSize="25"/>
+                <Label Grid.Row="0" Grid.Column="2" x:Name="CronometroOrden" TextColor="Black" FontAttributes="None" FontSize="20"/>
+                <Label Grid.Row="0" Grid.Column="1" x:Name="HoraInicioOrden" TextColor="Black" FontAttributes="Bold" FontSize="20"/>
+                <Label Grid.Row="0" Grid.Column="3" x:Name="HoraEstimadaOrden" TextColor="Black" FontAttributes="Bold" FontSize="20"/>
+                <Label Grid.Row="0" Grid.Column="4"/>
+
+            </Grid>
+
+
+
+
+
+
+
+            <Grid Grid.Row="2" Grid.Column="0">
+
+
+
+                <Grid Grid.Row="0" Grid.Column="0">
+                    <CollectionView SelectionMode="Single" x:Name="ordenlist" >
+                        <CollectionView.ItemsLayout>
+                            <GridItemsLayout Orientation="Vertical" Span="2"/>
+                        </CollectionView.ItemsLayout>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Padding="5">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="400"/>
+                                    </Grid.RowDefinitions>
+                                    <Frame HasShadow="True" Padding="5" CornerRadius="10">
+                                        <ScrollView>
+                                            <Grid BackgroundColor="White" RowSpacing="0" Padding="9,9,9,9">
+                                                <Grid.RowDefinitions >
+                                                    <RowDefinition Height="30"/>
+                                                    <RowDefinition Height="20"/>
+                                                    <RowDefinition Height="50"/>
+                                                    <RowDefinition Height="20"/>
+                                                    <RowDefinition Height="90"/>
+                                                    <RowDefinition Height="20"/>
+                                                    <RowDefinition Height="*"/>
+                                                </Grid.RowDefinitions>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Grid Grid.Row="1"  Grid.Column="0" Padding="0,0,0,0" BackgroundColor="White">
+                                                    <Label Text="Cantidad:" TextColor="Black" FontFamily="Bold" FontSize="20"/>
+                                                </Grid>
+                                                <Grid Grid.Row="0"  Grid.Column="0"   BackgroundColor="White"  Padding="0,0,0,0">
+                                                    <Label Text="Platillo" TextColor="Black" FontFamily="Bold" FontSize="20"/>
+                                                </Grid>
+
+                                                <Grid Grid.Row="1"  Grid.Column="1" Grid.ColumnSpan="2" BackgroundColor="White" HorizontalOptions="Start" Padding="0,0,0,0">
+                                                    <Label Text="{Binding cantidad}" TextColor="Black" FontFamily="Bold" FontSize="20"/>
+                                                </Grid>
+                                                <Grid Grid.Row="0"  Grid.Column="1" Grid.ColumnSpan="2" BackgroundColor="White" HorizontalOptions="Start" Padding="0,0,0,0">
+                                                    <Label Text="{Binding platillo}" TextColor="Black" FontFamily="Bold" FontSize="20" />
+                                                </Grid>
+                                                <Grid Grid.Row="3"  Grid.Column="0" Grid.ColumnSpan="3" BackgroundColor="White" HorizontalOptions="Center" Padding="0,0,0,0">
+                                                    <Label Text="Extras" TextColor="Black" FontFamily="Bold" FontSize="20"/>
+                                                </Grid>
+                                                <Grid Grid.Row="4"  Grid.Column="0" Grid.ColumnSpan="3" BackgroundColor="White" HorizontalOptions="Center" Padding="0,0,0,0">
+                                                    <Label Text="By default, Xamarin.Forms uses a system font defined by each platform. However, controls that display text define properties that you can use to change this font:" TextColor="Black" FontFamily="Bold" FontSize="20"/>
+
+                                                </Grid>
+                                                <Grid Grid.Row="5"  Grid.Column="0" Grid.ColumnSpan="3" BackgroundColor="White" HorizontalOptions="Center" Padding="0,0,0,0">
+                                                    <Label Text="Comentarios" TextColor="Black" FontFamily="Bold" FontSize="20"/>
+                                                </Grid>
+                                                <Grid Grid.Row="6"  Grid.Column="0" Grid.ColumnSpan="3" BackgroundColor="White" HorizontalOptions="Center" Padding="0,0,0,0">
+                                                    <Label Text="{Binding comentario}" TextColor="Black" FontFamily="Bold" FontSize="20"/>
+
+                                                </Grid>
+
+
+                                            </Grid>
+
+                                        </ScrollView>
+
+                                    </Frame>
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+
+                    </CollectionView>
                 </Grid>
-
-                <ImageButton Grid.Row="0" Grid.Column="2" Clicked="cerrarPop" HorizontalOptions="End"  Source="cerrar.png"/>
-
             </Grid>
 
 
+            <Grid Grid.Row="3" Grid.Column="0" BackgroundColor="WhiteSmoke" Padding="8,8,8,8">
 
+                <Picker x:Name="horas" Grid.Row="0" Grid.Column="0" Title="SELECIONA EL TIEMPO ESTIMADO" SelectedIndexChanged="OnPickerSelectedIndexChanged" HorizontalTextAlignment="Center">
+                    <Picker.Items>
 
-            <Grid Grid.Row="1" Grid.Column="0" Padding="8,8,8,8">
-                <ListView BackgroundColor="Blue">
+                    </Picker.Items>
+                </Picker>
 
+                <Button x:Name="btnIniciar" Grid.Column="1"  Text="Iniciar"  BackgroundColor="Green" TextColor="White" Clicked="Button_Clicked" />
 
-
-
-
-
-                </ListView>
-            </Grid>
-
-            <Grid Grid.Row="2" Grid.Column="0" BackgroundColor="WhiteSmoke" Padding="8,8,8,8">
-                <Button Grid.Row="0" Grid.Column="0"  Text="Iniciar" TextColor="Black" BackgroundColor="Green" />
-
-                <Button Grid.Row="0" Grid.Column="1"  Text="Finalizar" TextColor="Black" BackgroundColor="Red" />
+                <Button Grid.Row="0" Grid.Column="2"  Text="Finalizar" BackgroundColor="Red" TextColor="White"/>
             </Grid>
 
 
