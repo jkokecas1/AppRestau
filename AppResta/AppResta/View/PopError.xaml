@@ -4,7 +4,7 @@ xmlns="http://xamarin.com/schemas/2014/forms"
 xmlns:popup="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
   
-x:Class="AppResta.View.PrePago">
+x:Class="AppResta.View.PopError">
 
 
 
@@ -17,7 +17,7 @@ x:Class="AppResta.View.PrePago">
             </Grid>
 
             <Grid Grid.Row="1" Grid.Column="0">
-                <Label Grid.Row="0" Grid.Column="0" Text="Vuelva a verificar los datos" TextColor="Black" FontSize="20" HorizontalOptions="Center"/>
+                <Label Grid.Row="0" Grid.Column="0" x:Name="mensaje" TextColor="Black" FontSize="20" HorizontalOptions="Center"/>
 
             </Grid>
         </Grid>

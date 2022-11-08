@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AppResta.Model;
 using Newtonsoft.Json.Linq;
+using Rg.Plugins.Popup.Services;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -24,9 +25,10 @@ namespace AppResta.View
             init();
         }
 
-        async void init() {
-             ordenList = Ordene();
-            
+        public void init()
+        {
+            ordenList = Ordene();
+
             ordenesListView.ItemsSource = ordenList;//await App.Database.GetOrdenesAsync(); //
         }
 
@@ -34,7 +36,28 @@ namespace AppResta.View
         {
 
             int id = Int32.Parse(((MenuItem)sender).CommandParameter.ToString());
-            Navigation.PushAsync(new Pago(ordenList,id),false);
+            Pago pago  = new Pago(ordenList, id);
+            PopError error = new PopError("LA ORDEN AUN NO SE ESTA LISATA");
+            foreach (Model.Ordenes orden in ordenList)
+            {
+                if (orden.id == id)
+                {
+                    Console.WriteLine(orden.estado);
+                    if (orden.estado == "! Terminado !")
+                    {
+                       // if(!pago.IsVisible && !error.IsVisible)
+                            Navigation.PushAsync(pago, false);
+                    }
+                    else
+                    {
+                       // if (!pago.IsVisible && !error.IsVisible)
+                            PopupNavigation.Instance.PushAsync(error);
+                    }
+                }
+
+
+            }
+
         }
 
         public void select_Item(object sender, SelectedItemChangedEventArgs e)
@@ -42,15 +65,15 @@ namespace AppResta.View
             var orden = e.SelectedItem as Model.Ordenes;
 
             //Navigation.PushAsync(new Main(false, idOrden: orden.id));
-            
+
         }
-      
+
         public List<Model.Ordenes> Ordene()
         {
             Model.Ordenes orden;
             List<Model.Ordenes> ordenList = new List<Model.Ordenes>();
             var client = new HttpClient();
-          
+
             client.BaseAddress = new Uri("http://192.168.1.112/resta/admin/mysql/orden/index.php?op=obtenerOrden");
             HttpResponseMessage response = client.GetAsync(client.BaseAddress).Result;
             if (response.IsSuccessStatusCode)
@@ -58,24 +81,26 @@ namespace AppResta.View
                 var content = response.Content.ReadAsStringAsync().Result;
                 string json = content.ToString();
                 var jsonArray = JArray.Parse(json.ToString());
-               // Console.WriteLine(jsonArray);
+                // Console.WriteLine(jsonArray);
                 foreach (var item in jsonArray)
                 {
                     orden = new Model.Ordenes();
-                  
-                    orden.id = Int32.Parse(item["id"].ToString());
-                    orden.fecha_orden = item["fecha_orden"].ToString().Substring(11);
-                   
 
-                    if (item["fecha_cerada"].ToString().Substring(11) == "00:00:00") {
-                        orden.estado = "En lista...";
-                        orden.fecha_cerada = "Pendiente";
-                    }else
+                    orden.id = Int32.Parse(item["id"].ToString());
+                    orden.fecha_orden = item["fecha_orden"].ToString();
+                    if (item["fecha_start"].ToString() != "")
                     {
-                        orden.fecha_cerada = "Preparado...";
-                        orden.fecha_cerada = item["fecha_cerada"].ToString().Substring(11);
+                        orden.fecha_start = item["fecha_start"].ToString().Remove(0, 10);
+                        orden.fecha_estimada = item["fecha_estimada"].ToString().Remove(0, 10);
                     }
-                    
+
+                    orden.fecha_cerada = item["fecha_cerada"].ToString();
+                    switch (item["estado"].ToString())
+                    {
+                        case "1": orden.estado = "En espera"; break;
+                        case "2": orden.estado = "Preparando..."; break;
+                        case "3": orden.estado = "! Terminado !"; break;
+                    }
                     orden.mesero = Int32.Parse(item["mesero"].ToString());
                     orden.mesa = item["mesa"].ToString();
                     orden.total = item["total"].ToString();

@@ -15,6 +15,7 @@ namespace AppResta.Model
         public string extras { get; set; }
         public string estado { get; set; }
         public string visible { get; set; }
+        public string comentario { get; set; }
 
     }
 }

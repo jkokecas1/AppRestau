@@ -88,11 +88,12 @@
                             </Grid.ColumnDefinitions>
                             <Label Text="Orden" Grid.Row="0" Grid.Column="0" TextColor="Black"/>
                             <Label Text="Mesa" Grid.Row="0" Grid.Column="1" TextColor="Black"/>
-                            <Label Text="Hora inicio" Grid.Row="0" Grid.Column="2" TextColor="Black"/>
-                            <Label Text="Estado" Grid.Row="0" Grid.Column="3" TextColor="Black"/>
-                            <Label Text="Tiempo de estimado" Grid.Row="0" Grid.Column="4" TextColor="Black"/>
-                            <Label Grid.Row="0" Grid.Column="5"/>
-                            <Label Text="Total" Grid.Row="0" Grid.Column="6" TextColor="Black"/>
+                            <Label Text="Orden domada" Grid.Row="0" Grid.Column="2" TextColor="Black"/>
+                            <Label Text="Hora inicio" Grid.Row="0" Grid.Column="3" TextColor="Black"/>
+                            <Label Text="Estado" Grid.Row="0" Grid.Column="4" TextColor="Black"/>
+                            <Label Text="Tiempo de estimado" Grid.Row="0" Grid.Column="5" TextColor="Black"/>
+                            <Label Grid.Row="0" Grid.Column="6"/>
+                            <Label Text="Total" Grid.Row="0" Grid.Column="7" TextColor="Black"/>
                         </Grid>
 
                         <Grid Grid.Row="1" Grid.Column="0" BackgroundColor="WhiteSmoke" >
@@ -144,11 +145,13 @@
 
                                                         <StackLayout  Grid.Column="3" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical" Padding="0,10,0,0">
 
+                                                            <Label Text="{Binding fecha_start }" TextColor="Black" FontSize="22"/>
+                                                        </StackLayout>
+                                                        <StackLayout  Grid.Column="4" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical" Padding="0,10,0,0">
                                                             <Label Text="{Binding estado}" TextColor="Black" FontSize="22"/>
                                                         </StackLayout>
-
-                                                        <StackLayout  Grid.Column="4" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical" Padding="0,10,0,0">
-                                                            <Label Text="{Binding fecha_cerada}" TextColor="Black" FontSize="22"/>
+                                                        <StackLayout  Grid.Column="5" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical" Padding="0,10,0,0">
+                                                            <Label Text="{Binding fecha_estimada}" TextColor="Black" FontSize="22"/>
                                                         </StackLayout>
 
                                                     </Grid>

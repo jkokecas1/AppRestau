@@ -9,6 +9,7 @@ namespace AppResta.Model
         public int id { get; set; }
         public string fecha_orden { get; set; }
         public string fecha_start { get; set; }
+        public string fecha_estimada { get; set; }
         public string fecha_cerada { get; set; }
         public string estado { get; set; }
         public string mesa { get; set; }

@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using Rg.Plugins.Popup.Services;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -15,10 +16,14 @@ namespace AppResta.View
         public Model.Cart cartItem = new Model.Cart();
         Model.Ordenes ordenes;
         int hora = 0;
-
-        public VerOrden(Model.Ordenes ordenes)
+        List<Model.Ordenes> aux;
+        CollectionView collection;
+        public VerOrden(Model.Ordenes ordenes, List<Model.Ordenes> aux, CollectionView collection)
         {
             this.ordenes = ordenes;
+            this.aux = aux;
+            this.collection = collection;
+            
             InitializeComponent();
             
             init();
@@ -26,8 +31,27 @@ namespace AppResta.View
 
         public void init() {
             
+            
+
             numeroOrden.Text = "Orden # " + ordenes.id;
-            ordenlist.ItemsSource = CartMesa(ordenes.id.ToString(), ordenes.mesa);
+            cart = CartMesa(ordenes.id.ToString(), ordenes.mesa);
+
+            ordenlist.ItemsSource = cart;
+           
+           
+            if (ordenes.fecha_start != null)
+            {
+                if (ordenes.fecha_start.Length > 0) {
+                    HoraInicioOrden.Text = ordenes.fecha_start;
+                    CronometroOrden.Text = "Preparando ...";
+                    HoraEstimadaOrden.Text = ordenes.fecha_estimada;
+                    
+                    btnIniciar.IsEnabled = false;
+                    horas.IsEnabled = false;
+                }
+               
+
+            }
             var hora = new List<string>();
            
             hora.Add("10 minutos");
@@ -44,13 +68,44 @@ namespace AppResta.View
 
         private void cerrarPop(object sender, EventArgs e)
         {
-            this.IsVisible = false;
-            //Rg.Plugins.Popup.Services.PopupNavigation.Instance.PopAsync();
+            //collection.SelectedItems = null;
+            
+            collection.ItemsSource = null;
+            collection.ItemsSource = Cocina.Ordene();
+            Rg.Plugins.Popup.Services.PopupNavigation.Instance.PopAsync();
+            //
         }
+        public void ExtrasItem(Model.Cart c) {
+
+            var client = new HttpClient();
+           
+            client.BaseAddress = new Uri("http://192.168.1.112/resta/admin/mysql/platillo/index.php?op=obtenerExtrasAsItem&iditem=" + c.idItem);
+
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                var content = response.Content.ReadAsStringAsync().Result;
+                string json = content.ToString();
+                if (json.Equals("[]"))
+                {
+                    c.extras = "0 EXTRAS";
+                }
+                else {
+                    var jsonArray = JArray.Parse(json.ToString());
+
+                    foreach (var item in jsonArray)
+                    {
+                        if (Int32.Parse(item["item"].ToString()) == c.idItem)
+                        {
+                            c.extras += item["extra"].ToString() + ", ";
+                        }
+                    }
+                }
+            }
+        }
+
         public List<Model.Cart> CartMesa(string id, string mesa)
         {
-
-            var sub = new List<Model.Cart>();
             var client = new HttpClient();
 
             client.BaseAddress = new Uri("http://192.168.1.112/resta/admin/mysql/orden/index.php?op=obtenerCarrito&idOrden=" + id + "&mesa=" + mesa);
@@ -66,26 +121,29 @@ namespace AppResta.View
                 {
                     cartItem = new Model.Cart();
 
-
-                    int ids = Int32.Parse(item["id"].ToString());
-                    int iditem = Int32.Parse(item["idItem"].ToString());
-                    string nombre = item["nombre"].ToString();
-                    int cantidad = Int32.Parse(item["cantidad"].ToString());
-                    double precio = Convert.ToDouble(item["precio"].ToString().Replace(",", "."));
-                    double total = (double)(precio * cantidad);
-
-
-                    cartItem.id = ids;
-                    cartItem.idItem = iditem;
-                    cartItem.platillo = nombre;
-                    cartItem.cantidad = cantidad;
-                    cartItem.precio = precio;
-                    cartItem.total = total;
+                    cartItem.id = Int32.Parse(item["id"].ToString());
+                    cartItem.idItem = Int32.Parse(item["idItem"].ToString());
+                    cartItem.platillo = item["nombre"].ToString();
+                    cartItem.cantidad = Int32.Parse(item["cantidad"].ToString());
+                    if (item["comentario"] != null && item["comentario"].ToString() != "")
+                    {
+                        cartItem.comentario = item["comentario"].ToString().ToUpper();
+                    }
+                    else {
+                        cartItem.comentario = "SIN COMENTARIOS";
+                    }
+                   
+                    cartItem.precio = Convert.ToDouble(item["precio"].ToString().Replace(",", ".")); 
+                    cartItem.total = (double)(cartItem.precio * cartItem.cantidad);
                     cartItem.visible = "false";
+
+                    ExtrasItem(cartItem);
+
 
                     cart.Add(cartItem);
 
                 }
+
                 return cart;
             }
             else
@@ -94,41 +152,56 @@ namespace AppResta.View
             }
         }
         
-        private void Button_Clicked(object sender, EventArgs e)
+        private void Button_Iniciar(object sender, EventArgs e)
         {
             //var _count = DateTime.Now.ToString("HH:MM:ss");
             if (hora != 0)
             {
-                var h = DateTime.Now.ToString("HH:MM:ss");
-
-                HoraInicioOrden.Text = "H.I" + h;
+                var h = DateTime.Now.ToString("yyyy-MM-dd HH:MM:ss");
+                string fechaIn = h;
+                HoraInicioOrden.Text = h.Remove(0, 9).Replace(" ", "");
                 h = DateTime.Now.AddMinutes(hora).ToString();
-
+                string fechaFn = h;
                // CronometroOrden.Text = "00:00:00";
-                HoraEstimadaOrden.Text = "H.E" + h.Remove(0, 9);
+                HoraEstimadaOrden.Text = h.Remove(0, 9).Replace(" ","").Replace("PM","");
                 btnIniciar.IsEnabled = false;
                 horas.IsEnabled = false;
 
-              /*  Device.StartTimer(
-         TimeSpan.FromSeconds(1),
-         () =>
-         {
-            
-             _count = DateTime.Now.ToString("HH:MM:ss");
+                //Cambiar el estado de la orden // updateOrden
+                string cadena = "http://192.168.1.112/resta/admin/mysql/Orden/index.php?op=updateOrden&estado=2"+ "&fecha_inicio="+ fechaIn.Replace("/","-").Replace(" ","-")+"&fecha_estimada=" + fechaIn.Replace("/", "-").Replace("PM","").Replace(" ", "-") + "&idCart=" + ordenes.id;
+                //Console.WriteLine(cadena);
+                
+                popAgregar(cadena);
+                collection.ItemsSource = null;
+                collection.ItemsSource = Cocina.Ordene();
 
-
-            
-             this.CronometroOrden.Text = $"{_count}";
-             return true;
-         });*/
             }
             else {
-                DisplayAlert("INCORRECTP", "SELECCIONA EL TIMO ESTIMADAO", "OK");
+                
+                PopupNavigation.Instance.PushAsync(new PopError("SELECCIONA EL TIEMPO ESTIMADAO"));
             }
 
           
         }
 
+        private void Button_Terminar(object sender, EventArgs e)
+        {
+
+            string cadena = "http://192.168.1.112/resta/admin/mysql/Orden/index.php?op=updateEstadoOrden&idItem=" + ordenes.id;
+            Console.WriteLine(cadena);  
+            var client = new HttpClient();
+            client.BaseAddress = new Uri(cadena);
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                Rg.Plugins.Popup.Services.PopupNavigation.Instance.PopAsync();
+            }
+            else
+            {
+                DisplayAlert("Error", "Fallo el registro \n Intentalo de nuevo " + cadena, "OK");
+
+            }
+        }
         void OnPickerSelectedIndexChanged(object sender, EventArgs e)
         {
 
@@ -138,6 +211,23 @@ namespace AppResta.View
             {
                 hora= Int32.Parse(picker.SelectedItem.ToString().Replace(" minutos",""));
            
+            }
+        }
+
+        public void popAgregar(string c)
+        {
+            var client = new HttpClient();
+            client.BaseAddress = new Uri(c);
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                //this.IsVisible = false;
+                Rg.Plugins.Popup.Services.PopupNavigation.Instance.PopAsync();
+            }
+            else
+            {
+                DisplayAlert("Error", "Fallo el registro \n Intentalo de nuevo " + c, "OK");
+
             }
         }
     }

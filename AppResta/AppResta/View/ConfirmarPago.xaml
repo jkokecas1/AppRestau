@@ -17,15 +17,19 @@ x:Class="AppResta.View.ConfirmarPago">
                 <ImageButton Grid.Row="0" Grid.Column="1" Clicked="cerrarPop" HorizontalOptions="End"  Source="cerrar.png" BackgroundColor="Transparent"/>
             </Grid>
 
-            <Grid Grid.Row="1" Grid.Column="0">
-                <Label Grid.Row="0" Grid.Column="0" Text="Monto Efectivo" TextColor="Black" FontSize="20"/>
-                <Label Grid.Row="0" Grid.Column="1" Text="500" HorizontalOptions="End" FontSize="20" TextColor="Black" />
-                <Label Grid.Row="1" Grid.Column="0" Text="Cambio" TextColor="Black" FontSize="20"/>
-                <Label Grid.Row="1" Grid.Column="1" Text="100" HorizontalOptions="End" TextColor="Black" FontSize="20"/>
+            <Grid Grid.Row="1" Grid.Column="0" HorizontalOptions="Center">
+                <Label Grid.Row="0" Grid.Column="0" Text="TIPO DE PAGO:" TextColor="Black" FontSize="20"/>
+                <Label Grid.Row="0" Grid.Column="2" x:Name="tipo" Text="0" FontSize="20" TextColor="Black" />
+                <Label Grid.Row="1" Grid.Column="0" Text="MONTO:" TextColor="Black" FontSize="20" BackgroundColor="LightGray"/>
+                <Label Grid.Row="1" Grid.Column="1" x:Name="monto" Text="0" HorizontalOptions="Center" TextColor="Black" FontSize="20" BackgroundColor="LightGray"/>
+                <Label Grid.Row="2" Grid.Column="0" Text="CAMBIO:" TextColor="Black" FontSize="20"/>
+                <Label Grid.Row="2" Grid.Column="1" x:Name="cambio" Text="0" HorizontalOptions="Center" TextColor="Black" FontSize="20"/>
+                <Label Grid.Row="3" Grid.Column="0" Text="TOTAL:" TextColor="Black" FontSize="20" BackgroundColor="LightGray"/>
+                <Label Grid.Row="3" Grid.Column="1" x:Name="total" Text="0" HorizontalOptions="Center" TextColor="Black" FontSize="20" BackgroundColor="LightGray"/>
             </Grid>
 
             <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="1">
-                <Button Text="Confirmar Pago" TextColor="White" BackgroundColor="Green" FontSize="20"/>
+                <Button Text="Confirmar Pago" Clicked="confirmarPago" TextColor="White" BackgroundColor="Green" FontSize="20"/>
             </Grid>
 
         </Grid>

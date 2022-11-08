@@ -31,7 +31,7 @@
 
                     <Image Source="klassylogo.png"  Grid.Row="0" Grid.Column="0"></Image>
                     <Label x:Name="nombreEmpl" Text="COCINA" Grid.Row="0" Grid.Column="1"  FontSize="20" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center"></Label>
-                    <Button Text="SALIR"  Command="{Binding NavLoginCommand}" Grid.Row="0" Grid.Column="2" HorizontalOptions="End" CornerRadius="0" BackgroundColor="Red" TextColor="#FFF"></Button>
+                    <Button Text="SALIR"   Grid.Row="0" Grid.Column="2" HorizontalOptions="End" CornerRadius="0" BackgroundColor="Red" TextColor="#FFF"></Button>
                 </Grid>
             </Grid>
 
@@ -49,48 +49,51 @@
 
 
                     <Grid>
-                        
-                        
-                        
-                        <RefreshView Grid.Row="0" Grid.Column="0">
-                            <CollectionView SelectionMode="Single" x:Name="cocinaListView" SelectionChanged="cocinaListView_SelectionChanged" >
+
+
+
+                        <RefreshView Grid.Row="0" Grid.Column="0" x:Name="Refresh_Ordenes" Refreshing="RefreshView_Refreshing">
+                            <CollectionView SelectionMode="Single" x:Name="cocinaListView" SelectionChanged="cocinaListView_SelectionChanged"  >
                                 <CollectionView.ItemsLayout>
                                     <GridItemsLayout Orientation="Vertical" Span="3"/>
                                 </CollectionView.ItemsLayout>
                                 <CollectionView.ItemTemplate>
-                                    <DataTemplate>                                            
-                                            <Grid BackgroundColor="Yellow" Padding="5">
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="*" />
-                                                </Grid.ColumnDefinitions>
-                                                <Grid.RowDefinitions>
-                                                    <RowDefinition Height="100"/>
-                                                </Grid.RowDefinitions>
-                                                <Frame HasShadow="True" Padding="5" CornerRadius="10">
-                                                    <Grid BackgroundColor="White" RowSpacing="0" Padding="9,9,9,9">
-                                                        <Grid.RowDefinitions >
-                                                            <RowDefinition Height="*"/>
-                                                            <RowDefinition Height="20"/>
-                                                        </Grid.RowDefinitions>
-                                                        <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition Width="*"/>
-                                                        </Grid.ColumnDefinitions>
+                                    <DataTemplate>
+                                        <Grid BackgroundColor="Orange" Padding="5">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="110"/>
+                                            </Grid.RowDefinitions>
+                                            <Frame HasShadow="True" Padding="2" CornerRadius="10">
+                                                <Grid BackgroundColor="White" RowSpacing="0" Padding="3,15,3,3">
+                                                    <Grid.RowDefinitions >
+                                                        <RowDefinition Height="30"/>
+                                                        <RowDefinition Height="30"/>
+                                                    </Grid.RowDefinitions>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*"/>
+                                                    </Grid.ColumnDefinitions>
 
-                                                        <Grid Grid.Row="0"  Grid.Column="0"  BackgroundColor="White" Padding="0,0,0,0">
-                                                            <Label Text="ORDEN #" HorizontalOptions="Center" VerticalOptions="Center" FontSize="20" FontAttributes="Bold" TextColor="Black"/>
-                                                        </Grid>
+                                                    <Grid Grid.Row="0"  Grid.Column="0"  BackgroundColor="White" Padding="0,0,0,0">
+                                                        <Label Text="ORDEN #" HorizontalOptions="End" VerticalOptions="Center" FontSize="20" FontAttributes="Bold" TextColor="Black"/>
+                                                    </Grid>
 
-                                                        <Grid Grid.Row="0"  Grid.Column="1" BackgroundColor="White" HorizontalOptions="Center" Padding="0,0,0,0">
+                                                    <Grid Grid.Row="0"  Grid.Column="1" BackgroundColor="White" HorizontalOptions="Start" Padding="0,0,0,0">
                                                         <Label Text="{Binding id}"  FontSize="20"  TextColor="Black" FontAttributes="Bold" HorizontalOptions="Center" Padding="0,0,0,0"/>
-                                                        </Grid>
-                                                    <Grid Grid.Row="1"  Grid.Column="0" BackgroundColor="White" HorizontalOptions="Center" Padding="0,0,0,0">
-                                                        <Label Text="{Binding fecha_start}"  FontSize="20"  TextColor="Black" FontAttributes="Bold" HorizontalOptions="Center" Padding="0,0,0,0"/>
+                                                    </Grid>
+                                                    <Grid Grid.Row="1"  Grid.Column="0"  BackgroundColor="White" Padding="0,0,0,0">
+                                                        <Label Text="ESTADO:" HorizontalOptions="End" VerticalOptions="Center" FontSize="20" FontAttributes="Bold" TextColor="Black"/>
+                                                    </Grid>
+                                                    <Grid Grid.Row="1"  Grid.Column="1" Grid.ColumnSpan="2" BackgroundColor="White" HorizontalOptions="Start" Padding="0,0,0,0">
+                                                        <Label x:Name="start" Text="{Binding estado}"  FontSize="20"  TextColor="Black" FontAttributes="Bold" HorizontalOptions="Center" Padding="0,0,0,0"/>
                                                     </Grid>
                                                 </Grid>
 
-                                                </Frame>
-                                            </Grid>
-                                        </DataTemplate>
+                                            </Frame>
+                                        </Grid>
+                                    </DataTemplate>
                                 </CollectionView.ItemTemplate>
 
                             </CollectionView>

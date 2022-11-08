@@ -10,21 +10,17 @@ using Xamarin.Forms.Xaml;
 namespace AppResta.View
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class PrePago : Rg.Plugins.Popup.Pages.PopupPage
+    public partial class PopError : Rg.Plugins.Popup.Pages.PopupPage
     {
-        public PrePago()
+        public PopError(string messaje)
         {
             InitializeComponent();
+            /// titulo.Text = titulo;
+            mensaje.Text = messaje;
         }
-
         private void cerrarPop(object sender, EventArgs e)
         {
-            this.IsVisible = false;
-            //Rg.Plugins.Popup.Services.PopupNavigation.Instance.PopAsync();
+            Rg.Plugins.Popup.Services.PopupNavigation.Instance.PopAsync();
         }
-
-
-
-
     }
 }

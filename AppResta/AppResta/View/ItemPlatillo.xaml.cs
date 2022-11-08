@@ -30,6 +30,7 @@ namespace AppResta.View
 
         public ItemPlatillo(Model.Platillos platillo, string mesa, int bandera, List<Model.Cart> cart, ListView carrito = null, int item =0)
         {
+            //Main.actualizar();
             listExtra = new List<Model.Extras>();
             mesasGlb = mesa;
             this.item = item;
@@ -43,14 +44,18 @@ namespace AppResta.View
             nombPlatillo.Text = platillos.nombre;
             descPlatillo.Text = platillos.descrip;
 
-            foreach (Model.Cart cartItem in cart) {
-                if (cartItem.idItem == item) {
+            /*foreach (Model.Cart cartItem in cart) {
+                if (cartItem.idItem == item)
+                {
                     valCantidad.Text = cartItem.cantidad.ToString();
                     stepper.Value = cartItem.cantidad;
                     btn_agregar.Text = "ACTUALIZAR";
                     //listaExtraItems = Extras2(platillo.id);
                 }
-            }
+                else {
+                    btn_agregar.Text = "AGREGAR";
+                }
+            }*/
 
             extrasListView.ItemsSource = Extras(platillos.id);
 
@@ -58,8 +63,8 @@ namespace AppResta.View
 
         private void cerrarPop(object sender, EventArgs e)
         {
-            this.IsVisible = false;
-            //Rg.Plugins.Popup.Services.PopupNavigation.Instance.PopAsync();
+            //this.IsVisible = false;
+           Rg.Plugins.Popup.Services.PopupNavigation.Instance.PopAsync();
         }
 
         public void cantidadPlatillo(object sender, ValueChangedEventArgs e) {
@@ -139,7 +144,7 @@ namespace AppResta.View
 
             }
 
-
+            
             carrito.ItemsSource = null;
             carrito.ItemsSource = cart;
             cant = cart[index].cantidad;
@@ -153,20 +158,20 @@ namespace AppResta.View
             }
             else if (band == 1) // CASO 1: SI LE CARRITO EXISTE, Y ES EL MISMO PRODUCTO
             {
-                cadena = "http://192.168.1.112/resta/admin/mysql/Orden/index.php?op=updateItemPlatillo&cantidad=" + (cant ) + "&idPlatillo=" + platillos.id + "&idItem=" + cart[index].idItem;
+                cadena = "http://192.168.1.112/resta/admin/mysql/Orden/index.php?op=updateItemPlatillo&cantidad=" + (cant ) + "&idPlatillo=" + platillos.id + "&idItem=" + cart[index].idItem + "&comen=" + comentario;
                 popAgregar(cadena);
                 Console.WriteLine("CASO 1: " + cadena);
             }
             else if (band == 2) // CASP 2: SI EL CARRITO EXISTE, Y NO ES EL MISMO PLATILLO
             {
-                cadena = "http://192.168.1.112/resta/admin/mysql/Orden/index.php?op=insertarItems&cantidad=" + cantidad + "&idPlatillo=" + platillos.id + "&mesa=" + mesasGlb + "&total="+ total.ToString() ;
-                foreach (var item in cart) {
+                cadena = "http://192.168.1.112/resta/admin/mysql/Orden/index.php?op=insertarItems&cantidad=" + cantidad + "&idPlatillo=" + platillos.id + "&mesa=" + mesasGlb + "&total="+ total.ToString() + "&comen=" + comentario;
+               /* foreach (var item in cart) {
                     if (item.platillo == platillos.nombre) {
                         //cadena = cadena + item.id;
-                        Console.WriteLine(item.idItem);
+                       // Console.WriteLine(item.idItem);
                         break;
                     }
-                }
+                }*/
                 
                 popAgregar(cadena);
                 Console.WriteLine("CASO 2: " + cadena);
@@ -188,7 +193,7 @@ namespace AppResta.View
             }
 
             cant = 0;
-            
+           
         }
 
         public void popAgregar(string c){
@@ -197,7 +202,7 @@ namespace AppResta.View
             HttpResponseMessage response = client.GetAsync(client.BaseAddress).Result;
             if (response.IsSuccessStatusCode)
             {
-                //this.IsVisible = false;
+               // Main.actualizar();
                 Rg.Plugins.Popup.Services.PopupNavigation.Instance.PopAsync();
             }
             else
