@@ -19,10 +19,10 @@ namespace AppResta.View
     {
         int band = 0, ordenID;
         string mesaglb;
-        public List<Model.Cart> cart = new List<Model.Cart>();
+        public static List<Model.Cart> cart = new List<Model.Cart>();
 
         public Model.Cart cartItem = new Model.Cart();
-
+        public static double totalpay = 0.0;
         public Main(bool _Token, int idOrden = 0, string nombre="", string mesa = "MES-0")
         //public Main(Object[] datos)
         {
@@ -39,12 +39,14 @@ namespace AppResta.View
                 InitializeComponent();
                 // Refreshplatillos.IsRefreshing = true;
                 testListView.ItemsSource = Categorias2();
-                double totalpay = 0.0;
+                
 
                 if (idOrden != 0)
                 {
-                    
-                    test2ListView.ItemsSource = CartMesa(idOrden.ToString(), mesaglb);
+                    cart.Clear();
+                    totalpago.Text = "0";
+                    totalpay = 0;
+                    cart = CartMesa(idOrden.ToString(), mesaglb);
                     test2ListView.ItemsSource = null;
                     test2ListView.ItemsSource = cart;
                     test2ListView.IsRefreshing = false;
@@ -54,6 +56,7 @@ namespace AppResta.View
                         totalpay += cart[i].total;
                     }
                     totalpago.Text = totalpay.ToString();
+                    
                 }
 
 
@@ -62,7 +65,6 @@ namespace AppResta.View
                 NombTexto.Text = "Mesero: " + nombre;
                 OrdenTexto.Text = "# Orden: " + idOrden.ToString();
 
-                
             }   
 
         }
@@ -212,11 +214,18 @@ namespace AppResta.View
 
         private void Oredenar_orden(object sender, EventArgs e)
         {
+            string total = totalpago.Text;
+            if (total != "0")
+            {
+                GET_DATOS("http://192.168.1.112/resta/admin/mysql/orden/index.php?op=updateEstadoOrdenMesas&estado=1&id=" + ordenID + "&total=" + total);
+
+
+                Navigation.PushAsync(new View.Ordenes(), false);
+            }
+            else {
+                PopupNavigation.Instance.PushAsync(new PopError("AGREGA PRODUCTOS AL CARRITO ANTES DE ORDENAR"));
+            }
             
-            GET_DATOS("http://192.168.1.112/resta/admin/mysql/orden/index.php?op=updateEstadoOrdenMesas&estado=1&id="+ordenID);
-
-
-            Navigation.PushAsync(new View.Ordenes(), false);
         }
 
         public void select_Item(object sender, SelectionChangedEventArgs e)
@@ -312,21 +321,26 @@ namespace AppResta.View
 
                 }
 
-            } 
+            }
+            actualizar();
+
+
+        }
+
+        public void actualizar() {
+            totalpago.Text = "0.0";
+            totalpay = 0;
             test2ListView.ItemsSource = null;
             test2ListView.ItemsSource = cart;
             test2ListView.IsRefreshing = false;
-           
+
             for (int i = 0; i < cart.Count; i++)
             {
                 totalpay += cart[i].total;
             }
             //Console.WriteLine(totalpay);
             totalpago.Text = totalpay.ToString();
-            
         }
-
-        
 
         public void returnCategorias(object sender, EventArgs e)
         {

@@ -23,6 +23,7 @@ namespace AppResta.View
             this.ordenes = ordenes;
             this.aux = aux;
             this.collection = collection;
+            
             InitializeComponent();
             
             init();
@@ -67,17 +68,44 @@ namespace AppResta.View
 
         private void cerrarPop(object sender, EventArgs e)
         {
-            Rg.Plugins.Popup.Services.PopupNavigation.Instance.PopAsync();
+            //collection.SelectedItems = null;
+            
             collection.ItemsSource = null;
-            collection.ItemsSource = aux;
+            collection.ItemsSource = Cocina.Ordene();
+            Rg.Plugins.Popup.Services.PopupNavigation.Instance.PopAsync();
             //
         }
+        public void ExtrasItem(Model.Cart c) {
 
+            var client = new HttpClient();
+           
+            client.BaseAddress = new Uri("http://192.168.1.112/resta/admin/mysql/platillo/index.php?op=obtenerExtrasAsItem&iditem=" + c.idItem);
+
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                var content = response.Content.ReadAsStringAsync().Result;
+                string json = content.ToString();
+                if (json.Equals("[]"))
+                {
+                    c.extras = "0 EXTRAS";
+                }
+                else {
+                    var jsonArray = JArray.Parse(json.ToString());
+
+                    foreach (var item in jsonArray)
+                    {
+                        if (Int32.Parse(item["item"].ToString()) == c.idItem)
+                        {
+                            c.extras += item["extra"].ToString() + ", ";
+                        }
+                    }
+                }
+            }
+        }
 
         public List<Model.Cart> CartMesa(string id, string mesa)
         {
-
-            var sub = new List<Model.Cart>();
             var client = new HttpClient();
 
             client.BaseAddress = new Uri("http://192.168.1.112/resta/admin/mysql/orden/index.php?op=obtenerCarrito&idOrden=" + id + "&mesa=" + mesa);
@@ -109,9 +137,13 @@ namespace AppResta.View
                     cartItem.total = (double)(cartItem.precio * cartItem.cantidad);
                     cartItem.visible = "false";
 
+                    ExtrasItem(cartItem);
+
+
                     cart.Add(cartItem);
 
                 }
+
                 return cart;
             }
             else
@@ -120,7 +152,7 @@ namespace AppResta.View
             }
         }
         
-        private void Button_Clicked(object sender, EventArgs e)
+        private void Button_Iniciar(object sender, EventArgs e)
         {
             //var _count = DateTime.Now.ToString("HH:MM:ss");
             if (hora != 0)
@@ -141,7 +173,7 @@ namespace AppResta.View
                 
                 popAgregar(cadena);
                 collection.ItemsSource = null;
-                collection.ItemsSource = aux;
+                collection.ItemsSource = Cocina.Ordene();
 
             }
             else {
@@ -152,6 +184,24 @@ namespace AppResta.View
           
         }
 
+        private void Button_Terminar(object sender, EventArgs e)
+        {
+
+            string cadena = "http://192.168.1.112/resta/admin/mysql/Orden/index.php?op=updateEstadoOrden&idItem=" + ordenes.id;
+            Console.WriteLine(cadena);  
+            var client = new HttpClient();
+            client.BaseAddress = new Uri(cadena);
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                Rg.Plugins.Popup.Services.PopupNavigation.Instance.PopAsync();
+            }
+            else
+            {
+                DisplayAlert("Error", "Fallo el registro \n Intentalo de nuevo " + cadena, "OK");
+
+            }
+        }
         void OnPickerSelectedIndexChanged(object sender, EventArgs e)
         {
 

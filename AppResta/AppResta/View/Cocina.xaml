@@ -52,8 +52,8 @@
 
 
 
-                        <RefreshView Grid.Row="0" Grid.Column="0">
-                            <CollectionView SelectionMode="Single" x:Name="cocinaListView" SelectionChanged="cocinaListView_SelectionChanged" >
+                        <RefreshView Grid.Row="0" Grid.Column="0" x:Name="Refresh_Ordenes" Refreshing="RefreshView_Refreshing">
+                            <CollectionView SelectionMode="Single" x:Name="cocinaListView" SelectionChanged="cocinaListView_SelectionChanged"  >
                                 <CollectionView.ItemsLayout>
                                     <GridItemsLayout Orientation="Vertical" Span="3"/>
                                 </CollectionView.ItemsLayout>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -48,14 +49,15 @@ namespace AppResta.View
             }
 
 
-            string cadena = "http://192.168.1.112/resta/admin/mysql/Orden/index.php?op=insertarPago&IDpago=1"  +
-                                "&tipo=" + pago.tipoPago.ToString() + "&monto=" + pago.monto + "&fecha=" + h.ToString() + "&IDcart=" + pago.idcart;
+            string cadena = "http://192.168.1.112/resta/admin/mysql/Orden/index.php?op=insertarPago&idpago="+ obtenerIDPago()+"&tipo=" + pago.tipoPago.ToString() + "&monto=" + pago.monto + "&fecha=" + h.ToString() + "&IDcart=" + pago.idcart;
             Console.WriteLine(cadena);
              var client = new HttpClient();
             client.BaseAddress = new Uri(cadena);
             HttpResponseMessage response = client.GetAsync(client.BaseAddress).Result;
             if (response.IsSuccessStatusCode)
             {
+               // Rg.Plugins.Popup.Services.PopupNavigation.Instance.RemovePageAsync(Rg.Plugins.Popup.Pages.PopupPage );
+                Rg.Plugins.Popup.Services.PopupNavigation.Instance.PopAsync();
                 Rg.Plugins.Popup.Services.PopupNavigation.Instance.PopAsync();
             }
             else
@@ -63,6 +65,27 @@ namespace AppResta.View
                 DisplayAlert("Error", "Fallo el registro \n Intentalo de nuevo " + cadena, "OK");
 
             }
+        }
+
+        public int obtenerIDPago() {
+            int id = 0;
+            string cadena = "http://192.168.1.112/resta/admin/mysql/Orden/index.php?op=obtenerIDpago";
+            var client = new HttpClient();
+            client.BaseAddress = new Uri(cadena);
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                var content = response.Content.ReadAsStringAsync().Result;
+                string json = content.ToString();
+                var jsonArray = JArray.Parse(json.ToString());
+                foreach (var item in jsonArray) {
+                    Console.WriteLine(item["id_Pago"]);
+                    id = Int32.Parse(item["id_Pago"]+"")+1;
+
+                }
+
+            }
+            return id;
         }
 
     }

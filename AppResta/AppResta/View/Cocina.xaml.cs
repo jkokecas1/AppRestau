@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-
+using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -20,7 +20,7 @@ namespace AppResta.View
         }
         public List<Model.Cart> cart = new List<Model.Cart>();
 
-        public List<Model.Ordenes> Ordene()
+        public static List<Model.Ordenes> Ordene()
         {
             Model.Ordenes orden;
             List<Model.Ordenes> ordenList = new List<Model.Ordenes>();
@@ -128,5 +128,12 @@ namespace AppResta.View
 
         }
 
+        private void RefreshView_Refreshing(object sender, EventArgs e)
+        {
+            Task.Delay(100);
+            cocinaListView.ItemsSource = null;
+            cocinaListView.ItemsSource = Ordene();
+            Refresh_Ordenes.IsRefreshing = false;
+        }
     }
 }

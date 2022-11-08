@@ -49,17 +49,7 @@ namespace AppResta.View
                 }
             }
 
-            var monkeyList = new List<string>();
-            monkeyList.Add("5");
-            monkeyList.Add("10");
-            monkeyList.Add("15");
-            monkeyList.Add("20");
-            monkeyList.Add("25");
-            monkeyList.Add("30");
-            monkeyList.Add("35");
-
-
-            piker_propina.ItemsSource = monkeyList;
+           propina0.BorderColor = Color.White;
 
 
         }
@@ -76,7 +66,7 @@ namespace AppResta.View
                 propina.Text = ((Int32.Parse(Ordenes.total) * Int32.Parse(picker.SelectedItem.ToString())) / 100) + "";
                 total.Text = Ordenes.total;
                 Subtotal.Text = Int32.Parse(propina.Text.ToString()) + Int32.Parse(total.Text.ToString()) + "";
-                if(radioTarjeta.IsChecked)
+                if (radioTarjeta.IsChecked)
                     Tarjeta.Text = Subtotal.Text;
                 //Console.WriteLine( Ordenes.total);
             }
@@ -85,12 +75,13 @@ namespace AppResta.View
 
         void OnClicked_Pagar(object sender, EventArgs e)
         {
-           
+
 
             if (Efectivo.Text == "" && Tarjeta.Text == "")
             {
                 PopupNavigation.Instance.PushAsync(new PopError("VERIFICA LOS CAMPOS"));
-            }else if (Tarjeta.Text != "" && Efectivo.Text == "0")
+            }
+            else if (Tarjeta.Text != "" && Efectivo.Text == "0")
             {
                 pago.monto = Double.Parse(Tarjeta.Text + "");
                 pago.idcart = Ordenes.id;
@@ -104,10 +95,11 @@ namespace AppResta.View
                 }
                 else
                 {
-                    Console.WriteLine(pago.tipoPago+ "Tarjeta");
+                    Console.WriteLine(pago.tipoPago + "Tarjeta");
                     PopupNavigation.Instance.PushAsync(new ConfirmarPago(pago));
                 }
-            } else if (Efectivo.Text != "" && Tarjeta.Text == "0")
+            }
+            else if (Efectivo.Text != "" && Tarjeta.Text == "0")
             {
                 pago.monto = Double.Parse(Efectivo.Text + "");
                 pago.idcart = Ordenes.id;
@@ -120,7 +112,7 @@ namespace AppResta.View
                 }
                 else
                 {
-                    Console.WriteLine(pago.tipoPago+"EFECTIVO");
+                    Console.WriteLine(pago.tipoPago + "EFECTIVO");
                     PopupNavigation.Instance.PushAsync(new ConfirmarPago(pago));
                 }
             }
@@ -140,16 +132,17 @@ namespace AppResta.View
                 }
                 else
                 {
-                    Console.WriteLine(pago.tipoPago+"AMBOS");
+                    Console.WriteLine(pago.tipoPago + "AMBOS");
                     PopupNavigation.Instance.PushAsync(new ConfirmarPago(pago));
                 }
             }
 
         }
         bool pagos = false;
-        void OnClicked_Num1(object sender, EventArgs e) {
+        void OnClicked_Num1(object sender, EventArgs e)
+        {
             verificar0();
-             _ = pagos == false ? Efectivo.Text += "1" : Tarjeta.Text += "1"; 
+            _ = pagos == false ? Efectivo.Text += "1" : Tarjeta.Text += "1";
         }
         void OnClicked_Num2(object sender, EventArgs e) { verificar0(); _ = pagos == false ? Efectivo.Text += "2" : Tarjeta.Text += "2"; }
         void OnClicked_Num3(object sender, EventArgs e) { verificar0(); _ = pagos == false ? Efectivo.Text += "3" : Tarjeta.Text += "3"; }
@@ -161,14 +154,16 @@ namespace AppResta.View
         void OnClicked_Num9(object sender, EventArgs e) { verificar0(); _ = pagos == false ? Efectivo.Text += "9" : Tarjeta.Text += "9"; }
         void OnClicked_Num0(object sender, EventArgs e) { verificar0(); _ = pagos == false ? Efectivo.Text += "0" : Tarjeta.Text += "0"; }
 
-        void verificar0() {
+        void verificar0()
+        {
             if (pagos == false)
             { _ = Efectivo.Text == "0" ? Efectivo.Text = "" : Efectivo.Text; }
-            else {
+            else
+            {
                 _ = Tarjeta.Text == "0" ? Tarjeta.Text = "" : Tarjeta.Text;
             }
-               
-            
+
+
         }
 
         void OnClicked_NumBorrar(object sender, EventArgs e)
@@ -207,7 +202,7 @@ namespace AppResta.View
                 pagos = false;
                 Efectivo.TextColor = Color.Black;
                 Efectivo.Opacity = 1;
-               // Tarjeta.Opacity = 0.3;
+                // Tarjeta.Opacity = 0.3;
 
             }
 
@@ -239,7 +234,7 @@ namespace AppResta.View
             Tarjeta.Text = "0";
             Efectivo.Text = "0";
             btnSiguiente.IsEnabled = true;
-            EfectivoGrild.IsVisible= true;
+            EfectivoGrild.IsVisible = true;
             TarjetaGrild.IsVisible = true;
         }
     }

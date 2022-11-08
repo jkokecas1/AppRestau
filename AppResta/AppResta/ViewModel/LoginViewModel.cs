@@ -12,7 +12,6 @@ using AppResta.Services;
 using AppResta.Model;
 using System.ComponentModel;
 using System.Linq;
-using Rg.Plugins.Popup.Services;
 
 namespace AppResta.ViewModel
 {
@@ -107,7 +106,7 @@ namespace AppResta.ViewModel
         {
             if (Pin == null)
             {
-                await PopupNavigation.Instance.PushAsync(new PopError("EL USUARIO ES INCORRECTO"));
+                await DisplayAlert("Error", "User not exist", "Ok");
 
             }
 
@@ -144,8 +143,7 @@ namespace AppResta.ViewModel
             }
             else
             {
-                
-                await PopupNavigation.Instance.PushAsync(new PopError("EL USUARIO ES INCORRECTO"));
+                await DisplayAlert("Error", "User not exist", "Ok");
             }
         }
 

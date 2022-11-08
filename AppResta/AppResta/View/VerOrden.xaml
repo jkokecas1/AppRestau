@@ -48,80 +48,86 @@ x:Class="AppResta.View.VerOrden">
 
 
 
-            <Grid Grid.Row="2" Grid.Column="0">
+            <RefreshView Grid.Row="2" Grid.Column="0">
 
 
 
-                <Grid Grid.Row="0" Grid.Column="0">
-                    <CollectionView SelectionMode="Single" x:Name="ordenlist" >
-                        <CollectionView.ItemsLayout>
-                            <GridItemsLayout Orientation="Vertical" Span="2"/>
-                        </CollectionView.ItemsLayout>
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate>
-                                <Grid Padding="5">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="400"/>
-                                    </Grid.RowDefinitions>
-                                    <Frame HasShadow="True" Padding="5" CornerRadius="10">
-                                        <ScrollView>
-                                            <Grid BackgroundColor="White" RowSpacing="0" Padding="9,9,9,9">
-                                                <Grid.RowDefinitions >
-                                                    <RowDefinition Height="30"/>
-                                                    <RowDefinition Height="20"/>
-                                                    <RowDefinition Height="50"/>
-                                                    <RowDefinition Height="20"/>
-                                                    <RowDefinition Height="90"/>
-                                                    <RowDefinition Height="20"/>
-                                                    <RowDefinition Height="*"/>
-                                                </Grid.RowDefinitions>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="*"/>
-                                                </Grid.ColumnDefinitions>
-                                                <Grid Grid.Row="1"  Grid.Column="0" Padding="0,0,0,0" BackgroundColor="White">
-                                                    <Label Text="Cantidad:" TextColor="Black" FontFamily="Bold" FontSize="20"/>
-                                                </Grid>
-                                                <Grid Grid.Row="0"  Grid.Column="0"   BackgroundColor="White"  Padding="0,0,0,0">
-                                                    <Label Text="Platillo" TextColor="Black" FontFamily="Bold" FontSize="20"/>
-                                                </Grid>
 
-                                                <Grid Grid.Row="1"  Grid.Column="1" Grid.ColumnSpan="2" BackgroundColor="White" HorizontalOptions="Start" Padding="0,0,0,0">
-                                                    <Label Text="{Binding cantidad}" TextColor="Black" FontFamily="Bold" FontSize="20"/>
-                                                </Grid>
-                                                <Grid Grid.Row="0"  Grid.Column="1" Grid.ColumnSpan="2" BackgroundColor="White" HorizontalOptions="Start" Padding="0,0,0,0">
-                                                    <Label Text="{Binding platillo}" TextColor="Black" FontFamily="Bold" FontSize="20" />
-                                                </Grid>
-                                                <Grid Grid.Row="3"  Grid.Column="0" Grid.ColumnSpan="3" BackgroundColor="White" HorizontalOptions="Center" Padding="0,0,0,0">
-                                                    <Label Text="Extras" TextColor="Black" FontFamily="Bold" FontSize="20"/>
-                                                </Grid>
-                                                <Grid Grid.Row="4"  Grid.Column="0" Grid.ColumnSpan="3" BackgroundColor="White" HorizontalOptions="Center" Padding="0,0,0,0">
-                                                    <Label Text="By default, Xamarin.Forms uses a system font defined by each platform. However, controls that display text define properties that you can use to change this font:" TextColor="Black" FontFamily="Bold" FontSize="20"/>
+                <CollectionView SelectionMode="None"  x:Name="ordenlist">
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Orientation="Vertical" Span="2"/>
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Padding="5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="400"/>
+                                </Grid.RowDefinitions>
+                                <Frame HasShadow="True" Padding="5" CornerRadius="10">
 
-                                                </Grid>
-                                                <Grid Grid.Row="5"  Grid.Column="0" Grid.ColumnSpan="3" BackgroundColor="White" HorizontalOptions="Center" Padding="0,0,0,0">
-                                                    <Label Text="Comentarios" TextColor="Black" FontFamily="Bold" FontSize="20"/>
-                                                </Grid>
-                                                <Grid Grid.Row="6"  Grid.Column="0" Grid.ColumnSpan="3" BackgroundColor="White" HorizontalOptions="Center" Padding="0,0,0,0">
-                                                    <Label Text="{Binding comentario}" TextColor="Black" FontFamily="Bold" FontSize="20"/>
+                                    <Grid BackgroundColor="White" RowSpacing="0" Padding="9,9,9,9">
+                                        <Grid.RowDefinitions >
+                                            <RowDefinition Height="40"/>
+                                            <RowDefinition Height="20"/>
+                                            <RowDefinition Height="50"/>
+                                            <RowDefinition Height="20"/>
+                                            <RowDefinition Height="90"/>
+                                            <RowDefinition Height="20"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="30"/>
 
-                                                </Grid>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid Grid.Row="1"  Grid.Column="0" Padding="0,0,0,0" BackgroundColor="White">
+                                            <Label Text="Cantidad:" TextColor="Black" FontFamily="Bold" FontSize="20"/>
+                                        </Grid>
+                                        <Grid Grid.Row="0"  Grid.Column="0"   BackgroundColor="White"  Padding="0,0,0,0">
+                                            <Label Text="Platillo" TextColor="Black" FontFamily="Bold" FontSize="20"/>
+                                        </Grid>
+
+                                        <Grid Grid.Row="0"  Grid.Column="2" Grid.RowSpan="2" HorizontalOptions="End" BackgroundColor="White">
+                                            <CheckBox Color="Green"/>
+                                        </Grid>
+
+                                        <Grid Grid.Row="1"  Grid.Column="1" Grid.ColumnSpan="2" BackgroundColor="White" HorizontalOptions="Start" Padding="0,0,0,0">
+                                            <Label Text="{Binding cantidad}" TextColor="Black" FontFamily="Bold" FontSize="20"/>
+                                        </Grid>
+                                        <Grid Grid.Row="0"  Grid.Column="1" Grid.ColumnSpan="2" BackgroundColor="White" HorizontalOptions="Start" Padding="0,0,0,0">
+                                            <Label Text="{Binding platillo}" TextColor="Black" FontFamily="Bold" FontSize="20" />
+                                        </Grid>
+                                        <Grid Grid.Row="3"  Grid.Column="0" Grid.ColumnSpan="3" BackgroundColor="White" HorizontalOptions="Center" Padding="0,0,0,0">
+                                            <Label Text="Extras" TextColor="Black" FontFamily="Bold" FontSize="20"/>
+                                        </Grid>
+                                        <Grid Grid.Row="4"  Grid.Column="0" Grid.ColumnSpan="3" BackgroundColor="White" HorizontalOptions="Center" Padding="0,0,0,0">
+                                            <Label Text="{Binding extras}" TextColor="Black" FontFamily="Bold" FontSize="20"/>
+
+                                        </Grid>
+                                        <Grid Grid.Row="5"  Grid.Column="0" Grid.ColumnSpan="3" BackgroundColor="White" HorizontalOptions="Center" Padding="0,0,0,0">
+                                            <Label Text="Comentarios" TextColor="Black" FontFamily="Bold" FontSize="20"/>
+                                        </Grid>
+                                        <Grid Grid.Row="6"  Grid.Column="0" Grid.ColumnSpan="3" BackgroundColor="White" HorizontalOptions="Center" Padding="0,0,0,0">
+                                            <Label Text="{Binding comentario}" TextColor="Black" FontFamily="Bold" FontSize="20"/>
+
+                                        </Grid>
+
+                                    </Grid>
 
 
-                                            </Grid>
 
-                                        </ScrollView>
+                                </Frame>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
 
-                                    </Frame>
-                                </Grid>
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
+                </CollectionView>
 
-                    </CollectionView>
-                </Grid>
-            </Grid>
+            </RefreshView>
 
 
             <Grid Grid.Row="3" Grid.Column="0" BackgroundColor="WhiteSmoke" Padding="8,8,8,8">
@@ -132,9 +138,9 @@ x:Class="AppResta.View.VerOrden">
                     </Picker.Items>
                 </Picker>
 
-                <Button x:Name="btnIniciar" Grid.Column="1"  Text="Iniciar"  BackgroundColor="Green" TextColor="White" Clicked="Button_Clicked" />
+                <Button x:Name="btnIniciar" Grid.Column="1"  Text="Iniciar"  BackgroundColor="Green" TextColor="White" Clicked="Button_Iniciar" />
 
-                <Button Grid.Row="0" Grid.Column="2"  Text="Finalizar" BackgroundColor="Red" TextColor="White"/>
+                <Button Grid.Row="0" Grid.Column="2"  Text="Finalizar" BackgroundColor="Red" TextColor="White" Clicked="Button_Terminar"/>
             </Grid>
 
 
