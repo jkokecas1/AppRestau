@@ -27,11 +27,11 @@ namespace AppResta.View
         {
             InitializeComponent();
             BindingContext = new ViewModel.HistorialViewModel(Navigation);
-            ordenesListView.ItemsSource = Ordene();
+          // test2ListView.ItemsSource = Ordene();
 
         }
 
-
+        /*
         public void select_Item(object sender, SelectedItemChangedEventArgs e)
         {
             var orden = e.SelectedItem as Model.Ordenes;
@@ -51,7 +51,7 @@ namespace AppResta.View
             TP.Text = "Tiempo  25 MIN";
 
             productos.ItemsSource = CartMesa(orden.id + "", orden.mesa);
-        }
+        }*/
 
         public List<Model.Ordenes> Ordene()
         {

@@ -49,27 +49,25 @@ namespace AppResta.View
                 }
             }
 
-           propina0.BorderColor = Color.White;
-
 
         }
 
-        void OnPickerSelectedIndexChanged(object sender, EventArgs e)
+        public void calcularPropona(int p)
         {
-            var picker = (Picker)sender;
-            int selectedIndex = picker.SelectedIndex;
-            // Console.WriteLine(selectedIndex);
-            if (selectedIndex != -1)
-            {
-                //(bill * 20)/100 ) 101 * 10 
-
-                propina.Text = ((Int32.Parse(Ordenes.total) * Int32.Parse(picker.SelectedItem.ToString())) / 100) + "";
-                total.Text = Ordenes.total;
-                Subtotal.Text = Int32.Parse(propina.Text.ToString()) + Int32.Parse(total.Text.ToString()) + "";
-                if (radioTarjeta.IsChecked)
-                    Tarjeta.Text = Subtotal.Text;
-                //Console.WriteLine( Ordenes.total);
+            if (p == 0) {
+                propina.Text = "0";
             }
+            {
+                Console.WriteLine( );
+               propina.Text = ((Double.Parse(Ordenes.total) * Double.Parse(p + "")) / 100) + "";
+               total.Text = Ordenes.total;
+               Subtotal.Text = Double.Parse(propina.Text.ToString()) + Double.Parse(total.Text.ToString()) + "";
+               if (radioTarjeta.IsChecked)
+                  Tarjeta.Text = Subtotal.Text;
+
+            }
+            //Console.WriteLine( Ordenes.total);
+
         }
 
 
@@ -96,7 +94,7 @@ namespace AppResta.View
                 else
                 {
                     Console.WriteLine(pago.tipoPago + "Tarjeta");
-                    PopupNavigation.Instance.PushAsync(new ConfirmarPago(pago));
+                    PopupNavigation.Instance.PushAsync(new ConfirmarPago(pago, this));
                 }
             }
             else if (Efectivo.Text != "" && Tarjeta.Text == "0")
@@ -113,7 +111,7 @@ namespace AppResta.View
                 else
                 {
                     Console.WriteLine(pago.tipoPago + "EFECTIVO");
-                    PopupNavigation.Instance.PushAsync(new ConfirmarPago(pago));
+                    PopupNavigation.Instance.PushAsync(new ConfirmarPago(pago,this));
                 }
             }
             else if (Efectivo.Text != "" && Tarjeta.Text != "")
@@ -133,7 +131,7 @@ namespace AppResta.View
                 else
                 {
                     Console.WriteLine(pago.tipoPago + "AMBOS");
-                    PopupNavigation.Instance.PushAsync(new ConfirmarPago(pago));
+                    PopupNavigation.Instance.PushAsync(new ConfirmarPago(pago,this));
                 }
             }
 
@@ -236,6 +234,91 @@ namespace AppResta.View
             btnSiguiente.IsEnabled = true;
             EfectivoGrild.IsVisible = true;
             TarjetaGrild.IsVisible = true;
+        }
+
+        
+
+        private void propina0_Clicked(object sender, EventArgs e)
+        {
+            propina0.BorderColor = Color.Green;
+            propina5.BorderColor = Color.Black;
+            propina10.BorderColor = Color.Black;
+            propina15.BorderColor = Color.Black;
+            propina20.BorderColor = Color.Black;
+
+            propina0.BorderWidth = 3;
+            propina5.BorderWidth = 1;
+            propina10.BorderWidth = 1;
+            propina15.BorderWidth = 1;
+            propina20.BorderWidth = 1;
+
+            calcularPropona(0);
+
+        }
+
+        private void propina5_Clicked(object sender, EventArgs e)
+        {
+            propina0.BorderColor = Color.Black;
+            propina5.BorderColor = Color.Green;
+            propina10.BorderColor = Color.Black;
+            propina15.BorderColor = Color.Black;
+            propina20.BorderColor = Color.Black;
+
+            propina0.BorderWidth = 1;
+            propina5.BorderWidth = 3;
+            propina10.BorderWidth = 1;
+            propina15.BorderWidth = 1;
+            propina20.BorderWidth = 1;
+            calcularPropona(5);
+        }
+
+        private void propina10_Clicked(object sender, EventArgs e)
+        {
+            propina0.BorderColor = Color.Black;
+            propina5.BorderColor = Color.Black;
+            propina10.BorderColor = Color.Green;
+            propina15.BorderColor = Color.Black;
+            propina20.BorderColor = Color.Black;
+
+            propina0.BorderWidth = 1;
+            propina5.BorderWidth = 1;
+            propina10.BorderWidth = 3;
+            propina15.BorderWidth = 1;
+            propina20.BorderWidth = 1;
+            calcularPropona(10);
+        }
+
+        private void propina15_Clicked(object sender, EventArgs e)
+        {
+            propina0.BorderColor = Color.Black;
+            propina5.BorderColor = Color.Black;
+            propina10.BorderColor = Color.Black;
+            propina15.BorderColor = Color.Green;
+            propina20.BorderColor = Color.Black;
+
+            propina0.BorderWidth = 1;
+            propina5.BorderWidth = 1;
+            propina10.BorderWidth = 1;
+            propina15.BorderWidth = 3;
+            propina20.BorderWidth = 1;
+            calcularPropona(15);
+        }
+
+        private void propina20_Clicked(object sender, EventArgs e)
+        {
+            propina0.BorderColor = Color.Black;
+            propina5.BorderColor = Color.Black;
+            propina10.BorderColor = Color.Black;
+            propina15.BorderColor = Color.Black;
+            propina20.BorderColor = Color.Green;
+
+            propina0.BorderWidth = 1;
+            propina5.BorderWidth = 1;
+            propina10.BorderWidth = 1;
+            propina15.BorderWidth = 1;
+            propina20.BorderWidth = 3;
+
+            calcularPropona(20);
         }
     }
 }

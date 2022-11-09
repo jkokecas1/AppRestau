@@ -55,17 +55,24 @@
 
             <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" BackgroundColor="LightGray" Padding="10,10,10,10" ColumnSpacing="5">
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="80"/>
                     <RowDefinition Height="*"/>
-                  
-
-
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
 
                 </Grid.ColumnDefinitions>
-
-                <Frame Grid.Row="0" Grid.Column="0" Padding="0,0,0,0" CornerRadius="15">
+                <Frame Grid.Row="0" Grid.Column="0" Padding="0,0,0,0"  CornerRadius="15">
+                    <StackLayout Orientation="Horizontal" Grid.Row="0" Grid.Column="0" Padding="0,0,0,0" >
+                        <Frame BackgroundColor="Red" Padding="50,50,50,50" Margin="10,10,10,10" CornerRadius="60" />
+                        <Label Text="Orden entregada" VerticalOptions="Center" FontFamily="Bold" TextColor="Black" FontSize="20"/>
+                        <Frame BackgroundColor="Blue" Padding="50,50,50,50" Margin="10,10,10,10" CornerRadius="60" />
+                        <Label Text="Tomadno orden" VerticalOptions="Center" TextColor="Black" FontSize="20"/>
+                        <Frame BackgroundColor="Green" Padding="50,50,50,50" Margin="10,10,10,10" CornerRadius="60" />
+                        <Label Text="Orden en Cocina" VerticalOptions="Center" TextColor="Black" FontSize="20"/>
+                    </StackLayout>
+                </Frame>
+                <Frame Grid.Row="1" Grid.Column="0" Padding="0,0,0,0" CornerRadius="15">
                     <RefreshView x:Name="RefreshMesas" Refreshing="RefreshMesas_Refreshing">
                         
                             <CollectionView x:Name="mesasListView" SelectionMode="Single"  SelectionChanged="select_Item">
@@ -76,12 +83,13 @@
                                     <DataTemplate>
                                         <Grid Padding="20,20,20,20">
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="*" />
-                                            </Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="*"/>
                                             </Grid.RowDefinitions>
-                                            <Frame Grid.Row="0" Grid.Column="0" Padding="10,10,10,10" CornerRadius="15" BorderColor="{Binding orden}">
+                                       <!-- <Label Grid.Row="0" Grid.Column="0" Text="{Binding ubicacion}" TextColor="Black" FontSize="20"/> -->
+                                        <Frame Grid.Row="0" Grid.Column="0" Padding="10,10,10,10" CornerRadius="15" BorderColor="{Binding orden}">
                                                 <Grid RowSpacing="1" ColumnSpacing="1" >
                                                     <Grid.RowDefinitions >
 

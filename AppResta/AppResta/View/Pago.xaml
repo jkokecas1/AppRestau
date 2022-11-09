@@ -142,21 +142,21 @@
                     <Grid Grid.Row="1" Grid.Column="0">
 
 
-                        <Button x:Name="propina0" Text="0%" TextColor="Black" BackgroundColor="White" BorderColor="Black" BorderWidth="1" CornerRadius="10" FontSize="20" Grid.Row="0" Grid.Column="0"/>
+                        <Button x:Name="propina0" Clicked="propina0_Clicked" Text="0%" TextColor="Black" BackgroundColor="White" BorderColor="Black" BorderWidth="1" CornerRadius="10" FontSize="20" Grid.Row="0" Grid.Column="0"/>
 
 
 
-                        <Button Text="5%" TextColor="Black" BackgroundColor="White" BorderColor="Black" BorderWidth="1" CornerRadius="10" FontSize="20" Grid.Row="0" Grid.Column="1"/>
+                        <Button x:Name="propina5" Clicked="propina5_Clicked" Text="5%" TextColor="Black" BackgroundColor="White" BorderColor="Black" BorderWidth="1" CornerRadius="10" FontSize="20" Grid.Row="0" Grid.Column="1"/>
 
 
 
-                        <Button Text="10%" TextColor="Black" BackgroundColor="White" BorderColor="Black" BorderWidth="1" CornerRadius="10" FontSize="20" Grid.Row="0" Grid.Column="2"/>
+                        <Button x:Name="propina10" Clicked="propina10_Clicked" Text="10%" TextColor="Black" BackgroundColor="White" BorderColor="Black" BorderWidth="1" CornerRadius="10" FontSize="20" Grid.Row="0" Grid.Column="2"/>
 
 
-                        <Button Text="15%" TextColor="Black" BackgroundColor="White" BorderColor="Black" BorderWidth="1" CornerRadius="10" FontSize="20" Grid.Row="0" Grid.Column="3"/>
+                        <Button x:Name="propina15" Clicked="propina15_Clicked" Text="15%" TextColor="Black" BackgroundColor="White" BorderColor="Black" BorderWidth="1" CornerRadius="10" FontSize="20" Grid.Row="0" Grid.Column="3"/>
 
 
-                        <Button Text="20%" TextColor="Black" BackgroundColor="White" BorderColor="Black" BorderWidth="1" CornerRadius="10" FontSize="20" Grid.Row="0" Grid.Column="4"/>
+                        <Button x:Name="propina20" Clicked="propina20_Clicked" Text="20%" TextColor="Black" BackgroundColor="White" BorderColor="Black" BorderWidth="1" CornerRadius="10" FontSize="20" Grid.Row="0" Grid.Column="4"/>
 
                     </Grid>
 

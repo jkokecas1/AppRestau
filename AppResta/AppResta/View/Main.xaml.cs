@@ -39,7 +39,7 @@ namespace AppResta.View
                 InitializeComponent();
                 // Refreshplatillos.IsRefreshing = true;
                 testListView.ItemsSource = Categorias2();
-                
+
 
                 if (idOrden != 0)
                 {
@@ -56,7 +56,10 @@ namespace AppResta.View
                         totalpay += cart[i].total;
                     }
                     totalpago.Text = totalpay.ToString();
-                    
+
+                }
+                else {
+                    cart.Clear();
                 }
 
 
@@ -121,7 +124,7 @@ namespace AppResta.View
         //----- REFRESCA EL CONTENIDO DE LA LISTA DE CARRITO ------//
         private void SwipeItem_Editar(object sender, EventArgs e)
         {
-            if (IdOrden(mesaglb)[1] == "2" || IdOrden(mesaglb)[1] == "1")
+            if (IdOrden(mesaglb)[1] == "3" || IdOrden(mesaglb)[1] == "2")
             {
                 PopupNavigation.Instance.PushAsync(new PopError("El platillo se esat preparando"));
             }
@@ -215,12 +218,56 @@ namespace AppResta.View
         private void Oredenar_orden(object sender, EventArgs e)
         {
             string total = totalpago.Text;
+            /*
+            double total = 0.0;
+
+            var client1 = new HttpClient();
+            client1.BaseAddress = new Uri(("http://192.168.1.112/resta/admin/mysql/orden/index.php?op=ObtenerPrecioItems&idCart=" + ordenID));
+            HttpResponseMessage response1 = client1.GetAsync(client1.BaseAddress).Result;
+            if (response1.IsSuccessStatusCode)
+            {
+                var content1 = response1.Content.ReadAsStringAsync().Result;
+                string json1 = content1.ToString();
+
+                var jsonArray1 = JArray.Parse(json1.ToString());
+
+                //userInfo = JsonConvert.DeserializeObject<List<Model.Categorias>>(content);
+                foreach (var item in jsonArray1)
+                {
+                    total += Double.Parse(item["precio"].ToString().Replace(",", "."));
+                }
+            }*/
+
             if (total != "0")
             {
-                GET_DATOS("http://192.168.1.112/resta/admin/mysql/orden/index.php?op=updateEstadoOrdenMesas&estado=1&id=" + ordenID + "&total=" + total);
+                var client = new HttpClient();
+                client.BaseAddress = new Uri(("http://192.168.1.112/resta/admin/mysql/orden/index.php?op=obtenerEstadoCart&idOrden=" + ordenID));
+                HttpResponseMessage response = client.GetAsync(client.BaseAddress).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = response.Content.ReadAsStringAsync().Result;
+                    string json = content.ToString();
+                    
+                    var jsonArray = JArray.Parse(json.ToString());
 
-
-                Navigation.PushAsync(new View.Ordenes(), false);
+                    //userInfo = JsonConvert.DeserializeObject<List<Model.Categorias>>(content);
+                    foreach (var item in jsonArray)
+                    {
+                        if (item["estado"].Equals("3"))
+                        {
+                            GET_DATOS("http://192.168.1.112/resta/admin/mysql/orden/index.php?op=updateEstadoOrdenMesas&estado=0&id=" + ordenID + "&total=" + total);
+                            Navigation.PushAsync(new View.Ordenes(), false);
+                            break;
+                        }
+                        else {
+                            GET_DATOS("http://192.168.1.112/resta/admin/mysql/orden/index.php?op=updateEstadoOrdenMesas&estado=1&id=" + ordenID + "&total=" + total);
+                            Navigation.PushAsync(new View.Ordenes(), false);
+                            break;
+                        }
+                    }
+                 }
+              
+                
             }
             else {
                 PopupNavigation.Instance.PushAsync(new PopError("AGREGA PRODUCTOS AL CARRITO ANTES DE ORDENAR"));
@@ -285,7 +332,11 @@ namespace AppResta.View
                 *  2 - UPDATE CANTIDAD ITEM
                 *  3 - INSERTAMOS ITEM,SELECT CARTS, INSERT RELACION(ITEM, CART)
                 */
-                if (cart.Count == 0) // Caso 0: Carrito vacio
+                if (IdOrden(mesaglb)[1] == "3") { 
+                
+                }
+
+                if (cart.Count == 0 && IdOrden(mesaglb)[1] != "3") // Caso 0: Carrito vacio
                 {
                     
                     PopupNavigation.Instance.PushAsync(new ItemPlatillo(platillo, mesaglb, bandera: 0, cart, test2ListView));
@@ -327,7 +378,7 @@ namespace AppResta.View
 
         }
 
-        public void actualizar() {
+        public void  actualizar() {
             totalpago.Text = "0.0";
             totalpay = 0;
             test2ListView.ItemsSource = null;

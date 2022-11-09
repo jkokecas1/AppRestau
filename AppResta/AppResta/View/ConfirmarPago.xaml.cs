@@ -15,9 +15,11 @@ namespace AppResta.View
     public partial class ConfirmarPago : Rg.Plugins.Popup.Pages.PopupPage
     {
         Model.Pagos pago;
-        public ConfirmarPago(Model.Pagos pago)
+        Pago pagoModel;
+        public ConfirmarPago(Model.Pagos pago, Pago pagina)
         {
             this.pago = pago;
+            pagoModel = pagina;
             InitializeComponent();
            
             switch (pago.tipoPago)
@@ -56,9 +58,10 @@ namespace AppResta.View
             HttpResponseMessage response = client.GetAsync(client.BaseAddress).Result;
             if (response.IsSuccessStatusCode)
             {
-               // Rg.Plugins.Popup.Services.PopupNavigation.Instance.RemovePageAsync(Rg.Plugins.Popup.Pages.PopupPage );
+                //Ordenes.init();
+                Navigation.RemovePage(pagoModel);
                 Rg.Plugins.Popup.Services.PopupNavigation.Instance.PopAsync();
-                Rg.Plugins.Popup.Services.PopupNavigation.Instance.PopAsync();
+
             }
             else
             {

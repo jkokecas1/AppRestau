@@ -37,11 +37,25 @@ namespace AppResta.View
             cart = CartMesa(ordenes.id.ToString(), ordenes.mesa);
 
             ordenlist.ItemsSource = cart;
-           
-           
-            if (ordenes.fecha_start != null)
+
+            foreach (Model.Cart carro in cart) {
+                if (carro.estado == "2") {
+                    HoraInicioOrden.Text = ordenes.fecha_start;
+                    CronometroOrden.Text = "Preparando ...";
+                    HoraEstimadaOrden.Text = ordenes.fecha_estimada;
+
+                    btnIniciar.IsEnabled = false;
+                    horas.IsEnabled = false;
+                }
+            }
+            /*if (ordenes.fecha_start != null)
             {
+                
                 if (ordenes.fecha_start.Length > 0) {
+                    if (ordenes.estado == "1") {
+                        Console.WriteLine("Es igual a uno");
+                    }
+                    Console.WriteLine("Es igual a uno"+ ordenes.estado);
                     HoraInicioOrden.Text = ordenes.fecha_start;
                     CronometroOrden.Text = "Preparando ...";
                     HoraEstimadaOrden.Text = ordenes.fecha_estimada;
@@ -51,7 +65,7 @@ namespace AppResta.View
                 }
                
 
-            }
+            }*/
             var hora = new List<string>();
            
             hora.Add("10 minutos");
@@ -132,7 +146,7 @@ namespace AppResta.View
                     else {
                         cartItem.comentario = "SIN COMENTARIOS";
                     }
-                   
+                    cartItem.estado = item["estado"].ToString();
                     cartItem.precio = Convert.ToDouble(item["precio"].ToString().Replace(",", ".")); 
                     cartItem.total = (double)(cartItem.precio * cartItem.cantidad);
                     cartItem.visible = "false";
@@ -187,13 +201,34 @@ namespace AppResta.View
         private void Button_Terminar(object sender, EventArgs e)
         {
 
+            foreach (Model.Cart car in cart) {
+                string cadena2 = "http://192.168.1.112/resta/admin/mysql/Orden/index.php?op=updateEstadoItem&idItem=" + car.idItem;
+                 Console.WriteLine(cadena2);  
+                var clien2t = new HttpClient();
+                clien2t.BaseAddress = new Uri(cadena2);
+                HttpResponseMessage respons2e = clien2t.GetAsync(clien2t.BaseAddress).Result;
+                if (respons2e.IsSuccessStatusCode)
+                {
+                   
+                    
+                   // Rg.Plugins.Popup.Services.PopupNavigation.Instance.PopAsync();
+                }
+                else
+                {
+                    DisplayAlert("Error", "Fallo el registro \n Intentalo de nuevo " + cadena2, "OK");
+
+                }
+            }
+            
             string cadena = "http://192.168.1.112/resta/admin/mysql/Orden/index.php?op=updateEstadoOrden&idItem=" + ordenes.id;
-            Console.WriteLine(cadena);  
+           // Console.WriteLine(cadena);  
             var client = new HttpClient();
             client.BaseAddress = new Uri(cadena);
             HttpResponseMessage response = client.GetAsync(client.BaseAddress).Result;
             if (response.IsSuccessStatusCode)
             {
+                collection.ItemsSource = null;
+                collection.ItemsSource = Cocina.Ordene();
                 Rg.Plugins.Popup.Services.PopupNavigation.Instance.PopAsync();
             }
             else

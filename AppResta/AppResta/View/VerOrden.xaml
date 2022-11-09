@@ -138,9 +138,9 @@ x:Class="AppResta.View.VerOrden">
                     </Picker.Items>
                 </Picker>
 
-                <Button x:Name="btnIniciar" Grid.Column="1"  Text="Iniciar"  BackgroundColor="Green" TextColor="White" Clicked="Button_Iniciar" />
+                <Button x:Name="btnIniciar" Grid.Column="1"  Text="Confirmar"  BackgroundColor="Green" TextColor="White" Clicked="Button_Iniciar" />
 
-                <Button Grid.Row="0" Grid.Column="2"  Text="Finalizar" BackgroundColor="Red" TextColor="White" Clicked="Button_Terminar"/>
+                <Button Grid.Row="0" Grid.Column="2"  Text="Listo para recoleccion" BackgroundColor="White" BorderColor="Black" BorderWidth="2" TextColor="Black" Clicked="Button_Terminar"/>
             </Grid>
 
 
