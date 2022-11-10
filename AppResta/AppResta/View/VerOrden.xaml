@@ -8,142 +8,134 @@ x:Class="AppResta.View.VerOrden">
 
 
 
-    <Frame BackgroundColor="WhiteSmoke" Padding="20,20,20,20" Margin="100,10,100,10" CornerRadius="20">
-        <Grid RowSpacing="0">
+
+    <Grid BackgroundColor="WhiteSmoke" RowSpacing="0" Margin="100,50,100,50">
 
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="50"/>
-                <RowDefinition Height="50"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="60"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="60"/>
 
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
 
-            </Grid.ColumnDefinitions>
-
-
-            <Grid Grid.Row="0" Grid.Column="0" BackgroundColor="WhiteSmoke" Padding="4,8,4,8" >
-                <Label Grid.Row="0" Grid.Column="0" Text="Orden" TextColor="Black" FontSize="25" HorizontalOptions="Center" FontAttributes="Bold" BackgroundColor="Transparent" />
-                <Label Grid.Row="0" Grid.Column="1" Text="Hora inicio" TextColor="Black" FontSize="20" FontAttributes="Bold" BackgroundColor="Transparent"/>
-                <Label Grid.Row="0" Grid.Column="3" Text="Hora estimada" TextColor="Black" FontSize="20" FontAttributes="Bold" BackgroundColor="Transparent"/>
-                <ImageButton Grid.Row="0" Grid.Column="4" Clicked="cerrarPop" HorizontalOptions="End"  Source="cerrar.png" BackgroundColor="Transparent"/>
-
-            </Grid>
-
-            <Grid Grid.Row="1" Grid.Column="0" Padding="4,8,4,8">
-                <Label Grid.Row="0" Grid.Column="0" x:Name="numeroOrden" HorizontalOptions="Center" TextColor="Black" FontAttributes="Bold" FontSize="25"/>
-                <Label Grid.Row="0" Grid.Column="2" x:Name="CronometroOrden" TextColor="Black" FontAttributes="None" FontSize="20"/>
-                <Label Grid.Row="0" Grid.Column="1" x:Name="HoraInicioOrden" TextColor="Black" FontAttributes="Bold" FontSize="20"/>
-                <Label Grid.Row="0" Grid.Column="3" x:Name="HoraEstimadaOrden" TextColor="Black" FontAttributes="Bold" FontSize="20"/>
-                <Label Grid.Row="0" Grid.Column="4"/>
-
-            </Grid>
+        </Grid.ColumnDefinitions>
 
 
-
-
-
-
-
-            <RefreshView Grid.Row="2" Grid.Column="0">
-
-
-
-
-                <CollectionView SelectionMode="None"  x:Name="ordenlist">
-                    <CollectionView.ItemsLayout>
-                        <GridItemsLayout Orientation="Vertical" Span="2"/>
-                    </CollectionView.ItemsLayout>
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                            <Grid Padding="5">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="400"/>
-                                </Grid.RowDefinitions>
-                                <Frame HasShadow="True" Padding="5" CornerRadius="10">
-
-                                    <Grid BackgroundColor="White" RowSpacing="0" Padding="9,9,9,9">
-                                        <Grid.RowDefinitions >
-                                            <RowDefinition Height="40"/>
-                                            <RowDefinition Height="20"/>
-                                            <RowDefinition Height="50"/>
-                                            <RowDefinition Height="20"/>
-                                            <RowDefinition Height="90"/>
-                                            <RowDefinition Height="20"/>
-                                            <RowDefinition Height="*"/>
-                                        </Grid.RowDefinitions>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="30"/>
-
-                                        </Grid.ColumnDefinitions>
-                                        <Grid Grid.Row="1"  Grid.Column="0" Padding="0,0,0,0" BackgroundColor="White">
-                                            <Label Text="Cantidad:" TextColor="Black" FontFamily="Bold" FontSize="20"/>
-                                        </Grid>
-                                        <Grid Grid.Row="0"  Grid.Column="0"   BackgroundColor="White"  Padding="0,0,0,0">
-                                            <Label Text="Platillo" TextColor="Black" FontFamily="Bold" FontSize="20"/>
-                                        </Grid>
-
-                                        <Grid Grid.Row="0"  Grid.Column="2" Grid.RowSpan="2" HorizontalOptions="End" BackgroundColor="White">
-                                            <CheckBox Color="Green"/>
-                                        </Grid>
-
-                                        <Grid Grid.Row="1"  Grid.Column="1" Grid.ColumnSpan="2" BackgroundColor="White" HorizontalOptions="Start" Padding="0,0,0,0">
-                                            <Label Text="{Binding cantidad}" TextColor="Black" FontFamily="Bold" FontSize="20"/>
-                                        </Grid>
-                                        <Grid Grid.Row="0"  Grid.Column="1" Grid.ColumnSpan="2" BackgroundColor="White" HorizontalOptions="Start" Padding="0,0,0,0">
-                                            <Label Text="{Binding platillo}" TextColor="Black" FontFamily="Bold" FontSize="20" />
-                                        </Grid>
-                                        <Grid Grid.Row="3"  Grid.Column="0" Grid.ColumnSpan="3" BackgroundColor="White" HorizontalOptions="Center" Padding="0,0,0,0">
-                                            <Label Text="Extras" TextColor="Black" FontFamily="Bold" FontSize="20"/>
-                                        </Grid>
-                                        <Grid Grid.Row="4"  Grid.Column="0" Grid.ColumnSpan="3" BackgroundColor="White" HorizontalOptions="Center" Padding="0,0,0,0">
-                                            <Label Text="{Binding extras}" TextColor="Black" FontFamily="Bold" FontSize="20"/>
-
-                                        </Grid>
-                                        <Grid Grid.Row="5"  Grid.Column="0" Grid.ColumnSpan="3" BackgroundColor="White" HorizontalOptions="Center" Padding="0,0,0,0">
-                                            <Label Text="Comentarios" TextColor="Black" FontFamily="Bold" FontSize="20"/>
-                                        </Grid>
-                                        <Grid Grid.Row="6"  Grid.Column="0" Grid.ColumnSpan="3" BackgroundColor="White" HorizontalOptions="Center" Padding="0,0,0,0">
-                                            <Label Text="{Binding comentario}" TextColor="Black" FontFamily="Bold" FontSize="20"/>
-
-                                        </Grid>
-
-                                    </Grid>
-
-
-
-                                </Frame>
-                            </Grid>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-
-                </CollectionView>
-
-            </RefreshView>
-
-
-            <Grid Grid.Row="3" Grid.Column="0" BackgroundColor="WhiteSmoke" Padding="8,8,8,8">
-
-                <Picker x:Name="horas" Grid.Row="0" Grid.Column="0" Title="SELECIONA EL TIEMPO ESTIMADO" SelectedIndexChanged="OnPickerSelectedIndexChanged" HorizontalTextAlignment="Center">
-                    <Picker.Items>
-
-                    </Picker.Items>
-                </Picker>
-
-                <Button x:Name="btnIniciar" Grid.Column="1"  Text="Iniciar"  BackgroundColor="Green" TextColor="White" Clicked="Button_Iniciar" />
-
-                <Button Grid.Row="0" Grid.Column="2"  Text="Finalizar" BackgroundColor="Red" TextColor="White" Clicked="Button_Terminar"/>
-            </Grid>
-
+        <Grid Grid.Row="0" Grid.Column="0" BackgroundColor="WhiteSmoke" Padding="4,8,4,8" >
+            <Label Grid.Row="0" Grid.Column="0" Text="Orden" TextColor="Black" FontSize="25" HorizontalOptions="Center" FontAttributes="Bold" BackgroundColor="Transparent" />
+            <Label Grid.Row="0" Grid.Column="1" Text="Hora inicio" TextColor="Black" FontSize="20" FontAttributes="Bold" BackgroundColor="Transparent"/>
+            <Label Grid.Row="0" Grid.Column="3" Text="Hora estimada" TextColor="Black" FontSize="20" FontAttributes="Bold" BackgroundColor="Transparent"/>
+            <ImageButton Grid.Row="0" Grid.Column="4" Clicked="cerrarPop" HorizontalOptions="End"  Source="cerrar.png" BackgroundColor="Transparent"/>
 
         </Grid>
-    </Frame>
+
+        <Grid Grid.Row="1" Grid.Column="0" Padding="4,8,4,8">
+            <Label Grid.Row="0" Grid.Column="0" x:Name="numeroOrden" HorizontalOptions="Center" TextColor="Black" FontAttributes="Bold" FontSize="25"/>
+            <Label Grid.Row="0" Grid.Column="2" x:Name="CronometroOrden" TextColor="Black" FontAttributes="None" FontSize="20"/>
+            <Label Grid.Row="0" Grid.Column="1" x:Name="HoraInicioOrden" TextColor="Black" FontAttributes="Bold" FontSize="20"/>
+            <Label Grid.Row="0" Grid.Column="3" x:Name="HoraEstimadaOrden" TextColor="Black" FontAttributes="Bold" FontSize="20"/>
+            <Label Grid.Row="0" Grid.Column="4"/>
+
+        </Grid>
+
+
+
+
+
+
+
+        <Grid Grid.Row="2" Grid.Column="0">
+
+
+
+
+            <CollectionView SelectionMode="None"  x:Name="ordenlist">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical" Span="1"/>
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Padding="5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="150"/>
+                            </Grid.RowDefinitions>
+                            <Frame HasShadow="True" Padding="5" CornerRadius="10" >
+
+                                <Grid BackgroundColor="White" RowSpacing="0" Padding="9,9,9,9">
+                                    <Grid.RowDefinitions >
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="1"/>
+                                        <RowDefinition Height="*"/>
+
+
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="20"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="30"/>
+
+                                    </Grid.ColumnDefinitions>
+
+
+                                    <Grid Grid.Row="0"  Grid.Column="1" Grid.RowSpan="2"  HorizontalOptions="End" VerticalOptions="Start" BackgroundColor="White">
+                                        <CheckBox Color="Green"/>
+                                    </Grid>
+
+                                    <Grid Grid.Row="0"  Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="White" HorizontalOptions="Start" Padding="0,0,0,0">
+                                        <Label Text="{Binding cantidad}" TextColor="Black" FontAttributes="Bold" FontSize="20"/>
+                                    </Grid>
+                                    <Grid Grid.Row="0"  Grid.Column="1" Grid.ColumnSpan="2" BackgroundColor="White" HorizontalOptions="Start" Padding="0,0,0,0">
+                                        <Label Text="{Binding platillo}" TextColor="Black" FontAttributes="Bold" FontSize="20" />
+                                    </Grid>
+
+                                    <Grid  Grid.Row="2"  Grid.Column="1" Grid.ColumnSpan="2" BackgroundColor="Gray"></Grid>
+
+
+
+                                    <Grid Grid.Row="1"  Grid.Column="1" Grid.ColumnSpan="2" BackgroundColor="White" VerticalOptions="Center" Padding="0,0,0,0">
+                                        <Label Text="{Binding extras}" TextColor="Gray"  FontSize="15"/>
+                                    </Grid>
+
+                                    <Grid Grid.Row="3"  Grid.Column="1" Grid.ColumnSpan="2" BackgroundColor="White" VerticalOptions="Center" Padding="0,0,0,0">
+                                        <Label Text="{Binding comentario}" TextColor="Gray"  FontSize="15"/>
+                                    </Grid>
+
+                                </Grid>
+
+
+
+                            </Frame>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+
+            </CollectionView>
+
+        </Grid>
+
+
+        <Grid Grid.Row="3" Grid.Column="0" BackgroundColor="WhiteSmoke" Padding="8,8,8,8">
+
+            <Picker x:Name="horas" Grid.Row="0" Grid.Column="0" Title="SELECIONA EL TIEMPO ESTIMADO" SelectedIndexChanged="OnPickerSelectedIndexChanged" HorizontalTextAlignment="Center">
+                <Picker.Items>
+
+                </Picker.Items>
+            </Picker>
+
+            <Button x:Name="btnIniciar" Grid.Column="1"  Text="Confirmar"  BackgroundColor="Green" TextColor="White" Clicked="Button_Iniciar" />
+
+            <Button Grid.Row="0" Grid.Column="2"  Text="Listo para recoleccion" BackgroundColor="White" BorderColor="Black" BorderWidth="2" TextColor="Black" Clicked="Button_Terminar"/>
+        </Grid>
+
+
+    </Grid>
+
 </popup:PopupPage>

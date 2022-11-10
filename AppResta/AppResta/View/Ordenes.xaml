@@ -97,7 +97,8 @@
                         </Grid>
 
                         <Grid Grid.Row="1" Grid.Column="0" BackgroundColor="WhiteSmoke" >
-                            <ScrollView>
+                            <RefreshView x:Name="RefreshOrdenes" Refreshing="RefreshOrdenes_Refreshing">
+
                                 <ListView x:Name="ordenesListView" SelectionMode="None"  ItemSelected="select_Item" RowHeight="60">
                                     <ListView.ItemTemplate >
                                         <DataTemplate  >
@@ -162,7 +163,7 @@
                                         </DataTemplate>
                                     </ListView.ItemTemplate>
                                 </ListView>
-                            </ScrollView>
+                            </RefreshView>
                         </Grid>
                     </Grid>
                 </Frame>

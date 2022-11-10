@@ -15,11 +15,13 @@ namespace AppResta.View
     public partial class ConfirmarPago : Rg.Plugins.Popup.Pages.PopupPage
     {
         Model.Pagos pago;
-        public ConfirmarPago(Model.Pagos pago)
+        Pago pagoModel;
+        public ConfirmarPago(Model.Pagos pago, Pago pagina)
         {
             this.pago = pago;
+            pagoModel = pagina;
             InitializeComponent();
-           
+
             switch (pago.tipoPago)
             {
                 case "1": pago.tipoPago = "EFECTIVO"; break;
@@ -27,10 +29,10 @@ namespace AppResta.View
                 case "3": pago.tipoPago = "EFECTIVO Y TARJETA"; break;
             }
             tipo.Text = pago.tipoPago;
-            monto.Text = pago.monto+"";
-            cambio.Text = (pago.monto  -  Double.Parse(pago.total) )+"";
-            total.Text = pago.total+"";
-            
+            monto.Text = pago.monto + "";
+            cambio.Text = (pago.monto - Double.Parse(pago.total)) + "";
+            total.Text = pago.total + "";
+
 
         }
         private void cerrarPop(object sender, EventArgs e)
@@ -38,7 +40,8 @@ namespace AppResta.View
             Rg.Plugins.Popup.Services.PopupNavigation.Instance.PopAsync();
         }
 
-        public void confirmarPago(object sender, EventArgs e) {
+        public void confirmarPago(object sender, EventArgs e)
+        {
             var h = DateTime.Now.ToString("yyyy-MM-dd-HH:MM:ss");
 
             switch (pago.tipoPago)
@@ -49,16 +52,17 @@ namespace AppResta.View
             }
 
 
-            string cadena = "http://192.168.1.112/resta/admin/mysql/Orden/index.php?op=insertarPago&idpago="+ obtenerIDPago()+"&tipo=" + pago.tipoPago.ToString() + "&monto=" + pago.monto + "&fecha=" + h.ToString() + "&IDcart=" + pago.idcart;
+            string cadena = "http://192.168.1.112/resta/admin/mysql/Orden/index.php?op=insertarPago&idpago=" + obtenerIDPago() + "&tipo=" + pago.tipoPago.ToString() + "&monto=" + pago.monto + "&fecha=" + h.ToString() + "&IDcart=" + pago.idcart;
             Console.WriteLine(cadena);
-             var client = new HttpClient();
+            var client = new HttpClient();
             client.BaseAddress = new Uri(cadena);
             HttpResponseMessage response = client.GetAsync(client.BaseAddress).Result;
             if (response.IsSuccessStatusCode)
             {
-               // Rg.Plugins.Popup.Services.PopupNavigation.Instance.RemovePageAsync(Rg.Plugins.Popup.Pages.PopupPage );
+                //Ordenes.init();
+                Navigation.RemovePage(pagoModel);
                 Rg.Plugins.Popup.Services.PopupNavigation.Instance.PopAsync();
-                Rg.Plugins.Popup.Services.PopupNavigation.Instance.PopAsync();
+
             }
             else
             {
@@ -67,7 +71,8 @@ namespace AppResta.View
             }
         }
 
-        public int obtenerIDPago() {
+        public int obtenerIDPago()
+        {
             int id = 0;
             string cadena = "http://192.168.1.112/resta/admin/mysql/Orden/index.php?op=obtenerIDpago";
             var client = new HttpClient();
@@ -78,9 +83,10 @@ namespace AppResta.View
                 var content = response.Content.ReadAsStringAsync().Result;
                 string json = content.ToString();
                 var jsonArray = JArray.Parse(json.ToString());
-                foreach (var item in jsonArray) {
+                foreach (var item in jsonArray)
+                {
                     Console.WriteLine(item["id_Pago"]);
-                    id = Int32.Parse(item["id_Pago"]+"")+1;
+                    id = Int32.Parse(item["id_Pago"] + "") + 1;
 
                 }
 

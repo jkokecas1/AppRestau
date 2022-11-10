@@ -136,7 +136,7 @@ namespace AppResta.ViewModel
                     await Navigation.PushAsync(new Cocina(), false);
                 } else if (emp.puesto == "Barra") {
                     // Barra
-                    await Navigation.PushAsync(new Mesa(empleado: emp), false);
+                    await Navigation.PushAsync(new Bar(), false);
                 }
 
 

@@ -31,6 +31,8 @@ namespace AppResta.View
 
         private void RefreshMesas_Refreshing(object sender, EventArgs e)
         {
+
+
             Task.Delay(700);
             mesasListView.ItemsSource = Mesas();
             RefreshMesas.IsRefreshing = false;
@@ -113,7 +115,12 @@ namespace AppResta.View
                     {
                         if (Int32.Parse(item["estado"].ToString()) == 0)
                         {
-                            array[0] = "#2C67E6 ";
+                            array[0] = "#2C67E6";
+                            array[1] = item["id_orden"].ToString();
+                        }
+                        else if (Int32.Parse(item["estado"].ToString()) == 1)
+                        {
+                            array[0] = "#3AE62C ";
                             array[1] = item["id_orden"].ToString();
                         }
                         else {

@@ -127,7 +127,7 @@ namespace AppResta.View
                     cartItem.cantidad = Int32.Parse(item["cantidad"].ToString());
                     if (item["comentario"] != null && item["comentario"].ToString() != "")
                     {
-                        cartItem.comentario = item["comentario"].ToString().ToUpper();
+                        cartItem.comentario = item["comentario"].ToString().ToUpper().Replace("-"," ");
                     }
                     else {
                         cartItem.comentario = "SIN COMENTARIOS";
@@ -187,13 +187,35 @@ namespace AppResta.View
         private void Button_Terminar(object sender, EventArgs e)
         {
 
+            foreach (Model.Cart car in cart)
+            {
+                string cadena2 = "http://192.168.1.112/resta/admin/mysql/Orden/index.php?op=updateEstadoItem&idItem=" + car.idItem;
+                Console.WriteLine(cadena2);
+                var clien2t = new HttpClient();
+                clien2t.BaseAddress = new Uri(cadena2);
+                HttpResponseMessage respons2e = clien2t.GetAsync(clien2t.BaseAddress).Result;
+                if (respons2e.IsSuccessStatusCode)
+                {
+
+
+                    // Rg.Plugins.Popup.Services.PopupNavigation.Instance.PopAsync();
+                }
+                else
+                {
+                    DisplayAlert("Error", "Fallo el registro \n Intentalo de nuevo " + cadena2, "OK");
+
+                }
+            }
+
             string cadena = "http://192.168.1.112/resta/admin/mysql/Orden/index.php?op=updateEstadoOrden&idItem=" + ordenes.id;
-            Console.WriteLine(cadena);  
+            // Console.WriteLine(cadena);  
             var client = new HttpClient();
             client.BaseAddress = new Uri(cadena);
             HttpResponseMessage response = client.GetAsync(client.BaseAddress).Result;
             if (response.IsSuccessStatusCode)
             {
+                collection.ItemsSource = null;
+                collection.ItemsSource = Cocina.Ordene();
                 Rg.Plugins.Popup.Services.PopupNavigation.Instance.PopAsync();
             }
             else
