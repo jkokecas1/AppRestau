@@ -17,11 +17,13 @@ namespace AppResta.View
     {
 
         static List<Model.Ordenes> ordenList;
-        public Ordenes()
+        public Ordenes(Main mainPage = null)
         {
             InitializeComponent();
             BindingContext = new ViewModel.OrdenesViewModel(Navigation);
             //btnNotification.Clicked += BtnNotification_Clicked;
+            if(mainPage != null)
+                Navigation.RemovePage(mainPage);
             init();
         }
 
@@ -38,7 +40,7 @@ namespace AppResta.View
 
 
             Pago pago = new Pago(ordenList, id);
-            PopError error = new PopError("LA ORDEN AUN NO SE ESTA LISATA");
+            PopError error = new PopError("LA ORDEN AUN NO SE ESTA LISTA");
             foreach (Model.Ordenes orden in ordenList)
             {
                 if (orden.id == id)

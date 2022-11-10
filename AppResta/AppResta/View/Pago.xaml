@@ -78,8 +78,6 @@
 
 
 
-
-
             <!--PROPINA-->
             <Frame Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" BackgroundColor="White" CornerRadius="10" Padding="10,5,10,5" Margin="0,5,10,0">
                 <Grid  Grid.Row="0" Grid.Column="0" BackgroundColor="Transparent" >
@@ -93,24 +91,11 @@
                     </Grid.ColumnDefinitions>
                     <Label Grid.Row="0" Grid.Column="0" Text="Propina" TextColor="Black" FontSize="25" FontAttributes="Bold" />
                     <Grid Grid.Row="1" Grid.Column="0">
-
-
-                        <Button x:Name="propina0" Clicked="propina0_Clicked" Text="0%" TextColor="Black" BackgroundColor="White" BorderColor="Black" BorderWidth="1" CornerRadius="10" FontSize="20" Grid.Row="0" Grid.Column="0"/>
-
-
-
+                        <Button x:Name="propina0"  Clicked="propina0_Clicked" Text="0%" TextColor="Black" BackgroundColor="White" BorderColor="Black" BorderWidth="1" CornerRadius="10" FontSize="20" Grid.Row="0" Grid.Column="0"/>
                         <Button x:Name="propina5" Clicked="propina5_Clicked" Text="5%" TextColor="Black" BackgroundColor="White" BorderColor="Black" BorderWidth="1" CornerRadius="10" FontSize="20" Grid.Row="0" Grid.Column="1"/>
-
-
-
                         <Button x:Name="propina10" Clicked="propina10_Clicked" Text="10%" TextColor="Black" BackgroundColor="White" BorderColor="Black" BorderWidth="1" CornerRadius="10" FontSize="20" Grid.Row="0" Grid.Column="2"/>
-
-
                         <Button x:Name="propina15" Clicked="propina15_Clicked" Text="15%" TextColor="Black" BackgroundColor="White" BorderColor="Black" BorderWidth="1" CornerRadius="10" FontSize="20" Grid.Row="0" Grid.Column="3"/>
-
-
                         <Button x:Name="propina20" Clicked="propina20_Clicked" Text="20%" TextColor="Black" BackgroundColor="White" BorderColor="Black" BorderWidth="1" CornerRadius="10" FontSize="20" Grid.Row="0" Grid.Column="4"/>
-
                     </Grid>
 
 
@@ -134,7 +119,7 @@
                     </Grid.ColumnDefinitions>
 
                     <Label Grid.Row="0" Grid.Column="0" Text="Metodo de Pago" TextColor="Black" FontAttributes="Bold" BackgroundColor="White" FontSize="25"/>
-                    <RadioButton Grid.Row="1" Grid.Column="0" x:Name="radioEfectivo" Content="Efectivo" FontSize="25" CheckedChanged="radioEfectivo_CheckedChanged" BackgroundColor="White"/>
+                    <RadioButton IsChecked="True" Grid.Row="1" Grid.Column="0" x:Name="radioEfectivo" Content="Efectivo" FontSize="25" CheckedChanged="radioEfectivo_CheckedChanged" BackgroundColor="White"/>
                     <RadioButton Grid.Row="2" Grid.Column="0" x:Name="radioTarjeta" Content="Tarjeta" FontSize="25" CheckedChanged="radioTarjeta_CheckedChanged" BackgroundColor="White"/>
                     <RadioButton Grid.Row="3" Grid.Column="0" x:Name="radioEfecTarj" Content="Efectivo y Tarjeta" FontSize="25" CheckedChanged="radioEfecTarj_CheckedChanged" BackgroundColor="White"/>
 
@@ -183,9 +168,23 @@
             <!--SUBTOTAL Y PAGAR-->
             <Frame  Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="2"  BackgroundColor="White" CornerRadius="10" Padding="10,5,10,5" Margin="0,0,10,10">
                 <Grid >
-                    <Label Grid.Row="0" Grid.Column="0" Text="Total a pagar" FontAttributes="Bold" TextColor="Black" VerticalOptions="Center" FontSize="25"/>
-                    <Label x:Name="Subtotal"  Grid.Row="1" Grid.Column="0" HorizontalOptions="Start"  FontSize="35" TextColor="Black" FontAttributes="Bold" VerticalOptions="Start"/>
-                    <Button CornerRadius="10" Grid.Row="0" Grid.Column="1" Grid.RowSpan="2"  Text="Pagar" FontSize="25" TextColor="White"
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+
+
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="20"/>
+                        <ColumnDefinition Width="190"/>
+                        <ColumnDefinition Width="*"/>
+
+
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="Total a pagar" FontAttributes="Bold" TextColor="Black" VerticalOptions="Center" FontSize="25"/>
+                    <Label Text="$" FontSize="35" TextColor="Black" Grid.Row="1" Grid.Column="0" HorizontalOptions="End" FontAttributes="Bold" VerticalOptions="Start"/>
+                    <Label x:Name="Subtotal"  Grid.Row="1" Grid.Column="1" HorizontalOptions="Start"  FontSize="35" TextColor="Black" FontAttributes="Bold" VerticalOptions="Start"/>
+                    <Button CornerRadius="10" Grid.Row="0" Grid.Column="2" Grid.RowSpan="2"  Text="Pagar" FontSize="25" TextColor="White"
                             BackgroundColor="Green" WidthRequest="200" Clicked="OnClicked_Pagar" />
                 </Grid>
             </Frame>

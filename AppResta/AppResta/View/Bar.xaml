@@ -2,7 +2,8 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              NavigationPage.HasNavigationBar="False"
-             x:Class="AppResta.View.Bar">
+             x:Class="AppResta.View.Bar"
+             >
     <ContentPage.Content>
         <Grid  RowSpacing="0" ColumnSpacing="0">
             <Grid.RowDefinitions>
@@ -52,16 +53,16 @@
 
 
 
-                        <RefreshView  x:Name="Refresh_Ordenes" Refreshing="RefreshView_Refreshing">
-                            <CollectionView SelectionMode="Single" x:Name="cocinaListView" SelectionChanged="cocinaListView_SelectionChanged"  >
+                      <!--  <RefreshView  x:Name="Refresh_Ordenes" Refreshing="RefreshView_Refreshing" IsRefreshing="false"> -->
+                            <CollectionView SelectionMode="Single" x:Name="cocinaListView">
                                 <CollectionView.ItemsLayout>
                                     <GridItemsLayout Orientation="Horizontal" Span="1"/>
                                 </CollectionView.ItemsLayout>
                                 <CollectionView.ItemTemplate>
                                     <DataTemplate>
-                                        <Grid BackgroundColor="Orange" Padding="5">
+                                        <Grid  Padding="5">
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="300" />
                                             </Grid.ColumnDefinitions>
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="*"/>
@@ -71,8 +72,9 @@
                                                     <Grid.RowDefinitions >
                                                         <RowDefinition Height="30"/>
                                                         <RowDefinition Height="30"/>
+                                                        <RowDefinition Height="30"/>
                                                         <RowDefinition Height="*"/>
-                                                        <RowDefinition Height="*"/>
+                                                        <RowDefinition Height="60"/>
                                                     </Grid.RowDefinitions>
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="*"/>
@@ -91,19 +93,27 @@
                                                     <Grid Grid.Row="1"  Grid.Column="1" Grid.ColumnSpan="2" BackgroundColor="White" HorizontalOptions="Start" Padding="0,0,0,0">
                                                         <Label x:Name="start" Text="{Binding estado}"  FontSize="20"  TextColor="Black" FontAttributes="Bold" HorizontalOptions="Center" Padding="0,0,0,0"/>
                                                     </Grid>
-                                                    <Grid Grid.Row="2"  Grid.Column="0">
-                                                        <Label Text="MESA" TextColor="Black" FontSize="25" />
+                                                    <Grid Grid.Row="2"  Grid.Column="0" HorizontalOptions="Start" Padding="0,0,0,0">
+                                                        <!-- Nombre de mesa-->
+                                                        <Label Text="{Binding fecha_start}" TextColor="Black" FontSize="25" />
 
                                                     </Grid>
-                                                    <Grid Grid.Row="3"  Grid.Column="0">
-                                                        <Label Text="AGUA" TextColor="Black" FontSize="25" />
-                                                        
+                                                    <Grid Grid.Row="3"  Grid.Column="0" Grid.ColumnSpan="3"  >
+                                                        <!-- Lista de bebidas-->
+                                                        <ScrollView>
+                                                            <StackLayout>
+                                                                <Label Text="{Binding fecha_orden}" TextColor="Black" FontAttributes="Bold" FontSize="20" />
+                                                              
+                                                            </StackLayout>
+                                                            
+                                                        </ScrollView>
+
                                                     </Grid>
 
                                                     <Grid Grid.Row="4"  Grid.Column="0" Grid.ColumnSpan="3">
-                                                        <Button Text="LISTO" TextColor="Black" BackgroundColor="Green" FontSize="25"/>
+                                                        <Button Text="LISTO" TextColor="White" BackgroundColor="Green" FontSize="25"/>
                                                     </Grid>
-                                                   
+
                                                 </Grid>
 
                                             </Frame>
@@ -112,7 +122,8 @@
                                 </CollectionView.ItemTemplate>
 
                             </CollectionView>
-                        </RefreshView>
+                     <!--   </RefreshView> -->
+                      
                     </Grid>
 
                 </Frame>

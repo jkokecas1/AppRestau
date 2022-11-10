@@ -25,6 +25,8 @@ namespace AppResta.View
             Model.Ordenes orden;
             List<Model.Ordenes> ordenList = new List<Model.Ordenes>();
             var client = new HttpClient();
+            string[] aux = new string[3];
+
 
             client.BaseAddress = new Uri("http://192.168.1.112/resta/admin/mysql/orden/index.php?op=obtenerOrden");
             HttpResponseMessage response = client.GetAsync(client.BaseAddress).Result;
@@ -36,29 +38,33 @@ namespace AppResta.View
                 // Console.WriteLine(jsonArray);
                 foreach (var item in jsonArray)
                 {
-                    orden = new Model.Ordenes();
-                    if (item["estado"].ToString() != "3") {
-                        orden.id = Int32.Parse(item["id"].ToString());
-                        orden.fecha_orden = item["fecha_orden"].ToString();
-                        orden.fecha_start = item["fecha_start"].ToString();
-                        orden.fecha_estimada = item["fecha_estimada"].ToString();
-                        orden.fecha_cerada = item["fecha_cerada"].ToString();
-                        switch (item["estado"].ToString())
+                    aux = bebidas(item["id"].ToString(), item["mesa"].ToString());
+                    if (aux[0] == null)
+                    {
+                        orden = new Model.Ordenes();
+                        if (item["estado"].ToString() != "3")
                         {
-                            case "1": orden.estado = "En espera"; break;
-                            case "2": orden.estado = "Preparando..."; break;
-                            case "3": orden.estado = "! Terminado !"; break;
+                            orden.id = Int32.Parse(item["id"].ToString());
+                            orden.fecha_orden = item["fecha_orden"].ToString();
+                            orden.fecha_start = item["fecha_start"].ToString();
+                            orden.fecha_estimada = item["fecha_estimada"].ToString();
+                            orden.fecha_cerada = item["fecha_cerada"].ToString();
+                            switch (item["estado"].ToString())
+                            {
+                                case "1": orden.estado = "En espera"; break;
+                                case "2": orden.estado = "Preparando..."; break;
+                                case "3": orden.estado = "! Terminado !"; break;
+                            }
+                            orden.mesero = Int32.Parse(item["mesero"].ToString());
+                            orden.mesa = item["mesa"].ToString();
+                            orden.total = item["total"].ToString();
+                            orden.pago = Int32.Parse(item["pago"].ToString());
+
+
+                            ordenList.Add(orden);
+
                         }
-                        orden.mesero = Int32.Parse(item["mesero"].ToString());
-                        orden.mesa = item["mesa"].ToString();
-                        orden.total = item["total"].ToString();
-                        orden.pago = Int32.Parse(item["pago"].ToString());
-
-
-                        ordenList.Add(orden);
-
                     }
-                   
                 }
                 return ordenList;
             }
@@ -66,6 +72,30 @@ namespace AppResta.View
             {
                 return null;
             }
+        }
+
+        public static string[] bebidas(string id, string mesa)
+        {
+            string[] ordenList = new string[3];
+            var client = new HttpClient();
+            client.BaseAddress = new Uri("http://192.168.1.112/resta/admin/mysql/orden/index.php?op=obtenerCarritoBebidas&idOrden=" + id + "&mesa=" + mesa);
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                var content = response.Content.ReadAsStringAsync().Result;
+                string json = content.ToString();
+                var jsonArray = JArray.Parse(json.ToString());
+                // Console.WriteLine(jsonArray);
+                foreach (var item in jsonArray)
+                {
+                    ordenList[0] += item["cantidad"] + "X" + item["nombre"] + "\n";
+                    ordenList[1] = item["mesa"].ToString();
+                    ordenList[2] = item["idItem"].ToString();
+
+                }
+                return ordenList;
+            }
+            return ordenList;
         }
 
         private void cocinaListView_SelectionChanged(object sender, SelectionChangedEventArgs e)

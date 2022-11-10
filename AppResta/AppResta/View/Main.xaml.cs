@@ -180,7 +180,7 @@ namespace AppResta.View
                 }
 
 
-                PopupNavigation.Instance.PushAsync(new ItemPlatillo(platillo, mesaglb, bandera: 1, cart, test2ListView, cart[index].idItem));
+                PopupNavigation.Instance.PushAsync(new ItemPlatillo(platillo, mesaglb, bandera: 1, cart, test2ListView, cart[index].idItem, totalpago:totalpago));
 
             }
 
@@ -261,13 +261,13 @@ namespace AppResta.View
                         if (item["estado"].Equals("3"))
                         {
                             GET_DATOS("http://192.168.1.112/resta/admin/mysql/orden/index.php?op=updateEstadoOrdenMesas&estado=0&id=" + ordenID + "&total=" + total);
-                            Navigation.PushAsync(new View.Ordenes(), false);
+                            Navigation.PushAsync(new View.Ordenes(this), false);
                             break;
                         }
                         else
                         {
                             GET_DATOS("http://192.168.1.112/resta/admin/mysql/orden/index.php?op=updateEstadoOrdenMesas&estado=1&id=" + ordenID + "&total=" + total);
-                            Navigation.PushAsync(new View.Ordenes(), false);
+                            Navigation.PushAsync(new View.Ordenes(this), false);
                             break;
                         }
                     }

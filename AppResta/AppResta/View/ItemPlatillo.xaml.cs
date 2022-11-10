@@ -143,7 +143,7 @@ namespace AppResta.View
                     {
                         //Console.WriteLine("Es igual suma 1: "+valSteper);
                         cart[i].cantidad += valSteper;
-                        Console.WriteLine("-----" + cart[i].cantidad);
+                       // Console.WriteLine("-----" + cart[i].cantidad);
                         cart[i].total = (double)(cart[i].precio * cart[i].cantidad);
                         index = i;
                         band = 1;
