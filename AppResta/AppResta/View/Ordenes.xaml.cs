@@ -93,23 +93,23 @@ namespace AppResta.View
                     orden = new Model.Ordenes();
 
                     orden.id = Int32.Parse(item["id"].ToString());
-                    orden.fecha_orden = item["fecha_orden"].ToString();
+                    orden.fecha_orden = item["fecha_orden"].ToString().Remove(0, 10);
                     if (item["fecha_start"].ToString() != "")
                     {
                         orden.fecha_start = item["fecha_start"].ToString().Remove(0, 10);
                         orden.fecha_estimada = item["fecha_estimada"].ToString().Remove(0, 10);
                     }
 
-                    orden.fecha_cerada = item["fecha_cerada"].ToString();
+                    orden.fecha_cerada = ObtenerNumeorDeItems(orden.id, 1) + "/" + ObtenerNumeorDeItemsPlatillos(orden.id, 1);
                     switch (item["estado"].ToString())
                     {
                         case "1": orden.estado = "En espera"; break;
-                        case "2": orden.estado = "Preparando... " + cont + "/" + cont; break;
+                        case "2": orden.estado = "Preparando... "; break;
                         case "3": orden.estado = "! Terminado !"; break;
                     }
-                    orden.mesero = Int32.Parse(item["mesero"].ToString());
+                    orden.mesero = ObtenerNumeorDeItems(orden.id,2) + "/" + ObtenerNumeorDeItemsPlatillos(orden.id,2);
                     orden.mesa = item["mesa"].ToString();
-                    orden.total = obtenerPagoFinal(orden.id).ToString();
+                    orden.total = obtenerPagoFinal(orden.id).ToString() ;// 
                     orden.pago = Int32.Parse(item["pago"].ToString());
                     ordenList.Add(orden);
                 }
@@ -144,6 +144,53 @@ namespace AppResta.View
                 }
             }
             return total;
+        }
+        public static string ObtenerNumeorDeItems(int id, int opc)
+        {
+            string cantidad = "";
+
+            var client1 = new HttpClient();
+
+            client1.BaseAddress = new Uri(("http://192.168.1.112/resta/admin/mysql/orden/index.php?op=ObtenerNumeorDeItems&idCart=" + id + "&opc=" + opc));
+            HttpResponseMessage response1 = client1.GetAsync(client1.BaseAddress).Result;
+            if (response1.IsSuccessStatusCode)
+            {
+                var content1 = response1.Content.ReadAsStringAsync().Result;
+                string json1 = content1.ToString();
+
+                var jsonArray1 = JArray.Parse(json1.ToString());
+
+                //userInfo = JsonConvert.DeserializeObject<List<Model.Categorias>>(content);
+                foreach (var item in jsonArray1)
+                {
+                    cantidad = item["cantidad"].ToString();
+                }
+            }
+            return cantidad;
+        }
+
+        public static string ObtenerNumeorDeItemsPlatillos(int id,int opc)
+        {
+            string cantidad = "";
+
+            var client1 = new HttpClient();
+
+            client1.BaseAddress = new Uri(("http://192.168.1.112/resta/admin/mysql/orden/index.php?op=ObtenerNumeorDeItemsPlatillos&idCart=" + id+"&opc="+opc));
+            HttpResponseMessage response1 = client1.GetAsync(client1.BaseAddress).Result;
+            if (response1.IsSuccessStatusCode)
+            {
+                var content1 = response1.Content.ReadAsStringAsync().Result;
+                string json1 = content1.ToString();
+
+                var jsonArray1 = JArray.Parse(json1.ToString());
+
+                //userInfo = JsonConvert.DeserializeObject<List<Model.Categorias>>(content);
+                foreach (var item in jsonArray1)
+                {
+                    cantidad = item["cantidad"].ToString();
+                }
+            }
+            return cantidad;
         }
 
         private void RefreshOrdenes_Refreshing(object sender, EventArgs e)

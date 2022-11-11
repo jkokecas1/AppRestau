@@ -38,7 +38,7 @@ namespace AppResta.Services
                                 orden.id = Int32.Parse(item["id"].ToString());
                                 orden.fecha_orden = item["fecha_orden"].ToString();
                                 orden.fecha_cerada = item["fecha_cerada"].ToString();
-                                orden.mesero = Int32.Parse(item["mesero"].ToString());
+                                orden.mesero = item["mesero"].ToString();
                                 orden.mesa = item["mesa"].ToString();
                                 orden.total = item["total"].ToString();
                                 orden.pago = Int32.Parse(item["pago"].ToString());

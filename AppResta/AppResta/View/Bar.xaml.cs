@@ -56,7 +56,7 @@ namespace AppResta.View
                                 case "2": orden.estado = "Preparando..."; break;
                                 case "3": orden.estado = "! Terminado !"; break;
                             }
-                            orden.mesero = Int32.Parse(item["mesero"].ToString());
+                            orden.mesero = item["mesero"].ToString();
                             orden.mesa = item["mesa"].ToString();
                             orden.total = item["total"].ToString();
                             orden.pago = Int32.Parse(item["pago"].ToString());
@@ -149,7 +149,7 @@ namespace AppResta.View
                         case "3": ord.estado = "! Terminado !"; break;
                     }
                     ord.fecha_cerada = item.fecha_cerada.ToString();
-                    ord.mesero = Int32.Parse(item.mesero.ToString());
+                    ord.mesero =item.mesero.ToString();
                     ord.mesa = item.mesa.ToString();
                     ord.total = item.total.ToString();
                     ord.pago = Int32.Parse(item.pago.ToString());

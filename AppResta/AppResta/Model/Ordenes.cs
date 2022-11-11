@@ -14,7 +14,7 @@ namespace AppResta.Model
         public string estado { get; set; }
         public string mesa { get; set; }
         public string total { get; set; }
-        public int mesero { get; set; }
+        public string mesero { get; set; }
         public int pago { get; set; }
     }
 }

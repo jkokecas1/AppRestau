@@ -42,7 +42,7 @@
 
                     </Grid.ColumnDefinitions>
                     <Image Source="klassylogo.png" VerticalOptions="Start" Grid.Row="0" Grid.Column="0"></Image>
-                    <Button Text="Mesas" Command="{Binding Ordencommand}" Grid.Row="0" Grid.Column="1" CornerRadius="0" BackgroundColor="LightGray" TextColor="#000"></Button>
+                    <Button Text="Mesas"  Grid.Row="0" Grid.Column="1" CornerRadius="0" BackgroundColor="LightGray" TextColor="#000"></Button>
                     <Button Text="Ordenes" Command="{Binding Ordencommand}" Grid.Row="0" Grid.Column="2" CornerRadius="0" BackgroundColor="DimGray" TextColor="#FFF"></Button>
                     <Button Text="Historial" Command="{Binding Historialcommand}" Grid.Row="0" Grid.Column="3" CornerRadius="0" BackgroundColor="DimGray" TextColor="#FFF"></Button>
                     <Grid Grid.Row="0" Grid.Column="4" Padding="0,0,0,0">
@@ -68,12 +68,14 @@
                 </Grid.ColumnDefinitions>
                 <Frame Grid.Row="0" Grid.Column="0" Padding="0,0,0,0"  CornerRadius="15">
                     <Grid Padding="0,0,0,0" >
-                        <BoxView BackgroundColor="red" Margin="140,30,0,30" HorizontalOptions="End" Grid.Row="0" Grid.Column="0"/>
+                        <BoxView BackgroundColor="#E62C2C" Margin="140,30,0,30" HorizontalOptions="End" Grid.Row="0" Grid.Column="0"/>
                         <Label Text="Orden entregada" VerticalOptions="Center" FontFamily="Bold" HorizontalOptions="Start"  TextColor="Black" FontSize="20" Grid.Row="0" Grid.Column="1"/>
-                        <BoxView BackgroundColor="Blue" Margin="140,30,0,30" HorizontalOptions="End" Grid.Row="0" Grid.Column="2"/>
-                        <Label Text="Tomadno orden" VerticalOptions="Center" TextColor="Black" FontSize="20" Grid.Row="0" Grid.Column="3"/>
+                        <BoxView BackgroundColor="#2C67E6" Margin="140,30,0,30" HorizontalOptions="End" Grid.Row="0" Grid.Column="2"/>
+                        <Label Text="Tomando orden" VerticalOptions="Center" TextColor="Black" FontSize="20" Grid.Row="0" Grid.Column="3"/>
                         <BoxView BackgroundColor="#3AE62C" Margin="140,30,0,30" HorizontalOptions="End" Grid.Row="0" Grid.Column="4"/>
                         <Label Text="Orden en Cocina" VerticalOptions="Center" TextColor="Black" FontSize="20" Grid.Row="0" Grid.Column="5"/>
+                        <BoxView BackgroundColor="#F7DB2F" Margin="140,30,0,30" HorizontalOptions="End" Grid.Row="0" Grid.Column="6"/>
+                        <Label Text="Preparando..." VerticalOptions="Center" TextColor="Black" FontSize="20" Grid.Row="0" Grid.Column="7"/>
                     </Grid>
                 </Frame>
                 <Frame Grid.Row="1" Grid.Column="0" Padding="0,0,0,0" CornerRadius="15">

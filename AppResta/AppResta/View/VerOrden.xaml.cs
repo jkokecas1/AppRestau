@@ -34,7 +34,7 @@ namespace AppResta.View
 
 
 
-            numeroOrden.Text = "Orden # " + ordenes.id;
+            numeroOrden.Text = "# " + ordenes.id;
             cart = CartMesa(ordenes.id.ToString(), ordenes.mesa);
 
             ordenlist.ItemsSource = cart;
@@ -147,7 +147,7 @@ namespace AppResta.View
 
                     if (item["comentario"] != null && item["comentario"].ToString() != "")
                     {
-                        cartItem.comentario = item["comentario"].ToString().ToUpper();
+                        cartItem.comentario = item["comentario"].ToString().ToUpper().Replace("-"," ");
                     }
                     else
                     {
@@ -178,21 +178,23 @@ namespace AppResta.View
             //var _count = DateTime.Now.ToString("HH:MM:ss");
             if (hora != 0)
             {
-                var h = DateTime.Now.ToString("yyyy-MM-dd HH:MM:ss");
-                string fechaIn = h;
-                HoraInicioOrden.Text = h.Remove(0, 9).Replace(" ", "");
+                var h = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss");
+                var fecha = DateTime.Now.ToString("yyyy-MM-dd");
+                string fechaIn = h; 
+                HoraInicioOrden.Text = h.Remove(0, 10).Replace(" ", "");
                 h = DateTime.Now.AddMinutes(hora).ToString();
                 string fechaFn = h;
+                Console.WriteLine(HoraInicioOrden.Text +"+==="+ HoraEstimadaOrden.Text);
                 // CronometroOrden.Text = "00:00:00";
-                HoraEstimadaOrden.Text = h.Remove(0, 9).Replace(" ", "").Replace("PM", "");
+                HoraEstimadaOrden.Text = h.Remove(0, 10).Replace(" ", "").Replace("PM", "");
                 btnIniciar.IsEnabled = false;
                 horas.IsEnabled = false;
 
-                //Cambiar el estado de la orden // updateOrden
-                string cadena = "http://192.168.1.112/resta/admin/mysql/Orden/index.php?op=updateOrden&estado=2" + "&fecha_inicio=" + fechaIn.Replace("/", "-").Replace(" ", "-") + "&fecha_estimada=" + fechaIn.Replace("/", "-").Replace("PM", "").Replace(" ", "-") + "&idCart=" + ordenes.id;
-                //Console.WriteLine(cadena);
+                ////Cambiar el estado de la orden // updateOrden
+                 string cadena = "http://192.168.1.112/resta/admin/mysql/Orden/index.php?op=updateOrden&estado=2" + "&fecha_inicio=" + fecha.Replace("/", "-") + "-"+ HoraInicioOrden.Text.Replace(" ", "-") + "&fecha_estimada=" + fecha.Replace("/", "-") + "-" + HoraEstimadaOrden.Text + "&idCart=" + ordenes.id;
+                Console.WriteLine(cadena);
 
-                popAgregar(cadena);
+                 popAgregar(cadena);
                 collection.ItemsSource = null;
                 collection.ItemsSource = Cocina.Ordene();
 

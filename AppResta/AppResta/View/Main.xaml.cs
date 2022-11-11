@@ -242,8 +242,10 @@ namespace AppResta.View
                     total += Double.Parse(item["precio"].ToString().Replace(",", "."));
                 }
             }*/
-
-            if (total != "0")
+            if (IdOrden(mesaglb)[1] == "2" || IdOrden(mesaglb)[1] == "1")
+            {
+                PopupNavigation.Instance.PushAsync(new PopError("LE ORDEN SE ESTA PREPARANDO"));
+            }else if (total != "0")
             {
                 var client = new HttpClient();
                 client.BaseAddress = new Uri(("http://192.168.1.112/resta/admin/mysql/orden/index.php?op=obtenerEstadoCart&idOrden=" + ordenID));

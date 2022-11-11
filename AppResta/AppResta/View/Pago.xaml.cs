@@ -42,7 +42,7 @@ namespace AppResta.View
                     Ordenes.mesa = orden.mesa;
                     Ordenes.pago = orden.pago;
                     Ordenes.fecha_cerada = orden.fecha_cerada;
-                    Ordenes.fecha_orden = orden.fecha_orden;
+                    Ordenes.fecha_orden = orden.fecha_orden; 
 
                     total.Text = orden.total;
                     Subtotal.Text =  orden.total;//( Int32.Parse(orden.total) + Int32.Parse(propina.Text) + Int32.Parse(Tarjeta.Text) + Int32.Parse(Efectivo.Text)) + "";   
@@ -59,7 +59,7 @@ namespace AppResta.View
                 propina.Text = "0";
             }
             {
-                Console.WriteLine();
+               // Console.WriteLine();
                 propina.Text = ((Double.Parse(Ordenes.total) * Double.Parse(p + "")) / 100) + "";
                 total.Text = Ordenes.total;
                 Subtotal.Text = Double.Parse(propina.Text.ToString()) + Double.Parse(total.Text.ToString()) + "";
@@ -68,7 +68,6 @@ namespace AppResta.View
 
             }
             //Console.WriteLine( Ordenes.total);
-
         }
 
 

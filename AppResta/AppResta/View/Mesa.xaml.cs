@@ -122,6 +122,9 @@ namespace AppResta.View
                         {
                             array[0] = "#3AE62C ";
                             array[1] = item["id_orden"].ToString();
+                        } else if (Int32.Parse(item["estado"].ToString()) == 2) {
+                            array[0] = "#F7DB2F";
+                            array[1] = item["id_orden"].ToString();
                         }
                         else {
                             array[0] = "#E62C2C";
