@@ -31,7 +31,9 @@ namespace AppResta.View
 
         private void RefreshMesas_Refreshing(object sender, EventArgs e)
         {
-            Task.Delay(100);
+
+
+            Task.Delay(700);
             mesasListView.ItemsSource = Mesas();
             RefreshMesas.IsRefreshing = false;
         }
@@ -64,8 +66,6 @@ namespace AppResta.View
                 string json = content.ToString();
                 var jsonArray = JArray.Parse(json.ToString());
                 string[] array = new string[2];
-
-
                 foreach (var item in jsonArray)
                 {
                     mesa = new Model.Mesas();
@@ -75,8 +75,6 @@ namespace AppResta.View
                     array = OrdenInMesas(nombre);
                     mesa.id = id;
                     mesa.mesa = nombre;
-                    mesa.ubicacion = item["ubicacion"].ToString();
-
                     if (array[0] != null)
                     {
                         mesa.orden = array[0];
@@ -112,15 +110,20 @@ namespace AppResta.View
                 var jsonArray = JArray.Parse(json.ToString());
                 foreach (var item in jsonArray)
                 {
-                   
+                    Console.WriteLine(item["estado"]);
                     if (Int32.Parse(item["cont"].ToString()) == 1)
                     {
                         if (Int32.Parse(item["estado"].ToString()) == 0)
                         {
-                            array[0] = "#2C67E6 ";
+                            array[0] = "#2C67E6";
                             array[1] = item["id_orden"].ToString();
-                        } else if (Int32.Parse(item["estado"].ToString()) == 1) {
+                        }
+                        else if (Int32.Parse(item["estado"].ToString()) == 1)
+                        {
                             array[0] = "#3AE62C ";
+                            array[1] = item["id_orden"].ToString();
+                        } else if (Int32.Parse(item["estado"].ToString()) == 2) {
+                            array[0] = "#F7DB2F";
                             array[1] = item["id_orden"].ToString();
                         }
                         else {

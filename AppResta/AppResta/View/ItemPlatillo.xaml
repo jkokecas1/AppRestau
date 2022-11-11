@@ -91,7 +91,7 @@ xmlns:input="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.Input
                                 </DataTemplate>
                             </CollectionView.ItemTemplate>
                         </CollectionView>
-                       
+
 
                         <Entry BackgroundColor="LightGray" x:Name="comentTxt" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Placeholder="Comentarios" TextColor="Black"/>
 
@@ -102,8 +102,18 @@ xmlns:input="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.Input
             </Grid>
 
             <Grid Grid.Row="2" Grid.Column="0" BackgroundColor="WhiteSmoke" Padding="8,8,8,8">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+
+                </Grid.ColumnDefinitions>
                 <Grid Grid.Row="0" Grid.Column="0">
-                    <Label Grid.Row="0" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" x:Name="valCantidad" Text="1" FontSize="Large"></Label>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="30"/>
+
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Row="0" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" x:Name="valCantidad" Text="1" FontSize="Large"></Label>
                     <Stepper x:Name="stepper" Grid.Row="0" Grid.Column="0" ValueChanged="cantidadPlatillo" Value="1" ></Stepper>
                 </Grid>
                 <Button x:Name="btn_agregar" Grid.Row="0" Grid.Column="1" Clicked="agregarItemCart" Text="AGREGAR" TextColor="White" FontSize="20" BackgroundColor="Green" />

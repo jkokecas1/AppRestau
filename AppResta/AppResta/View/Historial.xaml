@@ -2,61 +2,8 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AppResta.View.Historial"
-                       NavigationPage.HasNavigationBar="False"
-             xmlns:xct="clr-namespace:Xamarin.CommunityToolkit.UI.Views;assembly=Xamarin.CommunityToolkit">
+                       NavigationPage.HasNavigationBar="False">
     <ContentPage.Content>
-        <xct:Expander Grid.Row="1" Grid.Column="2" ExpandAnimationEasing="CubicIn" 
-                                  ExpandAnimationLength="500"
-                                  CollapseAnimationEasing="CubicOut"
-                                  CollapseAnimationLength="500">
-            <xct:Expander.Header>
-                <Label></Label>
-                <!--  <Grid>
-                    <RefreshView x:Name="RefreshCart">
-                        <ListView BackgroundColor="WhiteSmoke" x:Name="test2ListView"  >
-                            <ListView.ItemTemplate >
-                                <DataTemplate  >
-                                    <ViewCell  >
-                                        
-                                            <Grid Padding="20,0,0,0" BackgroundColor="WhiteSmoke">
-                                            <StackLayout  Grid.Column="0" Grid.Row="0" VerticalOptions="Center" Orientation="Vertical" BackgroundColor="WhiteSmoke">
-                                                <Label  Text="{Binding mesa}" TextColor="Black" FontSize="15"/>
-                                            </StackLayout>
-                                        </Grid>
-                              
-
-                                    </ViewCell>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
-                    </RefreshView>
-
-                </Grid>  -->
-            </xct:Expander.Header>
-            <xct:Expander.ContentTemplate>
-                <DataTemplate>
-                    <Grid Padding="10">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <Image Source="dinero.png" 
-                                           Aspect="AspectFill"
-                                           HeightRequest="120" 
-                                           WidthRequest="120" />
-                        <Label Grid.Column="1"
-                                           Text="Expandible"
-                                           FontAttributes="Italic">
-                            <Label.GestureRecognizers>
-                                <TapGestureRecognizer />
-                            </Label.GestureRecognizers>
-                        </Label>
-                    </Grid>
-                </DataTemplate>
-
-            </xct:Expander.ContentTemplate>
-        </xct:Expander>
-        <!--
         <Grid  RowSpacing="0" ColumnSpacing="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="60"/>
@@ -258,7 +205,7 @@
                     </Grid>
                 </Grid>
             </Grid>
-        </Grid> -->
+        </Grid>
 
 
 

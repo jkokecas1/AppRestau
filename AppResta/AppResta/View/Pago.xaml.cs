@@ -1,4 +1,4 @@
-﻿using Rg.Plugins.Popup.Services;
+using Rg.Plugins.Popup.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,10 +42,10 @@ namespace AppResta.View
                     Ordenes.mesa = orden.mesa;
                     Ordenes.pago = orden.pago;
                     Ordenes.fecha_cerada = orden.fecha_cerada;
-                    Ordenes.fecha_orden = orden.fecha_orden;
+                    Ordenes.fecha_orden = orden.fecha_orden; 
 
                     total.Text = orden.total;
-                    Subtotal.Text = orden.total;//( Int32.Parse(orden.total) + Int32.Parse(propina.Text) + Int32.Parse(Tarjeta.Text) + Int32.Parse(Efectivo.Text)) + "";   
+                    Subtotal.Text =  orden.total;//( Int32.Parse(orden.total) + Int32.Parse(propina.Text) + Int32.Parse(Tarjeta.Text) + Int32.Parse(Efectivo.Text)) + "";   
                 }
             }
 
@@ -54,20 +54,20 @@ namespace AppResta.View
 
         public void calcularPropona(int p)
         {
-            if (p == 0) {
+            if (p == 0)
+            {
                 propina.Text = "0";
             }
             {
-                Console.WriteLine( );
-               propina.Text = ((Double.Parse(Ordenes.total) * Double.Parse(p + "")) / 100) + "";
-               total.Text = Ordenes.total;
-               Subtotal.Text = Double.Parse(propina.Text.ToString()) + Double.Parse(total.Text.ToString()) + "";
-               if (radioTarjeta.IsChecked)
-                  Tarjeta.Text = Subtotal.Text;
+               // Console.WriteLine();
+                propina.Text = ((Double.Parse(Ordenes.total) * Double.Parse(p + "")) / 100) + "";
+                total.Text = Ordenes.total;
+                Subtotal.Text = Double.Parse(propina.Text.ToString()) + Double.Parse(total.Text.ToString()) + "";
+                if (radioTarjeta.IsChecked)
+                    Tarjeta.Text = Subtotal.Text;
 
             }
             //Console.WriteLine( Ordenes.total);
-
         }
 
 
@@ -103,7 +103,7 @@ namespace AppResta.View
                 pago.idcart = Ordenes.id;
                 pago.tipoPago = "1"; // EFECTIVO
                 pago.propina = propina.Text;
-                pago.total = Subtotal.Text;
+                pago.total =  Subtotal.Text;
                 if (pago.monto < Double.Parse(Subtotal.Text))
                 {
                     PopupNavigation.Instance.PushAsync(new PopError("VERIFICA LOS CAMPOS"));
@@ -111,7 +111,7 @@ namespace AppResta.View
                 else
                 {
                     Console.WriteLine(pago.tipoPago + "EFECTIVO");
-                    PopupNavigation.Instance.PushAsync(new ConfirmarPago(pago,this));
+                    PopupNavigation.Instance.PushAsync(new ConfirmarPago(pago, this));
                 }
             }
             else if (Efectivo.Text != "" && Tarjeta.Text != "")
@@ -130,8 +130,8 @@ namespace AppResta.View
                 }
                 else
                 {
-                    Console.WriteLine(pago.tipoPago + "AMBOS");
-                    PopupNavigation.Instance.PushAsync(new ConfirmarPago(pago,this));
+                   // Console.WriteLine(pago.tipoPago + "AMBOS");
+                    PopupNavigation.Instance.PushAsync(new ConfirmarPago(pago, this));
                 }
             }
 
@@ -236,7 +236,7 @@ namespace AppResta.View
             TarjetaGrild.IsVisible = true;
         }
 
-        
+
 
         private void propina0_Clicked(object sender, EventArgs e)
         {

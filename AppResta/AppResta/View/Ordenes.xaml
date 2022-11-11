@@ -73,31 +73,32 @@
                         <Grid Grid.Row="0" Grid.Column="0" RowSpacing="0" ColumnSpacing="0" BackgroundColor="White" Padding="20,10,10,10">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*"/>
-
-
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="50"/>
-                                <ColumnDefinition Width="110"/>
-                                <ColumnDefinition Width="190"/>
-                                <ColumnDefinition Width="150"/>
-                                <ColumnDefinition Width="150"/>
-                                <ColumnDefinition Width="240"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
 
+
                             </Grid.ColumnDefinitions>
-                            <Label Text="Orden" Grid.Row="0" Grid.Column="0" TextColor="Black"/>
-                            <Label Text="Mesa" Grid.Row="0" Grid.Column="1" TextColor="Black"/>
-                            <Label Text="Orden Tomada" Grid.Row="0" Grid.Column="2" TextColor="Black"/>
-                            <Label Text="Hora inicio" Grid.Row="0" Grid.Column="3" TextColor="Black"/>
-                            <Label Text="Estado" Grid.Row="0" Grid.Column="4" TextColor="Black"/>
-                            <Label Text="Tiempo de estimado" Grid.Row="0" Grid.Column="5" TextColor="Black"/>
-                            <Label Grid.Row="0" Grid.Column="6"/>
-                            <Label Text="Total" Grid.Row="0" Grid.Column="7" TextColor="Black"/>
+                            <Label Text="# ORDEN" Grid.Row="0" Grid.Column="0" TextColor="Black"/>
+                            <Label Text="MESA" Grid.Row="0" Grid.Column="1" TextColor="Black"/>
+                            <Label Text="ORDEN TOMADA" Grid.Row="0" Grid.Column="2" TextColor="Black"/>
+                            <Label Text="HORA INICIADA" Grid.Row="0" Grid.Column="3" TextColor="Black"/>
+                            <Label Text="HORA ESTIMADA" Grid.Row="0" Grid.Column="4" TextColor="Black"/>
+                            <Label Text="ESTADO" Grid.Row="0" Grid.Column="5" TextColor="Black"/>
+                            <Label Text="PLATILLOS" Grid.Row="0" Grid.Column="6" TextColor="Black"/>
+                            <Label Text="BEBIDAS" Grid.Row="0" Grid.Column="7" TextColor="Black"/>
+                            
                         </Grid>
 
                         <Grid Grid.Row="1" Grid.Column="0" BackgroundColor="WhiteSmoke" >
-                            <ScrollView>
+                            <RefreshView x:Name="RefreshOrdenes" Refreshing="RefreshOrdenes_Refreshing">
+
                                 <ListView x:Name="ordenesListView" SelectionMode="None"  ItemSelected="select_Item" RowHeight="60">
                                     <ListView.ItemTemplate >
                                         <DataTemplate  >
@@ -122,15 +123,18 @@
                                                         </Grid.RowDefinitions>
 
                                                         <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition Width="40"/>
-                                                            <ColumnDefinition Width="80"/>
-                                                            <ColumnDefinition Width="220"/>
-                                                            <ColumnDefinition Width="110"/>
-                                                            <ColumnDefinition Width="220"/>
                                                             <ColumnDefinition Width="*"/>
-                                                            <ColumnDefinition Width="80"/>
-                                                        </Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="*"/>
+                                                            <ColumnDefinition Width="*"/>
+                                                            <ColumnDefinition Width="*"/>
+                                                            <ColumnDefinition Width="*"/>
+                                                            <ColumnDefinition Width="*"/>
+                                                            <ColumnDefinition Width="*"/>
 
+                                                            <ColumnDefinition Width="*"/>
+                                                            <ColumnDefinition Width="*"/>
+                                                        </Grid.ColumnDefinitions>
+                                                       
                                                         <StackLayout  Grid.Column="0" Grid.Row="0"  HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical" Padding="0,10,0,0">
                                                             <Label Text="{Binding id}" TextColor="Black" FontSize="22"/>
                                                         </StackLayout>
@@ -148,12 +152,19 @@
                                                             <Label Text="{Binding fecha_start }" TextColor="Black" FontSize="22"/>
                                                         </StackLayout>
                                                         <StackLayout  Grid.Column="4" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical" Padding="0,10,0,0">
-                                                            <Label Text="{Binding estado}" TextColor="Black" FontSize="22"/>
-                                                        </StackLayout>
-                                                        <StackLayout  Grid.Column="5" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical" Padding="0,10,0,0">
                                                             <Label Text="{Binding fecha_estimada}" TextColor="Black" FontSize="22"/>
                                                         </StackLayout>
-
+                                                        <StackLayout  Grid.Column="5" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical" Padding="0,10,0,0">
+                                                            <Label Text="{Binding estado}" TextColor="Black" FontSize="22"/>
+                                                        </StackLayout>
+                                                        <!-- Platillo 0/0-->
+                                                        <StackLayout  Grid.Column="6" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical" Padding="0,10,0,0">
+                                                            <Label Text="{Binding fecha_cerada}" TextColor="Black" FontSize="22"/>
+                                                        </StackLayout>
+                                                        <!-- Bebidas 0/0-->
+                                                        <StackLayout  Grid.Column="7" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical" Padding="0,10,0,0">
+                                                            <Label Text="{Binding mesero}" TextColor="Black" FontSize="22"/>
+                                                        </StackLayout>
                                                     </Grid>
 
                                                 </SwipeView>
@@ -162,7 +173,7 @@
                                         </DataTemplate>
                                     </ListView.ItemTemplate>
                                 </ListView>
-                            </ScrollView>
+                            </RefreshView>
                         </Grid>
                     </Grid>
                 </Frame>

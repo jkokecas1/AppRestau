@@ -27,11 +27,11 @@ namespace AppResta.View
         {
             InitializeComponent();
             BindingContext = new ViewModel.HistorialViewModel(Navigation);
-          // test2ListView.ItemsSource = Ordene();
+            ordenesListView.ItemsSource = Ordene();
 
         }
 
-        /*
+
         public void select_Item(object sender, SelectedItemChangedEventArgs e)
         {
             var orden = e.SelectedItem as Model.Ordenes;
@@ -51,7 +51,7 @@ namespace AppResta.View
             TP.Text = "Tiempo  25 MIN";
 
             productos.ItemsSource = CartMesa(orden.id + "", orden.mesa);
-        }*/
+        }
 
         public List<Model.Ordenes> Ordene()
         {
@@ -75,7 +75,7 @@ namespace AppResta.View
                         orden.id = Int32.Parse(item["id"].ToString());
                         orden.fecha_orden = item["fecha_orden"].ToString(); ;
                         orden.fecha_cerada = item["fecha_cerada"].ToString(); ;
-                        orden.mesero = Int32.Parse(item["mesero"].ToString()); ;
+                        orden.mesero = item["mesero"]+"";
                         orden.mesa = item["mesa"].ToString();
                         orden.total = item["total"].ToString(); ;
                         orden.pago = Int32.Parse(item["pago"].ToString()); ;

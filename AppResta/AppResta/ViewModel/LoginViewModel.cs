@@ -126,20 +126,25 @@ namespace AppResta.ViewModel
 
                 if (emp.puesto == "Cajero")
                 {
+                   
                     //Cajero
                     await Navigation.PushAsync(new Mesa(empleado: emp), false);
                 }
                 else if (emp.puesto == "Mesero") {
+                    
                     await Navigation.PushAsync(new Mesa(empleado: emp), false);
                 } else if (emp.puesto == "Cocinero") {
+                   
                     //Cocinero
                     await Navigation.PushAsync(new Cocina(), false);
                 } else if (emp.puesto == "Barra") {
+                    
                     // Barra
-                    await Navigation.PushAsync(new Mesa(empleado: emp), false);
+                    await Navigation.PushAsync(new Bar(), false);
+                    
                 }
 
-
+                Pin = "";
             }
             else
             {

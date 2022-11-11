@@ -23,7 +23,7 @@ namespace AppResta.View
 
         public Model.Cart cartItem = new Model.Cart();
         public static double totalpay = 0.0;
-        public Main(bool _Token, int idOrden = 0, string nombre="", string mesa = "MES-0")
+        public Main(bool _Token, int idOrden = 0, string nombre = "", string mesa = "MES-0")
         //public Main(Object[] datos)
         {
             ordenID = idOrden;
@@ -58,7 +58,8 @@ namespace AppResta.View
                     totalpago.Text = totalpay.ToString();
 
                 }
-                else {
+                else
+                {
                     cart.Clear();
                 }
 
@@ -68,16 +69,17 @@ namespace AppResta.View
                 NombTexto.Text = "Mesero: " + nombre;
                 OrdenTexto.Text = "# Orden: " + idOrden.ToString();
 
-            }   
+            }
 
         }
 
-       
 
-        public void SelectItem(object sender, SelectedItemChangedEventArgs e) {
+
+        public void SelectItem(object sender, SelectedItemChangedEventArgs e)
+        {
             var itme = e.SelectedItem as Model.Cart;
             Console.WriteLine(itme.id);
-                
+
 
 
         }
@@ -92,7 +94,7 @@ namespace AppResta.View
                 ordenID = Int32.Parse(IdOrden(mesaglb)[0]);
 
                 cart.Clear();
-                
+
                 cart = CartMesa(ordenID + "", mesaglb);
 
                 if (cart != null)
@@ -101,14 +103,16 @@ namespace AppResta.View
                     test2ListView.ItemsSource = cart;
                     RefreshCart.IsRefreshing = false;
                 }
+                actualizar(test2ListView, totalpago);
             }
-            else {
+            else
+            {
                 Task.Delay(100);
                 RefreshCart.IsRefreshing = false;
             }
-           
 
-            
+
+
         }
         //----- REFRESCA EL CONTENIDO DE LA LISTA DE CATEGORIA ------//
         private void RefreshMesas_Refreshing(object sender, EventArgs e)
@@ -117,7 +121,7 @@ namespace AppResta.View
             band = 0;
             testListView.ItemsSource = Categorias2();
 
-           // Refreshplatillos.IsRefreshing = false;
+            // Refreshplatillos.IsRefreshing = false;
 
         }
 
@@ -128,7 +132,8 @@ namespace AppResta.View
             {
                 PopupNavigation.Instance.PushAsync(new PopError("El platillo se esat preparando"));
             }
-            else {
+            else
+            {
                 string carito = ((MenuItem)sender).CommandParameter.ToString();
                 // Console.WriteLine(carito);
                 //int idItem = Int32.Parse(((MenuItem)sender).CommandParameter.ToString());
@@ -175,10 +180,10 @@ namespace AppResta.View
                 }
 
 
-                PopupNavigation.Instance.PushAsync(new ItemPlatillo(platillo, mesaglb, bandera: 1, cart, test2ListView, cart[index].idItem));
+                PopupNavigation.Instance.PushAsync(new ItemPlatillo(platillo, mesaglb, bandera: 1, cart, test2ListView, cart[index].idItem, totalpago:totalpago));
 
             }
-           
+
         }
 
         private void SwipeItem_Eliminar(object sender, EventArgs e)
@@ -208,7 +213,7 @@ namespace AppResta.View
                 test2ListView.ItemsSource = cart;
 
             }
-            
+
 
             // Actualizar el estado del item seleccionado
 
@@ -237,8 +242,10 @@ namespace AppResta.View
                     total += Double.Parse(item["precio"].ToString().Replace(",", "."));
                 }
             }*/
-
-            if (total != "0")
+            if (IdOrden(mesaglb)[1] == "2" || IdOrden(mesaglb)[1] == "1")
+            {
+                PopupNavigation.Instance.PushAsync(new PopError("LE ORDEN SE ESTA PREPARANDO"));
+            }else if (total != "0")
             {
                 var client = new HttpClient();
                 client.BaseAddress = new Uri(("http://192.168.1.112/resta/admin/mysql/orden/index.php?op=obtenerEstadoCart&idOrden=" + ordenID));
@@ -247,7 +254,7 @@ namespace AppResta.View
                 {
                     var content = response.Content.ReadAsStringAsync().Result;
                     string json = content.ToString();
-                    
+
                     var jsonArray = JArray.Parse(json.ToString());
 
                     //userInfo = JsonConvert.DeserializeObject<List<Model.Categorias>>(content);
@@ -256,23 +263,25 @@ namespace AppResta.View
                         if (item["estado"].Equals("3"))
                         {
                             GET_DATOS("http://192.168.1.112/resta/admin/mysql/orden/index.php?op=updateEstadoOrdenMesas&estado=0&id=" + ordenID + "&total=" + total);
-                            Navigation.PushAsync(new View.Ordenes(), false);
+                            Navigation.PushAsync(new View.Ordenes(this), false);
                             break;
                         }
-                        else {
+                        else
+                        {
                             GET_DATOS("http://192.168.1.112/resta/admin/mysql/orden/index.php?op=updateEstadoOrdenMesas&estado=1&id=" + ordenID + "&total=" + total);
-                            Navigation.PushAsync(new View.Ordenes(), false);
+                            Navigation.PushAsync(new View.Ordenes(this), false);
                             break;
                         }
                     }
-                 }
-              
-                
+                }
+
+
             }
-            else {
+            else
+            {
                 PopupNavigation.Instance.PushAsync(new PopError("AGREGA PRODUCTOS AL CARRITO ANTES DE ORDENAR"));
             }
-            
+
         }
 
         public void select_Item(object sender, SelectionChangedEventArgs e)
@@ -298,7 +307,7 @@ namespace AppResta.View
                 }
                 else
                 {
-                    
+
                     //var platillo = currentSelectedContact.FirstOrDefault() as Model.Platillos;
                     testListView.ItemsSource = Platillos("&idcate=" + categoria.nombre);
                 }
@@ -314,7 +323,7 @@ namespace AppResta.View
             }
             else if (band == 2)
             {
-                
+
                 var platillo = currentSelectedContact.FirstOrDefault() as Model.Platillos;
                 cartItem = new Model.Cart();
                 //DisplayAlert(platillo.nombre, " Nombre :" + platillo.precio + "\n Categoria:" + platillo.descrip,"Cancelar", "Ok");
@@ -332,18 +341,20 @@ namespace AppResta.View
                 *  2 - UPDATE CANTIDAD ITEM
                 *  3 - INSERTAMOS ITEM,SELECT CARTS, INSERT RELACION(ITEM, CART)
                 */
-                if (IdOrden(mesaglb)[1] == "3") { 
-                
+                if (IdOrden(mesaglb)[1] == "3")
+                {
+
                 }
 
                 if (cart.Count == 0 && IdOrden(mesaglb)[1] != "3") // Caso 0: Carrito vacio
                 {
-                    
-                    PopupNavigation.Instance.PushAsync(new ItemPlatillo(platillo, mesaglb, bandera: 0, cart, test2ListView));
+
+                    PopupNavigation.Instance.PushAsync(new ItemPlatillo(platillo, mesaglb, bandera: 0, cart, test2ListView, totalpago: totalpago));
 
 
                 }
-                else { // Caso 1
+                else
+                { // Caso 1
 
                     int band = 0;
                     int index = 0;
@@ -357,29 +368,31 @@ namespace AppResta.View
                         }
                     }
 
-                    if (band == 1) { // CASO 1.1
-                                     // itemPlatillo = new ItemPlatillo(platillo, mesaglb, bandera: 1, cart, test2ListView);
-                        PopupNavigation.Instance.PushAsync(new ItemPlatillo(platillo, mesaglb, bandera: 1, cart, test2ListView));
+                    if (band == 1)
+                    { // CASO 1.1
+                      // itemPlatillo = new ItemPlatillo(platillo, mesaglb, bandera: 1, cart, test2ListView);
+                        PopupNavigation.Instance.PushAsync(new ItemPlatillo(platillo, mesaglb, bandera: 1, cart, test2ListView,totalpago: totalpago));
                     }
                     else if (band == 0) // CASO 1.2
                     {
 
                         //Console.WriteLine("Ya exite un platillo y se agrega el otro");
                         // itemPlatillo = new ItemPlatillo(platillo, mesaglb, bandera: 2, cart, test2ListView);
-                        PopupNavigation.Instance.PushAsync(new ItemPlatillo(platillo, mesaglb, bandera: 2, cart, test2ListView));
+                        PopupNavigation.Instance.PushAsync(new ItemPlatillo(platillo, mesaglb, bandera: 2, cart, test2ListView,totalpago: totalpago));
 
                     }
 
                 }
 
             }
-            actualizar();
+          
 
 
         }
 
-        public void  actualizar() {
-            totalpago.Text = "0.0";
+        public static void actualizar(ListView test2ListView, Label totalpago)
+        {
+           // totalpago.Text = "0.0";
             totalpay = 0;
             test2ListView.ItemsSource = null;
             test2ListView.ItemsSource = cart;
@@ -397,10 +410,10 @@ namespace AppResta.View
         {
             band = 0;
             testListView.ItemsSource = Categorias2();
-            
+
         }
 
-        
+
         public void GET_DATOS(string c)
         {
             var client = new HttpClient();
@@ -408,9 +421,9 @@ namespace AppResta.View
             HttpResponseMessage response = client.GetAsync(client.BaseAddress).Result;
             if (response.IsSuccessStatusCode)
             {
-               // DisplayAlert("Eliminado","", "OK");
+                // DisplayAlert("Eliminado","", "OK");
             }
-           
+
         }
         public List<Model.Categorias> Categorias2()
         {
@@ -458,7 +471,7 @@ namespace AppResta.View
 
             client.BaseAddress = new Uri("http://192.168.1.112/resta/admin/mysql/categoria/index.php?op=obtenerSubCategorias&id=" + id);
 
-             HttpResponseMessage response = client.GetAsync(client.BaseAddress).Result;
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress).Result;
             if (response.IsSuccessStatusCode)
             {
                 var content = response.Content.ReadAsStringAsync().Result;
@@ -512,7 +525,7 @@ namespace AppResta.View
             {
                 var content = response.Content.ReadAsStringAsync().Result;
                 string json = content.ToString();
-             
+
                 var jsonArray = JArray.Parse(json.ToString());
 
                 foreach (var item in jsonArray)
@@ -530,7 +543,7 @@ namespace AppResta.View
 
                     //Console.WriteLine(urls);
                     var byteArray = Convert.FromBase64String(urls);
-                   
+
                     Stream stream = new MemoryStream(byteArray);
                     var imageSource = ImageSource.FromStream(() => stream);
                     //MyImage.Source = imageSource;
@@ -557,13 +570,13 @@ namespace AppResta.View
         }
 
 
-        public List<Model.Cart> CartMesa(string id,string mesa)
+        public List<Model.Cart> CartMesa(string id, string mesa)
         {
 
             var sub = new List<Model.Cart>();
             var client = new HttpClient();
 
-            client.BaseAddress = new Uri("http://192.168.1.112/resta/admin/mysql/orden/index.php?op=obtenerCarrito&idOrden=" + id+"&mesa="+mesa);
+            client.BaseAddress = new Uri("http://192.168.1.112/resta/admin/mysql/orden/index.php?op=obtenerCarrito&idOrden=" + id + "&mesa=" + mesa);
 
             HttpResponseMessage response = client.GetAsync(client.BaseAddress).Result;
             if (response.IsSuccessStatusCode)
@@ -604,8 +617,8 @@ namespace AppResta.View
             }
         }
 
-       
-       
+
+
         public string[] IdOrden(string mesa)
         {
 
