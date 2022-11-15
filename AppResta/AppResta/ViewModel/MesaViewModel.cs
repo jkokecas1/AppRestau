@@ -91,7 +91,7 @@ namespace AppResta.ViewModel
         public void Logout()
         {
           
-           Navigation.PopAsync();
+           Navigation.PopAsync(false);
             
         }
         public void Alerta()

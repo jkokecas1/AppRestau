@@ -25,13 +25,16 @@ namespace AppResta.ViewModel
         #region VARIABLES
 
         string _Pin;
+        bool _IsInternet;
 
        
         #endregion
 
         #region CONSTRUCTOR
-        public LoginViewModel(INavigation navigation)
+        public LoginViewModel(INavigation navigation, bool internet)
         {
+            
+            _IsInternet = internet;
             Navigation = navigation;
             Num0Command = new Command(() => Pin += "0");
             Num1Command = new Command(() => Pin += "1");
@@ -54,6 +57,11 @@ namespace AppResta.ViewModel
         {
             get { return _Pin; }
             set { SetValue(ref _Pin, value); }
+        }
+
+        public bool IsInternet { 
+            get { return _IsInternet; }
+            set { SetValue(ref _IsInternet, value); }
         }
 
 
@@ -109,30 +117,44 @@ namespace AppResta.ViewModel
                 await DisplayAlert("Error", "User not exist", "Ok");
 
             }
+            List<Empleado> empleado;
+            if (IsInternet)
+            {
+                empleado = await App.Database.GetEmpleadoAsync();
+                //empleado = _loginRespository.Login(Pin);
+            }
+            else {
+                Console.WriteLine("No internet" + IsInternet);
+               
+                empleado = await App.Database.GetEmpleadoAsync();
+            }
 
-            List <Empleado> empleado = _loginRespository.Login(Pin);
+            
             Model.Empleado emp = new Empleado(); ;
             if (empleado != null)
             {
                 foreach (Empleado item in empleado)
                 {
-                    emp.id = item.id;
-                    emp.nombre = item.nombre;
-                    emp.pin = item.pin;
-                    emp.puesto = item.puesto;
-                    emp.email = item.email;
-                    emp.celular = item.celular;
+                    if (Pin == item.pin) {
+                        emp.id = item.id;
+                        emp.nombre = item.nombre;
+                        emp.pin = item.pin;
+                        emp.puesto = item.puesto;
+                        emp.email = item.email;
+                        emp.celular = item.celular;
+                    }
+                    
                 }
-
+               
                 if (emp.puesto == "Cajero")
                 {
                    
                     //Cajero
-                    await Navigation.PushAsync(new Mesa(empleado: emp), false);
+                    await Navigation.PushAsync(new Mesa(empleado: emp, interent: IsInternet), false);
                 }
                 else if (emp.puesto == "Mesero") {
                     
-                    await Navigation.PushAsync(new Mesa(empleado: emp), false);
+                    await Navigation.PushAsync(new Mesa(empleado: emp,interent: IsInternet), false);
                 } else if (emp.puesto == "Cocinero") {
                    
                     //Cocinero
