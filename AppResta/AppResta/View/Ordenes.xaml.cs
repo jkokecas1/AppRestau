@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using AppResta.Model;
 using Newtonsoft.Json.Linq;
 using Rg.Plugins.Popup.Services;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -86,10 +87,10 @@ namespace AppResta.View
                 var content = response.Content.ReadAsStringAsync().Result;
                 string json = content.ToString();
                 var jsonArray = JArray.Parse(json.ToString());
-                int cont = 0;
+             
                 foreach (var item in jsonArray)
                 {
-                    cont++;
+                    
                     orden = new Model.Ordenes();
 
                     orden.id = Int32.Parse(item["id"].ToString());
@@ -99,7 +100,7 @@ namespace AppResta.View
                         orden.fecha_start = item["fecha_start"].ToString().Remove(0, 10);
                         orden.fecha_estimada = item["fecha_estimada"].ToString().Remove(0, 10);
                     }
-
+                    //PLATILLOS
                     orden.fecha_cerada = ObtenerNumeorDeItems(orden.id, 1) + "/" + ObtenerNumeorDeItemsPlatillos(orden.id, 1);
                     switch (item["estado"].ToString())
                     {
@@ -107,9 +108,11 @@ namespace AppResta.View
                         case "2": orden.estado = "Preparando... "; break;
                         case "3": orden.estado = "! Terminado !"; break;
                     }
+                    //BEBIDAS
                     orden.mesero = ObtenerNumeorDeItems(orden.id,2) + "/" + ObtenerNumeorDeItemsPlatillos(orden.id,2);
                     orden.mesa = item["mesa"].ToString();
-                    orden.total = obtenerPagoFinal(orden.id).ToString() ;// 
+                    orden.totoalExtras = obtenerPagoFinal(orden.id)[1].ToString();
+                    orden.total = obtenerPagoFinal(orden.id)[0].ToString() ;// 
                     orden.pago = Int32.Parse(item["pago"].ToString());
                     ordenList.Add(orden);
                 }
@@ -121,14 +124,15 @@ namespace AppResta.View
             }
         }
 
-        public static double obtenerPagoFinal(int id)
+        public static double[] obtenerPagoFinal(int id)
         {
-            double total = 0.0;
+            double []total = new double[2];
 
             var client1 = new HttpClient();
 
-            //Console.WriteLine(("http://192.168.1.112/resta/admin/mysql/orden/index.php?op=ObtenerPrecioItems&idCart=" + id));
+           
             client1.BaseAddress = new Uri(("http://192.168.1.112/resta/admin/mysql/orden/index.php?op=ObtenerPrecioItems&idCart=" + id));
+           
             HttpResponseMessage response1 = client1.GetAsync(client1.BaseAddress).Result;
             if (response1.IsSuccessStatusCode)
             {
@@ -140,11 +144,47 @@ namespace AppResta.View
                 //userInfo = JsonConvert.DeserializeObject<List<Model.Categorias>>(content);
                 foreach (var item in jsonArray1)
                 {
-                    total += Double.Parse(item["precio"].ToString().Replace(",", "."));
+                    total[0] += Double.Parse(item["precio"].ToString().Replace(",", ".")) ;
+                    total[1] += Double.Parse(ExtrasItem(item["item"].ToString())+"");
                 }
+
+                
             }
             return total;
         }
+
+        public static double ExtrasItem(string id)
+        {
+            double totoal = 0.0;
+            var client = new HttpClient();
+
+            client.BaseAddress = new Uri("http://192.168.1.112/resta/admin/mysql/platillo/index.php?op=obtenerExtrasAsItem&iditem=" + id);
+            
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                var content = response.Content.ReadAsStringAsync().Result;
+                string json = content.ToString();
+                if (json.Equals("[]"))
+                {
+                    totoal = 0.0;
+                   
+                }
+                else
+                {
+                    var jsonArray = JArray.Parse(json.ToString());
+
+                    foreach (var item in jsonArray)
+                    {
+                        totoal += Double.Parse(item["precio"].ToString().Replace(",", "."));
+                    }
+                   
+                }
+                
+            }
+            return totoal;
+        }
+
         public static string ObtenerNumeorDeItems(int id, int opc)
         {
             string cantidad = "";
@@ -172,7 +212,7 @@ namespace AppResta.View
         public static string ObtenerNumeorDeItemsPlatillos(int id,int opc)
         {
             string cantidad = "";
-
+            
             var client1 = new HttpClient();
 
             client1.BaseAddress = new Uri(("http://192.168.1.112/resta/admin/mysql/orden/index.php?op=ObtenerNumeorDeItemsPlatillos&idCart=" + id+"&opc="+opc));
@@ -195,9 +235,33 @@ namespace AppResta.View
 
         private void RefreshOrdenes_Refreshing(object sender, EventArgs e)
         {
-            Task.Delay(700);
+            Task.Delay(100);
             init();
+            //VIVRACION
+           /* try
+            {
+                // Use default vibration length
+                Vibration.Vibrate();
+
+                // Or use specified time
+                var duration = TimeSpan.FromSeconds(1);
+                Vibration.Vibrate(duration);
+            }
+            catch (FeatureNotSupportedException ex)
+            {
+                // Feature not supported on device
+            }
+            catch (Exception ex)
+            {
+                // Other error has occurred.
+            }*/
             RefreshOrdenes.IsRefreshing = false;
+        }
+
+        protected override bool OnBackButtonPressed()
+        {
+            base.OnBackButtonPressed();
+            return true;
         }
     }
 }

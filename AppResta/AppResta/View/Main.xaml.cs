@@ -30,7 +30,7 @@ namespace AppResta.View
             mesaglb = mesa;
             if (_Token == false)
             {
-                Navigation.PushAsync(new Login());
+                Navigation.PushAsync(new Login(false));
                 //Console.WriteLine("No token");
             }
             else
@@ -242,13 +242,18 @@ namespace AppResta.View
                     total += Double.Parse(item["precio"].ToString().Replace(",", "."));
                 }
             }*/
-            if (IdOrden(mesaglb)[1] == "2" || IdOrden(mesaglb)[1] == "1")
+            int ord = Int32.Parse(IdOrden(mesaglb)[1]);
+            string idO = IdOrden(mesaglb)[0];
+            Console.WriteLine("Ordenar butno"+IdOrden(mesaglb)[1]);
+            if (ord == 1 || ord == 2)
             {
                 PopupNavigation.Instance.PushAsync(new PopError("LE ORDEN SE ESTA PREPARANDO"));
-            }else if (total != "0")
+            }else if (ord == 0 || ord == 3)
             {
+
                 var client = new HttpClient();
-                client.BaseAddress = new Uri(("http://192.168.1.112/resta/admin/mysql/orden/index.php?op=obtenerEstadoCart&idOrden=" + ordenID));
+                client.BaseAddress = new Uri("http://192.168.1.112/resta/admin/mysql/orden/index.php?op=obtenerEstadoCart&idOrden=" + mesaglb);
+               // Console.WriteLine("http://192.168.1.112/resta/admin/mysql/orden/index.php?op=obtenerEstadoCart&idOrden=" + mesaglb);
                 HttpResponseMessage response = client.GetAsync(client.BaseAddress).Result;
                 if (response.IsSuccessStatusCode)
                 {
@@ -256,19 +261,21 @@ namespace AppResta.View
                     string json = content.ToString();
 
                     var jsonArray = JArray.Parse(json.ToString());
-
+                    var h = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss");
+                    Console.WriteLine(h);
                     //userInfo = JsonConvert.DeserializeObject<List<Model.Categorias>>(content);
                     foreach (var item in jsonArray)
                     {
+
                         if (item["estado"].Equals("3"))
                         {
-                            GET_DATOS("http://192.168.1.112/resta/admin/mysql/orden/index.php?op=updateEstadoOrdenMesas&estado=0&id=" + ordenID + "&total=" + total);
+                            GET_DATOS("http://192.168.1.112/resta/admin/mysql/orden/index.php?op=updateEstadoOrdenMesas&estado=0&id=" + idO + "&total=" + total+"&fecha="+h.Replace(" ","-"));
                             Navigation.PushAsync(new View.Ordenes(this), false);
                             break;
                         }
                         else
                         {
-                            GET_DATOS("http://192.168.1.112/resta/admin/mysql/orden/index.php?op=updateEstadoOrdenMesas&estado=1&id=" + ordenID + "&total=" + total);
+                            GET_DATOS("http://192.168.1.112/resta/admin/mysql/orden/index.php?op=updateEstadoOrdenMesas&estado=1&id=" + idO + "&total=" + total + "&fecha=" + h.Replace(" ", "-"));
                             Navigation.PushAsync(new View.Ordenes(this), false);
                             break;
                         }

@@ -16,10 +16,13 @@ namespace AppResta.View
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class Login : ContentPage
     {
-         public Login()
+        bool internet;
+         public Login(bool interent)
         {
+            this.internet = interent;
             InitializeComponent();
-            BindingContext = new ViewModel.LoginViewModel(Navigation);
-        }  
+            BindingContext = new ViewModel.LoginViewModel(Navigation, internet);
+        }
+        
     }
 }

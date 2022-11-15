@@ -35,15 +35,19 @@ namespace AppResta.View
                 var content = response.Content.ReadAsStringAsync().Result;
                 string json = content.ToString();
                 var jsonArray = JArray.Parse(json.ToString());
-                // Console.WriteLine(jsonArray);
+                //Console.WriteLine(jsonArray);
                 foreach (var item in jsonArray)
                 {
                     aux = bebidas(item["id"].ToString(), item["mesa"].ToString());
-                    if (aux[0] == null)
+
+                    if (aux[0] != null)
                     {
+                        //Console.WriteLine(item["estado"].ToString());
                         orden = new Model.Ordenes();
-                        if (item["estado"].ToString() != "3")
+                        Console.WriteLine("Estado ORDEN = " + item["estado"]+" ---"+ aux[0]);
+                        if (Int32.Parse(item["estado"] + "") == 2 || Int32.Parse(item["estado"] + "") == 1 || Int32.Parse(item["estado"] + "") == 0)
                         {
+                            
                             orden.id = Int32.Parse(item["id"].ToString());
                             orden.fecha_orden = item["fecha_orden"].ToString();
                             orden.fecha_start = item["fecha_start"].ToString();
@@ -78,7 +82,8 @@ namespace AppResta.View
         {
             string[] ordenList = new string[3];
             var client = new HttpClient();
-            client.BaseAddress = new Uri("http://192.168.1.112/resta/admin/mysql/orden/index.php?op=obtenerCarritoBebidas&idOrden=" + id + "&mesa=" + mesa);
+            client.BaseAddress = new Uri("http://192.168.1.112/resta/admin/mysql/orden/index.php?op=obtenerCarritoBebidas&idOrden=" + id + "&mesa=" + mesa+"&opc="+2);
+           // Console.WriteLine("http://192.168.1.112/resta/admin/mysql/orden/index.php?op=obtenerCarritoBebidas&idOrden=" + id + "&mesa=" + mesa + "&opc=" + 2);
             HttpResponseMessage response = client.GetAsync(client.BaseAddress).Result;
             if (response.IsSuccessStatusCode)
             {
@@ -164,6 +169,18 @@ namespace AppResta.View
             cocinaListView.ItemsSource = null;
             cocinaListView.ItemsSource = Ordene();
             Refresh_Ordenes.IsRefreshing = false;
+        }
+
+        
+        protected override bool OnBackButtonPressed()
+        {
+            base.OnBackButtonPressed();
+            return true;
+        }
+
+        private void exit_Clicked(object sender, EventArgs e)
+        {
+            Navigation.PopAsync(false);
         }
     }
 }

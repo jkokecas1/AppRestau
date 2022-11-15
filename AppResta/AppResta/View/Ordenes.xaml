@@ -70,7 +70,7 @@
 
 
 
-                        <Grid Grid.Row="0" Grid.Column="0" RowSpacing="0" ColumnSpacing="0" BackgroundColor="White" Padding="20,10,10,10">
+                        <Grid Grid.Row="0" Grid.Column="0" RowSpacing="0" ColumnSpacing="0" BackgroundColor="White" Padding="5,10,10,5">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
@@ -82,18 +82,19 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
 
 
                             </Grid.ColumnDefinitions>
-                            <Label Text="# ORDEN" Grid.Row="0" Grid.Column="0" TextColor="Black"/>
-                            <Label Text="MESA" Grid.Row="0" Grid.Column="1" TextColor="Black"/>
-                            <Label Text="ORDEN TOMADA" Grid.Row="0" Grid.Column="2" TextColor="Black"/>
-                            <Label Text="HORA INICIADA" Grid.Row="0" Grid.Column="3" TextColor="Black"/>
-                            <Label Text="HORA ESTIMADA" Grid.Row="0" Grid.Column="4" TextColor="Black"/>
-                            <Label Text="ESTADO" Grid.Row="0" Grid.Column="5" TextColor="Black"/>
-                            <Label Text="PLATILLOS" Grid.Row="0" Grid.Column="6" TextColor="Black"/>
-                            <Label Text="BEBIDAS" Grid.Row="0" Grid.Column="7" TextColor="Black"/>
-                            
+                            <Label Text="# ORDEN" Grid.Row="0" Grid.Column="0" TextColor="Black" HorizontalOptions="Center" FontAttributes="Bold" FontSize="22"/>
+                            <Label Text="MESA" Grid.Row="0" Grid.Column="1" TextColor="Black" HorizontalOptions="Center" FontAttributes="Bold" FontSize="22"/>
+                            <Label Text="ORDEN TOMADA" Grid.Row="0" Grid.Column="2" TextColor="Black" HorizontalOptions="Center" FontAttributes="Bold" FontSize="22"/>
+                            <Label Text="HORA INICIADA" Grid.Row="0" Grid.Column="3" TextColor="Black" HorizontalOptions="Center" FontAttributes="Bold" FontSize="22"/>
+                            <Label Text="HORA ESTIMADA" Grid.Row="0" Grid.Column="4" TextColor="Black" HorizontalOptions="Center" FontAttributes="Bold" FontSize="22"/>
+                            <Label Text="ESTADO" Grid.Row="0" Grid.Column="5" TextColor="Black" HorizontalOptions="Center" FontAttributes="Bold" FontSize="22"/>
+                            <Label Text="PLATILLOS" Grid.Row="0" Grid.Column="6" TextColor="Black" HorizontalOptions="Center" FontAttributes="Bold" FontSize="22"/>
+                            <Label Text="BEBIDAS" Grid.Row="0" Grid.Column="7" TextColor="Black" HorizontalOptions="Center" FontAttributes="Bold" FontSize="22"/>
+
                         </Grid>
 
                         <Grid Grid.Row="1" Grid.Column="0" BackgroundColor="WhiteSmoke" >
@@ -130,11 +131,10 @@
                                                             <ColumnDefinition Width="*"/>
                                                             <ColumnDefinition Width="*"/>
                                                             <ColumnDefinition Width="*"/>
+                                                            <ColumnDefinition Width="*"/>
 
-                                                            <ColumnDefinition Width="*"/>
-                                                            <ColumnDefinition Width="*"/>
                                                         </Grid.ColumnDefinitions>
-                                                       
+
                                                         <StackLayout  Grid.Column="0" Grid.Row="0"  HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical" Padding="0,10,0,0">
                                                             <Label Text="{Binding id}" TextColor="Black" FontSize="22"/>
                                                         </StackLayout>

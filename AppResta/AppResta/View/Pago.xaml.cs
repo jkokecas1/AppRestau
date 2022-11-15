@@ -31,6 +31,8 @@ namespace AppResta.View
         {
             Efectivo.Text = "0";
             Tarjeta.Text = "0";
+            TarjetaGrild.IsVisible = false;
+            tiketOrden.Text = "TICKET # :" + id;
             foreach (Model.Ordenes orden in orden)
             {
                 if (orden.id == id)
@@ -41,11 +43,13 @@ namespace AppResta.View
                     Ordenes.total = orden.total;
                     Ordenes.mesa = orden.mesa;
                     Ordenes.pago = orden.pago;
+                   
                     Ordenes.fecha_cerada = orden.fecha_cerada;
                     Ordenes.fecha_orden = orden.fecha_orden; 
 
                     total.Text = orden.total;
-                    Subtotal.Text =  orden.total;//( Int32.Parse(orden.total) + Int32.Parse(propina.Text) + Int32.Parse(Tarjeta.Text) + Int32.Parse(Efectivo.Text)) + "";   
+                    extras.Text = orden.totoalExtras;
+                    Subtotal.Text =( Double.Parse(orden.total) + Double.Parse(orden.totoalExtras))+"";//( Int32.Parse(orden.total) + Int32.Parse(propina.Text) + Int32.Parse(Tarjeta.Text) + Int32.Parse(Efectivo.Text)) + "";   
                 }
             }
 
@@ -62,7 +66,7 @@ namespace AppResta.View
                // Console.WriteLine();
                 propina.Text = ((Double.Parse(Ordenes.total) * Double.Parse(p + "")) / 100) + "";
                 total.Text = Ordenes.total;
-                Subtotal.Text = Double.Parse(propina.Text.ToString()) + Double.Parse(total.Text.ToString()) + "";
+                Subtotal.Text = Double.Parse(propina.Text.ToString()) + Double.Parse(total.Text.ToString()) + Double.Parse(extras.Text.ToString()) + "";
                 if (radioTarjeta.IsChecked)
                     Tarjeta.Text = Subtotal.Text;
 
@@ -319,6 +323,11 @@ namespace AppResta.View
             propina20.BorderWidth = 3;
 
             calcularPropona(20);
+        }
+
+        private void Button_Clicked(object sender, EventArgs e)
+        {
+            PopupNavigation.Instance.PushAsync(new Ticket(orden,id));
         }
     }
 }

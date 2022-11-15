@@ -15,18 +15,31 @@ namespace AppResta.View
     public partial class Mesa : ContentPage
     {
         string nomb = "";
-       
-        public Mesa(Model.Empleado empleado = null)
+        bool internet;
+        public Mesa(Model.Empleado empleado = null, bool interent= false)
         {
-
+            this.internet = interent;
             InitializeComponent();
             BindingContext = new ViewModel.MesaViewModel(Navigation);
             nomb = empleado.nombre;
             nombreEmpl.Text = "Bienvenido: "+empleado.nombre;
             puestoEmpl.Text = empleado.puesto;
-            mesasListView.ItemsSource = Mesas();
+
+            init();
+            
            
-            Navigation.RemovePage(new Login());
+            //Navigation.RemovePage(new Login());
+        }
+
+        public async void init() {
+            //List<Model.Mesas> mesas = await App.Database.GetMesaAsync();
+
+            if (internet)
+            {
+                //mesasListView.ItemsSource = mesas;
+                mesasListView.ItemsSource = Mesas();
+            }
+
         }
 
         private void RefreshMesas_Refreshing(object sender, EventArgs e)
@@ -149,6 +162,11 @@ namespace AppResta.View
             return array;
         }
 
-       
+        protected override bool OnBackButtonPressed()
+        {
+            base.OnBackButtonPressed();
+            return true;
+        }
+
     }
 }

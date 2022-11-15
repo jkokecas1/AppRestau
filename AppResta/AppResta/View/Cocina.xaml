@@ -2,7 +2,8 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AppResta.View.Cocina"
-             NavigationPage.HasNavigationBar="False">
+             NavigationPage.HasNavigationBar="False"
+             >
     <ContentPage.Content>
         <Grid  RowSpacing="0" ColumnSpacing="0">
             <Grid.RowDefinitions>
@@ -31,7 +32,7 @@
 
                     <Image Source="klassylogo.png"  Grid.Row="0" Grid.Column="0"></Image>
                     <Label x:Name="nombreEmpl" Text="COCINA" Grid.Row="0" Grid.Column="1"  FontSize="20" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center"></Label>
-                    <Button Text="SALIR"   Grid.Row="0" Grid.Column="2" HorizontalOptions="End" CornerRadius="0" BackgroundColor="Red" TextColor="#FFF"></Button>
+                    <Button Text="SALIR" x:Name="exit" Clicked="exit_Clicked" Grid.Row="0" Grid.Column="2" HorizontalOptions="End" CornerRadius="0" BackgroundColor="Red" TextColor="#FFF"></Button>
                 </Grid>
             </Grid>
 
@@ -59,7 +60,7 @@
                                 </CollectionView.ItemsLayout>
                                 <CollectionView.ItemTemplate>
                                     <DataTemplate>
-                                        <Grid BackgroundColor="Orange" Padding="5">
+                                        <Grid Padding="5">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="*" />
                                             </Grid.ColumnDefinitions>

@@ -71,8 +71,7 @@
             <Grid Grid.Row="2" Grid.Column="0" Margin="10,0,0,0">
                 <Frame CornerRadius="5" Padding="0,0,0,0">
 
-                    <Grid RowSpacing="0" Grid.Row="0" Grid.Column="0"
-                      ColumnSpacing="0">
+                        <Grid RowSpacing="0" Grid.Row="0" Grid.Column="0" ColumnSpacing="0">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="45"/>
                                 <RowDefinition Height="*"/>
@@ -84,19 +83,23 @@
 
 
                         <Grid BackgroundColor="WhiteSmoke" Grid.Row="0" Grid.Column="0" Padding="20,10,40,0">
-                                <Label Grid.Row="0" Grid.Column="0" Text="Nombre" TextColor="Black"  FontSize="Body"/>
-                                <Label Grid.Row="0" Grid.Column="1" HorizontalOptions="End" Text="Cantidad" TextColor="Black"  FontSize="Body"/>
-                                <Label Grid.Row="0" Grid.Column="2" HorizontalOptions="End" Text="Precio" TextColor="Black" FontSize="Body"/>
-                                <Label Grid.Row="0" Grid.Column="3" HorizontalOptions="End" Text="Total" TextColor="Black" FontSize="Body"/>
-                            </Grid>
+                            <Label Grid.Row="0" Grid.Column="0" HorizontalOptions="Start" Text="Cantidad" TextColor="Black" FontSize="Body"/>
+                            <Label Grid.Row="0" Grid.Column="1" HorizontalOptions="Start" Text="Nombre" TextColor="Black"  FontSize="Body"/>
+                            <Label Grid.Row="0" Grid.Column="2" HorizontalOptions="Start" Text="Precio" TextColor="Black" FontSize="Body"/>
+                            <!--
+                            <Label Grid.Row="0" Grid.Column="3" HorizontalOptions="Center" Text="Cantidad extras" TextColor="Black" FontSize="Body"/>
+                            <Label Grid.Row="0" Grid.Column="4" HorizontalOptions="Center" Text="Precio extras" TextColor="Black" FontSize="Body"/>
+                            -->
+                            <Label Grid.Row="0" Grid.Column="3" HorizontalOptions="Start" Text="Total" TextColor="Black" FontSize="Body"/>
+                        </Grid>
 
                             <!---LIST  VIEW-->
-                        <Grid Grid.Row="1" Grid.Column="0" >
+                        <Grid Grid.Row="1" Grid.Column="0">
                             <RefreshView x:Name="RefreshCart" Refreshing="RefreshCart_Refreshing">
                                 <ListView BackgroundColor="WhiteSmoke" x:Name="test2ListView" ItemSelected="SelectItem" >
-                                    <ListView.ItemTemplate >
-                                        <DataTemplate  >
-                                            <ViewCell  >
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <ViewCell>
                                                 <!--<ViewCell.ContextActions>
                                                 <MenuItem Clicked="MenuItem_Clicked"
                                                 CommandParameter="{Binding .}"
@@ -125,19 +128,27 @@
                                                         </SwipeItems>
                                                     </SwipeView.RightItems>
                                                     <Grid Padding="20,0,0,0" BackgroundColor="WhiteSmoke">
-                                                        <StackLayout  Grid.Column="0" Grid.Row="0" VerticalOptions="Center" Orientation="Vertical" BackgroundColor="WhiteSmoke">
-                                                            <Label  Text="{Binding platillo}" TextColor="Black" FontSize="15"/>
+
+                                                        <StackLayout Grid.Column="0" Grid.Row="0"   VerticalOptions="Center" Orientation="Vertical" BackgroundColor="WhiteSmoke">
+                                                            <Label Text="{Binding cantidad }"  TextColor="Black" FontSize="15"/>
                                                         </StackLayout>
-                                                        <StackLayout  Grid.Column="1" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical">
-                                                            <Label Text="{Binding cantidad}" TextColor="Black" FontSize="15"/>
+                                                        <StackLayout Grid.Column="1" Grid.Row="0" VerticalOptions="Center" Orientation="Vertical">
+                                                            <Label Text="{Binding platillo}" TextColor="Black" FontSize="15"/>
                                                         </StackLayout>
-                                                        <StackLayout  Grid.Column="2" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical">
+                                                        <StackLayout   Grid.Column="2" Grid.Row="0"  VerticalOptions="Center" Orientation="Vertical">
                                                             <Label Text="{Binding precio}" TextColor="Black" FontSize="15"/>
                                                         </StackLayout>
+                                                        <!--
                                                         <StackLayout  Grid.Column="3" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical">
+                                                            <Label Text="{Binding precio}" TextColor="Black" FontSize="15"/>
+                                                        </StackLayout>
+                                                        <StackLayout  Grid.Column="4" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical">
+                                                            <Label Text="{Binding precio}" TextColor="Black" FontSize="15"/>
+                                                        </StackLayout> -->
+                                                        <StackLayout  Grid.Column="3" Grid.Row="0"  VerticalOptions="Center" Orientation="Vertical">
                                                             <Label Text="{Binding total}" TextColor="Black" FontSize="15"/>
                                                         </StackLayout>
-                                                        <StackLayout Grid.Column="0" Grid.Row="1" HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical">
+                                                        <StackLayout Grid.Column="0" Grid.Row="1" VerticalOptions="Center" Orientation="Vertical">
                                                             <Label Text="Nombre" IsVisible="{Binding visible}" ></Label>
                                                         </StackLayout>
                                                     </Grid>

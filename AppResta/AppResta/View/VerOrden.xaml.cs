@@ -49,6 +49,9 @@ namespace AppResta.View
 
                     btnIniciar.IsEnabled = false;
                     horas.IsEnabled = false;
+
+                    btnIniciar.IsVisible = false;
+                    horas.IsVisible = false;
                 }
             }
             /*if (ordenes.fecha_start != null)
@@ -98,7 +101,7 @@ namespace AppResta.View
             var client = new HttpClient();
 
             client.BaseAddress = new Uri("http://192.168.1.112/resta/admin/mysql/platillo/index.php?op=obtenerExtrasAsItem&iditem=" + c.idItem);
-
+            //Console.WriteLine("http://192.168.1.112/resta/admin/mysql/platillo/index.php?op=obtenerExtrasAsItem&iditem=" + c.idItem);
             HttpResponseMessage response = client.GetAsync(client.BaseAddress).Result;
             if (response.IsSuccessStatusCode)
             {
@@ -127,9 +130,11 @@ namespace AppResta.View
         {
             var client = new HttpClient();
 
-            client.BaseAddress = new Uri("http://192.168.1.112/resta/admin/mysql/orden/index.php?op=obtenerCarrito&idOrden=" + id + "&mesa=" + mesa);
-
+            //client.BaseAddress = new Uri("http://192.168.1.112/resta/admin/mysql/orden/index.php?op=obtenerCarrito&idOrden=" + id + "&mesa=" + mesa);
+            client.BaseAddress = new Uri("http://192.168.1.112/resta/admin/mysql/orden/index.php?op=obtenerCarritoBebidas&idOrden=" + id + "&mesa=" + mesa+"&opc="+2);
+           // Console.WriteLine("http://192.168.1.112/resta/admin/mysql/orden/index.php?op=obtenerCarritoBebidas&idOrden=" + id + "&mesa=" + mesa + "&opc=" + 2);
             HttpResponseMessage response = client.GetAsync(client.BaseAddress).Result;
+            
             if (response.IsSuccessStatusCode)
             {
                 var content = response.Content.ReadAsStringAsync().Result;
@@ -189,7 +194,8 @@ namespace AppResta.View
                 HoraEstimadaOrden.Text = h.Remove(0, 10).Replace(" ", "").Replace("PM", "");
                 btnIniciar.IsEnabled = false;
                 horas.IsEnabled = false;
-
+                btnIniciar.IsVisible = false;
+                horas.IsVisible = false;
                 ////Cambiar el estado de la orden // updateOrden
                  string cadena = "http://192.168.1.112/resta/admin/mysql/Orden/index.php?op=updateOrden&estado=2" + "&fecha_inicio=" + fecha.Replace("/", "-") + "-"+ HoraInicioOrden.Text.Replace(" ", "-") + "&fecha_estimada=" + fecha.Replace("/", "-") + "-" + HoraEstimadaOrden.Text + "&idCart=" + ordenes.id;
                 Console.WriteLine(cadena);
@@ -220,9 +226,7 @@ namespace AppResta.View
                 HttpResponseMessage respons2e = clien2t.GetAsync(clien2t.BaseAddress).Result;
                 if (respons2e.IsSuccessStatusCode)
                 {
-
-
-                    // Rg.Plugins.Popup.Services.PopupNavigation.Instance.PopAsync();
+                    // 
                 }
                 else
                 {
@@ -230,23 +234,72 @@ namespace AppResta.View
 
                 }
             }
-
-            string cadena = "http://192.168.1.112/resta/admin/mysql/Orden/index.php?op=updateEstadoOrden&idItem=" + ordenes.id;
-            // Console.WriteLine(cadena);  
-            var client = new HttpClient();
-            client.BaseAddress = new Uri(cadena);
-            HttpResponseMessage response = client.GetAsync(client.BaseAddress).Result;
-            if (response.IsSuccessStatusCode)
+            int bebidas = Int32.Parse(ObtenerNumeorDeItems(Int32.Parse(ordenes.id+""), 1));
+            int platillos = Int32.Parse(ObtenerNumeorDeItems(Int32.Parse(ordenes.id+""), 2));
+            int bebidas2 = Int32.Parse(ObtenerNumeorDeItemsPlatillos(Int32.Parse(ordenes.id + ""), 1));
+            int platillos2 = Int32.Parse(ObtenerNumeorDeItemsPlatillos(Int32.Parse(ordenes.id + ""), 2));
+            Console.WriteLine("Platillos:" + bebidas +" = "+ bebidas2);
+            Console.WriteLine("BEBIDAS:" + platillos + " = " + platillos2);
+            var h = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss");
+            string cadena0 = "";
+            if (bebidas == bebidas2 && platillos == platillos2)
             {
-                collection.ItemsSource = null;
-                collection.ItemsSource = Cocina.Ordene();
-                Rg.Plugins.Popup.Services.PopupNavigation.Instance.PopAsync();
+                cadena0 = "http://192.168.1.112/resta/admin/mysql/Orden/index.php?op=updateOrden&estado=3" + "&fecha_inicio=" + h.Replace("/", "-").Replace(" ", "-") + "&fecha_estimada=" + h.Replace("/", "-").Replace(" ", "-") + "&idCart=" + ordenes.id;
+                popAgregar(cadena0);
+                string cadena = "http://192.168.1.112/resta/admin/mysql/Orden/index.php?op=updateEstadoOrden&idItem=" + ordenes.id;
+                popAgregar(cadena);
             }
-            else
-            {
-                DisplayAlert("Error", "Fallo el registro \n Intentalo de nuevo " + cadena, "OK");
+            collection.ItemsSource = null;
+            collection.ItemsSource = Cocina.Ordene();
+            Rg.Plugins.Popup.Services.PopupNavigation.Instance.PopAsync();
+           
+        }
+        public static string ObtenerNumeorDeItemsPlatillos(int id, int opc)
+        {
+            string cantidad = "";
 
+            var client1 = new HttpClient();
+
+            client1.BaseAddress = new Uri(("http://192.168.1.112/resta/admin/mysql/orden/index.php?op=ObtenerNumeorDeItemsPlatillos&idCart=" + id + "&opc=" + opc));
+            HttpResponseMessage response1 = client1.GetAsync(client1.BaseAddress).Result;
+            if (response1.IsSuccessStatusCode)
+            {
+                var content1 = response1.Content.ReadAsStringAsync().Result;
+                string json1 = content1.ToString();
+
+                var jsonArray1 = JArray.Parse(json1.ToString());
+
+                //userInfo = JsonConvert.DeserializeObject<List<Model.Categorias>>(content);
+                foreach (var item in jsonArray1)
+                {
+                    cantidad = item["cantidad"].ToString();
+                }
             }
+            return cantidad;
+        }
+
+        public static string ObtenerNumeorDeItems(int id, int opc)
+        {
+            string cantidad = "";
+
+            var client1 = new HttpClient();
+
+            client1.BaseAddress = new Uri(("http://192.168.1.112/resta/admin/mysql/orden/index.php?op=ObtenerNumeorDeItems&idCart=" + id + "&opc=" + opc));
+            HttpResponseMessage response1 = client1.GetAsync(client1.BaseAddress).Result;
+            if (response1.IsSuccessStatusCode)
+            {
+                var content1 = response1.Content.ReadAsStringAsync().Result;
+                string json1 = content1.ToString();
+
+                var jsonArray1 = JArray.Parse(json1.ToString());
+
+                //userInfo = JsonConvert.DeserializeObject<List<Model.Categorias>>(content);
+                foreach (var item in jsonArray1)
+                {
+                    cantidad = item["cantidad"].ToString();
+                }
+            }
+            return cantidad;
         }
         void OnPickerSelectedIndexChanged(object sender, EventArgs e)
         {
