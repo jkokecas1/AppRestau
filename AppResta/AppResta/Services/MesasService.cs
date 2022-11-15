@@ -12,8 +12,6 @@ namespace AppResta.Services
         public static async void Mesas(bool band)
         {
             Model.Mesas mesa;
-
-            var mesas = new List<Model.Mesas>();
             var client = new HttpClient();
             
             if (band == true)

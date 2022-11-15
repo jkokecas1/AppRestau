@@ -12,6 +12,48 @@ namespace AppResta.Services
 {
     public class LoginService : iLoginRespository
     {
+
+
+        public static async void Empleados(bool band)
+        {
+            if (band == true)
+            {
+                var client = new HttpClient();
+                Model.Empleado empl;
+
+                List<Model.Empleado> datos = await App.Database.GetEmpleadoAsync();
+                //{"id":1,"nombre":"Joreg M","pin":"1112","puesto":"Cajero","email":"(871) 736-2020","celular":"Jorge@resta.mz","estatus":1}
+                client.BaseAddress = new Uri("http://192.168.1.112/resta/admin/mysql/empleados/index.php?op=obtenerEmpleados");
+                HttpResponseMessage response = client.GetAsync(client.BaseAddress).Result;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = response.Content.ReadAsStringAsync().Result;
+                    string json = content.ToString();
+                    var jsonArray = JArray.Parse(json.ToString());
+                    string[] array = new string[2];
+                    if (jsonArray.Count != datos.Count)
+                    {
+                        foreach (var item in jsonArray)
+                        {
+                            empl = new Model.Empleado();
+                            empl.id = Int32.Parse(item["id"].ToString());
+                            empl.nombre = item["nombre"].ToString();
+                            empl.pin = item["pin"].ToString();
+                            empl.puesto = item["puesto"].ToString();
+                            empl.email = item["email"].ToString();
+                            empl.celular = item["celular"].ToString();
+                            empl.estatus = Int32.Parse(item["estatus"].ToString());
+                            await App.Database.SaveEmpleadoAsync(empl);
+                        }
+                    }
+
+                }
+            }
+
+        }
+
+
         public List<Empleado> Login(string pins)
         {
             Model.Empleado usuario;
@@ -45,7 +87,7 @@ namespace AppResta.Services
                     usuario = new Model.Empleado();
 
                     //id":1,"nombre":"Joreg M","pin":"1112","puesto":"Cajero","email":"(871) 736-2020","celular":"Jorge@resta.mz","estatus":1}
-                 
+
                     usuario.id = Int32.Parse(item["id"].ToString());
                     usuario.nombre = item["nombre"].ToString();
                     usuario.pin = item["pin"].ToString();
@@ -66,11 +108,12 @@ namespace AppResta.Services
             {
                 return empelado;
             }
-            else {
+            else
+            {
                 return null;
             }
 
-               
-            }
+
         }
     }
+}
