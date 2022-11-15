@@ -20,6 +20,8 @@
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="PdfSharp.Xamarin.Forms" Version="1.0.0" />
+    <PackageReference Include="PdfSharpCore" Version="1.3.41" />
     <PackageReference Include="Plugin.LocalNotification" Version="10.0.2" />
     <PackageReference Include="Rg.Plugins.Popup" Version="2.1.0" />
     <PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
@@ -48,8 +50,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="View\PopError.xaml.cs">
-      <DependentUpon>PopError.xaml</DependentUpon>
+    <Compile Update="View\PopDialog\PopQuestion.xaml.cs">
+      <DependentUpon>PopQuestion.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
 </Project>
