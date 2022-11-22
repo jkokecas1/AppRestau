@@ -12,6 +12,7 @@ using AppResta.Services;
 using AppResta.Model;
 using System.ComponentModel;
 using System.Linq;
+using System.Net.Http;
 
 namespace AppResta.ViewModel
 {
@@ -22,18 +23,21 @@ namespace AppResta.ViewModel
         
 
         public event PropertyChangedEventHandler PropertyChanged;
-        #region VARIABLES
 
+        #region VARIABLES
         string _Pin;
         bool _IsInternet;
 
-       
+        List<Model.Mesas> mesas;
+        List<Model.Ordenes> ordenes;
+        List<Model.Ordenes> ordenesBar;
+        List<Model.Ordenes> ordenesCocina;
+
         #endregion
 
         #region CONSTRUCTOR
         public LoginViewModel(INavigation navigation, bool internet)
         {
-            
             _IsInternet = internet;
             Navigation = navigation;
             Num0Command = new Command(() => Pin += "0");
@@ -48,7 +52,10 @@ namespace AppResta.ViewModel
             Num9Command = new Command(() => Pin += "9");
             
             BorrarCommand = new Command(() => Pin = validarPIN());
-
+            mesas = Services.LoginService.Mesas();
+            ordenes = Services.OrdenesService.Ordene();
+            ordenesBar = Services.OrdenesService.OrdeneBar();
+            ordenesCocina = Services.OrdenesService.OrdeneCocina();
         }
         #endregion
 
@@ -112,6 +119,7 @@ namespace AppResta.ViewModel
         string nombre;
         public async Task IsExisteAcount()
         {
+
             if (Pin == null)
             {
                 await DisplayAlert("Error", "User not exist", "Ok");
@@ -145,25 +153,34 @@ namespace AppResta.ViewModel
                     }
                     
                 }
-               
+
                 if (emp.puesto == "Cajero")
                 {
-                   
+
                     //Cajero
-                    await Navigation.PushAsync(new Mesa(empleado: emp, interent: IsInternet), false);
+                    await Navigation.PushAsync(new Cajero(), false);
                 }
-                else if (emp.puesto == "Mesero") {
-                    
-                    await Navigation.PushAsync(new Mesa(empleado: emp,interent: IsInternet), false);
-                } else if (emp.puesto == "Cocinero") {
-                   
+                else if (emp.puesto == "Mesero")
+                {
+
+                    await Navigation.PushAsync(new Mesa(mesas, empleado: emp, interent: IsInternet), false);
+                }
+                else if (emp.puesto == "Cocinero")
+                {
+
                     //Cocinero
-                    await Navigation.PushAsync(new Cocina(), false);
-                } else if (emp.puesto == "Barra") {
-                    
+                    await Navigation.PushAsync(new Cocina(orden: ordenesCocina), false);
+                }
+                else if (emp.puesto == "Barra")
+                {
+
                     // Barra
-                    await Navigation.PushAsync(new Bar(), false);
-                    
+                    await Navigation.PushAsync(new Bar(orden: ordenesBar), false);
+
+                }
+                else {
+                    // Barra
+                    await Navigation.PushAsync(new PRUEBAS(), false);
                 }
 
                 Pin = "";

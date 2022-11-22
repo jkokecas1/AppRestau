@@ -102,11 +102,11 @@ namespace AppResta.View
             int index = 0;
             int idplatillo = platillos.id;
             int cantidad = Int32.Parse(valCantidad.Text);
-            var hora = DateTime.Now.ToString("yyyy-dd-yy HH:MM:ss");
+            var hora = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss").Replace(" ", "-");
             var fecha = DateTime.Now.ToString("MM-dd-yy");
             string comentario = "SIN COMENTARIOS";
 
-
+            Console.WriteLine("Fecha: " + hora);
             int extra = 0;
             if (comentTxt.Text != null)
             {

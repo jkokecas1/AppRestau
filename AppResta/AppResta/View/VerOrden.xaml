@@ -55,7 +55,7 @@ x:Class="AppResta.View.VerOrden">
 
             <CollectionView SelectionMode="None"  x:Name="ordenlist">
                 <CollectionView.ItemsLayout>
-                    <GridItemsLayout Orientation="Vertical" Span="1"/>
+                    <GridItemsLayout Orientation="Vertical" Span="3"/>
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
@@ -85,9 +85,6 @@ x:Class="AppResta.View.VerOrden">
                                     </Grid.ColumnDefinitions>
 
 
-                                    <Grid Grid.Row="0"  Grid.Column="1" Grid.RowSpan="2"  HorizontalOptions="End" VerticalOptions="Start" BackgroundColor="White">
-                                        <CheckBox Color="Green"/>
-                                    </Grid>
 
                                     <Grid Grid.Row="0"  Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="White" HorizontalOptions="Start" Padding="0,0,0,0">
                                         <Label Text="{Binding cantidad}" TextColor="Black" FontAttributes="Bold" FontSize="20"/>

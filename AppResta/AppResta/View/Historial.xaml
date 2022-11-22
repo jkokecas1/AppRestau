@@ -31,9 +31,9 @@
                 <Image Source="klassylogo.png" VerticalOptions="Start" Grid.Row="0" Grid.Column="0" Margin="5"></Image>
 
                 <Button Text="Ordenes" Command="{Binding Ordencommand}" Grid.Row="0" Grid.Column="2" CornerRadius="0" BackgroundColor="DimGray" TextColor="#FFF"></Button>
-                <Button Text="Historial" Command="{Binding Historialcommand}" Grid.Row="0" Grid.Column="3" CornerRadius="0" BackgroundColor="LightGray" TextColor="Black"></Button>
+                <Button Text="Historial"  Grid.Row="0" Grid.Column="3" CornerRadius="0" BackgroundColor="LightGray" TextColor="Black"></Button>
                 <Label x:Name="nombreEmpl" Grid.Row="0" Grid.Column="4"  FontSize="20" TextColor="Black"></Label>
-                <Button Text="SALIR"  Command="{Binding NavLoginCommand}" Grid.Row="0" Grid.Column="5" Grid.ColumnSpan="3" HorizontalOptions="End" CornerRadius="0" BackgroundColor="Red" TextColor="#FFF"></Button>
+                <Button Text="SALIR"  Clicked="BtnSalir_Clicked" Grid.Row="0" Grid.Column="5" Grid.ColumnSpan="3" HorizontalOptions="End" CornerRadius="0" BackgroundColor="Red" TextColor="#FFF"></Button>
             </Grid>
 
 
@@ -76,7 +76,7 @@
 
 
 
-                    <ListView Grid.Row="1" Grid.Column="0" x:Name="ordenesListView" ItemSelected="select_Item" BackgroundColor="WhiteSmoke">
+                    <ListView Grid.Row="1" Grid.Column="0" x:Name="ordenesListView" ItemsSource="{Binding History}" ItemSelected="select_Item" BackgroundColor="WhiteSmoke">
                         <ListView.ItemTemplate >
                             <DataTemplate  >
                                 <ViewCell >
@@ -169,10 +169,6 @@
                                     <RowDefinition Height="250"/>
                                     <RowDefinition Height="2"/>
                                     <RowDefinition Height="100"/>
-
-
-
-
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
@@ -180,8 +176,30 @@
 
 
                                 <Frame x:Name="linea2" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="LightGray" IsVisible="false"></Frame>
-                                <ListView x:Name="productos" IsVisible="false" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="WhiteSmoke">
+                                <ListView x:Name="productos" IsVisible="false" ItemsSource="{Binding Items}"  Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="WhiteSmoke">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <ViewCell>
+                                                <Grid Padding="20,0,0,0" BackgroundColor="WhiteSmoke">
 
+                                                    <StackLayout Grid.Column="0" Grid.Row="0"   VerticalOptions="Center" Orientation="Vertical" BackgroundColor="WhiteSmoke">
+                                                        <Label Text="{Binding cantidad}" TextColor="Black" FontSize="15"/>
+                                                    </StackLayout>
+                                                    <StackLayout Grid.Column="1" Grid.Row="0" VerticalOptions="Center" Orientation="Vertical">
+                                                        <Label Text="{Binding platillo }"  TextColor="Black" FontSize="15"/>
+                                                    </StackLayout>
+                                                    <StackLayout   Grid.Column="2" Grid.Row="0"  VerticalOptions="Center" Orientation="Vertical">
+                                                        <Label Text="{Binding precio}" TextColor="Black" FontSize="15"/>
+                                                    </StackLayout>
+                                                    <StackLayout  Grid.Column="3" Grid.Row="0"  VerticalOptions="Center" Orientation="Vertical">
+                                                        <Label Text="{Binding comentario}" TextColor="Black" FontSize="15"/>
+                                                    </StackLayout>
+
+                                                </Grid>
+
+                                            </ViewCell>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
                                 </ListView>
 
                                 <Frame x:Name="linea1" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="LightGray" IsVisible="false"></Frame>

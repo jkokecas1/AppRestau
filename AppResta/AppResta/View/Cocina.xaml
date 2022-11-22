@@ -3,9 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AppResta.View.Cocina"
              NavigationPage.HasNavigationBar="False"
+            xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
              >
-    <ContentPage.Content>
-        <Grid  RowSpacing="0" ColumnSpacing="0">
+    <StackLayout>
+
+        <Grid >
             <Grid.RowDefinitions>
                 <RowDefinition Height="60"/>
                 <RowDefinition Height="*"/>
@@ -31,80 +33,124 @@
                     </Grid.ColumnDefinitions>
 
                     <Image Source="klassylogo.png"  Grid.Row="0" Grid.Column="0"></Image>
-                    <Label x:Name="nombreEmpl" Text="COCINA" Grid.Row="0" Grid.Column="1"  FontSize="20" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center"></Label>
-                    <Button Text="SALIR" x:Name="exit" Clicked="exit_Clicked" Grid.Row="0" Grid.Column="2" HorizontalOptions="End" CornerRadius="0" BackgroundColor="Red" TextColor="#FFF"></Button>
+                    <Label Text="COCINA" Grid.Row="0" Grid.Column="1"  FontSize="20" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center"></Label>
+                    <Button Text="SALIR" Clicked="exit_Clicked"  Grid.Row="0" Grid.Column="2" HorizontalOptions="End" CornerRadius="0" BackgroundColor="Red" TextColor="#FFFF"></Button>
                 </Grid>
             </Grid>
 
-
-            <Grid Grid.Row="1" Grid.Column="0" BackgroundColor="LightGray" Padding="10,10,10,10" ColumnSpacing="5">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-
-                <Frame Grid.Row="0" Grid.Column="0" Padding="30,30,30,30" CornerRadius="15">
-
-
-
-                    <Grid>
-
-
-
-                        <RefreshView Grid.Row="0" Grid.Column="0" x:Name="Refresh_Ordenes" Refreshing="RefreshView_Refreshing">
-                            <CollectionView SelectionMode="Single" x:Name="cocinaListView" SelectionChanged="cocinaListView_SelectionChanged"  >
-                                <CollectionView.ItemsLayout>
-                                    <GridItemsLayout Orientation="Vertical" Span="3"/>
-                                </CollectionView.ItemsLayout>
-                                <CollectionView.ItemTemplate>
-                                    <DataTemplate>
-                                        <Grid Padding="5">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="*" />
-                                            </Grid.ColumnDefinitions>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="110"/>
-                                            </Grid.RowDefinitions>
-                                            <Frame HasShadow="True" Padding="2" CornerRadius="10">
-                                                <Grid BackgroundColor="White" RowSpacing="0" Padding="3,15,3,3">
-                                                    <Grid.RowDefinitions >
-                                                        <RowDefinition Height="30"/>
-                                                        <RowDefinition Height="30"/>
-                                                    </Grid.RowDefinitions>
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="*"/>
-                                                    </Grid.ColumnDefinitions>
-
-                                                    <Grid Grid.Row="0"  Grid.Column="0"  BackgroundColor="White" Padding="0,0,0,0">
-                                                        <Label Text="ORDEN #" HorizontalOptions="End" VerticalOptions="Center" FontSize="20" FontAttributes="Bold" TextColor="Black"/>
-                                                    </Grid>
-
-                                                    <Grid Grid.Row="0"  Grid.Column="1" BackgroundColor="White" HorizontalOptions="Start" Padding="0,0,0,0">
-                                                        <Label Text="{Binding id}"  FontSize="20"  TextColor="Black" FontAttributes="Bold" HorizontalOptions="Center" Padding="0,0,0,0"/>
-                                                    </Grid>
-                                                    <Grid Grid.Row="1"  Grid.Column="0"  BackgroundColor="White" Padding="0,0,0,0">
-                                                        <Label Text="ESTADO:" HorizontalOptions="End" VerticalOptions="Center" FontSize="20" FontAttributes="Bold" TextColor="Black"/>
-                                                    </Grid>
-                                                    <Grid Grid.Row="1"  Grid.Column="1" Grid.ColumnSpan="2" BackgroundColor="White" HorizontalOptions="Start" Padding="0,0,0,0">
-                                                        <Label x:Name="start" Text="{Binding estado}"  FontSize="20"  TextColor="Black" FontAttributes="Bold" HorizontalOptions="Center" Padding="0,0,0,0"/>
-                                                    </Grid>
-                                                </Grid>
-
-                                            </Frame>
-                                        </Grid>
-                                    </DataTemplate>
-                                </CollectionView.ItemTemplate>
-
-                            </CollectionView>
-                        </RefreshView>
-                    </Grid>
-
-                </Frame>
-
-            </Grid>
-
         </Grid>
-    </ContentPage.Content>
+        <xct:TabView  Grid.Row="1" Grid.Column="0"
+                TabStripPlacement="Top"
+                TabStripBackgroundColor="Transparent"
+                TabStripHeight="60"
+                TabIndicatorColor="Yellow"
+                TabContentBackgroundColor="Black"
+            IsSwipeEnabled="False" 
+            x:Name="Tab">
+
+            <xct:TabViewItem
+                   
+                    Text="ORDENES ACTIVAS"
+                    TextColor="Black"
+                    TextColorSelected="Black"
+                    FontSize="12"
+                FontAttributes="Bold">
+                <Grid BackgroundColor="LightGray"  ColumnSpacing="5" Padding="10,17,10,10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Frame Grid.Row="0" Grid.Column="0" Padding="30,30,30,30" CornerRadius="15">
+                        
+                            <Grid>
+                                <RefreshView Grid.Row="0" Grid.Column="0" x:Name="Refresh_Ordenes" Refreshing="RefreshView_Refreshing">
+                                    <CollectionView SelectionMode="Single" x:Name="cocinaListView" IsVisible="false" SelectionChanged="cocinaListView_SelectionChanged"  >
+                                        <CollectionView.ItemsLayout>
+                                            <GridItemsLayout Orientation="Vertical" Span="3"/>
+                                        </CollectionView.ItemsLayout>
+                                        <CollectionView.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid Padding="5">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="110"/>
+                                                    </Grid.RowDefinitions>
+                                                    <Frame HasShadow="True" Padding="2" CornerRadius="10" BorderColor="Black">
+                                                        <Grid BackgroundColor="White" RowSpacing="0" Padding="3,15,3,3" HorizontalOptions="Center">
+                                                            <Grid.RowDefinitions >
+                                                                <RowDefinition Height="30"/>
+                                                                <RowDefinition Height="30"/>
+                                                            </Grid.RowDefinitions>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="*"/>
+                                                            </Grid.ColumnDefinitions>
+
+                                                            <Grid Grid.Row="0"  Grid.Column="0"  BackgroundColor="White" Padding="0,0,0,0">
+                                                                <Label Text=" NUMERO ORDEN" HorizontalOptions="End" VerticalOptions="Center" FontSize="20" FontAttributes="Bold" TextColor="Black"/>
+                                                            </Grid>
+
+                                                            <Grid Grid.Row="0"  Grid.Column="1" BackgroundColor="White" HorizontalOptions="Start" Padding="0,0,0,0">
+                                                                <Label Text="{Binding id}"  FontSize="20"  TextColor="Black" FontAttributes="Bold" HorizontalOptions="Center" Padding="0,0,0,0"/>
+                                                            </Grid>
+                                                            <Grid Grid.Row="1"  Grid.Column="0"  BackgroundColor="White" Padding="0,0,0,0">
+                                                                <Label Text="ESTADO:" HorizontalOptions="End" VerticalOptions="Center" FontSize="20" FontAttributes="Bold" TextColor="Black"/>
+                                                            </Grid>
+                                                            <Grid Grid.Row="1"  Grid.Column="1" Grid.ColumnSpan="2" BackgroundColor="White" HorizontalOptions="Start" Padding="0,0,0,0">
+                                                                <Label x:Name="start" Text="{Binding estado}"  FontSize="20"  TextColor="Black" FontAttributes="Bold" HorizontalOptions="Center" Padding="0,0,0,0"/>
+                                                            </Grid>
+                                                        </Grid>
+
+                                                    </Frame>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </CollectionView.ItemTemplate>
+
+                                    </CollectionView>
+                                </RefreshView>
+                            <ActivityIndicator Grid.Row="0" Grid.Column="0" Scale=".1" x:Name="cargar"  IsRunning="True" />
+
+                        </Grid>
+                           
+                        
+
+                    </Frame>
+
+                </Grid>
+            </xct:TabViewItem>
+
+            <xct:TabViewItem
+                   
+                    Text="ORDENES TERMINADAS"
+                    TextColor="Black"
+                    TextColorSelected="Black"
+                    FontSize="12"
+                FontAttributes="Bold"
+                >
+                <Grid BackgroundColor="LightGray"  ColumnSpacing="5" Padding="10,17,10,10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Frame Grid.Row="0" Grid.Column="0" Padding="30,30,30,30" CornerRadius="15">
+                        <Grid>
+
+                            <ActivityIndicator Grid.Row="0" Grid.Column="0" Scale=".1" x:Name="cargar2"  IsRunning="True" />
+
+                        </Grid>
+
+                    </Frame>
+
+                </Grid>
+            </xct:TabViewItem>
+        </xct:TabView>
+    </StackLayout>
+    
 </ContentPage>

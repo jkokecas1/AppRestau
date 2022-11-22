@@ -1,48 +1,43 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using Rg.Plugins.Popup.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using AppResta.Model;
-using Newtonsoft.Json.Linq;
-using Rg.Plugins.Popup.Services;
-using Xamarin.Essentials;
+
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace AppResta.View
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class Ordenes : ContentPage
+    public partial class Cajero : ContentPage
     {
-
-        static List<Model.Ordenes> ordenList;
-        
-
-        public Ordenes(Main mainPage = null, List<Model.Ordenes> ord = null)
+            static List<Model.Ordenes> ordenList;
+            public Cajero()
         {
+            
             InitializeComponent();
-            if (ord != null)
-                ordenesListView.ItemsSource = ord;
-            else
-                ordenesListView.ItemsSource = Ordene();
-            Device.StartTimer(TimeSpan.FromSeconds(0.4), () => {
+            BindingContext = new ViewModel.OrdenesViewModel(Navigation);
+            //btnNotification.Clicked += BtnNotification_Clicked;
+            Device.StartTimer(TimeSpan.FromSeconds(1.2), () => {
                 cargar.IsEnabled = false;
                 cargar.IsRunning = false;
                 cargar.IsVisible = false;
-                grilAbsolute.IsVisible = true;
+                RefreshOrdenes.IsVisible = true;
                 return false;
             });
-            BindingContext = new ViewModel.OrdenesViewModel(Navigation);
-
+           
+            init();
+            // 
         }
 
-        public static void init(ListView ordenesListView)
+        public void init()
         {
-           
             ordenList = Ordene();
-            if(ordenList != null)
+            if (ordenList != null)
                 ordenesListView.ItemsSource = ordenList;//await App.Database.GetOrdenesAsync(); //
         }
 
@@ -98,10 +93,10 @@ namespace AppResta.View
                 var content = response.Content.ReadAsStringAsync().Result;
                 string json = content.ToString();
                 var jsonArray = JArray.Parse(json.ToString());
-             
+
                 foreach (var item in jsonArray)
                 {
-                    
+
                     orden = new Model.Ordenes();
 
                     orden.id = Int32.Parse(item["id"].ToString());
@@ -112,18 +107,18 @@ namespace AppResta.View
                         orden.fecha_estimada = item["fecha_estimada"].ToString().Remove(0, 10);
                     }
                     //PLATILLOS
-                   // orden.fecha_cerada = ObtenerNumeorDeItems(orden.id, 1);// + "/" + ObtenerNumeorDeItemsPlatillos(orden.id, 1);
+                    orden.fecha_cerada = item["fecha_cerada"].ToString();
                     switch (item["estado"].ToString())
                     {
-                        case "1": orden.estado = "En espera"; break;
-                        case "2": orden.estado = "Preparando... "; break;
-                        case "3": orden.estado = "! Terminado !"; break;
+                        case "1": orden.estado = "En espera"; orden.fecha_estimada = "#11111"; break;
+                        case "2": orden.estado = "Preparando... "; orden.fecha_estimada = "#11111"; break;
+                        case "3": orden.estado = "! Terminado !"; orden.fecha_estimada = "#ff0000"; break;
                     }
                     //BEBIDAS
-                    //orden.mesero = ObtenerNumeorDeItems(orden.id, 2);//+ "/" + ObtenerNumeorDeItemsPlatillos(orden.id,2);
+                    orden.mesero = item["mesero"].ToString();
                     orden.mesa = item["mesa"].ToString();
-                   // orden.totoalExtras = obtenerPagoFinal(orden.id)[1].ToString();
-                    //orden.total = obtenerPagoFinal(orden.id)[0].ToString() ;// 
+                  //  orden.totoalExtras = item["totoalExtras"].ToString();
+                   orden.total = item["total"].ToString();
                     orden.pago = Int32.Parse(item["pago"].ToString());
                     ordenList.Add(orden);
                 }
@@ -135,58 +130,47 @@ namespace AppResta.View
             }
         }
 
-        public static string ObtenerNumeorDeItems(int id, int opc)
+        
+
+        public static double ExtrasItem(string id)
         {
-            string cantidad = "";
+            double totoal = 0.0;
+            var client = new HttpClient();
 
-            var client1 = new HttpClient();
+            client.BaseAddress = new Uri("http://192.168.1.112/resta/admin/mysql/platillo/index.php?op=obtenerExtrasAsItem&iditem=" + id);
 
-            client1.BaseAddress = new Uri(("http://192.168.1.112/resta/admin/mysql/orden/index.php?op=ObtenerNumeorDeItems&idCart=" + id + "&opc=" + opc));
-            HttpResponseMessage response1 = client1.GetAsync(client1.BaseAddress).Result;
-            if (response1.IsSuccessStatusCode)
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress).Result;
+            if (response.IsSuccessStatusCode)
             {
-                var content1 = response1.Content.ReadAsStringAsync().Result;
-                string json1 = content1.ToString();
-
-                var jsonArray1 = JArray.Parse(json1.ToString());
-
-                foreach (var item in jsonArray1)
+                var content = response.Content.ReadAsStringAsync().Result;
+                string json = content.ToString();
+                if (json.Equals("[]"))
                 {
-                    cantidad = item["cantidad"].ToString();
+                    totoal = 0.0;
+
                 }
+                else
+                {
+                    var jsonArray = JArray.Parse(json.ToString());
+
+                    foreach (var item in jsonArray)
+                    {
+                        totoal += Double.Parse(item["precio"].ToString().Replace(",", "."));
+                    }
+
+                }
+
             }
-            return cantidad;
+            return totoal;
         }
 
-        public static string ObtenerNumeorDeItemsPlatillos(int id,int opc)
-        {
-            string cantidad = "";
-            
-            var client1 = new HttpClient();
+       
 
-            client1.BaseAddress = new Uri(("http://192.168.1.112/resta/admin/mysql/orden/index.php?op=ObtenerNumeorDeItemsPlatillos&idCart=" + id+"&opc="+opc));
-            HttpResponseMessage response1 = client1.GetAsync(client1.BaseAddress).Result;
-            if (response1.IsSuccessStatusCode)
-            {
-                var content1 = response1.Content.ReadAsStringAsync().Result;
-                string json1 = content1.ToString();
-
-                var jsonArray1 = JArray.Parse(json1.ToString());
-
-                //userInfo = JsonConvert.DeserializeObject<List<Model.Categorias>>(content);
-                foreach (var item in jsonArray1)
-                {
-                    cantidad = item["cantidad"].ToString();
-                }
-            }
-            return cantidad;
-        }
-
-        private async void RefreshOrdenes_Refreshing(object sender, EventArgs e)
+        
+        private void RefreshOrdenes_Refreshing(object sender, EventArgs e)
         {
             Task.Delay(100);
-            ordenList = Ordene();
-            //init(ordenesListView);
+            init();
             //VIVRACION
             /* try
              {
@@ -205,32 +189,16 @@ namespace AppResta.View
              {
                  // Other error has occurred.
              }*/
-            if (ordenList != null) {
-                foreach (var item in ordenList)
-                {
-
-                    if (item.estado == "! Terminado !")
-                    {
-
-                        await TextToSpeech.SpeakAsync("ORDEN NUMERO " + item.id + " TERMINADA", new SpeechOptions
-                        {
-                            Volume = 1
-                        });
-                    }
-                }
-
-                ordenesListView.ItemsSource = ordenList;
-
-            }
             RefreshOrdenes.IsRefreshing = false;
         }
-        /*
+
         protected override bool OnBackButtonPressed()
         {
             base.OnBackButtonPressed();
             return true;
-        }*/
-        private void BtnSalir_Clicked(object sender, EventArgs e)
+        }
+
+        private void Button_Clicked(object sender, EventArgs e)
         {
             Navigation.PopToRootAsync();
         }

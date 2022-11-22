@@ -1,6 +1,7 @@
 ﻿using AppResta.View;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -12,21 +13,36 @@ namespace AppResta.ViewModel
     {
         #region VARIABLES
         string _Numero;
+        private ObservableCollection<Model.Cart> items;
+        private ObservableCollection<Model.Ordenes> history;
         #endregion
 
         #region CONSTRUCTOR
-        public HistorialViewModel(INavigation navigation)
+        public  HistorialViewModel(INavigation navigation, int id, string mesa)
         {
             Navigation = navigation;
+
+           
+            Items = new ObservableCollection<Model.Cart>() {
+                
+            };
+
+            GetHistoryDetaillAsync(id,mesa);
+
+            History = new ObservableCollection<Model.Ordenes>() { };
+
+            GetHistoryAsync();
+
+
         }
         #endregion
 
         #region OBJETOS
-        public string Numero
-        {
-            get { return _Numero; }
-            set { SetValue(ref _Numero, value); }
-        }
+        public string Numero { get { return _Numero; } set { SetValue(ref _Numero, value); } }       
+        public ObservableCollection<Model.Cart> Items{ get { return items; } set { items = value;}}
+        public ObservableCollection<Model.Ordenes> History { get { return history; } set { history = value; } }
+        
+
         #endregion
 
         #region PROCESOS
@@ -47,9 +63,30 @@ namespace AppResta.ViewModel
 
         }
 
-        public async Task ProcesoAsyncrono()
+        public async Task GetHistoryDetaillAsync(int id ,string mesa)
         {
+           await Services.HostorialService.GetAllNewsAsync(list =>
+            {
+                foreach (Model.Cart item in list)
+                {
 
+                    Items.Add(item);
+                }
+
+            }, id, mesa);
+        }
+
+        public async Task GetHistoryAsync()
+        {
+            await Services.HostorialService.GetAllHistoryAsync(list =>
+            {
+                foreach (Model.Ordenes item in list)
+                {
+
+                    History.Add(item);
+                }
+
+            });
         }
         public async Task IrComanda()
         {
@@ -65,11 +102,12 @@ namespace AppResta.ViewModel
         {
 
         }
+
         #endregion
 
 
         #region COMANDOS
-        public ICommand ProcesoAsyncommand => new Command(async () => await ProcesoAsyncrono());
+      
         public ICommand IrComandacommand => new Command(async () => await IrComanda());
         public ICommand Mesascommand => new Command(async () => await Mesas());
         public ICommand Ordencommand => new Command(async () => await Orden());

@@ -26,8 +26,8 @@ namespace AppResta.View
         public Historial()
         {
             InitializeComponent();
-            BindingContext = new ViewModel.HistorialViewModel(Navigation);
-            ordenesListView.ItemsSource = Ordene();
+            BindingContext = new ViewModel.HistorialViewModel(Navigation,0,"");
+           // ordenesListView.ItemsSource = Ordene();
 
         }
 
@@ -49,11 +49,10 @@ namespace AppResta.View
             Pago.Text = "Pago";
             Monto.Text = "Monto";
             TP.Text = "Tiempo  25 MIN";
-
-            productos.ItemsSource = CartMesa(orden.id + "", orden.mesa);
+            BindingContext = new ViewModel.HistorialViewModel(Navigation, orden.id, orden.mesa);
+            //productos.ItemsSource = CartMesa(orden.id + "", orden.mesa);
         }
-
-        public List<Model.Ordenes> Ordene()
+        /* public List<Model.Ordenes> Ordene()
         {
             Model.Ordenes orden;
             var ordenList = new List<Model.Ordenes>();
@@ -78,7 +77,7 @@ namespace AppResta.View
                         orden.mesero = item["mesero"]+"";
                         orden.mesa = item["mesa"].ToString();
                         orden.total = item["total"].ToString(); ;
-                        orden.pago = Int32.Parse(item["pago"].ToString()); ;
+                        orden.pago = Int32.Parse(item["pago"].ToString()); 
                         ordenList.Add(orden);
                     
 
@@ -92,9 +91,9 @@ namespace AppResta.View
 
 
         }
+        */
 
-
-        public List<Model.Cart> CartMesa(string id, string mesas)
+        /*public List<Model.Cart> CartMesa(string id, string mesas)
         {
 
             var sub = new List<Model.Cart>();
@@ -140,6 +139,13 @@ namespace AppResta.View
             }
 
         }
+       */
+        
+        private void BtnSalir_Clicked(object sender, EventArgs e)
+        {
+            Navigation.PopToRootAsync();
+        }
+
     }
 
 

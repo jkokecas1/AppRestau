@@ -16,10 +16,12 @@ namespace AppResta.View
     {
         Model.Pagos pago;
         Pago pagoModel;
-        public ConfirmarPago(Model.Pagos pago, Pago pagina)
+        ListView ordenesListView;
+        public ConfirmarPago(Model.Pagos pago, Pago pagina,ListView ordenesListView)
         {
             this.pago = pago;
             pagoModel = pagina;
+            this.ordenesListView = ordenesListView;
             InitializeComponent();
 
             switch (pago.tipoPago)
@@ -59,7 +61,7 @@ namespace AppResta.View
             HttpResponseMessage response = client.GetAsync(client.BaseAddress).Result;
             if (response.IsSuccessStatusCode)
             {
-                //Ordenes.init();
+                Ordenes.init(ordenesListView);
                 Navigation.RemovePage(pagoModel);
                 Rg.Plugins.Popup.Services.PopupNavigation.Instance.PopAsync();
 

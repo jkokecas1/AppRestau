@@ -16,49 +16,73 @@ namespace AppResta.View
     {
         string nomb = "";
         bool internet;
-        public Mesa(Model.Empleado empleado = null, bool interent= false)
+        List<Model.Ordenes> list;
+        List<Model.Cart> listMain;
+        List<Model.Mesas> mesa;
+        List<Model.Categorias> categorias;
+        public Mesa(List<Model.Mesas> mesas=null,Model.Empleado empleado = null, bool interent= false)
         {
-            this.internet = interent;
             InitializeComponent();
+          
+            this.internet = interent;
+           
+            Device.StartTimer(TimeSpan.FromSeconds(1.2), () => {
+                cargar.IsEnabled = false;
+                cargar.IsRunning = false;
+                cargar.IsVisible = false;
+                mesasListView.IsVisible = true;
+                return false;
+            });
+
             BindingContext = new ViewModel.MesaViewModel(Navigation);
             nomb = empleado.nombre;
             nombreEmpl.Text = "Bienvenido: "+empleado.nombre;
             puestoEmpl.Text = empleado.puesto;
 
-            init();
+            if(mesas != null)
+                 mesa = mesas; //Mesas();
+            else
+                mesa = Mesas();
+
+            init(mesa);
+            list = Services.OrdenesService.Ordene();
+            categorias = Services.CartService.Categorias2();
             
-           
+
             //Navigation.RemovePage(new Login());
         }
 
-        public async void init() {
+        public void init(List<Model.Mesas> mesa) {
             //List<Model.Mesas> mesas = await App.Database.GetMesaAsync();
 
-            if (internet)
-            {
-                //mesasListView.ItemsSource = mesas;
-                mesasListView.ItemsSource = Mesas();
-            }
+            //if (internet)
+            //{
+            mesasListView.ItemsSource = mesa;
+            //List<Model.Mesas> m = Mesas();
+            
+          //  }
 
         }
 
         private void RefreshMesas_Refreshing(object sender, EventArgs e)
         {
+            List<Model.Mesas> mesa = Mesas();
 
+            RefreshMesas.IsRefreshing = true;
+            Task.Delay(800);
+            if (mesa != null)
+                mesasListView.ItemsSource = mesa;
 
-            Task.Delay(700);
-            mesasListView.ItemsSource = Mesas();
             RefreshMesas.IsRefreshing = false;
         }
 
         public void select_Item(object sender, SelectionChangedEventArgs e)
         {
             var mesas = e.CurrentSelection.FirstOrDefault() as Model.Mesas;
-            
-            Navigation.PushAsync(new Main(true, idOrden: Int32.Parse(mesas.id_orden), nomb, mesas.mesa),false);
-            mesasListView.ItemsSource = null;
-            mesasListView.ItemsSource = Mesas();
-
+            // mesasListView.ItemsSource = null;
+            listMain = Services.CartService.CartMesa(mesas.id_orden, mesas.mesa);
+            //mesasListView.ItemsSource = mesa;
+            Navigation.PushAsync(new Main(true, idOrden: Int32.Parse(mesas.id_orden), nomb, mesas.mesa, listMain, categorias),false);
 
             //mesasListView.IsRefreshing = false;
         }
@@ -97,6 +121,27 @@ namespace AppResta.View
                         mesa.orden ="0";
                         mesa.id_orden = "0";
                     }
+                    /* if (Int32.Parse(item["estado"].ToString()) == 0)
+                    {
+                       mesa.orden = "#2C67E6";
+                        mesa.id_orden = item["id_orden"].ToString();
+                    }
+                    else if (Int32.Parse(item["estado"].ToString()) == 1)
+                    {
+                        mesa.orden = "#3AE62C ";
+                        mesa.id_orden = item["id_orden"].ToString();
+                    }
+                    else if (Int32.Parse(item["estado"].ToString()) == 2)
+                    {
+                        mesa.orden = "#F7DB2F";
+                        mesa.id_orden = item["id_orden"].ToString();
+                    }
+                    else
+                    {
+                        mesa.orden = "#E62C2C";
+                        mesa.id_orden = item["id_orden"].ToString();
+                    }*/
+                    mesa.ubicacion = item["ubicacion"].ToString();
                     mesas.Add(mesa);
                 }
 
@@ -123,7 +168,7 @@ namespace AppResta.View
                 var jsonArray = JArray.Parse(json.ToString());
                 foreach (var item in jsonArray)
                 {
-                    Console.WriteLine(item["estado"]);
+                    //Console.WriteLine(item["estado"]);
                     if (Int32.Parse(item["cont"].ToString()) == 1)
                     {
                         if (Int32.Parse(item["estado"].ToString()) == 0)
@@ -168,5 +213,9 @@ namespace AppResta.View
             return true;
         }
 
+        private void Button_Clicked(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new Ordenes(ord: list), false);
+        }
     }
 }

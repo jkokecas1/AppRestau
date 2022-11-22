@@ -10,6 +10,7 @@ using System.Reflection;
 using System.IO;
 using AppResta.Model;
 using System.Collections.ObjectModel;
+using System.Net.Http;
 
 namespace AppResta.View
 {
@@ -19,8 +20,10 @@ namespace AppResta.View
         bool internet;
          public Login(bool interent)
         {
+            Navigation.PushAsync(new SplashCarga());
             this.internet = interent;
             InitializeComponent();
+            
             BindingContext = new ViewModel.LoginViewModel(Navigation, internet);
         }
         

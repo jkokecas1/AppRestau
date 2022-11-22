@@ -1,7 +1,9 @@
+using Newtonsoft.Json.Linq;
 using Rg.Plugins.Popup.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -17,60 +19,141 @@ namespace AppResta.View
         Model.Pagos pago = new Model.Pagos();
         int id = 0;
         Model.Ordenes Ordenes;
-        public Pago(List<Model.Ordenes> orden, int id)
+        ListView ordenesListView;
+
+        public Pago(List<Model.Ordenes> orden, int id, ListView ordenesListView)
         {
             this.id = id;
             this.orden = orden;
+            this.ordenesListView = ordenesListView;
             InitializeComponent();
 
             BindingContext = new ViewModel.PagoViewModel(Navigation);
+
+            Device.StartTimer(TimeSpan.FromSeconds(1.2), () => {
+                cargar.IsEnabled = false;
+                cargar.IsRunning = false;
+                cargar.IsVisible = false;
+                grild.IsVisible = true;
+                return false;
+            });
             init();
         }
 
         public void init()
         {
-            Efectivo.Text = "0";
-            Tarjeta.Text = "0";
+            Efectivo.Text = "$ 0";
+            Tarjeta.Text = "$ 0";
             TarjetaGrild.IsVisible = false;
             tiketOrden.Text = "TICKET # :" + id;
+            double[] totoales = new double[3];
+
             foreach (Model.Ordenes orden in orden)
             {
                 if (orden.id == id)
                 {
+                    
+                    totoales = obtenerPagoFinal(orden.id);
+                    orden.totoalExtras = totoales[1].ToString();
+                    orden.total = totoales[0].ToString();
                     Ordenes = new Model.Ordenes();
                     Ordenes.id = id;
                     Ordenes.mesero = orden.mesero;
                     Ordenes.total = orden.total;
                     Ordenes.mesa = orden.mesa;
                     Ordenes.pago = orden.pago;
-                   
+                    Ordenes.totoalExtras = orden.totoalExtras;
                     Ordenes.fecha_cerada = orden.fecha_cerada;
-                    Ordenes.fecha_orden = orden.fecha_orden; 
+                    Ordenes.fecha_orden = orden.fecha_orden;
 
-                    total.Text = orden.total;
-                    extras.Text = orden.totoalExtras;
-                    Subtotal.Text =( Double.Parse(orden.total) + Double.Parse(orden.totoalExtras))+"";//( Int32.Parse(orden.total) + Int32.Parse(propina.Text) + Int32.Parse(Tarjeta.Text) + Int32.Parse(Efectivo.Text)) + "";   
+                    // total.Text = orden.total;
+                    // extras.Text =orden.totoalExtras;
+                    if (orden.totoalExtras != null)
+                        Subtotal.Text = (Double.Parse(Ordenes.total) + Double.Parse(Ordenes.totoalExtras)) + "";//( Int32.Parse(orden.total) + Int32.Parse(propina.Text) + Int32.Parse(Tarjeta.Text) + Int32.Parse(Efectivo.Text)) + "";   
+                    else
+                        Subtotal.Text = Ordenes.total;
                 }
             }
 
 
         }
-
-        public void calcularPropona(int p)
+        public static double[] obtenerPagoFinal(int id)
         {
-            if (p == 0)
+            double[] total = new double[2];
+
+            var client1 = new HttpClient();
+
+
+            client1.BaseAddress = new Uri(("http://192.168.1.112/resta/admin/mysql/orden/index.php?op=ObtenerPrecioItems&idCart=" + id));
+
+            HttpResponseMessage response1 = client1.GetAsync(client1.BaseAddress).Result;
+            if (response1.IsSuccessStatusCode)
             {
-                propina.Text = "0";
-            }
-            {
-               // Console.WriteLine();
-                propina.Text = ((Double.Parse(Ordenes.total) * Double.Parse(p + "")) / 100) + "";
-                total.Text = Ordenes.total;
-                Subtotal.Text = Double.Parse(propina.Text.ToString()) + Double.Parse(total.Text.ToString()) + Double.Parse(extras.Text.ToString()) + "";
-                if (radioTarjeta.IsChecked)
-                    Tarjeta.Text = Subtotal.Text;
+                var content1 = response1.Content.ReadAsStringAsync().Result;
+                string json1 = content1.ToString();
+
+                var jsonArray1 = JArray.Parse(json1.ToString());
+
+                //userInfo = JsonConvert.DeserializeObject<List<Model.Categorias>>(content);
+                foreach (var item in jsonArray1)
+                {
+                    total[0] += Double.Parse(item["precio"].ToString().Replace(",", "."));
+                    total[1] += Double.Parse(ExtrasItem(item["item"].ToString()) + "");
+                }
+
 
             }
+            return total;
+        }
+        public static double ExtrasItem(string id)
+        {
+            double totoal = 0.0;
+            var client = new HttpClient();
+
+            client.BaseAddress = new Uri("http://192.168.1.112/resta/admin/mysql/platillo/index.php?op=obtenerExtrasAsItem&iditem=" + id);
+
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                var content = response.Content.ReadAsStringAsync().Result;
+                string json = content.ToString();
+                if (json.Equals("[]"))
+                {
+                    totoal = 0.0;
+
+                }
+                else
+                {
+                    var jsonArray = JArray.Parse(json.ToString());
+
+                    foreach (var item in jsonArray)
+                    {
+                        totoal += Double.Parse(item["precio"].ToString().Replace(",", "."));
+                    }
+
+                }
+
+            }
+            return totoal;
+        }
+        
+        double propina  = 0.0;
+        public void calcularPropona(int p)
+        {      
+               // Console.WriteLine();
+                propina= ((Double.Parse(Ordenes.total) * Double.Parse(p + "")) / 100) ;
+            // total.Text = Ordenes.total;
+            if (Ordenes.totoalExtras != null)
+                Subtotal.Text = propina + Double.Parse(Ordenes.total) + Double.Parse(Ordenes.totoalExtras) + "";
+            else if (propina > 0.0)
+                Subtotal.Text = propina + Ordenes.total + "";
+            else
+                Subtotal.Text = Ordenes.total;
+
+            if (radioTarjeta.IsChecked)
+                    Tarjeta.Text ="$"+ Subtotal.Text;
+
+            
             //Console.WriteLine( Ordenes.total);
         }
 
@@ -79,16 +162,16 @@ namespace AppResta.View
         {
 
 
-            if (Efectivo.Text == "" && Tarjeta.Text == "")
+            if (Efectivo.Text == "" && Tarjeta.Text.Replace("$ ","") == "")
             {
                 PopupNavigation.Instance.PushAsync(new PopError("VERIFICA LOS CAMPOS"));
             }
-            else if (Tarjeta.Text != "" && Efectivo.Text == "0")
+            else if (Tarjeta.Text.Replace("$ ", "") != "" && Efectivo.Text == "0")
             {
-                pago.monto = Double.Parse(Tarjeta.Text + "");
+                pago.monto = Double.Parse(Tarjeta.Text.Replace("$ ", "") + "");
                 pago.idcart = Ordenes.id;
                 pago.tipoPago = "2"; // TARJETA
-                pago.propina = propina.Text;
+                pago.propina = propina+"";
                 pago.total = Subtotal.Text;
 
                 if (pago.monto < Double.Parse(Subtotal.Text))
@@ -98,15 +181,15 @@ namespace AppResta.View
                 else
                 {
                     Console.WriteLine(pago.tipoPago + "Tarjeta");
-                    PopupNavigation.Instance.PushAsync(new ConfirmarPago(pago, this));
+                    PopupNavigation.Instance.PushAsync(new ConfirmarPago(pago, this, ordenesListView));
                 }
             }
-            else if (Efectivo.Text != "" && Tarjeta.Text == "0")
+            else if (Efectivo.Text != "" && Tarjeta.Text.Replace("$ ", "") == "0")
             {
                 pago.monto = Double.Parse(Efectivo.Text + "");
                 pago.idcart = Ordenes.id;
                 pago.tipoPago = "1"; // EFECTIVO
-                pago.propina = propina.Text;
+                pago.propina = propina+"";
                 pago.total =  Subtotal.Text;
                 if (pago.monto < Double.Parse(Subtotal.Text))
                 {
@@ -115,17 +198,17 @@ namespace AppResta.View
                 else
                 {
                     Console.WriteLine(pago.tipoPago + "EFECTIVO");
-                    PopupNavigation.Instance.PushAsync(new ConfirmarPago(pago, this));
+                    PopupNavigation.Instance.PushAsync(new ConfirmarPago(pago, this, ordenesListView));
                 }
             }
-            else if (Efectivo.Text != "" && Tarjeta.Text != "")
+            else if (Efectivo.Text != "" && Tarjeta.Text.Replace("$ ", "") != "")
             {
-                int monto = Int32.Parse(Efectivo.Text + "") + Int32.Parse(Tarjeta.Text + "");
+                int monto = Int32.Parse(Efectivo.Text + "") + Int32.Parse(Tarjeta.Text.Replace("$ ", "") + "");
                 //Console.WriteLine(monto);
                 pago.monto = Double.Parse(monto.ToString());
                 pago.idcart = Ordenes.id;
                 pago.tipoPago = "3"; // EFECTIVO Y TARJETA
-                pago.propina = propina.Text;
+                pago.propina = propina+"";
                 pago.total = Subtotal.Text;
                 if (pago.monto < Double.Parse(Subtotal.Text))
                 {
@@ -135,7 +218,7 @@ namespace AppResta.View
                 else
                 {
                    // Console.WriteLine(pago.tipoPago + "AMBOS");
-                    PopupNavigation.Instance.PushAsync(new ConfirmarPago(pago, this));
+                    PopupNavigation.Instance.PushAsync(new ConfirmarPago(pago, this, ordenesListView));
                 }
             }
 
@@ -249,12 +332,14 @@ namespace AppResta.View
             propina10.BorderColor = Color.Black;
             propina15.BorderColor = Color.Black;
             propina20.BorderColor = Color.Black;
+            propinaOtro.BorderColor = Color.Black;
 
             propina0.BorderWidth = 3;
             propina5.BorderWidth = 1;
             propina10.BorderWidth = 1;
             propina15.BorderWidth = 1;
             propina20.BorderWidth = 1;
+            propinaOtro.BorderWidth = 1;
 
             calcularPropona(0);
 
@@ -267,12 +352,14 @@ namespace AppResta.View
             propina10.BorderColor = Color.Black;
             propina15.BorderColor = Color.Black;
             propina20.BorderColor = Color.Black;
+            propinaOtro.BorderColor = Color.Black;
 
             propina0.BorderWidth = 1;
             propina5.BorderWidth = 3;
             propina10.BorderWidth = 1;
             propina15.BorderWidth = 1;
             propina20.BorderWidth = 1;
+            propinaOtro.BorderWidth = 1;
             calcularPropona(5);
         }
 
@@ -283,12 +370,14 @@ namespace AppResta.View
             propina10.BorderColor = Color.Green;
             propina15.BorderColor = Color.Black;
             propina20.BorderColor = Color.Black;
+            propinaOtro.BorderColor = Color.Black;
 
             propina0.BorderWidth = 1;
             propina5.BorderWidth = 1;
             propina10.BorderWidth = 3;
             propina15.BorderWidth = 1;
             propina20.BorderWidth = 1;
+            propinaOtro.BorderWidth = 1;
             calcularPropona(10);
         }
 
@@ -299,12 +388,14 @@ namespace AppResta.View
             propina10.BorderColor = Color.Black;
             propina15.BorderColor = Color.Green;
             propina20.BorderColor = Color.Black;
+            propinaOtro.BorderColor = Color.Black;
 
             propina0.BorderWidth = 1;
             propina5.BorderWidth = 1;
             propina10.BorderWidth = 1;
             propina15.BorderWidth = 3;
             propina20.BorderWidth = 1;
+            propinaOtro.BorderWidth = 1;
             calcularPropona(15);
         }
 
@@ -315,12 +406,14 @@ namespace AppResta.View
             propina10.BorderColor = Color.Black;
             propina15.BorderColor = Color.Black;
             propina20.BorderColor = Color.Green;
+            propinaOtro.BorderColor = Color.Black;
 
             propina0.BorderWidth = 1;
             propina5.BorderWidth = 1;
             propina10.BorderWidth = 1;
             propina15.BorderWidth = 1;
             propina20.BorderWidth = 3;
+            propinaOtro.BorderWidth = 1;
 
             calcularPropona(20);
         }
@@ -328,6 +421,23 @@ namespace AppResta.View
         private void Button_Clicked(object sender, EventArgs e)
         {
             PopupNavigation.Instance.PushAsync(new Ticket(orden,id));
+        }
+
+        private void propinaOtro_Clicked(object sender, EventArgs e)
+        {
+            propina0.BorderColor = Color.Black;
+            propina5.BorderColor = Color.Black;
+            propina10.BorderColor = Color.Black;
+            propina15.BorderColor = Color.Black;
+            propina20.BorderColor = Color.Black;
+            propinaOtro.BorderColor = Color.Green;
+
+            propina0.BorderWidth = 1;
+            propina5.BorderWidth = 1;
+            propina10.BorderWidth = 1;
+            propina15.BorderWidth = 1;
+            propina20.BorderWidth = 1;
+            propinaOtro.BorderWidth = 3;
         }
     }
 }

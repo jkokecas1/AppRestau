@@ -93,7 +93,7 @@ xmlns:input="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.Input
                         </CollectionView>
 
 
-                        <Entry BackgroundColor="LightGray" x:Name="comentTxt" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Placeholder="Comentarios" TextColor="Black"/>
+                        <Editor  BackgroundColor="LightGray" x:Name="comentTxt" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Placeholder="Comentarios" TextColor="Black"/>
 
                     </Grid>
 

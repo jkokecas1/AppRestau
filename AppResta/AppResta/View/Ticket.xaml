@@ -5,111 +5,116 @@ xmlns:popup="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     CloseWhenBackgroundIsClicked="False"
              x:Class="AppResta.View.Ticket">
-  
-        <Frame Margin="280,20,280,20">
+
+    <Grid Margin="280,20,280,20" >
 
 
-        <Grid Grid.Row="0" Grid.Column="0" BackgroundColor="White" Padding="25,5,20,10">
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="40"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
+        <Frame  x:Name="tabla"  >
 
-            <Grid Grid.Row="0" Grid.Column="0" RowSpacing="0"  x:Name="tabla">
+
+            <Grid Grid.Row="0" Grid.Column="0" BackgroundColor="White" Padding="25,5,20,10" >
+
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="100"/>
                     <RowDefinition Height="*"/>
-                    
-
+                    <RowDefinition Height="40"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-
-                <Grid Grid.Row="0" Grid.Column="0" BackgroundColor="White" RowSpacing="0">
-                    <StackLayout Grid.Row="0" Grid.Column="0" VerticalOptions="Center" >
-                        <Label x:Name="NombTicket" TextColor="Black" FontAttributes="Bold" FontSize="30"/>
-                    </StackLayout>
-
-                    <StackLayout Grid.Row="1" Grid.Column="0" VerticalOptions="Center" >
-                        <Label x:Name="NumMesa" TextColor="Black" FontSize="20"/>
-                    </StackLayout>
-
-                    <StackLayout Grid.Row="2" Grid.Column="0" VerticalOptions="Center" >
-                        <Label x:Name="NombMesero" TextColor="Black" FontSize="20"/>
-                    </StackLayout>
-                    <StackLayout Grid.Row="3" Grid.Column="0" VerticalOptions="Center" >
-                        <Label x:Name="FechaCerada" TextColor="Black" FontSize="20"/>
-                    </StackLayout>
+                <Grid Grid.Row="0" Grid.Column="0" RowSpacing="0" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="100"/>
+                        <RowDefinition Height="1"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="1"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
 
 
+                    <Grid Grid.Row="0" Grid.Column="0" BackgroundColor="White" RowSpacing="0">
 
-                </Grid>
+                        <Label Text="AQUI VA LA INFORMACION DEL NEGOCIO" TextColor="Black" FontSize="25" VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="White"/>
 
-               
+                    </Grid>
 
-
-                <Grid Grid.Row="1" Grid.Column="0" BackgroundColor="Yellow">
-
-                    <Grid Grid.Row="0" Grid.Column="0"  BackgroundColor="White">
+                    <Grid Grid.Row="1" Grid.Column="0" BackgroundColor="White" RowSpacing="0">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="2"/>
-                            <RowDefinition Height="50"/>
-                            <RowDefinition Height="2"/>
-                            <RowDefinition Height="100"/>
-                            <RowDefinition Height="100"/>
-
-
-
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="30"/>
 
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
+                        <Label Grid.Row="0" Grid.Column="0" Text="Recibo" TextColor="Black" FontAttributes="Bold" FontSize="20" HorizontalOptions="Center"/>
+                        <Label Grid.Row="1" Grid.Column="0" x:Name="fecha_cerrada" TextColor="Black" FontSize="20" HorizontalOptions="Center"/>
+                        <Label Grid.Row="2" Grid.Column="0" x:Name="NombTicket" TextColor="Black" HorizontalOptions="Center" FontSize="20"/>
+                    </Grid>
 
-                        <Frame x:Name="linea2" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="LightGray" ></Frame>
-                        <ListView x:Name="productos" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="WhiteSmoke">
+                    <Grid Grid.Row="2" Grid.Column="0" BackgroundColor="Black"></Grid>
 
+                    <Grid Grid.Row="3" Grid.Column="0"  BackgroundColor="White">
+
+                        <ListView x:Name="productos" Grid.Row="0" Grid.Column="0" BackgroundColor="WhiteSmoke">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewCell>
+
+
+                                        <Grid Padding="20,0,0,0" BackgroundColor="WhiteSmoke">
+
+                                            <StackLayout Grid.Column="0" Grid.Row="0"   VerticalOptions="Center" Orientation="Vertical" BackgroundColor="WhiteSmoke">
+                                                <Label Text="{Binding cantidad }"  TextColor="Black" FontSize="15"/>
+                                            </StackLayout>
+                                            <StackLayout Grid.Column="1" Grid.Row="0" VerticalOptions="Center" Orientation="Vertical">
+                                                <Label Text="{Binding platillo}" TextColor="Black" FontSize="15"/>
+                                            </StackLayout>
+                                            <StackLayout   Grid.Column="2" Grid.Row="0"  VerticalOptions="Center" Orientation="Vertical">
+                                                <Label Text="{Binding precio}" TextColor="Black" FontSize="15"/>
+                                            </StackLayout>
+                                            <StackLayout  Grid.Column="3" Grid.Row="0"  VerticalOptions="Center" Orientation="Vertical">
+                                                <Label Text="{Binding total}" TextColor="Black" FontSize="15"/>
+                                            </StackLayout>
+
+                                        </Grid>
+
+                                    </ViewCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
                         </ListView>
+                    </Grid>
 
-                        <Frame x:Name="linea1" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="LightGray" ></Frame>
+                    <Grid Grid.Row="4" Grid.Column="0" BackgroundColor="Black"></Grid>
 
-                        <Grid Grid.Row="3" Grid.Column="0" >
-                            <Label Grid.Row="0" Grid.Column="0" x:Name="Monto" TextColor="Black" FontSize="20" FontAttributes="Bold"/>
-                            <Label Grid.Row="1" Grid.Column="0" x:Name="PagoTotal" TextColor="Black" FontSize="20"/>
-                            <Label Grid.Row="2" Grid.Column="0" x:Name="TotalExtras" TextColor="Black" FontSize="20"/>
-                        </Grid>
+                    <Grid Grid.Row="5" Grid.Column="0" >
 
-                        <Grid Grid.Row="4" Grid.Column="0">
-                            <Label Grid.Row="0" Grid.Column="0" x:Name="Pago" TextColor="Black" FontSize="20" FontAttributes="Bold"/>
-                            <Label Grid.Row="1" Grid.Column="0" x:Name="Efectivo" TextColor="Black" FontSize="20"/>
-                            <Label Grid.Row="2" Grid.Column="0" x:Name="Tarjeta" TextColor="Black" FontSize="20"/>
-                        </Grid>
-
-
+                        <Label Grid.Row="1" Grid.Column="0" x:Name="Pago" TextColor="Black" FontSize="20" FontAttributes="Bold"/>
+                        <Label Grid.Row="2" Grid.Column="0" Text="Efectivo:" TextColor="Black" FontSize="20"/>
+                        <Label Grid.Row="2" Grid.Column="1" HorizontalOptions="End" x:Name="Efectivo" TextColor="Black" FontSize="20"/>
+                        <Label Grid.Row="3" Grid.Column="0" Text="Tarjeta:" TextColor="Black" FontSize="20"/>
+                        <Label Grid.Row="3" Grid.Column="1" HorizontalOptions="End" x:Name="Tarjeta" TextColor="Black" FontSize="20"/>
+                        <Label Grid.Row="4" Grid.Column="0" x:Name="Monto" TextColor="Black" FontSize="20" FontAttributes="Bold"/>
+                        <Label Grid.Row="6" Grid.Column="0" Text="Total:" TextColor="Black" FontSize="20"/>
+                        <Label Grid.Row="6" Grid.Column="1" HorizontalOptions="End" x:Name="PagoTotal" TextColor="Black" FontSize="20"/>
+                        <Label Grid.Row="5" Grid.Column="0" Text="Total extras:" TextColor="Black" FontSize="20"/>
+                        <Label Grid.Row="5" Grid.Column="1" HorizontalOptions="End" x:Name="TotalExtras" TextColor="Black" FontSize="20"/>
                     </Grid>
 
                 </Grid>
 
+                <Grid Grid.Row="1" Grid.Column="0" >
+                    <Button Text="Imprimir" Clicked="Button_Clicked" BackgroundColor="Blue" TextColor="White"/>
+                </Grid>
             </Grid>
 
-            <Grid Grid.Row="1" Grid.Column="0">
-                <Button Text="Imprimir" Clicked="Button_Clicked" BackgroundColor="Blue" TextColor="White"/>
-            </Grid>
-        </Grid>
-        
-
-
-
-        
-            
-           
-        
-    </Frame>
+        </Frame>
+    </Grid>
 </popup:PopupPage>

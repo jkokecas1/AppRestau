@@ -18,8 +18,25 @@ namespace AppResta.View
         int hora = 0;
         List<Model.Ordenes> aux;
         CollectionView collection;
+
+
         public VerOrden(Model.Ordenes ordenes, List<Model.Ordenes> aux, CollectionView collection)
         {
+            int a = -1;
+            if (aux.Count < aux.Count / 2)
+            {
+                a = aux.IndexOf(ordenes);
+            }
+            else {
+                aux.Reverse();
+                a = aux.IndexOf(ordenes);
+            }
+
+
+            if (a != -1)
+                ordenes = aux[a];
+
+            cart = CartMesa(ordenes.id.ToString(), ordenes.mesa);
             this.ordenes = ordenes;
             this.aux = aux;
             this.collection = collection;
@@ -31,12 +48,8 @@ namespace AppResta.View
 
         public void init()
         {
-
-
-
             numeroOrden.Text = "# " + ordenes.id;
-            cart = CartMesa(ordenes.id.ToString(), ordenes.mesa);
-
+          
             ordenlist.ItemsSource = cart;
 
             foreach (Model.Cart carro in cart)

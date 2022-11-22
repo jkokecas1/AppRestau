@@ -23,7 +23,7 @@ namespace AppResta.View
 
         public Model.Cart cartItem = new Model.Cart();
         public static double totalpay = 0.0;
-        public Main(bool _Token, int idOrden = 0, string nombre = "", string mesa = "MES-0")
+        public Main(bool _Token, int idOrden = 0, string nombre = "", string mesa = "MES-0", List<Model.Cart> lsit=null, List<Model.Categorias> categoria = null)
         //public Main(Object[] datos)
         {
             ordenID = idOrden;
@@ -38,15 +38,18 @@ namespace AppResta.View
 
                 InitializeComponent();
                 // Refreshplatillos.IsRefreshing = true;
-                testListView.ItemsSource = Categorias2();
+                testListView.ItemsSource = categoria;
 
 
-                if (idOrden != 0)
+                if (idOrden != 0 )
                 {
                     cart.Clear();
                     totalpago.Text = "0";
                     totalpay = 0;
-                    cart = CartMesa(idOrden.ToString(), mesaglb);
+                    if (lsit != null)
+                        cart = lsit;
+                    else
+                        cart = CartMesa(idOrden.ToString(), mesaglb);
                     test2ListView.ItemsSource = null;
                     test2ListView.ItemsSource = cart;
                     test2ListView.IsRefreshing = false;
@@ -261,7 +264,7 @@ namespace AppResta.View
                     string json = content.ToString();
 
                     var jsonArray = JArray.Parse(json.ToString());
-                    var h = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss");
+                    var h = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss").Replace(" ", "-");
                     Console.WriteLine(h);
                     //userInfo = JsonConvert.DeserializeObject<List<Model.Categorias>>(content);
                     foreach (var item in jsonArray)
@@ -269,14 +272,18 @@ namespace AppResta.View
 
                         if (item["estado"].Equals("3"))
                         {
-                            GET_DATOS("http://192.168.1.112/resta/admin/mysql/orden/index.php?op=updateEstadoOrdenMesas&estado=0&id=" + idO + "&total=" + total+"&fecha="+h.Replace(" ","-"));
-                            Navigation.PushAsync(new View.Ordenes(this), false);
+                            GET_DATOS("http://192.168.1.112/resta/admin/mysql/orden/index.php?op=updateEstadoOrdenMesas&estado=0&id=" + idO + "&total=" + total+ "&fecha=" + h);
+                            // Console.WriteLine("http://192.168.1.112/resta/admin/mysql/orden/index.php?op=updateEstadoOrdenMesas&estado=0&id=" + idO + "&total=" + total + "&fecha=" + h);
+                            Navigation.PopAsync(false);
+                            //Navigation.PushAsync(new View.Ordenes(this), false);
                             break;
                         }
                         else
                         {
                             GET_DATOS("http://192.168.1.112/resta/admin/mysql/orden/index.php?op=updateEstadoOrdenMesas&estado=1&id=" + idO + "&total=" + total + "&fecha=" + h.Replace(" ", "-"));
-                            Navigation.PushAsync(new View.Ordenes(this), false);
+                            //8 Console.WriteLine("http://192.168.1.112/resta/admin/mysql/orden/index.php?op=updateEstadoOrdenMesas&estado=1&id=" + idO + "&total=" + total + "&fecha=" + h);
+                            Navigation.PopAsync(false);
+                            //Navigation.PushAsync(new View.Ordenes(this), false);
                             break;
                         }
                     }
@@ -296,7 +303,7 @@ namespace AppResta.View
 
             UpdateSelectionData(e.PreviousSelection, e.CurrentSelection);
         }
-
+        Model.Categorias categoria;
         public void UpdateSelectionData(IEnumerable<object> previousSelectedContact, IEnumerable<object> currentSelectedContact)
         {
             double totalpay = 0.0;
@@ -305,16 +312,16 @@ namespace AppResta.View
             if (band == 0)
             {
                 var i = currentSelectedContact.FirstOrDefault(); // Obtenemos el indice de la lista
-                var categoria = currentSelectedContact.FirstOrDefault() as Model.Categorias;
+               categoria = currentSelectedContact.FirstOrDefault() as Model.Categorias;
 
                 if (SubCategorias(categoria.id) != null)
                 {
                     testListView.ItemsSource = SubCategorias(categoria.id);
-
+                    tituloR.Text += "/" + categoria.nombre;
                 }
                 else
                 {
-
+                    tituloR.Text += "/" + categoria.nombre;
                     //var platillo = currentSelectedContact.FirstOrDefault() as Model.Platillos;
                     testListView.ItemsSource = Platillos("&idcate=" + categoria.nombre);
                 }
@@ -326,6 +333,7 @@ namespace AppResta.View
                 var platillo = currentSelectedContact.FirstOrDefault() as Model.Platillos;
 
                 testListView.ItemsSource = Platillos("&idsub=" + subcategoria.nombre);
+                tituloR.Text +=  "/" + subcategoria.nombre;
 
             }
             else if (band == 2)
@@ -415,8 +423,36 @@ namespace AppResta.View
 
         public void returnCategorias(object sender, EventArgs e)
         {
-            band = 0;
-            testListView.ItemsSource = Categorias2();
+            Console.WriteLine(band);
+            if (band == 1) {
+                tituloR.Text = "CATEGORIAS";
+                band = 0;
+                testListView.ItemsSource = Categorias2();
+            }else if (band == 2)
+            {
+              
+                tituloR.Text = "Categorias".ToUpper() +"/" + categoria.nombre;
+                testListView.ItemsSource = SubCategorias(categoria.id);
+                if (SubCategorias(categoria.id) != null) { 
+                    tituloR.Text = "CATEGORIAS";
+                     band = 0;
+                testListView.ItemsSource = Categorias2();
+                }
+                else {
+                    tituloR.Text = "CATEGORIAS";
+                    band = 0;
+                    testListView.ItemsSource = Categorias2();
+
+
+                }
+                   
+            }
+            
+            
+            //band = 0;
+
+
+            //testListView.ItemsSource = Categorias2();
 
         }
 
@@ -595,22 +631,12 @@ namespace AppResta.View
                 foreach (var item in jsonArray)
                 {
                     cartItem = new Model.Cart();
-
-
-                    int ids = Int32.Parse(item["id"].ToString());
-                    int iditem = Int32.Parse(item["idItem"].ToString());
-                    string nombre = item["nombre"].ToString();
-                    int cantidad = Int32.Parse(item["cantidad"].ToString());
-                    double precio = Convert.ToDouble(item["precio"].ToString().Replace(",", "."));
-                    double total = (double)(precio * cantidad);
-
-
-                    cartItem.id = ids;
-                    cartItem.idItem = iditem;
-                    cartItem.platillo = nombre;
-                    cartItem.cantidad = cantidad;
-                    cartItem.precio = precio;
-                    cartItem.total = total;
+                    cartItem.id = Int32.Parse(item["id"].ToString());
+                    cartItem.idItem = Int32.Parse(item["idItem"].ToString());
+                    cartItem.platillo = item["nombre"].ToString();
+                    cartItem.cantidad = Int32.Parse(item["cantidad"].ToString());
+                    cartItem.precio = Convert.ToDouble(item["precio"].ToString().Replace(",", "."));
+                    cartItem.total = (double)(cartItem.precio * cartItem.cantidad);
                     cartItem.visible = "false";
 
                     cart.Add(cartItem);
@@ -649,6 +675,11 @@ namespace AppResta.View
             }
             //Console.WriteLine(ordenID);
             return orden;
+        }
+
+        private void BtnSalir_Clicked(object sender, EventArgs e)
+        {
+            Navigation.PopToRootAsync();
         }
 
     }

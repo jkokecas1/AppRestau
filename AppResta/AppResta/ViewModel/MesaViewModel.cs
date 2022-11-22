@@ -14,6 +14,7 @@ namespace AppResta.ViewModel
         #region VARIABLES
        
         private ObservableCollection<Model.Mesas> items;
+        List<Model.Ordenes> list;
         //private Model.Mesas _selectMesa { get; set; };
         #endregion
 
@@ -31,7 +32,7 @@ namespace AppResta.ViewModel
                     Items.Add(item);
                 }
             });*/
-
+          // list = Services.OrdenesService.Ordene();
         }
         #endregion
 
@@ -73,7 +74,8 @@ namespace AppResta.ViewModel
 
         public async Task Orden()
         {
-            await Navigation.PushAsync(new Ordenes(), false);
+         
+            await Navigation.PushAsync(new Ordenes(ord:list), false);
 
         }
         public async Task Historial()
@@ -85,7 +87,7 @@ namespace AppResta.ViewModel
         {
             //Object[] datos = { false, "", "","" };
             //Navigation.RemovePage(Login());
-            await Navigation.PushAsync(new Main(false), false);
+           // await Navigation.PushAsync(new Main(false), false);
 
         }
         public void Logout()

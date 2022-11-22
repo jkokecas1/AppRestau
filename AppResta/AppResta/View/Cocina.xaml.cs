@@ -13,10 +13,32 @@ namespace AppResta.View
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class Cocina : ContentPage
     {
-        public Cocina()
+        List<Model.Ordenes> ORDEN;
+        public Cocina(List<Model.Ordenes> orden= null)
         {
+
             InitializeComponent();
-            cocinaListView.ItemsSource = Ordene();
+            if (orden != null) {
+                ORDEN = orden;
+                cocinaListView.ItemsSource = ORDEN;
+            }
+            else {
+                ORDEN = Ordene();
+                cocinaListView.ItemsSource = ORDEN;
+            }
+               
+
+            
+            Device.StartTimer(TimeSpan.FromSeconds(0.5), () =>
+            {
+                cargar.IsEnabled = false;
+                cargar.IsRunning = false;
+                cargar.IsVisible = false;
+                cocinaListView.IsVisible = true;
+                return false;
+            });
+
+           // cocinaListView.ItemsSource = ord;
         }
         public List<Model.Cart> cart = new List<Model.Cart>();
 
@@ -27,7 +49,8 @@ namespace AppResta.View
             var client = new HttpClient();
             string[] aux = new string[3];
 
-
+            var h = DateTime.Now.ToString("yyyy-MM-dd");
+            orden = new Model.Ordenes();
             client.BaseAddress = new Uri("http://192.168.1.112/resta/admin/mysql/orden/index.php?op=obtenerOrden");
             HttpResponseMessage response = client.GetAsync(client.BaseAddress).Result;
             if (response.IsSuccessStatusCode)
@@ -36,40 +59,80 @@ namespace AppResta.View
                 string json = content.ToString();
                 var jsonArray = JArray.Parse(json.ToString());
                 //Console.WriteLine(jsonArray);
-                foreach (var item in jsonArray)
+                /*foreach (var item in jsonArray)
                 {
-                    aux = bebidas(item["id"].ToString(), item["mesa"].ToString());
+                    //if (item["fecha_orden"].ToString().Remove(10, 9) == h)
+                   // {
+                        aux = bebidas(item["id"].ToString(), item["mesa"].ToString());
 
-                    if (aux[0] != null)
-                    {
-                        //Console.WriteLine(item["estado"].ToString());
-                        orden = new Model.Ordenes();
-                        Console.WriteLine("Estado ORDEN = " + item["estado"]+" ---"+ aux[0]);
-                        if (Int32.Parse(item["estado"] + "") == 2 || Int32.Parse(item["estado"] + "") == 1 || Int32.Parse(item["estado"] + "") == 0)
+                        if (aux[0] != null)
                         {
-                            
-                            orden.id = Int32.Parse(item["id"].ToString());
-                            orden.fecha_orden = item["fecha_orden"].ToString();
-                            orden.fecha_start = item["fecha_start"].ToString();
-                            orden.fecha_estimada = item["fecha_estimada"].ToString();
-                            orden.fecha_cerada = item["fecha_cerada"].ToString();
-                            switch (item["estado"].ToString())
-                            {
-                                case "1": orden.estado = "En espera"; break;
-                                case "2": orden.estado = "Preparando..."; break;
-                                case "3": orden.estado = "! Terminado !"; break;
+                            if (true) {
+                                orden.id = Int32.Parse(item["id"].ToString());
+                                orden.fecha_orden = item["fecha_orden"].ToString();
+                                orden.fecha_start = item["fecha_start"].ToString();
+                                orden.fecha_estimada = item["fecha_estimada"].ToString();
+                                orden.fecha_cerada = item["fecha_cerada"].ToString();
+                                switch (item["estado"].ToString())
+                                {
+                                    case "1": orden.estado = "En espera"; break;
+                                    case "2": orden.estado = "Preparando..."; break;
+                                    case "3": orden.estado = "! Terminado !"; break;
+                                }
+                                orden.mesero = item["mesero"].ToString();
+                                orden.mesa = item["mesa"].ToString();
+                                orden.total = item["total"].ToString();
+                                orden.pago = Int32.Parse(item["pago"].ToString());
+                                ordenList.Add(orden);
+
                             }
-                            orden.mesero = item["mesero"].ToString();
-                            orden.mesa = item["mesa"].ToString();
-                            orden.total = item["total"].ToString();
-                            orden.pago = Int32.Parse(item["pago"].ToString());
 
 
-                            ordenList.Add(orden);
+                           
+
 
                         }
+                   // }
+
+                }*/
+                foreach (var item in jsonArray)
+                {
+                    if (item["fecha_orden"].ToString().Remove(10, 9) == h){
+                        aux = bebidas(item["id"].ToString(), item["mesa"].ToString());
+
+                        if (aux[0] != null)
+                        {
+                            //Console.WriteLine(item["estado"].ToString());
+                            orden = new Model.Ordenes();
+                            // Console.WriteLine("Estado ORDEN = " + item["estado"] + " ---" + aux[0]);
+                            if (Int32.Parse(item["estado"] + "") == 2 || Int32.Parse(item["estado"] + "") == 1 || Int32.Parse(item["estado"] + "") == 0)
+                            {
+
+                                orden.id = Int32.Parse(item["id"].ToString());
+                                orden.fecha_orden = item["fecha_orden"].ToString();
+                                orden.fecha_start = item["fecha_start"].ToString();
+                                orden.fecha_estimada = item["fecha_estimada"].ToString();
+                                orden.fecha_cerada = item["fecha_cerada"].ToString();
+                                switch (item["estado"].ToString())
+                                {
+                                    case "1": orden.estado = "En espera"; break;
+                                    case "2": orden.estado = "Preparando..."; break;
+                                    case "3": orden.estado = "! Terminado !"; break;
+                                }
+                                orden.mesero = item["mesero"].ToString();
+                                orden.mesa = item["mesa"].ToString();
+                                orden.total = item["total"].ToString();
+                                orden.pago = Int32.Parse(item["pago"].ToString());
+
+
+                                ordenList.Add(orden);
+
+                            }
+                        }
                     }
+                    
                 }
+                
                 return ordenList;
             }
             else
@@ -82,15 +145,13 @@ namespace AppResta.View
         {
             string[] ordenList = new string[3];
             var client = new HttpClient();
-            client.BaseAddress = new Uri("http://192.168.1.112/resta/admin/mysql/orden/index.php?op=obtenerCarritoBebidas&idOrden=" + id + "&mesa=" + mesa+"&opc="+2);
-           // Console.WriteLine("http://192.168.1.112/resta/admin/mysql/orden/index.php?op=obtenerCarritoBebidas&idOrden=" + id + "&mesa=" + mesa + "&opc=" + 2);
+            client.BaseAddress = new Uri("http://192.168.1.112/resta/admin/mysql/orden/index.php?op=obtenerCarritoBebidas&idOrden=" + id + "&mesa=" + mesa + "&opc=" + 2);
             HttpResponseMessage response = client.GetAsync(client.BaseAddress).Result;
             if (response.IsSuccessStatusCode)
             {
                 var content = response.Content.ReadAsStringAsync().Result;
                 string json = content.ToString();
                 var jsonArray = JArray.Parse(json.ToString());
-                // Console.WriteLine(jsonArray);
                 foreach (var item in jsonArray)
                 {
                     ordenList[0] += item["cantidad"] + "X" + item["nombre"] + "\n";
@@ -110,56 +171,18 @@ namespace AppResta.View
         public void UpdateSelectionData(IEnumerable<object> previousSelectedContact, IEnumerable<object> currentSelectedContact)
 
         {
-           
+
             Model.Ordenes ord = new Model.Ordenes();
-            var idorden = currentSelectedContact.FirstOrDefault() as Model.Ordenes;
+            Model.Ordenes idorden = currentSelectedContact.FirstOrDefault() as Model.Ordenes;
 
-            List<Model.Ordenes> cart = Ordene();
-
-            foreach (Model.Ordenes item in cart)
-            {
-
-                if (item.id == idorden.id)
-                {
-                    ord.id = Int32.Parse(item.id.ToString());
-                    ord.fecha_orden = item.fecha_orden.ToString();
-
-                    Console.WriteLine(item.fecha_start.ToString());
-                    if (item.fecha_start.ToString() != "") {
-                        if(!item.fecha_start.ToString().Equals("0000-00-00 00:00:00"))
-                            ord.fecha_start = item.fecha_start.ToString().Remove(0, 10);
-                    }
-                    else {
-                        ord.fecha_start = item.fecha_start.ToString();
-                    }
-
-                    if (item.fecha_estimada.ToString() != "" )
-                    {
-                        if (!item.fecha_estimada.ToString().Equals("0000-00-00 00:00:00"))
-                            ord.fecha_estimada = item.fecha_estimada.ToString().Remove(0, 10);
-                    }
-                    else
-                    {
-                        
-                        ord.fecha_estimada = item.fecha_estimada.ToString();
-                    }
-                    switch (ord.estado) {
-                        case "1": ord.estado = "En espera"; break;
-                        case "2": ord.estado = "Preparando..."; break;
-                        case "3": ord.estado = "! Terminado !"; break;
-                    }
-                    ord.fecha_cerada = item.fecha_cerada.ToString();
-                    ord.mesero = item.mesero.ToString();
-                    ord.mesa = item.mesa.ToString();
-                    ord.total = item.total.ToString();
-                    ord.pago = Int32.Parse(item.pago.ToString());
-
-                }
-
-            }
-
-                List<Model.Ordenes> auxList = Ordene();
-                PopupNavigation.Instance.PushAsync(new VerOrden(ord, auxList, cocinaListView));
+            //List<Model.Ordenes> cart = Ordene();
+           /* int a = ORDEN.IndexOf(idorden);
+           
+            if(a != -1)
+                ord = ORDEN[a];*/
+            
+           // List<Model.Ordenes> auxList = Ordene();
+            PopupNavigation.Instance.PushAsync(new VerOrden(idorden, ORDEN, cocinaListView));
 
         }
 
@@ -167,11 +190,13 @@ namespace AppResta.View
         {
             Task.Delay(100);
             cocinaListView.ItemsSource = null;
-            cocinaListView.ItemsSource = Ordene();
+            ORDEN = Ordene();
+            cocinaListView.ItemsSource = ORDEN;
+
             Refresh_Ordenes.IsRefreshing = false;
         }
 
-        
+
         protected override bool OnBackButtonPressed()
         {
             base.OnBackButtonPressed();
@@ -180,7 +205,15 @@ namespace AppResta.View
 
         private void exit_Clicked(object sender, EventArgs e)
         {
-            Navigation.PopAsync(false);
+            Console.WriteLine("Salir");
+            Navigation.PopAsync();
+        }
+
+        private void exit_Clicked_1(object sender, EventArgs e)
+        {
+            Console.WriteLine("Salir");
+           // Navigation.PopAsync();
+            this.Navigation.PopAsync(true);
         }
     }
 }
