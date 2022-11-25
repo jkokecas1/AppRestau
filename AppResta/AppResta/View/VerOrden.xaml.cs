@@ -55,23 +55,45 @@ namespace AppResta.View
             }*/
 
             cart = CartMesa(ordenes.id.ToString(), ordenes.mesa);
-        init();
-
             this.ordenes = ordenes;
+            init();
+            
+
             aux.Reverse();
             this.aux = aux;
             this.collection = collection;
 
-           
+            Device.StartTimer(TimeSpan.FromSeconds(60), updateTimeLive);
 
-          
-            
         }
 
         public void init()
         {
-           // numeroOrden.Text = "# " + ordenes.id;
-          
+            
+            numeroOrden.Text = ordenes.id.ToString();
+            HoraInicioOrden.Text = ordenes.fecha_orden.Remove(0, 10);
+
+
+
+            CronometroOrden.Text = (Convert.ToDateTime(DateTime.Now.ToString("HH:mm:ss")) - Convert.ToDateTime(ordenes.fecha_orden)).ToString();
+            HoraEstimadaOrden.Text = (Convert.ToDateTime(ordenes.fecha_orden).AddMinutes(35)).ToString("HH:mm:ss ");
+
+            var t2 = Convert.ToDateTime((Convert.ToDateTime(ordenes.fecha_orden).AddMinutes(35)).ToString("HH:mm:ss "));
+            var t1 = Convert.ToDateTime(DateTime.Now.ToString("HH:mm:ss"));
+           
+            Console.WriteLine(t1+ " >= " + t2);
+            if (t2 <= t1)
+            {
+                labelEspera.TextColor = Color.Red;
+                CronometroOrden.TextColor = Color.Red;
+                CronometroOrden.TranslateTo(-50, 0, 1000);
+                
+            }
+            else {
+                CronometroOrden.TextColor = Color.Black;
+            }
+
+
             ordenlist.ItemsSource = cart;
 
             foreach (Model.Cart carro in cart)
@@ -82,11 +104,11 @@ namespace AppResta.View
                     CronometroOrden.Text = "Preparando ...";
                     HoraEstimadaOrden.Text = ordenes.fecha_estimada;
 
-                    btnIniciar.IsEnabled = false;
-                    horas.IsEnabled = false;
+                   // btnIniciar.IsEnabled = false;
+                    //horas.IsEnabled = false;
 
-                    btnIniciar.IsVisible = false;
-                    horas.IsVisible = false;
+                    //btnIniciar.IsVisible = false;
+                    //horas.IsVisible = false;
                 }
             }
             /*if (ordenes.fecha_start != null)
@@ -107,7 +129,7 @@ namespace AppResta.View
                
 
             }*/
-            var hora = new List<string>();
+           /* var hora = new List<string>();
 
             hora.Add("10 minutos");
             hora.Add("15 minutos");
@@ -116,17 +138,25 @@ namespace AppResta.View
             hora.Add("30 minutos");
             hora.Add("35 minutos");
             hora.Add("40 minutos");
-            hora.Add("45 minutos");
+            hora.Add("45 minutos");*/
 
-            horas.ItemsSource = hora;
+            //horas.ItemsSource = hora;
+        }
+
+        bool updateTimeLive()
+        {
+            Device.BeginInvokeOnMainThread(() => init());
+            
+            return true;
         }
 
         private void cerrarPop(object sender, EventArgs e)
         {
             //collection.SelectedItems = null;
 
-            collection.ItemsSource = null;
-            collection.ItemsSource = aux;
+            // collection.ItemsSource = null;
+            //collection.ItemsSource = aux;
+            
             Rg.Plugins.Popup.Services.PopupNavigation.Instance.PopAsync();
             //
         }
@@ -227,10 +257,10 @@ namespace AppResta.View
                 //Console.WriteLine(HoraInicioOrden.Text +"+==="+ HoraEstimadaOrden.Text);
                 // CronometroOrden.Text = "00:00:00";
                 HoraEstimadaOrden.Text = h.Remove(0, 10).Replace(" ", "").Replace("PM", "");
-                btnIniciar.IsEnabled = false;
-                horas.IsEnabled = false;
-                btnIniciar.IsVisible = false;
-                horas.IsVisible = false;
+                //btnIniciar.IsEnabled = false;
+                //horas.IsEnabled = false;
+                //btnIniciar.IsVisible = false;
+                //horas.IsVisible = false;
                 ////Cambiar el estado de la orden // updateOrden
                  string cadena = "http://192.168.1.112/resta/admin/mysql/Orden/index.php?op=updateOrden&estado=2" + "&fecha_inicio=" + fecha.Replace("/", "-") + "-"+ HoraInicioOrden.Text.Replace(" ", "-") + "&fecha_estimada=" + fecha.Replace("/", "-") + "-" + HoraEstimadaOrden.Text + "&idCart=" + ordenes.id;
               //  Console.WriteLine(cadena);

@@ -76,7 +76,7 @@ namespace AppResta.View
                 }
                 else
                 {
-                    btnOrdenar.IsEnabled = false;
+                    btnOrdenar.IsEnabled = true;
                     cart.Clear();
                 }
                 this.empleado = empleado;
@@ -460,7 +460,7 @@ namespace AppResta.View
                 {
 
                 }*/
-                
+                mesa_orden = IdOrden(mesaglb);
                 if (cart.Count == 0 && mesa_orden[1] != "3") // Caso 0: Carrito vacio
                 {
                     PopupNavigation.Instance.PushAsync(new ItemPlatillo(platillo, mesaglb, bandera: 0, cart, test2ListView, totalpago: totalpago, empleado: empleado));

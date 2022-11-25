@@ -274,6 +274,47 @@ namespace AppResta.Services
             }
         }
 
+        public static List<Model.Ordenes> OrdenecajeroEmpleado(string id)
+        {
+            Model.Ordenes orden;
+            var h = DateTime.Now.ToString("yyyy-MM-dd");
+            string[] itemaux = new string[3];
+            List<Model.Ordenes> ordenList = new List<Model.Ordenes>();
+            var client = new HttpClient();
+
+            client.BaseAddress = new Uri("http://192.168.1.112/resta/admin/mysql/orden/index.php?op=obtenerOrdenCajaEmpleado&empleado=" + id);
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                var content = response.Content.ReadAsStringAsync().Result;
+                string json = content.ToString();
+                var jsonArray = JArray.Parse(json.ToString());
+                //  Console.WriteLine(jsonArray);
+                foreach (var item in jsonArray)
+                {
+
+                    orden = new Model.Ordenes();
+
+                    orden.id = Int32.Parse(item["id"].ToString());
+                    orden.fecha_orden = itemaux[0]; // Items Bebidaas
+                    orden.fecha_start = itemaux[1]; // Item Mesa
+                    orden.mesa = item["mesa"].ToString();
+                    orden.mesero = item["mesero"].ToString();
+
+                    ordenList.Add(orden);
+
+                }
+                return ordenList;
+            }
+            else
+            {
+                Console.WriteLine("OrdeneBarEmpleado");
+                return null;
+            }
+
+        }
+
+
         /****************************************************************************************************
          *                              CCOCINA
          **************************************************************************************************/
@@ -364,7 +405,7 @@ namespace AppResta.Services
                 return null;
             }
         }
-        public static List<Model.Ordenes> OrdenecocinaEmpleado(string id)
+        public static List<Model.Ordenes> OrdeneCocinaEmpleado(string id)
         {
             Model.Ordenes orden;
             var h = DateTime.Now.ToString("yyyy-MM-dd");
@@ -372,7 +413,7 @@ namespace AppResta.Services
             List<Model.Ordenes> ordenList = new List<Model.Ordenes>();
             var client = new HttpClient();
 
-            client.BaseAddress = new Uri("http://192.168.1.112/resta/admin/mysql/orden/index.php?op=obtenerOrdenEmpleado&empleado=" + id);
+            client.BaseAddress = new Uri("http://192.168.1.112/resta/admin/mysql/orden/index.php?op=obtenerOrdenCajaEmpleado&empleado=" + id);
             // Console.WriteLine("http://192.168.1.112/resta/admin/mysql/orden/index.php?op=obtenerOrdenEmpleado&empleado=" + id);
             HttpResponseMessage response = client.GetAsync(client.BaseAddress).Result;
             if (response.IsSuccessStatusCode)
@@ -380,7 +421,7 @@ namespace AppResta.Services
                 var content = response.Content.ReadAsStringAsync().Result;
                 string json = content.ToString();
                 var jsonArray = JArray.Parse(json.ToString());
-                //  Console.WriteLine(jsonArray);
+                 Console.WriteLine(jsonArray);
                 foreach (var item in jsonArray)
                 {
 

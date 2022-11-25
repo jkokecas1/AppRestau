@@ -15,18 +15,25 @@ namespace AppResta.View
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class Pago : ContentPage
     {
+
+        // VARIABLES 
         List<Model.Ordenes> orden;
         Model.Pagos pago = new Model.Pagos();
         int id = 0;
         Model.Ordenes Ordenes;
         ListView ordenesListView;
+        Model.Empleado empleado;
 
-        public Pago(List<Model.Ordenes> orden, int id, ListView ordenesListView)
+
+        // CONSTRUCTOR
+        public Pago(List<Model.Ordenes> orden, int id, ListView ordenesListView, Model.Empleado empleado= null)
         {
+            InitializeComponent();
             this.id = id;
             this.orden = orden;
             this.ordenesListView = ordenesListView;
-            InitializeComponent();
+            this.empleado = empleado;
+           
 
             BindingContext = new ViewModel.PagoViewModel(Navigation);
 
@@ -39,6 +46,9 @@ namespace AppResta.View
             });
             init();
         }
+
+
+        // METODOS
 
         public void init()
         {
@@ -168,7 +178,8 @@ namespace AppResta.View
             }
             else if (Tarjeta.Text.Replace("$ ", "") != "" && Efectivo.Text == "0")
             {
-                pago.monto = Double.Parse(Tarjeta.Text.Replace("$ ", "") + "");
+
+                pago.monto = Double.Parse(Tarjeta.Text.Replace("$", "") + "");
                 pago.idcart = Ordenes.id;
                 pago.tipoPago = "2"; // TARJETA
                 pago.propina = propina+"";
@@ -181,7 +192,7 @@ namespace AppResta.View
                 else
                 {
                     Console.WriteLine(pago.tipoPago + "Tarjeta");
-                    PopupNavigation.Instance.PushAsync(new ConfirmarPago(pago, this, ordenesListView));
+                    PopupNavigation.Instance.PushAsync(new ConfirmarPago(pago, this, ordenesListView, empleado));
                 }
             }
             else if (Efectivo.Text != "" && Tarjeta.Text.Replace("$ ", "") == "0")
@@ -199,7 +210,7 @@ namespace AppResta.View
                     else
                     {
                         Console.WriteLine(pago.tipoPago + "EFECTIVO");
-                        PopupNavigation.Instance.PushAsync(new ConfirmarPago(pago, this, ordenesListView));
+                        PopupNavigation.Instance.PushAsync(new ConfirmarPago(pago, this, ordenesListView,empleado));
                     }
                 }
                
@@ -221,7 +232,7 @@ namespace AppResta.View
                 else
                 {
                    // Console.WriteLine(pago.tipoPago + "AMBOS");
-                    PopupNavigation.Instance.PushAsync(new ConfirmarPago(pago, this, ordenesListView));
+                    PopupNavigation.Instance.PushAsync(new ConfirmarPago(pago, this, ordenesListView, empleado));
                 }
             }
 

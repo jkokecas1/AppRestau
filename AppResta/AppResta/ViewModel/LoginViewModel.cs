@@ -69,8 +69,6 @@ namespace AppResta.ViewModel
             ordenesCaja = Services.OrdenesService.OrdenCaja();
             categorias = Services.CartService.Categorias2();
 
-
-
         }
         /*********************************************************************
          *  METODO updateTimeLive:

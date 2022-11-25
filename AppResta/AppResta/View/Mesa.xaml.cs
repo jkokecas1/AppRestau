@@ -141,8 +141,8 @@ namespace AppResta.View
                // listMain = Services.CartService.CartMesa(mesas.id_orden, mesas.mesa);
                 Navigation.PushAsync(new Main(true, band: true, idOrden: Int32.Parse(mesas.id_orden), empleado, mesas.mesa, listMain, categorias), false);
             }
-               
 
+           
         }
 
         /*********************************************************************

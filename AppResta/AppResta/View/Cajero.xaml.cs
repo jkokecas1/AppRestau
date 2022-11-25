@@ -19,7 +19,7 @@ namespace AppResta.View
         // VARIABLES    
         List<Model.Ordenes> listordAux = new List<Model.Ordenes>();
         static List<Model.Ordenes> ordenList;
-
+        Model.Empleado empleado;
 
         // CONSTRUCTOR
         public Cajero(List<Model.Ordenes> ordenes, Model.Empleado empleado)
@@ -27,6 +27,7 @@ namespace AppResta.View
 
             InitializeComponent();
             tiempoCajero.Text = DateTime.Now.ToString("t");
+            this.empleado = empleado;
             nombreEmpl.Text = empleado.pin + "";
             BindingContext = new ViewModel.OrdenesViewModel(Navigation);
             //btnNotification.Clicked += BtnNotification_Clicked;
@@ -40,6 +41,8 @@ namespace AppResta.View
             });
             ordenList = ordenes;
             init(ordenList);
+            cocinaHistorial.ItemsSource = Services.OrdenesService.OrdeneCocinaEmpleado(empleado.id.ToString());
+            // Device.StartTimer(TimeSpan.FromSeconds(3), updateHistorial);
             Device.StartTimer(TimeSpan.FromSeconds(60), updateTimeLive);
         }
 
@@ -49,9 +52,12 @@ namespace AppResta.View
         public void init(List<Model.Ordenes> ord)
         {
             tiempoCajero.Text = DateTime.Now.ToString("t");
-
-            if (ord != null)
+            cocinaHistorial.ItemsSource = Services.OrdenesService.OrdeneCocinaEmpleado(empleado.id.ToString());
+            if (ord != null) {
                 ordenesListView.ItemsSource = ord;//await App.Database.GetOrdenesAsync(); //
+                ordenList = ord;
+            }
+            
         }
 
         bool updateTimeLive()
@@ -59,12 +65,25 @@ namespace AppResta.View
             Device.BeginInvokeOnMainThread(() => init(Services.OrdenesService.OrdenCaja()));
             return true;
         }
+
+
+        bool updateHistorial()
+        {
+            // init(Services.OrdenesService.OrdeneBar());
+            // cargar2.IsEnabled = false;
+            //cargar2.IsRunning = false;
+            //cargar2.IsVisible = false;
+            cocinaHistorial.ItemsSource = Services.OrdenesService.OrdeneCocinaEmpleado(empleado.id.ToString());
+            cocinaHistorial.IsVisible = true;
+            return false;
+        }
+
         private void Button_Pagar(object sender, EventArgs e)
         {
             int id = Int32.Parse(((MenuItem)sender).CommandParameter.ToString());
 
 
-            Pago pago = new Pago(ordenList, id, ordenesListView);
+            Pago pago = new Pago(ordenList, id, ordenesListView, empleado);
             PopError error = new PopError("LA ORDEN AUN NO SE ESTA LISTA");
             foreach (Model.Ordenes orden in ordenList)
             {

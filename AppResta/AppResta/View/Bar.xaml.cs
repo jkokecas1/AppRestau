@@ -32,7 +32,7 @@ namespace AppResta.View
             this.empleado = empleado;   
             
             timebar.Text = DateTime.Now.ToString("t");
-            bartender.Text += " : "+empleado.pin;
+           // bartender.Text += " : "+empleado.pin;
 
             if (ORDEN != null)
                 barListView.ItemsSource = ORDEN;
@@ -84,7 +84,7 @@ namespace AppResta.View
             UpdateSelectionDataAsync(e.PreviousSelection, e.CurrentSelection);
         }
 
-        public async Task UpdateSelectionDataAsync(IEnumerable<object> previousSelectedContact, IEnumerable<object> currentSelectedContact)
+        public void UpdateSelectionDataAsync(IEnumerable<object> previousSelectedContact, IEnumerable<object> currentSelectedContact)
 
         {
             Model.Ordenes idorden = currentSelectedContact.FirstOrDefault() as Model.Ordenes;
@@ -126,6 +126,7 @@ namespace AppResta.View
                 barListView.ItemsSource = null;
                 barListView.ItemsSource = Ordene();
             }*/
+
         }
 
       

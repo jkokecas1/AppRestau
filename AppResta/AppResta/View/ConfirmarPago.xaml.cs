@@ -14,14 +14,20 @@ namespace AppResta.View
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ConfirmarPago : Rg.Plugins.Popup.Pages.PopupPage
     {
+        // VARIABLEs
         Model.Pagos pago;
         Pago pagoModel;
         ListView ordenesListView;
-        public ConfirmarPago(Model.Pagos pago, Pago pagina,ListView ordenesListView)
+        Model.Empleado empleado;
+
+
+        //CONSTRUCTOR
+        public ConfirmarPago(Model.Pagos pago, Pago pagina,ListView ordenesListView, Model.Empleado empleado)
         {
             this.pago = pago;
             pagoModel = pagina;
             this.ordenesListView = ordenesListView;
+            this.empleado = empleado;
             InitializeComponent();
 
             switch (pago.tipoPago)
@@ -37,6 +43,9 @@ namespace AppResta.View
 
 
         }
+
+        // METODOS
+
         private void cerrarPop(object sender, EventArgs e)
         {
             Rg.Plugins.Popup.Services.PopupNavigation.Instance.PopAsync();
@@ -54,7 +63,7 @@ namespace AppResta.View
             }
 
 
-            string cadena = "http://192.168.1.112/resta/admin/mysql/Orden/index.php?op=insertarPago&idpago=" + obtenerIDPago() + "&tipo=" + pago.tipoPago.ToString() + "&monto=" + pago.monto + "&fecha=" + h.ToString() + "&IDcart=" + pago.idcart;
+            string cadena = "http://192.168.1.112/resta/admin/mysql/Orden/index.php?op=insertarPago&idpago=" + obtenerIDPago() + "&tipo=" + pago.tipoPago.ToString() + "&monto=" + pago.monto + "&fecha=" + h.ToString() + "&IDcart=" + pago.idcart+ "&idCajero="+empleado.id;
             Console.WriteLine(cadena);
             var client = new HttpClient();
             client.BaseAddress = new Uri(cadena);

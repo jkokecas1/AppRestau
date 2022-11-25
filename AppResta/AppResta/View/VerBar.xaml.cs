@@ -40,7 +40,7 @@ namespace AppResta.View
                 ordenes.Reverse();
                 a = ordenes.IndexOf(orden);
             }
-            numeroOrden.Text = "ORDEN NUMERO: " + orden.id + "";
+            //numeroOrden.Text = "ORDEN NUMERO: " + orden.id + "";
 
             if (a != -1)
                 orden = ordenes[a];

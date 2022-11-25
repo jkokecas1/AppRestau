@@ -91,6 +91,7 @@ namespace AppResta.View
         private void cocinaListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             UpdateSelectionData(e.PreviousSelection, e.CurrentSelection);
+            ((CollectionView)sender).SelectedItem = null;
         }
         public void UpdateSelectionData(IEnumerable<object> previousSelectedContact, IEnumerable<object> currentSelectedContact)
 
@@ -108,8 +109,9 @@ namespace AppResta.View
             // List<Model.Ordenes> auxList = Ordene();
             
             if (idorden != null) {
+               
                 PopupNavigation.Instance.PushAsync(new VerOrden(idorden, aux: ORDEN, cocinaListView, listCat, empleado.id));
-
+                
             }
 
         }
@@ -143,5 +145,7 @@ namespace AppResta.View
             // Navigation.PopAsync();
             this.Navigation.PopAsync(true);
         }
+
+     
     }
 }

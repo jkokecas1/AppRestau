@@ -4,137 +4,165 @@
              x:Class="AppResta.View.Cocina"
              NavigationPage.HasNavigationBar="False"
             xmlns:xct="http://xamarin.com/schemas/2020/toolkit">
-    <StackLayout>
-        <Grid>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+
+
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Row="0" Grid.Column="0" BackgroundColor="AliceBlue" Padding="0,10,5,0">
             <Grid.RowDefinitions>
-                <RowDefinition Height="60"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+
             </Grid.ColumnDefinitions>
-            <Grid Grid.Row="0" Grid.Column="0"  BackgroundColor="AliceBlue" Padding="0,10,5,0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Image Source="klassylogo.png"  Grid.Row="0" Grid.Column="0"></Image>
-                <Label Text="COCINA" Grid.Row="0" Grid.Column="1"  FontSize="20" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center"></Label>
-                <Label x:Name="fecha"  Grid.Row="0" Grid.Column="2" FontSize="20" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center"></Label>
-                <Label x:Name="chef" Grid.Row="0" Grid.Column="3" FontSize="20" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center"></Label>
-                <Button Text="SALIR" Clicked="exit_Clicked"  Grid.Row="0" Grid.Column="4" HorizontalOptions="End" CornerRadius="0" BackgroundColor="Red" TextColor="#FFFF"></Button>
-            </Grid>
+            <Image Source="klassylogo.png"  Grid.Row="0" Grid.Column="0"></Image>
+            <Label Text="COCINA" Grid.Row="0" Grid.Column="1"  FontSize="30" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center"></Label>
+            <Label x:Name="fecha"  Grid.Row="0" Grid.Column="2" FontSize="40" FontAttributes="Bold" TextColor="Black" VerticalOptions="Center" HorizontalOptions="End"></Label>
+            <Button Text="SALIR" Clicked="exit_Clicked"  Grid.Row="0" Grid.Column="3" HorizontalOptions="End" CornerRadius="0" BackgroundColor="Red" TextColor="#FFFF"></Button>
+
         </Grid>
-        <xct:TabView  TabStripPlacement="Top" TabStripBackgroundColor="WhiteSmoke" TabStripHeight="65" TabIndicatorColor="Red" TabContentBackgroundColor="Black"
+
+
+        <Frame Grid.Row="1" Grid.Column="0" BackgroundColor="LightGray" CornerRadius="10" Margin="10,10,10,10" Padding="0,0,0,0">
+            <xct:TabView  TabStripPlacement="Top" TabStripBackgroundColor="WhiteSmoke" TabStripHeight="65" TabIndicatorColor="Red" TabContentBackgroundColor="Black"
                                           IsSwipeEnabled="False" x:Name="Tab" TabIndicatorHeight="10" >
-            <xct:TabViewItem  Text="ORDENES ACTIVAS" TextColor="Black" TextColorSelected="Black" FontSize="20" FontAttributes="Bold" FontSizeSelected="30" FontFamilySelected="5">
-                <Grid BackgroundColor="LightGray"  ColumnSpacing="5" Padding="10,17,10,10">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Frame Grid.Row="0" Grid.Column="0" Padding="30,30,30,30" CornerRadius="15">
-                        <Grid>
-                            <RefreshView Grid.Row="0" Grid.Column="0" x:Name="Refresh_Ordenes" Refreshing="RefreshView_Refreshing">
-                                <CollectionView SelectionMode="Single" x:Name="cocinaListView" IsVisible="false" SelectionChanged="cocinaListView_SelectionChanged"  >
-                                    <CollectionView.ItemsLayout>
-                                        <GridItemsLayout Orientation="Vertical" Span="3"/>
-                                    </CollectionView.ItemsLayout>
-                                    <CollectionView.ItemTemplate>
-                                        <DataTemplate>
-                                            <Grid Padding="5">
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="*" />
-                                                </Grid.ColumnDefinitions>
-                                                <Grid.RowDefinitions>
-                                                    <RowDefinition Height="110"/>
-                                                </Grid.RowDefinitions>
-                                                <Frame HasShadow="True" Padding="4,4,4,4" CornerRadius="10" Margin="5" BorderColor="Black">
-                                                    <Grid BackgroundColor="White" RowSpacing="0" Padding="3,15,3,3" HorizontalOptions="Center">
-                                                        <Grid.RowDefinitions >
-                                                            <RowDefinition Height="30"/>
-                                                            <RowDefinition Height="30"/>
-                                                        </Grid.RowDefinitions>
-                                                        <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition Width="*"/>
-                                                        </Grid.ColumnDefinitions>
-                                                        <StackLayout Grid.Row="0"  Grid.Column="0"  Orientation="Horizontal" BackgroundColor="White" Padding="0,0,0,0">
-                                                            <Label Text="Orden #" HorizontalOptions="Center" VerticalOptions="Center" FontSize="20" FontAttributes="Bold" TextColor="Black"/>
-                                                            <Label Text="{Binding id}"  FontSize="20"  TextColor="Black" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"/>
-                                                        </StackLayout>
-                                                        <StackLayout Grid.Row="1"  Grid.Column="0" Orientation="Horizontal" BackgroundColor="White" Padding="0,0,0,0">
-                                                            <Label Text="ESTADO:" HorizontalOptions="End" VerticalOptions="Center" FontSize="20" FontAttributes="Bold" TextColor="Black"/>
-                                                            <Label x:Name="start" Text="{Binding estado}"  FontSize="20"  TextColor="Black" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"/>
-                                                        </StackLayout>
-                                                    </Grid>
-                                                </Frame>
-                                            </Grid>
+                <xct:TabViewItem  Text="ORDENES ACTIVAS" TextColor="Black" TextColorSelected="Black" FontSize="20" FontAttributes="Bold" FontSizeSelected="30" FontFamilySelected="5">
+                    <Grid BackgroundColor="LightGray"  ColumnSpacing="5" >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Frame Grid.Row="0" Grid.Column="0" Padding="30,30,30,30" CornerRadius="15" BackgroundColor="White">
+                            <Grid >
+                                <RefreshView Grid.Row="0" Grid.Column="0" x:Name="Refresh_Ordenes" Refreshing="RefreshView_Refreshing">
+                                    <CollectionView SelectionMode="Single" x:Name="cocinaListView" IsVisible="false" SelectionChanged="cocinaListView_SelectionChanged"  >
+                                        <CollectionView.ItemsLayout>
+                                            <GridItemsLayout Orientation="Vertical" Span="3"/>
+                                        </CollectionView.ItemsLayout>
+                                        <CollectionView.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid Padding="5">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="110"/>
+                                                    </Grid.RowDefinitions>
+                                                    <Frame HasShadow="True" Padding="4,4,4,4" CornerRadius="10"  BorderColor="Black">
+                                                        <Grid BackgroundColor="White" RowSpacing="0" Padding="3,15,3,3" HorizontalOptions="Center">
+                                                            <Grid.RowDefinitions >
+                                                                <RowDefinition Height="30"/>
+                                                                <RowDefinition Height="30"/>
+                                                            </Grid.RowDefinitions>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="*"/>
+                                                            </Grid.ColumnDefinitions>
+                                                            <StackLayout Grid.Row="0"  Grid.Column="0"  Orientation="Horizontal" BackgroundColor="White" Padding="0,0,0,0">
+                                                                <Label Text="Orden #" HorizontalOptions="Center" VerticalOptions="Center" FontSize="20" FontAttributes="Bold" TextColor="Black"/>
+                                                                <Label Text="{Binding id}"  FontSize="20"  TextColor="Black" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                                            </StackLayout>
+                                                            <StackLayout Grid.Row="1"  Grid.Column="0" Orientation="Horizontal" BackgroundColor="White" Padding="0,0,0,0">
+                                                                <Label Text="ESTADO:" HorizontalOptions="End" VerticalOptions="Center" FontSize="20" FontAttributes="Bold" TextColor="Black"/>
+                                                                <Label x:Name="start" Text="{Binding estado}"  FontSize="20"  TextColor="Black" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                                            </StackLayout>
+                                                        </Grid>
+                                                    </Frame>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </CollectionView.ItemTemplate>
+                                    </CollectionView>
+                                </RefreshView>
+                                <ActivityIndicator Grid.Row="0" Grid.Column="0" Scale=".1" x:Name="cargar"  IsRunning="True" />
+                            </Grid>
+                        </Frame>
+                    </Grid>
+                </xct:TabViewItem>
+
+                <xct:TabViewItem Text="ORDENES ENTREGADAS" TextColor="Black" TextColorSelected="Black" FontSize="20" FontAttributes="Bold" FontSizeSelected="30" FontFamilySelected="5">
+
+                    <Grid BackgroundColor="LightGray"  ColumnSpacing="5">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Frame Grid.Row="0" Grid.Column="0" Padding="0,0,0,0" CornerRadius="15">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="60"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid Grid.Row="0" Grid.Column="0" BackgroundColor="Gray">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+
+                                    </Grid.RowDefinitions>
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="190"/>
+                                        <ColumnDefinition Width="190"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Text="Orden #" TextColor="White" FontSize="20" FontAttributes="Bold" Grid.Column="0" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                    <Label Text="Mesa" TextColor="White" FontSize="20" FontAttributes="Bold" Grid.Column="1" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                    <Label Text="Mesero" TextColor="White" FontSize="20" FontAttributes="Bold" Grid.Column="2" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                    <Label Text="Orden terminada" TextColor="White" FontSize="20" FontAttributes="Bold" Grid.Column="3" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                </Grid>
+                                <ListView IsVisible="False" x:Name="cocinaHistorialList" SelectionMode="None" Grid.Row="1" Grid.Column="0" RowHeight="60" BackgroundColor="WhiteSmoke">
+                                    <ListView.ItemTemplate >
+                                        <DataTemplate  >
+                                            <ViewCell >
+                                                <Grid Padding="0,0,0,0">
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="*"/>
+
+                                                    </Grid.RowDefinitions>
+
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="190"/>
+                                                        <ColumnDefinition Width="190"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="*"/>
+
+
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="0" Grid.Row="0" Text="{Binding id}" TextColor="Black" FontSize="22" />
+                                                    <Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="1" Grid.Row="0" Text="{Binding mesa}" TextColor="Black" FontSize="22"/>
+                                                    <Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="2" Grid.Row="0" Text="{Binding mesero}" TextColor="Black" FontSize="22"/>
+                                                    <Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="3" Grid.Row="0" Text="{Binding fecha_cerada}" TextColor="Black" FontSize="22"/>
+                                                </Grid>
+
+
+                                            </ViewCell>
                                         </DataTemplate>
-                                    </CollectionView.ItemTemplate>
-                                </CollectionView>
-                            </RefreshView>
-                            <ActivityIndicator Grid.Row="0" Grid.Column="0" Scale=".1" x:Name="cargar"  IsRunning="True" />
-                        </Grid>
-                    </Frame>
-                </Grid>
-            </xct:TabViewItem>
-
-            <xct:TabViewItem Text="ORDENES ENTREGADAS" TextColor="Black" TextColorSelected="Black" FontSize="20" FontAttributes="Bold" FontSizeSelected="30" FontFamilySelected="5">
-
-                <Grid BackgroundColor="LightGray"  ColumnSpacing="5" Padding="10,17,10,10">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Frame Grid.Row="0" Grid.Column="0" Padding="30,30,30,30" CornerRadius="15">
-                        <Grid>
-                            <ListView IsVisible="False" x:Name="cocinaHistorialList" SelectionMode="None" Grid.Row="1" Grid.Column="0" RowHeight="60" BackgroundColor="WhiteSmoke">
-                                <ListView.ItemTemplate >
-                                    <DataTemplate  >
-                                        <ViewCell >
-                                            <Grid Padding="0,0,0,0">
-                                                <Grid.RowDefinitions>
-                                                    <RowDefinition Height="*"/>
-
-                                                </Grid.RowDefinitions>
-
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="190"/>
-                                                    <ColumnDefinition Width="190"/>
-                                                    <ColumnDefinition Width="*"/>
-                                                    <ColumnDefinition Width="*"/>
-
-
-                                                </Grid.ColumnDefinitions>
-
-                                                <Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="0" Grid.Row="0" Text="{Binding id}" TextColor="Black" FontSize="22" />
-                                                <Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="1" Grid.Row="0" Text="{Binding mesa}" TextColor="Black" FontSize="22"/>
-                                                <Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="2" Grid.Row="0" Text="{Binding mesero}" TextColor="Black" FontSize="22"/>
-                                                <Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="3" Grid.Row="0" Text="{Binding fecha_cerada}" TextColor="Black" FontSize="22"/>
-                                            </Grid>
-
-
-                                        </ViewCell>
-                                    </DataTemplate>
-                                </ListView.ItemTemplate>
-                            </ListView>
-                          
-                            <ActivityIndicator Grid.Row="0" Grid.Column="0" Scale=".1" x:Name="cargar2"  IsRunning="True" />
-                        </Grid>
-                    </Frame>
-                </Grid>
-            </xct:TabViewItem>
-        </xct:TabView>
-    </StackLayout>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </Grid>
+                        </Frame>
+                        <ActivityIndicator Grid.Row="0" Grid.Column="0" Scale=".1" x:Name="cargar2"  IsRunning="True" />
+                    </Grid>
+                </xct:TabViewItem>
+            </xct:TabView>
+        </Frame>
+    </Grid>
 
 </ContentPage>

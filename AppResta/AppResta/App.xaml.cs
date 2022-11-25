@@ -29,9 +29,7 @@ namespace AppResta
             InitializeComponent();
             bool internet;
            
-          
-           
-
+          /*
             if (Connectivity.NetworkAccess == NetworkAccess.Internet)
             {
                 internet = true;
@@ -46,7 +44,7 @@ namespace AppResta
                 //Services.LoginService.Empleados(false);
                 //Services.OrdenesService.Ordene(false);
                 //Services.MesasService.Mesas(false);
-            }
+            }*/
             MainPage = new NavigationPage(new Login(true));
             //MainPage = new NavigationPage(new Login(true));
             // MainPage = new NavigationPage(new SplashCarga());
