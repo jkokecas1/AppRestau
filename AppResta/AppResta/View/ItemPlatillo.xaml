@@ -25,8 +25,16 @@ xmlns:input="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.Input
 
 
             <Grid Grid.Row="0" Grid.Column="0" BackgroundColor="WhiteSmoke" Padding="8,8,8,8">
-                <Label Grid.Row="0" Grid.Column="0" x:Name="nombPlatillo"  TextColor="Black" FontAttributes="Bold" FontSize="25"/>
-                <ImageButton Grid.Row="0" Grid.Column="1" Clicked="cerrarPop" HorizontalOptions="End"  Source="cerrar.png"/>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="40"/>
+
+                </Grid.ColumnDefinitions>
+                <Label Grid.Row="0" Grid.Column="0" x:Name="nombPlatillo"  TextColor="Black" FontAttributes="Bold" FontSize="25" BackgroundColor="WhiteSmoke"/>
+                <ImageButton Grid.Row="0" Grid.Column="1" Clicked="cerrarPop" HorizontalOptions="End"  Source="cerrar.png" BackgroundColor="WhiteSmoke"/>
 
             </Grid>
 
@@ -73,15 +81,18 @@ xmlns:input="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.Input
                                                 </Grid.RowDefinitions>
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="*"/>
+
                                                 </Grid.ColumnDefinitions>
 
 
                                                 <StackLayout  Grid.Column="0" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical">
                                                     <Label x:Name="nombre" Text="{Binding extra_nombre}" TextColor="Black" FontSize="15" FontAttributes="Bold"/>
                                                 </StackLayout>
-                                                <StackLayout  Grid.Column="0" Grid.Row="1" HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical">
+                                                <StackLayout  Grid.Column="0" Grid.Row="1" HorizontalOptions="Center" VerticalOptions="Center" Orientation="Horizontal">
+                                                    <Label Text="$" TextColor="Black" FontSize="15"/>
                                                     <Label x:Name="cantidad" Text="{Binding extra_precio}" TextColor="Black" FontSize="15"/>
                                                 </StackLayout>
+
 
                                             </Grid>
 
@@ -93,7 +104,7 @@ xmlns:input="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.Input
                         </CollectionView>
 
 
-                        <Entry BackgroundColor="LightGray" x:Name="comentTxt" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Placeholder="Comentarios" TextColor="Black"/>
+                        <Editor  BackgroundColor="LightGray" x:Name="comentTxt" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Placeholder="Comentarios" TextColor="Black"/>
 
                     </Grid>
 

@@ -14,141 +14,154 @@ namespace AppResta.View
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class Mesa : ContentPage
     {
+        // VARIABLES GLOBALES
         string nomb = "";
-       
-        public Mesa(Model.Empleado empleado = null)
-        {
+        bool internet;
+        List<Model.Ordenes> list;
+        List<Model.Cart> listMain, listMainAux;
+        List<Model.Mesas> mesa;
+        List<Model.Categorias> categorias;
+        Model.Empleado empleado;
+        int iDorden;
 
+        // CONSTRUCTOR
+        public Mesa(List<Model.Ordenes> orden =null, List<Model.Categorias> categorias2 = null, List<Model.Mesas> mesas = null, Model.Empleado empleado = null, bool interent = false)
+        {
             InitializeComponent();
+
+            this.internet = interent;
+
+            Device.StartTimer(TimeSpan.FromSeconds(1.2), () =>
+            {
+                cargar.IsEnabled = false;
+                cargar.IsRunning = false;
+                cargar.IsVisible = false;
+                mesasListView.IsVisible = true;
+                return false;
+            });
+
             BindingContext = new ViewModel.MesaViewModel(Navigation);
             nomb = empleado.nombre;
-            nombreEmpl.Text = "Bienvenido: "+empleado.nombre;
-            puestoEmpl.Text = empleado.puesto;
-            mesasListView.ItemsSource = Mesas();
-           
-            Navigation.RemovePage(new Login());
+            nombreEmpl.Text = "Bienvenido: " + empleado.nombre;
+            //puestoEmpl.Text = empleado.puesto;
+
+            if (mesas != null)
+                mesa = mesas; //Mesas();
+            else
+                mesa = Services.MesasService.ObtenerMesas();
+
+            if (orden != null)
+                list = orden; 
+            else
+                list = Services.OrdenesService.Ordene();
+
+            if (categorias2 != null)
+                categorias = categorias2;
+            else
+                categorias = Services.CartService.Categorias2();
+
+            init(mesa);
+
+            listMainAux = Services.CartService.Carts(DateTime.Now.ToString("yyyy-MM-dd"));
+
+            this.empleado = empleado;
+            Device.StartTimer(TimeSpan.FromSeconds(60), updateTimeLive);
         }
 
+        /*********************************************************************
+         *  METODO INIT:
+         *      INICIALIZA TODAS LAS ACCIONES
+         *********************************************************************/
+
+        public void init(List<Model.Mesas> mesa)
+        {
+            //List<Model.Mesas> mesas = await App.Database.GetMesaAsync();
+
+            //if (internet)
+            //{
+            mesasListView.ItemsSource = mesa;
+            iDorden = Services.OrdenesService.IDordene() +1;
+
+            //List<Model.Mesas> m = Mesas();
+
+            //  }
+
+        }
+
+        /*********************************************************************
+         *  METODO updateTimeLive:
+         *      ACTUALIZA LOS DATOS CON EL HILO PRINCIPAL
+         *********************************************************************/
+        bool updateTimeLive()
+        {
+            Device.BeginInvokeOnMainThread(() => init(Services.MesasService.ObtenerMesas()));
+            return true;
+        }
+
+        /*********************************************************************
+         *  METODO RefreshMesas_Refreshing:
+         *      REFRESCA LA LISTA DE LAS MESAS
+         *********************************************************************/
         private void RefreshMesas_Refreshing(object sender, EventArgs e)
         {
+            List<Model.Mesas> mesa = Services.MesasService.ObtenerMesas();//Mesas();
 
+            RefreshMesas.IsRefreshing = true;
+            Task.Delay(800);
+            if (mesa != null)
+                mesasListView.ItemsSource = mesa;
 
-            Task.Delay(700);
-            mesasListView.ItemsSource = Mesas();
             RefreshMesas.IsRefreshing = false;
         }
 
+        /*********************************************************************
+         *  METODO select_Item:
+         *      SELECCIONA EL ELEMENTO DE LA LISTA Y ABRE LA PANTALLA DE MAIN
+         *********************************************************************/
         public void select_Item(object sender, SelectionChangedEventArgs e)
         {
             var mesas = e.CurrentSelection.FirstOrDefault() as Model.Mesas;
-            
-            Navigation.PushAsync(new Main(true, idOrden: Int32.Parse(mesas.id_orden), nomb, mesas.mesa),false);
-            mesasListView.ItemsSource = null;
-            mesasListView.ItemsSource = Mesas();
+           // listMain.Clear();
 
-
-            //mesasListView.IsRefreshing = false;
-        }
- 
-        public List<Model.Mesas> Mesas()
-        {
-            Model.Mesas mesa;
-
-            var mesas = new List<Model.Mesas>();
-            var client = new HttpClient();
-            
-            client.BaseAddress = new Uri("http://192.168.1.112/resta/admin/mysql/empleados/index.php?op=obtenerMesas");
-            HttpResponseMessage response = client.GetAsync(client.BaseAddress).Result;
-            
-            if (response.IsSuccessStatusCode)
-            {
-                var content = response.Content.ReadAsStringAsync().Result;
-                string json = content.ToString();
-                var jsonArray = JArray.Parse(json.ToString());
-                string[] array = new string[2];
-                foreach (var item in jsonArray)
+            //// CHACAR
+            if(listMainAux != null)
+                foreach(Model.Cart c in listMainAux)
                 {
-                    mesa = new Model.Mesas();
-                    int id = Int32.Parse(item["id"].ToString());
-                    string nombre = item["mesa"].ToString();
-                    string mesero = item["mesa"].ToString();
-                    array = OrdenInMesas(nombre);
-                    mesa.id = id;
-                    mesa.mesa = nombre;
-                    if (array[0] != null)
+                    if(c.id+"" == mesas.id_orden )
                     {
-                        mesa.orden = array[0];
-                        mesa.id_orden = array[1];
+                        //listMain.Add(c);
+                       Console.WriteLine(c.id + " == "+mesas.id_orden +" && "+ c.mesa + " == " + mesas.mesa);
                     }
-                    else {
-                        mesa.orden ="0";
-                        mesa.id_orden = "0";
-                    }
-                    mesas.Add(mesa);
+                    //Console.WriteLine(c.id + " == " + mesas.id_orden + " && " + c.mesa + " == " + mesas.mesa);
                 }
+            
+            if (Int32.Parse(mesas.id_orden) == 0)
+                Navigation.PushAsync(new Main(true, band: false, idOrden: iDorden, empleado, mesas.mesa, listMain, categorias), false);
+            else {
+               // listMain = Services.CartService.CartMesa(mesas.id_orden, mesas.mesa);
+                Navigation.PushAsync(new Main(true, band: true, idOrden: Int32.Parse(mesas.id_orden), empleado, mesas.mesa, listMain, categorias), false);
+            }
+               
 
-                return mesas;
-            }
-            else
-            {
-                return null;
-            }
         }
 
-        //VALIDA SI LA MESA TINE ORDEN ACTIVA
-        public string[] OrdenInMesas(string mesa)
+        /*********************************************************************
+         *  METODO OnBackButtonPressed:
+         *      DESACTIVA EL BOTON DE REGRESAR
+         *********************************************************************/
+        protected override bool OnBackButtonPressed()
         {
-            var client = new HttpClient();
-            string[] array = new string[2];
-            client.BaseAddress = new Uri("http://192.168.1.112/resta/admin/mysql/orden/index.php?op=obtenerOrdenMesas&mesa=" + mesa);
-            HttpResponseMessage response = client.GetAsync(client.BaseAddress).Result;
-
-            if (response.IsSuccessStatusCode)
-            {
-                var content = response.Content.ReadAsStringAsync().Result;
-                string json = content.ToString();
-                var jsonArray = JArray.Parse(json.ToString());
-                foreach (var item in jsonArray)
-                {
-                    Console.WriteLine(item["estado"]);
-                    if (Int32.Parse(item["cont"].ToString()) == 1)
-                    {
-                        if (Int32.Parse(item["estado"].ToString()) == 0)
-                        {
-                            array[0] = "#2C67E6";
-                            array[1] = item["id_orden"].ToString();
-                        }
-                        else if (Int32.Parse(item["estado"].ToString()) == 1)
-                        {
-                            array[0] = "#3AE62C ";
-                            array[1] = item["id_orden"].ToString();
-                        } else if (Int32.Parse(item["estado"].ToString()) == 2) {
-                            array[0] = "#F7DB2F";
-                            array[1] = item["id_orden"].ToString();
-                        }
-                        else {
-                            array[0] = "#E62C2C";
-                            array[1] = item["id_orden"].ToString();
-                        }
-                        
-                    }
-                    /*
-                    if(Int32.Parse(item["cont"].ToString()) == 0)
-                    {
-                        array[0] = "#02B942";
-                    }*/
-
-                }
-                
-            }
-            else
-            {
-                return null;
-            }
-
-            return array;
+            base.OnBackButtonPressed();
+            return true;
         }
 
-       
+        /*********************************************************************
+         *  METODO Button_Clicked:
+         *      ABRE LA PAGINA DE ORDENES
+         *********************************************************************/
+        private void Button_Clicked(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new Ordenes(ord: list), false);
+        }
     }
 }

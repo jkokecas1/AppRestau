@@ -10,25 +10,46 @@ x:Class="AppResta.View.ConfirmarPago">
 
 
 
-    <Frame BackgroundColor="WhiteSmoke" Padding="20,20,20,20" Margin="280,200,280,200" CornerRadius="20">
-        <Grid RowSpacing="20">
+    <Frame BackgroundColor="WhiteSmoke" Padding="20,20,20,20" Margin="300,180,300,180" CornerRadius="20">
+        <Grid RowSpacing="10">
+
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="50"/>
+
+
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
             <Grid Grid.Row="0" Grid.Column="0">
-                <Label Grid.Row="0" Grid.Column="0" Text="CONFIRMAR PAGO" TextColor="Black" FontAttributes="Bold" FontSize="25"/>
-                <ImageButton Grid.Row="0" Grid.Column="1" Clicked="cerrarPop" HorizontalOptions="End"  Source="cerrar.png" BackgroundColor="Transparent"/>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="30"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Row="0" Grid.Column="0" Text="CONFIRMAR PAGO" TextColor="Black" HorizontalOptions="Start" VerticalOptions="Center" FontAttributes="Bold" FontSize="22"/>
+                <ImageButton Grid.Row="0" Grid.Column="2" Clicked="cerrarPop" VerticalOptions="Start" HorizontalOptions="End"  Source="cerrar.png" BackgroundColor="Transparent"/>
             </Grid>
 
-            <Grid Grid.Row="1" Grid.Column="0" HorizontalOptions="Center">
-                <Label Grid.Row="0" Grid.Column="0" Text="TIPO DE PAGO:" TextColor="Black" FontSize="20"/>
-                <Label Grid.Row="0" Grid.Column="2" x:Name="tipo" Text="0" FontSize="20" TextColor="Black" />
-                <Label Grid.Row="1" Grid.Column="0" Text="MONTO:" TextColor="Black" FontSize="20" BackgroundColor="LightGray"/>
-                <Label Grid.Row="1" Grid.Column="1" x:Name="monto" Text="0" HorizontalOptions="Center" TextColor="Black" FontSize="20" BackgroundColor="LightGray"/>
-                <Label Grid.Row="2" Grid.Column="0" Text="CAMBIO:" TextColor="Black" FontSize="20"/>
-                <Label Grid.Row="2" Grid.Column="1" x:Name="cambio" Text="0" HorizontalOptions="Center" TextColor="Black" FontSize="20"/>
-                <Label Grid.Row="3" Grid.Column="0" Text="TOTAL:" TextColor="Black" FontSize="20" BackgroundColor="LightGray"/>
-                <Label Grid.Row="3" Grid.Column="1" x:Name="total" Text="0" HorizontalOptions="Center" TextColor="Black" FontSize="20" BackgroundColor="LightGray"/>
+
+            <Grid Grid.Row="1" Grid.Column="0" >
+                <Label Grid.Row="0" Grid.Column="0" Text="TIPO DE PAGO:" TextColor="Black" HorizontalOptions="Start" FontSize="20"/>
+                <Label Grid.Row="0" Grid.Column="1" x:Name="tipo" Text="0" FontSize="20" HorizontalOptions="Start" TextColor="Black" />
+                <Label Grid.Row="1" Grid.Column="0" Text="MONTO:" TextColor="Black" FontSize="20" BackgroundColor="LightGray" HorizontalOptions="Start"/>
+                <Label Grid.Row="1" Grid.Column="1" x:Name="monto" Text="0" HorizontalOptions="Start" TextColor="Black" FontSize="20" BackgroundColor="LightGray"/>
+                <Label Grid.Row="2" Grid.Column="0" Text="CAMBIO:" TextColor="Black" HorizontalOptions="Start" FontSize="20"/>
+                <Label Grid.Row="2" Grid.Column="1" x:Name="cambio" Text="0" HorizontalOptions="Start" TextColor="Black" FontSize="20"/>
+                <Label Grid.Row="3" Grid.Column="0" Text="TOTAL:" TextColor="Black" FontSize="20" HorizontalOptions="Start" BackgroundColor="LightGray"/>
+                <Label Grid.Row="3" Grid.Column="1" x:Name="total" Text="0" HorizontalOptions="Start" TextColor="Black" FontSize="20" BackgroundColor="LightGray"/>
             </Grid>
 
-            <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="1">
+            <Grid Grid.Row="2" Grid.Column="0">
                 <Button Text="Confirmar Pago" Clicked="confirmarPago" TextColor="White" BackgroundColor="Green" FontSize="20"/>
             </Grid>
 

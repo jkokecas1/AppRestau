@@ -97,7 +97,8 @@ namespace AppResta.ViewModel
             if (_Token == true)
             {
 
-                Navigation.PushAsync(new Login());
+                //Navigation.PushAsync(new Login(true));
+                //Navigation.PushAsync(new Login(true));
             }
         }
 

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using AppResta.Model;
 using Newtonsoft.Json.Linq;
 using Rg.Plugins.Popup.Services;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -17,18 +18,29 @@ namespace AppResta.View
     {
 
         static List<Model.Ordenes> ordenList;
-        public Ordenes(Main mainPage = null)
+        
+
+        public Ordenes(Main mainPage = null, List<Model.Ordenes> ord = null)
         {
             InitializeComponent();
+            if (ord != null)
+                ordenesListView.ItemsSource = ord;
+            else
+                ordenesListView.ItemsSource = Ordene();
+            Device.StartTimer(TimeSpan.FromSeconds(0.3), () => {
+                cargar.IsEnabled = false;
+                cargar.IsRunning = false;
+                cargar.IsVisible = false;
+                grilAbsolute.IsVisible = true;
+                return false;
+            });
             BindingContext = new ViewModel.OrdenesViewModel(Navigation);
-            //btnNotification.Clicked += BtnNotification_Clicked;
-            if(mainPage != null)
-                Navigation.RemovePage(mainPage);
-            init();
+            
         }
 
-        public void init()
+        public static void init(ListView ordenesListView)
         {
+           
             ordenList = Ordene();
             if(ordenList != null)
                 ordenesListView.ItemsSource = ordenList;//await App.Database.GetOrdenesAsync(); //
@@ -39,7 +51,7 @@ namespace AppResta.View
             int id = Int32.Parse(((MenuItem)sender).CommandParameter.ToString());
 
 
-            Pago pago = new Pago(ordenList, id);
+            Pago pago = new Pago(ordenList, id, ordenesListView);
             PopError error = new PopError("LA ORDEN AUN NO SE ESTA LISTA");
             foreach (Model.Ordenes orden in ordenList)
             {
@@ -86,10 +98,10 @@ namespace AppResta.View
                 var content = response.Content.ReadAsStringAsync().Result;
                 string json = content.ToString();
                 var jsonArray = JArray.Parse(json.ToString());
-                int cont = 0;
+             
                 foreach (var item in jsonArray)
                 {
-                    cont++;
+                    
                     orden = new Model.Ordenes();
 
                     orden.id = Int32.Parse(item["id"].ToString());
@@ -97,19 +109,21 @@ namespace AppResta.View
                     if (item["fecha_start"].ToString() != "")
                     {
                         orden.fecha_start = item["fecha_start"].ToString().Remove(0, 10);
-                        orden.fecha_estimada = item["fecha_estimada"].ToString().Remove(0, 10);
+                        //orden.fecha_estimada = item["fecha_estimada"].ToString().Remove(0, 10);
                     }
-
-                    orden.fecha_cerada = ObtenerNumeorDeItems(orden.id, 1) + "/" + ObtenerNumeorDeItemsPlatillos(orden.id, 1);
+                    //PLATILLOS
+                   // orden.fecha_cerada = ObtenerNumeorDeItems(orden.id, 1);// + "/" + ObtenerNumeorDeItemsPlatillos(orden.id, 1);
                     switch (item["estado"].ToString())
                     {
                         case "1": orden.estado = "En espera"; break;
                         case "2": orden.estado = "Preparando... "; break;
                         case "3": orden.estado = "! Terminado !"; break;
                     }
-                    orden.mesero = ObtenerNumeorDeItems(orden.id,2) + "/" + ObtenerNumeorDeItemsPlatillos(orden.id,2);
+                    //BEBIDAS
+                    //orden.mesero = ObtenerNumeorDeItems(orden.id, 2);//+ "/" + ObtenerNumeorDeItemsPlatillos(orden.id,2);
                     orden.mesa = item["mesa"].ToString();
-                    orden.total = obtenerPagoFinal(orden.id).ToString() ;// 
+                   // orden.totoalExtras = obtenerPagoFinal(orden.id)[1].ToString();
+                    //orden.total = obtenerPagoFinal(orden.id)[0].ToString() ;// 
                     orden.pago = Int32.Parse(item["pago"].ToString());
                     ordenList.Add(orden);
                 }
@@ -121,30 +135,6 @@ namespace AppResta.View
             }
         }
 
-        public static double obtenerPagoFinal(int id)
-        {
-            double total = 0.0;
-
-            var client1 = new HttpClient();
-
-            //Console.WriteLine(("http://192.168.1.112/resta/admin/mysql/orden/index.php?op=ObtenerPrecioItems&idCart=" + id));
-            client1.BaseAddress = new Uri(("http://192.168.1.112/resta/admin/mysql/orden/index.php?op=ObtenerPrecioItems&idCart=" + id));
-            HttpResponseMessage response1 = client1.GetAsync(client1.BaseAddress).Result;
-            if (response1.IsSuccessStatusCode)
-            {
-                var content1 = response1.Content.ReadAsStringAsync().Result;
-                string json1 = content1.ToString();
-
-                var jsonArray1 = JArray.Parse(json1.ToString());
-
-                //userInfo = JsonConvert.DeserializeObject<List<Model.Categorias>>(content);
-                foreach (var item in jsonArray1)
-                {
-                    total += Double.Parse(item["precio"].ToString().Replace(",", "."));
-                }
-            }
-            return total;
-        }
         public static string ObtenerNumeorDeItems(int id, int opc)
         {
             string cantidad = "";
@@ -160,7 +150,6 @@ namespace AppResta.View
 
                 var jsonArray1 = JArray.Parse(json1.ToString());
 
-                //userInfo = JsonConvert.DeserializeObject<List<Model.Categorias>>(content);
                 foreach (var item in jsonArray1)
                 {
                     cantidad = item["cantidad"].ToString();
@@ -172,7 +161,7 @@ namespace AppResta.View
         public static string ObtenerNumeorDeItemsPlatillos(int id,int opc)
         {
             string cantidad = "";
-
+            
             var client1 = new HttpClient();
 
             client1.BaseAddress = new Uri(("http://192.168.1.112/resta/admin/mysql/orden/index.php?op=ObtenerNumeorDeItemsPlatillos&idCart=" + id+"&opc="+opc));
@@ -193,11 +182,57 @@ namespace AppResta.View
             return cantidad;
         }
 
-        private void RefreshOrdenes_Refreshing(object sender, EventArgs e)
+        private async void RefreshOrdenes_Refreshing(object sender, EventArgs e)
         {
-            Task.Delay(700);
-            init();
+            Task.Delay(100);
+            ordenList = Ordene();
+            //init(ordenesListView);
+            //VIVRACION
+            /* try
+             {
+                 // Use default vibration length
+                 Vibration.Vibrate();
+
+                 // Or use specified time
+                 var duration = TimeSpan.FromSeconds(1);
+                 Vibration.Vibrate(duration);
+             }
+             catch (FeatureNotSupportedException ex)
+             {
+                 // Feature not supported on device
+             }
+             catch (Exception ex)
+             {
+                 // Other error has occurred.
+             }*/
+            if (ordenList != null) {
+                foreach (var item in ordenList)
+                {
+
+                    if (item.estado == "! Terminado !")
+                    {
+
+                        await TextToSpeech.SpeakAsync("ORDEN NUMERO " + item.id + " TERMINADA", new SpeechOptions
+                        {
+                            Volume = 1
+                        });
+                    }
+                }
+
+                ordenesListView.ItemsSource = ordenList;
+
+            }
             RefreshOrdenes.IsRefreshing = false;
+        }
+        /*
+        protected override bool OnBackButtonPressed()
+        {
+            base.OnBackButtonPressed();
+            return true;
+        }*/
+        private void BtnSalir_Clicked(object sender, EventArgs e)
+        {
+            Navigation.PopToRootAsync();
         }
     }
 }

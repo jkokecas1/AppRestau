@@ -10,16 +10,29 @@ using System.Reflection;
 using System.IO;
 using AppResta.Model;
 using System.Collections.ObjectModel;
+using System.Net.Http;
+using Xamarin.Essentials;
 
 namespace AppResta.View
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class Login : ContentPage
     {
-         public Login()
+        bool internet;
+  
+        public Login(bool interent)
         {
+            Navigation.PushAsync(new SplashCarga());
+            this.internet = interent;
             InitializeComponent();
-            BindingContext = new ViewModel.LoginViewModel(Navigation);
-        }  
+            
+            BindingContext = new ViewModel.LoginViewModel(Navigation, internet);
+           
+           
+        }
+
+        
+      
+
     }
 }

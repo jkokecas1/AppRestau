@@ -37,7 +37,7 @@
                         <ColumnDefinition Width="200"/>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="410"/>                        
+                        <ColumnDefinition Width="410"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Image Source="klassylogo.png" VerticalOptions="Start" Grid.Row="0" Grid.Column="0"></Image>
@@ -46,57 +46,60 @@
                         <Label Text="COMANDA" HorizontalOptions="Center" VerticalOptions="Center" TextColor="Black" ></Label>
                     </Frame>
                     <Label  x:Name="NombTexto" FontSize="20" TextColor="#000" HorizontalOptions="Center" VerticalOptions="Center" Padding="0,0,0,0" Grid.Row="0" Grid.Column="3" BackgroundColor="Transparent"></Label>
-                    <Button Text="SALIR"  Command="{Binding NavLoginCommand}" Grid.Row="0" Grid.Column="4" HorizontalOptions="End" BackgroundColor="Red" CornerRadius="0" TextColor="#000"> </Button>
-                    
+                    <Button Text="SALIR"  Clicked="BtnSalir_Clicked" Grid.Row="0" Grid.Column="4" HorizontalOptions="End" BackgroundColor="Red" CornerRadius="0" TextColor="#FFFF"></Button>
+
 
                 </Grid>
             </Grid>
 
-        
 
 
-                <Frame  Grid.Row="1" Grid.Column="0" Padding="5,0,5,0" CornerRadius="5" Margin="10,0,0,0">
-                    <Grid >
-                        <Label HorizontalOptions="Center" VerticalOptions="Center" x:Name="OrdenTexto" FontSize="20" TextColor="#000" Grid.Row="0" Grid.Column="0"></Label>
 
-                        <Label HorizontalOptions="Center" VerticalOptions="Center" x:Name="MesaTexto" Grid.Row="0" Grid.Column="1"  FontSize="20" TextColor="Black" ></Label>
+            <Frame  Grid.Row="1" Grid.Column="0" Padding="5,0,5,0" CornerRadius="5" Margin="10,0,0,0">
+                <Grid >
+                    <Label HorizontalOptions="Center" VerticalOptions="Center" x:Name="OrdenTexto" FontSize="20" TextColor="#000" Grid.Row="0" Grid.Column="0"></Label>
 
-                    </Grid>
-                </Frame>
-            
-            
-            
-            
+                    <Label HorizontalOptions="Center" VerticalOptions="Center" x:Name="MesaTexto" Grid.Row="0" Grid.Column="1"  FontSize="20" TextColor="Black" ></Label>
+
+                </Grid>
+            </Frame>
+
+
+
+
 
             <Grid Grid.Row="2" Grid.Column="0" Margin="10,0,0,0">
                 <Frame CornerRadius="5" Padding="0,0,0,0">
 
-                    <Grid RowSpacing="0" Grid.Row="0" Grid.Column="0"
-                      ColumnSpacing="0">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="45"/>
-                                <RowDefinition Height="*"/>
-                                
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
+                    <Grid RowSpacing="0" Grid.Row="0" Grid.Column="0" ColumnSpacing="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="45"/>
+                            <RowDefinition Height="*"/>
+
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
 
 
                         <Grid BackgroundColor="WhiteSmoke" Grid.Row="0" Grid.Column="0" Padding="20,10,40,0">
-                                <Label Grid.Row="0" Grid.Column="0" Text="Nombre" TextColor="Black"  FontSize="Body"/>
-                                <Label Grid.Row="0" Grid.Column="1" HorizontalOptions="End" Text="Cantidad" TextColor="Black"  FontSize="Body"/>
-                                <Label Grid.Row="0" Grid.Column="2" HorizontalOptions="End" Text="Precio" TextColor="Black" FontSize="Body"/>
-                                <Label Grid.Row="0" Grid.Column="3" HorizontalOptions="End" Text="Total" TextColor="Black" FontSize="Body"/>
-                            </Grid>
+                            <Label Grid.Row="0" Grid.Column="0" HorizontalOptions="Start" Text="Cantidad" TextColor="Black" FontSize="Body"/>
+                            <Label Grid.Row="0" Grid.Column="1" HorizontalOptions="Start" Text="Nombre" TextColor="Black"  FontSize="Body"/>
+                            <Label Grid.Row="0" Grid.Column="2" HorizontalOptions="Start" Text="Precio" TextColor="Black" FontSize="Body"/>
+                            <!--
+                            <Label Grid.Row="0" Grid.Column="3" HorizontalOptions="Center" Text="Cantidad extras" TextColor="Black" FontSize="Body"/>
+                            <Label Grid.Row="0" Grid.Column="4" HorizontalOptions="Center" Text="Precio extras" TextColor="Black" FontSize="Body"/>
+                            -->
+                            <Label Grid.Row="0" Grid.Column="3" HorizontalOptions="Start" Text="Total" TextColor="Black" FontSize="Body"/>
+                        </Grid>
 
-                            <!---LIST  VIEW-->
-                        <Grid Grid.Row="1" Grid.Column="0" >
+                        <!---LIST  VIEW-->
+                        <Grid Grid.Row="1" Grid.Column="0">
                             <RefreshView x:Name="RefreshCart" Refreshing="RefreshCart_Refreshing">
                                 <ListView BackgroundColor="WhiteSmoke" x:Name="test2ListView" ItemSelected="SelectItem" >
-                                    <ListView.ItemTemplate >
-                                        <DataTemplate  >
-                                            <ViewCell  >
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <ViewCell>
                                                 <!--<ViewCell.ContextActions>
                                                 <MenuItem Clicked="MenuItem_Clicked"
                                                 CommandParameter="{Binding .}"
@@ -111,35 +114,42 @@
                                                 <SwipeView>
                                                     <SwipeView.RightItems>
                                                         <SwipeItems  SwipeBehaviorOnInvoked="Close">
+                                                            <SwipeItem Text="Borrar"
+                                                                           CommandParameter="{Binding idItem}"
+                                                                           IconImageSource="borrar.png"
+                                                                           BackgroundColor="Red"
+                                                                           Invoked="SwipeItem_Eliminar"/>
                                                             <SwipeItem Text="Editar"    
                                                                            CommandParameter="{Binding platillo}"
                                                                       
                                                                            IconImageSource="editar.png"
                                                                            BackgroundColor="Green"
                                                                            Invoked="SwipeItem_Editar"/>
-                                                            <SwipeItem Text="Borrar"
-                                                                           CommandParameter="{Binding idItem}"
-                                                                           IconImageSource="borrar.png"
-                                                                           BackgroundColor="Red"
-                                                                           Invoked="SwipeItem_Eliminar"/>
+
                                                         </SwipeItems>
                                                     </SwipeView.RightItems>
                                                     <Grid Padding="20,0,0,0" BackgroundColor="WhiteSmoke">
-                                                        <StackLayout  Grid.Column="0" Grid.Row="0" VerticalOptions="Center" Orientation="Vertical" BackgroundColor="WhiteSmoke">
-                                                            <Label  Text="{Binding platillo}" TextColor="Black" FontSize="15"/>
+
+                                                        <StackLayout Grid.Column="0" Grid.Row="0"   VerticalOptions="Center" Orientation="Vertical" BackgroundColor="WhiteSmoke">
+                                                            <Label Text="{Binding cantidad }"  TextColor="Black" FontSize="15"/>
                                                         </StackLayout>
-                                                        <StackLayout  Grid.Column="1" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical">
-                                                            <Label Text="{Binding cantidad}" TextColor="Black" FontSize="15"/>
+                                                        <StackLayout Grid.Column="1" Grid.Row="0" VerticalOptions="Center" Orientation="Vertical">
+                                                            <Label Text="{Binding platillo}" TextColor="Black" FontSize="15"/>
                                                         </StackLayout>
-                                                        <StackLayout  Grid.Column="2" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical">
+                                                        <StackLayout   Grid.Column="2" Grid.Row="0"  VerticalOptions="Center" Orientation="Vertical">
                                                             <Label Text="{Binding precio}" TextColor="Black" FontSize="15"/>
                                                         </StackLayout>
+                                                        <!--
                                                         <StackLayout  Grid.Column="3" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical">
+                                                            <Label Text="{Binding precio}" TextColor="Black" FontSize="15"/>
+                                                        </StackLayout>
+                                                        <StackLayout  Grid.Column="4" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical">
+                                                            <Label Text="{Binding precio}" TextColor="Black" FontSize="15"/>
+                                                        </StackLayout> -->
+                                                        <StackLayout  Grid.Column="3" Grid.Row="0"  VerticalOptions="Center" Orientation="Vertical">
                                                             <Label Text="{Binding total}" TextColor="Black" FontSize="15"/>
                                                         </StackLayout>
-                                                        <StackLayout Grid.Column="0" Grid.Row="1" HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical">
-                                                            <Label Text="Nombre" IsVisible="{Binding visible}" ></Label>
-                                                        </StackLayout>
+
                                                     </Grid>
                                                 </SwipeView>
 
@@ -151,123 +161,100 @@
                                     </ListView.ItemTemplate>
                                 </ListView>
                             </RefreshView>
-                            
+
                         </Grid>
 
                         <!--END LIST  x:Name="test2ListView"-->
-                        </Grid>
-                       
-                </Frame>
-               </Grid>
-
-
-
-
-           
-                <Frame CornerRadius="5" Grid.Row="3" Grid.Column="0" Margin="10,0,0,10" Padding="0,0,0,0">
-                <Grid Padding="0,0,0,0" RowSpacing="0">
-                    <Grid Grid.Row="0" Grid.Column="0" Padding="10,10,0,15" BackgroundColor="WhiteSmoke">
-                            <Grid.RowDefinitions>
-
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="60"/>
-                            </Grid.ColumnDefinitions>
-                            <Label Grid.Row="0" Grid.Column="0" FontSize="Body" TextColor="Black"  Text="Precio Total" />
-                            <Image Source="dinero.png" Grid.Row="0" Grid.Column="1" HorizontalOptions="End" VerticalOptions="Center"/>
-                            <Label Grid.Row="0" Grid.Column="2" HorizontalOptions="StartAndExpand" FontSize="Body" TextColor="Black" x:Name="totalpago" />
-                        </Grid>
-
-
-                    <Grid BackgroundColor="White" Grid.Row="1" Grid.Column="0" Padding="5,5,5,5">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="40"/>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-
-
-                            <Button Scale=".8" Grid.Row="0" Grid.Column="0" HorizontalOptions="Start" FontSize="Body" CornerRadius="10"  Text="..." />
-                            <Button Scale=".8" HorizontalOptions="End" Grid.Row="0" Grid.Column="1" FontSize="Body" CornerRadius="10" TextColor="#FFFF" BackgroundColor="Green" Text="ORDENAR" Clicked="Oredenar_orden"/>
-                        </Grid>
-
-
                     </Grid>
+
                 </Frame>
-
-
-
-
-
-
-
-
-
-
-            <Frame Grid.Row="1" Grid.Column="1" Grid.RowSpan="3" BackgroundColor="WhiteSmoke" Padding="5,5,5,5" CornerRadius="5" Margin="0,0,10,10">
-            <Grid >
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="50"/>
-                    <RowDefinition Height="*"/>
-
-
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-
-                </Grid.ColumnDefinitions>
-                <Button TextColor="White"  Text="Categorias" Clicked="returnCategorias" ImageSource="regresar.png" Padding="10,0,320,0" Grid.Column="0" Grid.Row="0" BackgroundColor="DimGray" >
-                    
-                </Button>
-                <RefreshView Grid.Row="1" Grid.Column="0" >
-                    <CollectionView x:Name="testListView" SelectionMode="Single" SelectionChanged="select_Item">
-                        <CollectionView.ItemsLayout>
-                            <GridItemsLayout Orientation="Vertical" Span="3"/>
-                        </CollectionView.ItemsLayout>
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate>
-                                <Grid Padding="5">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="100"/>
-                                    </Grid.RowDefinitions>
-                                    <Frame HasShadow="True" Padding="5" CornerRadius="10">
-                                        <Grid BackgroundColor="White" RowSpacing="0" Padding="9,9,9,9">
-                                            <Grid.RowDefinitions >
-                                                <RowDefinition Height="*"/>
-                                                <RowDefinition Height="20"/>
-                                            </Grid.RowDefinitions>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="*"/>
-                                            </Grid.ColumnDefinitions>
-
-                                            <Grid Grid.Row="0"  Grid.Column="0"  BackgroundColor="White" Padding="0,0,0,0">
-                                                <Label Text="{Binding nombre}" HorizontalOptions="Center" VerticalOptions="Center" FontSize="20" FontAttributes="Bold" TextColor="Black"/>
-                                            </Grid>
-
-                                            <Grid Grid.Row="1"  Grid.Column="0" BackgroundColor="White" HorizontalOptions="Center" Padding="0,0,0,0">
-                                                <Label Text="{Binding precio}" FontSize="20"  TextColor="Black" FontAttributes="Bold" HorizontalOptions="Center" Padding="0,0,0,0"/>
-                                            </Grid>
-
-
-                                        </Grid>
-
-                                    </Frame>
-
-                                </Grid>
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                    </CollectionView>
-
-                </RefreshView>
             </Grid>
+
+
+
+
+
+            <Frame CornerRadius="5" Grid.Row="3" Grid.Column="0" Margin="10,0,0,10" Padding="10,10,10,10">
+                <Grid >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+
+
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="20"/>
+                        <ColumnDefinition Width="190"/>
+                        <ColumnDefinition Width="*"/>
+
+
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="Total a pagar" FontAttributes="Bold" TextColor="Black" VerticalOptions="Center" FontSize="25"/>
+                    <Label Text="$" FontSize="35" TextColor="Black" Grid.Row="1" Grid.Column="0" HorizontalOptions="End" FontAttributes="Bold" VerticalOptions="Start"/>
+                    <Label x:Name="totalpago"  Grid.Row="1" Grid.Column="1" HorizontalOptions="Start"  FontSize="35" TextColor="Black" FontAttributes="Bold" VerticalOptions="Start"/>
+                    <Button x:Name="btnOrdenar" CornerRadius="10" Grid.Row="0" Grid.Column="2" Grid.RowSpan="2"  Text="ORDENAR" FontSize="25" TextColor="White"
+                            BackgroundColor="Green" WidthRequest="200" Clicked="Oredenar_orden" />
+                </Grid>
+            </Frame>
+            <Frame Grid.Row="1" Grid.Column="1" Grid.RowSpan="3" BackgroundColor="WhiteSmoke" Padding="5,5,5,5" CornerRadius="5" Margin="0,0,10,10">
+                <Grid >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="*"/>
+
+
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+
+                    </Grid.ColumnDefinitions>
+                    <Button TextColor="Black"  x:Name="tituloR" Text="Categorias" FontSize="20" Clicked="returnCategorias" ImageSource="regresar.png" Padding="10,0,320,0" Grid.Column="0" Grid.Row="0" BackgroundColor="WhiteSmoke" >
+
+                    </Button>
+                    <RefreshView Grid.Row="1" Grid.Column="0" IsRefreshing="False">
+                        <CollectionView x:Name="testListView" SelectionMode="Single" SelectionChanged="select_Item">
+                            <CollectionView.ItemsLayout>
+                                <GridItemsLayout Orientation="Vertical" Span="3"/>
+                            </CollectionView.ItemsLayout>
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Padding="5">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="100"/>
+                                        </Grid.RowDefinitions>
+                                        <Frame HasShadow="True" Padding="5" CornerRadius="10">
+                                            <Grid BackgroundColor="White" RowSpacing="0" Padding="9,9,9,9">
+                                                <Grid.RowDefinitions >
+                                                    <RowDefinition Height="*"/>
+                                                    <RowDefinition Height="20"/>
+                                                </Grid.RowDefinitions>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                </Grid.ColumnDefinitions>
+
+                                                <Grid Grid.Row="0"  Grid.Column="0"  BackgroundColor="White" Padding="0,0,0,0">
+                                                    <Label Text="{Binding nombre}" HorizontalOptions="Center" VerticalOptions="Center" FontSize="20" FontAttributes="Bold" TextColor="Black"/>
+                                                </Grid>
+
+                                                <Grid Grid.Row="1"  Grid.Column="0" BackgroundColor="White" HorizontalOptions="Center" Padding="0,0,0,0">
+                                                    <Label Text="{Binding precio}" FontSize="20"  TextColor="Black" FontAttributes="Bold" HorizontalOptions="Center" Padding="0,0,0,0"/>
+                                                </Grid>
+
+
+                                            </Grid>
+
+                                        </Frame>
+
+                                    </Grid>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+
+                    </RefreshView>
+                </Grid>
             </Frame>
         </Grid>
 

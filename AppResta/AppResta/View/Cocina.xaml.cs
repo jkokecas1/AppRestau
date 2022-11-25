@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -13,91 +14,80 @@ namespace AppResta.View
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class Cocina : ContentPage
     {
-        public Cocina()
-        {
-            InitializeComponent();
-            cocinaListView.ItemsSource = Ordene();
-        }
+        // VARIABLES GLOBALES
+        List<Model.Ordenes> ORDEN;
         public List<Model.Cart> cart = new List<Model.Cart>();
+        public List<Model.Cart> listCat;
+        Model.Empleado empleado;
 
-        public static List<Model.Ordenes> Ordene()
+
+        // CONSTRUCTOR
+        public Cocina(List<Model.Ordenes> orden = null, Model.Empleado empleado =null, List<Model.Cart> listCat = null)
         {
-            Model.Ordenes orden;
-            List<Model.Ordenes> ordenList = new List<Model.Ordenes>();
-            var client = new HttpClient();
-            string[] aux = new string[3];
 
-
-            client.BaseAddress = new Uri("http://192.168.1.112/resta/admin/mysql/orden/index.php?op=obtenerOrden");
-            HttpResponseMessage response = client.GetAsync(client.BaseAddress).Result;
-            if (response.IsSuccessStatusCode)
+            InitializeComponent();
+            fecha.Text = DateTime.Now.ToString("t");
+            this.empleado = empleado;
+            //chef.Text = empleado.pin;
+            if (orden != null)
             {
-                var content = response.Content.ReadAsStringAsync().Result;
-                string json = content.ToString();
-                var jsonArray = JArray.Parse(json.ToString());
-                // Console.WriteLine(jsonArray);
-                foreach (var item in jsonArray)
-                {
-                    aux = bebidas(item["id"].ToString(), item["mesa"].ToString());
-                    if (aux[0] == null)
-                    {
-                        orden = new Model.Ordenes();
-                        if (item["estado"].ToString() != "3")
-                        {
-                            orden.id = Int32.Parse(item["id"].ToString());
-                            orden.fecha_orden = item["fecha_orden"].ToString();
-                            orden.fecha_start = item["fecha_start"].ToString();
-                            orden.fecha_estimada = item["fecha_estimada"].ToString();
-                            orden.fecha_cerada = item["fecha_cerada"].ToString();
-                            switch (item["estado"].ToString())
-                            {
-                                case "1": orden.estado = "En espera"; break;
-                                case "2": orden.estado = "Preparando..."; break;
-                                case "3": orden.estado = "! Terminado !"; break;
-                            }
-                            orden.mesero = item["mesero"].ToString();
-                            orden.mesa = item["mesa"].ToString();
-                            orden.total = item["total"].ToString();
-                            orden.pago = Int32.Parse(item["pago"].ToString());
-
-
-                            ordenList.Add(orden);
-
-                        }
-                    }
-                }
-                return ordenList;
+                ORDEN = orden;
+                cocinaListView.ItemsSource = ORDEN;
             }
             else
             {
-                return null;
+                ORDEN = Services.OrdenesService.OrdeneCocina();
+                cocinaListView.ItemsSource = ORDEN;
             }
-        }
 
-        public static string[] bebidas(string id, string mesa)
-        {
-            string[] ordenList = new string[3];
-            var client = new HttpClient();
-            client.BaseAddress = new Uri("http://192.168.1.112/resta/admin/mysql/orden/index.php?op=obtenerCarritoBebidas&idOrden=" + id + "&mesa=" + mesa);
-            HttpResponseMessage response = client.GetAsync(client.BaseAddress).Result;
-            if (response.IsSuccessStatusCode)
+           
+            fecha.Text = DateTime.Now.ToString("t");
+            Device.StartTimer(TimeSpan.FromSeconds(0.5), () =>
             {
-                var content = response.Content.ReadAsStringAsync().Result;
-                string json = content.ToString();
-                var jsonArray = JArray.Parse(json.ToString());
-                // Console.WriteLine(jsonArray);
-                foreach (var item in jsonArray)
-                {
-                    ordenList[0] += item["cantidad"] + "X" + item["nombre"] + "\n";
-                    ordenList[1] = item["mesa"].ToString();
-                    ordenList[2] = item["idItem"].ToString();
-
-                }
-                return ordenList;
-            }
-            return ordenList;
+                cargar.IsEnabled = false;
+                cargar.IsRunning = false;
+                cargar.IsVisible = false;
+                cocinaListView.IsVisible = true;
+                return false;
+            });
+            this.listCat = listCat;//Services.CartService.Carts(DateTime.Now.ToString("yyyy-MM-dd") + "-00:00:00");
+            // StartCountDownTimer();
+            //updateHistorial();
+           Device.StartTimer(TimeSpan.FromSeconds(5), updateHistorial);
+            Device.StartTimer(TimeSpan.FromSeconds(60), updateTimeLive);
+            // cocinaListView.ItemsSource = ord;
+           
         }
 
+        // METODOS
+
+
+
+        public void init() {
+
+            // Console.WriteLine(DateTime.Now.ToString("t"));
+            ORDEN = Services.OrdenesService.OrdeneCocina();
+            fecha.Text = DateTime.Now.ToString("t");
+            cocinaListView.ItemsSource = ORDEN;
+             cocinaHistorialList.ItemsSource = Services.OrdenesService.OrdeneBarEmpleado(empleado.id + "");
+        }
+
+        bool updateTimeLive()
+        {
+            Device.BeginInvokeOnMainThread(() => init());
+            return true;
+        }
+        bool updateHistorial()
+        {
+            Console.WriteLine(empleado.id);
+             cocinaHistorialList.ItemsSource = Services.OrdenesService.OrdeneBarEmpleado(empleado.id + "");
+            cargar2.IsEnabled = false;
+            cargar2.IsRunning = false;
+            cargar2.IsVisible = false;
+            cocinaHistorialList.IsVisible = true;
+
+            return false;
+        }
         private void cocinaListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             UpdateSelectionData(e.PreviousSelection, e.CurrentSelection);
@@ -105,56 +95,22 @@ namespace AppResta.View
         public void UpdateSelectionData(IEnumerable<object> previousSelectedContact, IEnumerable<object> currentSelectedContact)
 
         {
-           
-            Model.Ordenes ord = new Model.Ordenes();
-            var idorden = currentSelectedContact.FirstOrDefault() as Model.Ordenes;
 
-            List<Model.Ordenes> cart = Ordene();
+           // Model.Ordenes ord = new Model.Ordenes();
+            Model.Ordenes idorden = currentSelectedContact.FirstOrDefault() as Model.Ordenes;
 
-            foreach (Model.Ordenes item in cart)
-            {
+            //List<Model.Ordenes> cart = Ordene();
+            /* int a = ORDEN.IndexOf(idorden);
 
-                if (item.id == idorden.id)
-                {
-                    ord.id = Int32.Parse(item.id.ToString());
-                    ord.fecha_orden = item.fecha_orden.ToString();
+             if(a != -1)
+                 ord = ORDEN[a];*/
 
-                    Console.WriteLine(item.fecha_start.ToString());
-                    if (item.fecha_start.ToString() != "") {
-                        if(!item.fecha_start.ToString().Equals("0000-00-00 00:00:00"))
-                            ord.fecha_start = item.fecha_start.ToString().Remove(0, 10);
-                    }
-                    else {
-                        ord.fecha_start = item.fecha_start.ToString();
-                    }
-
-                    if (item.fecha_estimada.ToString() != "" )
-                    {
-                        if (!item.fecha_estimada.ToString().Equals("0000-00-00 00:00:00"))
-                            ord.fecha_estimada = item.fecha_estimada.ToString().Remove(0, 10);
-                    }
-                    else
-                    {
-                        
-                        ord.fecha_estimada = item.fecha_estimada.ToString();
-                    }
-                    switch (ord.estado) {
-                        case "1": ord.estado = "En espera"; break;
-                        case "2": ord.estado = "Preparando..."; break;
-                        case "3": ord.estado = "! Terminado !"; break;
-                    }
-                    ord.fecha_cerada = item.fecha_cerada.ToString();
-                    ord.mesero = item.mesero.ToString();
-                    ord.mesa = item.mesa.ToString();
-                    ord.total = item.total.ToString();
-                    ord.pago = Int32.Parse(item.pago.ToString());
-
-                }
+            // List<Model.Ordenes> auxList = Ordene();
+            
+            if (idorden != null) {
+                PopupNavigation.Instance.PushAsync(new VerOrden(idorden, aux: ORDEN, cocinaListView, listCat, empleado.id));
 
             }
-
-                List<Model.Ordenes> auxList = Ordene();
-                PopupNavigation.Instance.PushAsync(new VerOrden(ord, auxList, cocinaListView));
 
         }
 
@@ -162,8 +118,30 @@ namespace AppResta.View
         {
             Task.Delay(100);
             cocinaListView.ItemsSource = null;
-            cocinaListView.ItemsSource = Ordene();
+            ORDEN = Services.OrdenesService.OrdeneCocina();
+            cocinaListView.ItemsSource = ORDEN;
+
             Refresh_Ordenes.IsRefreshing = false;
+        }
+
+        
+        protected override bool OnBackButtonPressed()
+        {
+            base.OnBackButtonPressed();
+            return true;
+        }
+
+        private void exit_Clicked(object sender, EventArgs e)
+        {
+            Console.WriteLine("Salir");
+            Navigation.PopAsync();
+        }
+
+        private void exit_Clicked_1(object sender, EventArgs e)
+        {
+            Console.WriteLine("Salir");
+            // Navigation.PopAsync();
+            this.Navigation.PopAsync(true);
         }
     }
 }

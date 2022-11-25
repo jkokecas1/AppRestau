@@ -1,0 +1,252 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             x:Class="AppResta.View.Cajero"
+             NavigationPage.HasNavigationBar="False">
+    <ContentPage.Content>
+        <Grid>
+            <Grid  RowSpacing="0" ColumnSpacing="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid Grid.Row="0" Grid.Column="0"   BackgroundColor="AliceBlue" Padding="5,10,5,0">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+
+
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+
+
+                        </Grid.ColumnDefinitions>
+
+                        <Image Source="klassylogo.png"  Grid.Row="0" Grid.Column="0"></Image>
+                        <Label  Text="CAJERO" Grid.Row="0" Grid.Column="1"  FontSize="20" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center"></Label>
+                        <Label x:Name="tiempoCajero" Text="Time" Grid.Row="0" Grid.Column="2"  FontSize="20" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center"></Label>
+                        <Label x:Name="nombreEmpl"  Grid.Row="0" Grid.Column="3"  FontSize="20" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center"></Label>
+                        <Button Text="SALIR" x:Name="exit" Clicked="Button_Clicked" Grid.Row="0" Grid.Column="4" HorizontalOptions="End" CornerRadius="0" BackgroundColor="Red" TextColor="#FFF"></Button>
+                    </Grid>
+                </Grid>
+
+
+
+
+
+
+                <Frame Grid.Row="1" Grid.Column="0" BackgroundColor="LightGray" CornerRadius="10" Margin="10,10,10,10" Padding="0,0,0,0">
+                    <xct:TabView  TabStripPlacement="Top" TabStripBackgroundColor="WhiteSmoke" TabStripHeight="65" TabIndicatorColor="Red" TabContentBackgroundColor="Black"
+                                          IsSwipeEnabled="False" x:Name="Tab" TabIndicatorHeight="10" >
+
+                        <xct:TabViewItem  Text="ORDENES ACTIVAS" TextColor="Black" TextColorSelected="Black" FontSize="20" FontAttributes="Bold" FontSizeSelected="30" FontFamilySelected="5">
+                            <Grid RowSpacing="0" ColumnSpacing="0">
+
+                                <Grid.RowDefinitions>
+
+                                    <RowDefinition Height="60"/>
+                                    <RowDefinition Height="45"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Frame Grid.Row="0" Grid.Column="0" Padding="3,3,3,3" HorizontalOptions="Fill" VerticalOptions="Fill" >
+                                    <Grid>
+                                        <SearchBar Placeholder="Buscar" CancelButtonColor="Orange" PlaceholderColor="Black" TextColor="Black" TextTransform="Lowercase"
+                                                   HorizontalTextAlignment="Center" FontSize="Medium" FontAttributes="Italic" TextChanged="SearchBar_TextChanged" />
+                                    </Grid>
+                                </Frame>
+
+                                <Grid Grid.Row="1" Grid.Column="0" RowSpacing="0" ColumnSpacing="0" BackgroundColor="Gray" Padding="5,10,10,5">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Grid.Row="0" Grid.Column="0" Text="# ORDEN"  TextColor="White" HorizontalOptions="Center" FontAttributes="Bold" VerticalOptions="Center" FontSize="22"/>
+                                    <Label Grid.Row="0" Grid.Column="1"  Text="MESERO" TextColor="White" HorizontalOptions="Center" FontAttributes="Bold" VerticalOptions="Center" FontSize="22"/>
+                                    <Label Grid.Row="0" Grid.Column="2"  Text="MESA" TextColor="White" HorizontalOptions="Center" FontAttributes="Bold" VerticalOptions="Center" FontSize="22"/>
+                                </Grid>
+
+                                <Grid Grid.Row="2" Grid.Column="0" BackgroundColor="WhiteSmoke" >
+                                    <RefreshView x:Name="RefreshOrdenes" IsVisible="false" Refreshing="RefreshOrdenes_Refreshing">
+
+                                        <ListView x:Name="ordenesListView" SelectionMode="None"  ItemSelected="select_Item" RowHeight="60">
+                                            <ListView.ItemTemplate >
+                                                <DataTemplate  >
+                                                    <ViewCell >
+
+                                                        <SwipeView Threshold="150">
+                                                            <SwipeView.RightItems>
+                                                                <SwipeItems  SwipeBehaviorOnInvoked="Close" Mode="Execute" >
+                                                                    <SwipeItem Text="PAGAR"                                                                     
+                                                                       CommandParameter="{Binding id}"
+                                                                       BackgroundColor="Green"
+                                                                       Invoked="Button_Pagar"/>
+
+                                                                </SwipeItems>
+                                                            </SwipeView.RightItems>
+
+                                                            <Frame BorderColor="{Binding fecha_estimada}" Margin="1" CornerRadius="0" Padding="0,0,0,0">
+
+
+
+                                                                <Grid Padding="0,0,0,0" >
+                                                                    <Grid.RowDefinitions>
+                                                                        <RowDefinition Height="*"/>
+
+                                                                    </Grid.RowDefinitions>
+
+                                                                    <Grid.ColumnDefinitions>
+                                                                        <ColumnDefinition Width="*"/>
+                                                                        <ColumnDefinition Width="*"/>
+                                                                        <ColumnDefinition Width="*"/>
+                                                                        <!--
+                                                                <ColumnDefinition Width="*"/>
+                                                            -->
+                                                                    </Grid.ColumnDefinitions>
+
+                                                                    <Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="0" Grid.Row="0" Text="{Binding id}" TextColor="Black" FontSize="22"/>
+                                                                    <Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="1" Grid.Row="0" Text="{Binding mesero}" TextColor="Black" FontSize="22"/>
+                                                                    <Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="2" Grid.Row="0" Text="{Binding mesa}" TextColor="Black" FontSize="22"/>
+
+
+                                                                    <!--
+                                                        <Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="2" Grid.Row="0" Text="{Binding fecha_orden}" TextColor="Black" FontSize="22"/>                                                       
+                                                        <Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="3" Grid.Row="0" Text="{Binding estado}" TextColor="Black" FontSize="22"/>
+                                                       -->
+                                                                </Grid>
+                                                            </Frame>
+
+                                                        </SwipeView>
+
+                                                    </ViewCell>
+                                                </DataTemplate>
+                                            </ListView.ItemTemplate>
+                                        </ListView>
+                                    </RefreshView>
+                                </Grid>
+                            </Grid>
+
+                        </xct:TabViewItem>
+
+                        <xct:TabViewItem Text="ORDENES TERMINADAS" TextColor="Black" TextColorSelected="Black" FontSize="20" FontAttributes="Bold" FontSizeSelected="30" FontFamilySelected="5">
+                            <Grid RowSpacing="0" ColumnSpacing="0">
+
+                                <Grid.RowDefinitions>
+
+                                    <RowDefinition Height="60"/>
+                                    <RowDefinition Height="45"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Frame Grid.Row="0" Grid.Column="0" Padding="3,3,3,3" HorizontalOptions="Fill" VerticalOptions="Fill" >
+                                    <Grid>
+                                        <SearchBar Placeholder="Buscar" CancelButtonColor="Orange" PlaceholderColor="Black" TextColor="Black" TextTransform="Lowercase"
+                                                   HorizontalTextAlignment="Center" FontSize="Medium" FontAttributes="Italic"/>
+                                    </Grid>
+                                </Frame>
+
+                                <Grid Grid.Row="1" Grid.Column="0" RowSpacing="0" ColumnSpacing="0" BackgroundColor="Gray" Padding="5,10,10,5">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Grid.Row="0" Grid.Column="0" Text="# ORDEN"  TextColor="White" HorizontalOptions="Center" FontAttributes="Bold" VerticalOptions="Center" FontSize="22"/>
+                                    <Label Grid.Row="0" Grid.Column="1"  Text="MESERO" TextColor="White" HorizontalOptions="Center" FontAttributes="Bold" VerticalOptions="Center" FontSize="22"/>
+                                    <Label Grid.Row="0" Grid.Column="2"  Text="MESA" TextColor="White" HorizontalOptions="Center" FontAttributes="Bold" VerticalOptions="Center" FontSize="22"/>
+                                </Grid>
+
+                                <Grid Grid.Row="2" Grid.Column="0" BackgroundColor="WhiteSmoke" >
+                                    <RefreshView  IsVisible="false" >
+
+                                        <ListView  SelectionMode="None"  RowHeight="60">
+                                            <ListView.ItemTemplate >
+                                                <DataTemplate  >
+                                                    <ViewCell >
+
+                                                        <SwipeView Threshold="150">
+                                                            <SwipeView.RightItems>
+                                                                <SwipeItems  SwipeBehaviorOnInvoked="Close" Mode="Execute" >
+                                                                    <SwipeItem Text="PAGAR"                                                                     
+                                                                       CommandParameter="{Binding id}"
+                                                                       BackgroundColor="Green"
+                                                                       Invoked="Button_Pagar"/>
+
+                                                                </SwipeItems>
+                                                            </SwipeView.RightItems>
+
+                                                            <Frame BorderColor="{Binding fecha_estimada}" Margin="1" CornerRadius="0" Padding="0,0,0,0">
+
+
+
+                                                                <Grid Padding="0,0,0,0" >
+                                                                    <Grid.RowDefinitions>
+                                                                        <RowDefinition Height="*"/>
+
+                                                                    </Grid.RowDefinitions>
+
+                                                                    <Grid.ColumnDefinitions>
+                                                                        <ColumnDefinition Width="*"/>
+                                                                        <ColumnDefinition Width="*"/>
+                                                                        <ColumnDefinition Width="*"/>
+                                                                        <!--
+                                                                <ColumnDefinition Width="*"/>
+                                                            -->
+                                                                    </Grid.ColumnDefinitions>
+
+                                                                    <Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="0" Grid.Row="0" Text="{Binding id}" TextColor="Black" FontSize="22"/>
+                                                                    <Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="1" Grid.Row="0" Text="{Binding mesero}" TextColor="Black" FontSize="22"/>
+                                                                    <Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="2" Grid.Row="0" Text="{Binding mesa}" TextColor="Black" FontSize="22"/>
+
+
+                                                                    <!--
+                                                        <Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="2" Grid.Row="0" Text="{Binding fecha_orden}" TextColor="Black" FontSize="22"/>                                                       
+                                                        <Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="3" Grid.Row="0" Text="{Binding estado}" TextColor="Black" FontSize="22"/>
+                                                       -->
+                                                                </Grid>
+                                                            </Frame>
+
+                                                        </SwipeView>
+
+                                                    </ViewCell>
+                                                </DataTemplate>
+                                            </ListView.ItemTemplate>
+                                        </ListView>
+                                    </RefreshView>
+                                </Grid>
+                            </Grid>
+
+                        </xct:TabViewItem>
+                    </xct:TabView>
+                </Frame>
+
+
+
+            </Grid>
+        </Grid>
+
+    </ContentPage.Content>
+</ContentPage>

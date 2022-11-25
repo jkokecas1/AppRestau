@@ -29,14 +29,17 @@ namespace AppResta.View
         List<Model.Extras> listExtra, listaExtraItems;
 
         Label totalpago;
+        Model.Empleado empleado;
 
-        public ItemPlatillo(Model.Platillos platillo, string mesa, int bandera, List<Model.Cart> cart, ListView carrito = null, int item = 0, Label totalpago = null)
+
+        public ItemPlatillo(Model.Platillos platillo, string mesa, int bandera, List<Model.Cart> cart, ListView carrito = null, int item = 0, Label totalpago = null, Model.Empleado empleado = null)
         {
 
             listExtra = new List<Model.Extras>();
             mesasGlb = mesa;
             this.item = item;
             this.totalpago = totalpago;
+            this.empleado = empleado;
             //idItems = cart[index].idItem;
             //cant = cantidad;
             this.cart = cart;
@@ -102,11 +105,11 @@ namespace AppResta.View
             int index = 0;
             int idplatillo = platillos.id;
             int cantidad = Int32.Parse(valCantidad.Text);
-            var hora = DateTime.Now.ToString("yyyy-dd-yy HH:MM:ss");
+            var hora = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss").Replace(" ", "-");
             var fecha = DateTime.Now.ToString("MM-dd-yy");
             string comentario = "SIN COMENTARIOS";
 
-
+            Console.WriteLine("Fecha: " + hora);
             int extra = 0;
             if (comentTxt.Text != null)
             {
@@ -175,7 +178,7 @@ namespace AppResta.View
 
             if (band == 0) // CASO 0: SI EL CARITO PARA ESA MESA NO EXITE 
             {
-                cadena = "http://192.168.1.112/resta/admin/mysql/Orden/index.php?op=insertItemPlatillo&idplatillo=" + idplatillo.ToString() + "&cantidad=" + cantidad.ToString() + "&fecha=" + hora.Replace(" ", "-") + "&mesa=" + mesasGlb.ToString() + "&total=" + total.ToString() + "&comen=" + comentario.Replace(" ", "-");
+                cadena = "http://192.168.1.112/resta/admin/mysql/Orden/index.php?op=insertItemPlatillo&idplatillo=" + idplatillo.ToString() + "&cantidad=" + cantidad.ToString() + "&fecha=" + hora.Replace(" ", "-") + "&mesa=" + mesasGlb.ToString() + "&total=" + total.ToString() + "&comen=" + comentario.Replace(" ", "-")+"&mesero="+empleado.id;
                 Console.WriteLine("CASO 0: " + cadena);
                 popAgregar(cadena);
 

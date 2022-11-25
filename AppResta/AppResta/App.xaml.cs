@@ -27,19 +27,30 @@ namespace AppResta
         public App()
         {
             InitializeComponent();
-
-            MainPage = new NavigationPage(new Main(false));
+            bool internet;
+           
+          
+           
 
             if (Connectivity.NetworkAccess == NetworkAccess.Internet)
             {
-                Console.WriteLine("------------------------------------------------------------------------------      Si hay conectividad");
+                internet = true;
+                Console.WriteLine("------------------------------------------------------------------------------ Si hay conectividad");
                 //Services.OrdenesService.Ordene(true);
-               ////Services.MesasService.Mesas(true);
+                Services.LoginService.Empleados(true);
+                //Services.MesasService.Mesas(true);
             }
             else {
-                Services.OrdenesService.Ordene(false);
-                Services.MesasService.Mesas(false);
+                internet = false;
+                Console.WriteLine("------------------------------------- SIN CONECTIVIDAD");
+                //Services.LoginService.Empleados(false);
+                //Services.OrdenesService.Ordene(false);
+                //Services.MesasService.Mesas(false);
             }
+            MainPage = new NavigationPage(new Login(true));
+            //MainPage = new NavigationPage(new Login(true));
+            // MainPage = new NavigationPage(new SplashCarga());
+
         }
 
         protected override void OnStart()

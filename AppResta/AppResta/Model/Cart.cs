@@ -9,6 +9,7 @@ namespace AppResta.Model
         public int idItem { get; set; }
         public int id { get; set; }
         public string platillo { get; set; }
+        public string mesa { get; set; }
         public int cantidad { get; set; }
         public double precio { get; set; }
         public double total { get; set; }

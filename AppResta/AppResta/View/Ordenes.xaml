@@ -4,13 +4,9 @@
              x:Class="AppResta.View.Ordenes"
              NavigationPage.HasNavigationBar="False">
 
-
-
-
-
     <ContentPage.Content>
-
-        <Grid  RowSpacing="0" ColumnSpacing="0">
+       
+            <Grid  RowSpacing="0" ColumnSpacing="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="60"/>
                 <RowDefinition Height="*"/>
@@ -41,12 +37,12 @@
                     <Button Text="Ordenes" Command="{Binding Ordencommand}" Grid.Row="0" Grid.Column="2" CornerRadius="0" BackgroundColor="LightGray"></Button>
                     <Button Text="Historial" Command="{Binding Historialcommand}" Grid.Row="0" Grid.Column="3" CornerRadius="0" BackgroundColor="DimGray" TextColor="#FFF"></Button>
                     <Label x:Name="nombreEmpl" Grid.Row="0" Grid.Column="4"  FontSize="20" TextColor="Black"></Label>
-                    <Button Text="SALIR"  Command="{Binding NavLoginCommand}" Grid.Row="0" Grid.Column="5" HorizontalOptions="End" CornerRadius="0" BackgroundColor="Red" TextColor="#FFF"></Button>
+                    <Button Text="SALIR"  Clicked="BtnSalir_Clicked" Grid.Row="0" Grid.Column="5" HorizontalOptions="End" CornerRadius="0" BackgroundColor="Red" TextColor="#FFF"></Button>
                 </Grid>
             </Grid>
 
 
-            <Grid Grid.Row="1" Grid.Column="0" BackgroundColor="LightGray" Padding="10,10,10,10" ColumnSpacing="5">
+            <Grid  Grid.Row="1" Grid.Column="0" BackgroundColor="LightGray" Padding="10,10,10,10" ColumnSpacing="5">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
@@ -58,7 +54,7 @@
                     <Grid RowSpacing="0" ColumnSpacing="0">
 
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="60"/>
                             <RowDefinition Height="*"/>
 
                         </Grid.RowDefinitions>
@@ -70,7 +66,7 @@
 
 
 
-                        <Grid Grid.Row="0" Grid.Column="0" RowSpacing="0" ColumnSpacing="0" BackgroundColor="White" Padding="20,10,10,10">
+                        <Grid Grid.Row="0" Grid.Column="0" RowSpacing="0" ColumnSpacing="0" BackgroundColor="Gray" Padding="5,10,10,5">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
@@ -82,21 +78,36 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
 
 
                             </Grid.ColumnDefinitions>
-                            <Label Text="# ORDEN" Grid.Row="0" Grid.Column="0" TextColor="Black"/>
-                            <Label Text="MESA" Grid.Row="0" Grid.Column="1" TextColor="Black"/>
-                            <Label Text="ORDEN TOMADA" Grid.Row="0" Grid.Column="2" TextColor="Black"/>
-                            <Label Text="HORA INICIADA" Grid.Row="0" Grid.Column="3" TextColor="Black"/>
-                            <Label Text="HORA ESTIMADA" Grid.Row="0" Grid.Column="4" TextColor="Black"/>
-                            <Label Text="ESTADO" Grid.Row="0" Grid.Column="5" TextColor="Black"/>
-                            <Label Text="PLATILLOS" Grid.Row="0" Grid.Column="6" TextColor="Black"/>
-                            <Label Text="BEBIDAS" Grid.Row="0" Grid.Column="7" TextColor="Black"/>
                             
+                            <Label Grid.Row="0" Grid.Column="0" Text="# ORDEN"  TextColor="White" HorizontalOptions="Center" FontAttributes="None" VerticalOptions="Center" FontSize="22"/>
+                            <Label Grid.Row="0" Grid.Column="1"  Text="MESA" TextColor="White" HorizontalOptions="Center" FontAttributes="None" VerticalOptions="Center" FontSize="22"/>
+
+                            <Grid Grid.Row="0" Grid.Column="2"  Padding="0,0,0,0" RowSpacing="0" Margin="0,0,0,0">
+                                <Label Grid.Row="0" Grid.Column="0"  Text="ORDEN" TextColor="White" HorizontalOptions="Center" FontAttributes="None" FontSize="17"/>
+                                <Label Grid.Row="1" Grid.Column="0"  Text="TOMADA" TextColor="White" HorizontalOptions="Center" FontAttributes="None" FontSize="17"/>
+                            </Grid>
+
+                            <Grid Grid.Row="0" Grid.Column="3" Padding="0,0,0,0" RowSpacing="0" Margin="0,0,0,0">
+                                <Label Text="HORA" TextColor="White" HorizontalOptions="Center" FontAttributes="None" FontSize="17"/>
+                                <Label Grid.Row="1" Grid.Column="0"  Text="INICIADA" TextColor="White" HorizontalOptions="Center" FontAttributes="None" FontSize="17"/>
+                            </Grid>
+
+                            <Grid Grid.Row="0" Grid.Column="4" Padding="0,0,0,0" RowSpacing="0" Margin="0,0,0,0">
+                                <Label Text="HORA" TextColor="White" HorizontalOptions="Center" FontAttributes="None" FontSize="17"/>
+                                <Label Grid.Row="1" Grid.Column="0"  Text="ESTIMADA" TextColor="White" HorizontalOptions="Center" FontAttributes="None" FontSize="17"/>
+                            </Grid>
+
+
+                            <Label Grid.Row="0" Grid.Column="5" Text="ESTADO" TextColor="White" HorizontalOptions="Center" FontAttributes="None" VerticalOptions="Center" FontSize="22"/>
+                            <Label Grid.Row="0" Grid.Column="6" Text="PLATILLOS" TextColor="White" HorizontalOptions="Center" FontAttributes="None" VerticalOptions="Center" FontSize="22"/>
+                            <Label Grid.Row="0" Grid.Column="7"  Text="BEBIDAS" TextColor="White" HorizontalOptions="Center" FontAttributes="None" VerticalOptions="Center" FontSize="22"/>
                         </Grid>
 
-                        <Grid Grid.Row="1" Grid.Column="0" BackgroundColor="WhiteSmoke" >
+                        <Grid x:Name="grilAbsolute" IsVisible="false" Grid.Row="1" Grid.Column="0" BackgroundColor="WhiteSmoke" >
                             <RefreshView x:Name="RefreshOrdenes" Refreshing="RefreshOrdenes_Refreshing">
 
                                 <ListView x:Name="ordenesListView" SelectionMode="None"  ItemSelected="select_Item" RowHeight="60">
@@ -130,41 +141,20 @@
                                                             <ColumnDefinition Width="*"/>
                                                             <ColumnDefinition Width="*"/>
                                                             <ColumnDefinition Width="*"/>
+                                                            <ColumnDefinition Width="*"/>
 
-                                                            <ColumnDefinition Width="*"/>
-                                                            <ColumnDefinition Width="*"/>
                                                         </Grid.ColumnDefinitions>
-                                                       
-                                                        <StackLayout  Grid.Column="0" Grid.Row="0"  HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical" Padding="0,10,0,0">
-                                                            <Label Text="{Binding id}" TextColor="Black" FontSize="22"/>
-                                                        </StackLayout>
-                                                        <StackLayout  Grid.Column="1" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical" Padding="0,10,0,0">
 
-                                                            <Label Text="{Binding mesa}" TextColor="Black" FontSize="22"/>
-                                                        </StackLayout>
-                                                        <StackLayout  Grid.Column="2" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical" Padding="0,10,0,0">
-
-                                                            <Label Text="{Binding fecha_orden}" TextColor="Black" FontSize="22"/>
-                                                        </StackLayout>
-
-                                                        <StackLayout  Grid.Column="3" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical" Padding="0,10,0,0">
-
-                                                            <Label Text="{Binding fecha_start }" TextColor="Black" FontSize="22"/>
-                                                        </StackLayout>
-                                                        <StackLayout  Grid.Column="4" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical" Padding="0,10,0,0">
-                                                            <Label Text="{Binding fecha_estimada}" TextColor="Black" FontSize="22"/>
-                                                        </StackLayout>
-                                                        <StackLayout  Grid.Column="5" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical" Padding="0,10,0,0">
-                                                            <Label Text="{Binding estado}" TextColor="Black" FontSize="22"/>
-                                                        </StackLayout>
+                                                        <Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="0" Grid.Row="0" Text="{Binding id}" TextColor="Black" FontSize="22"/>
+                                                        <Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="1" Grid.Row="0" Text="{Binding mesa}" TextColor="Black" FontSize="22"/>
+                                                        <Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="2" Grid.Row="0" Text="{Binding fecha_orden}" TextColor="Black" FontSize="22"/>
+                                                        <Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="3" Grid.Row="0" Text="{Binding fecha_start }" TextColor="Black" FontSize="22"/>
+                                                        <Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="4" Grid.Row="0" Text="{Binding fecha_estimada}" TextColor="Black" FontSize="22"/>
+                                                        <Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="5" Grid.Row="0" Text="{Binding estado}" TextColor="Black" FontSize="22"/>
                                                         <!-- Platillo 0/0-->
-                                                        <StackLayout  Grid.Column="6" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical" Padding="0,10,0,0">
-                                                            <Label Text="{Binding fecha_cerada}" TextColor="Black" FontSize="22"/>
-                                                        </StackLayout>
+                                                        <Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="6" Grid.Row="0" Text="{Binding fecha_cerada}" TextColor="Black" FontSize="22"/>
                                                         <!-- Bebidas 0/0-->
-                                                        <StackLayout  Grid.Column="7" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical" Padding="0,10,0,0">
-                                                            <Label Text="{Binding mesero}" TextColor="Black" FontSize="22"/>
-                                                        </StackLayout>
+                                                        <Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="7" Grid.Row="0" Text="{Binding mesero}" TextColor="Black" FontSize="22"/>
                                                     </Grid>
 
                                                 </SwipeView>
@@ -178,7 +168,7 @@
                     </Grid>
                 </Frame>
             </Grid>
-
+            <ActivityIndicator Grid.Row="1" Grid.Column="0" Scale=".1" x:Name="cargar"  IsRunning="True" />
         </Grid>
     </ContentPage.Content>
 </ContentPage>
