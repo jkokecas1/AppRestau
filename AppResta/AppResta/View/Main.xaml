@@ -64,11 +64,6 @@
                 </Grid>
             </Frame>
 
-
-
-
-
-
             <Grid Grid.Row="2" Grid.Column="0" Margin="10,0,0,0">
                 <Frame CornerRadius="5" Padding="0,0,0,0">
 

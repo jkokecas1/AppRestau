@@ -73,15 +73,13 @@ namespace AppResta.View
             numeroOrden.Text = ordenes.id.ToString();
             HoraInicioOrden.Text = ordenes.fecha_orden.Remove(0, 10);
 
-
-
             CronometroOrden.Text = (Convert.ToDateTime(DateTime.Now.ToString("HH:mm:ss")) - Convert.ToDateTime(ordenes.fecha_orden)).ToString();
             HoraEstimadaOrden.Text = (Convert.ToDateTime(ordenes.fecha_orden).AddMinutes(35)).ToString("HH:mm:ss ");
 
             var t2 = Convert.ToDateTime((Convert.ToDateTime(ordenes.fecha_orden).AddMinutes(35)).ToString("HH:mm:ss "));
             var t1 = Convert.ToDateTime(DateTime.Now.ToString("HH:mm:ss"));
            
-            Console.WriteLine(t1+ " >= " + t2);
+           // Console.WriteLine(t1+ " >= " + t2);
             if (t2 <= t1)
             {
                 labelEspera.TextColor = Color.Red;
