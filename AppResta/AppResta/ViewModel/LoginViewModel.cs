@@ -28,13 +28,13 @@ namespace AppResta.ViewModel
         string _Pin;
         bool _IsInternet;
 
-        List<Model.Mesas> mesas;
-        List<Model.Ordenes> ordenes;
-        List<Model.Ordenes> ordenesBar;
-        List<Model.Ordenes> ordenesCocina;
-        List<Model.Ordenes> ordenesCaja;
-        List<Model.Categorias> categorias;
-        List<Model.Cart> ordenesCocinaCart;
+        public static List<Model.Mesas> mesas;
+        public static List<Model.Ordenes> ordenes;
+        public static List<Model.Ordenes> ordenesBar;
+        public static List<Model.Ordenes> ordenesCocina;
+        public static List<Model.Ordenes> ordenesCaja;
+        public static List<Model.Categorias> categorias;
+        public static List<Model.Cart> ordenesCocinaCart;
 
         #endregion
 
@@ -55,15 +55,13 @@ namespace AppResta.ViewModel
             Num9Command = new Command(() => Pin += "9");
             
             BorrarCommand = new Command(() => Pin = validarPIN());
-            init();
+           init();
         }
 
-        public void init() {
+        public static void init() {
             mesas = Services.LoginService.Mesas();
             ordenes = Services.OrdenesService.Ordene();
-           
             ordenesBar = Services.OrdenesService.OrdeneBar();
-            
             ordenesCocina = Services.OrdenesService.OrdeneCocina();
             ordenesCocinaCart = Services.CartService.Carts(DateTime.Now.ToString("yyyy-MM-dd") + "-00:00:00");
             ordenesCaja = Services.OrdenesService.OrdenCaja();
@@ -145,8 +143,8 @@ namespace AppResta.ViewModel
             List<Empleado> empleado;
             if (IsInternet)
             {
-                empleado = await App.Database.GetEmpleadoAsync();
-                //empleado = _loginRespository.Login(Pin);
+                 empleado = await App.Database.GetEmpleadoAsync();
+                //empleado = Services.LoginService.Login();//_loginRespository.Login(Pin);
             }
             else {
                 empleado = await App.Database.GetEmpleadoAsync();
@@ -154,9 +152,12 @@ namespace AppResta.ViewModel
             Model.Empleado emp = new Empleado(); ;
             if (empleado != null)
             {
+                
                 foreach (Empleado item in empleado)
                 {
+                   
                     if (Pin == item.pin) {
+                        Console.WriteLine(item.pin);
                         emp.id = item.id;
                         emp.nombre = item.nombre;
                         emp.pin = item.pin;
@@ -166,7 +167,6 @@ namespace AppResta.ViewModel
                     }
                     
                 }
-
                 if (emp.puesto == "Cajero")
                 {
                     //Cajero

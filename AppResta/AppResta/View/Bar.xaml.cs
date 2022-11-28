@@ -148,5 +148,11 @@ namespace AppResta.View
         {
             Navigation.PopAsync(false);
         }
+
+        private async void Fecha_cajero_DateSelected(object sender, DateChangedEventArgs e)
+        {
+            var fechamostrar = e.NewDate.ToString("D");
+            await DisplayAlert("Alert", fechamostrar, "OK");
+        }
     }
 }

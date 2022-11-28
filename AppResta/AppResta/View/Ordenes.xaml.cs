@@ -23,6 +23,7 @@ namespace AppResta.View
         public Ordenes(Main mainPage = null, List<Model.Ordenes> ord = null)
         {
             InitializeComponent();
+            tiempoCajero.Text = DateTime.Now.ToString("t");
             if (ord != null)
                 ordenesListView.ItemsSource = ord;
             else

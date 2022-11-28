@@ -81,9 +81,9 @@ namespace AppResta.View
         {
             Console.WriteLine(empleado.id);
              cocinaHistorialList.ItemsSource = Services.OrdenesService.OrdeneBarEmpleado(empleado.id + "");
-            cargar2.IsEnabled = false;
-            cargar2.IsRunning = false;
-            cargar2.IsVisible = false;
+            //cargar2.IsEnabled = false;
+            //cargar2.IsRunning = false;
+            //cargar2.IsVisible = false;
             cocinaHistorialList.IsVisible = true;
 
             return false;
@@ -145,7 +145,11 @@ namespace AppResta.View
             // Navigation.PopAsync();
             this.Navigation.PopAsync(true);
         }
+        private async void Fecha_cajero_DateSelected(object sender, DateChangedEventArgs e)
+        {
+            var fechamostrar = e.NewDate.ToString("D");
+            await DisplayAlert("Alert", fechamostrar, "OK");
+        }
 
-     
     }
 }

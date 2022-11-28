@@ -212,5 +212,12 @@ namespace AppResta.View
                 ordenesListView.ItemsSource = ordenList;
             }
         }
+
+        private async void Fecha_cajero_DateSelected(object sender, DateChangedEventArgs e)
+        {
+            var fechamostrar = e.NewDate.ToString("D");
+            await DisplayAlert("Alert", fechamostrar, "OK");
+        }
+
     }
 }

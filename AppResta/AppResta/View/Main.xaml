@@ -37,15 +37,15 @@
                         <ColumnDefinition Width="200"/>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="410"/>
                         <ColumnDefinition Width="*"/>
+
                     </Grid.ColumnDefinitions>
                     <Image Source="klassylogo.png" VerticalOptions="Start" Grid.Row="0" Grid.Column="0"></Image>
                     <Button Text="Mesas"  Command="{Binding Mesascommand}" Grid.Row="0" Grid.Column="1" CornerRadius="0" BackgroundColor="DimGray" TextColor="#FFF"></Button>
                     <Frame CornerRadius="0" Grid.Row="0" Grid.Column="2" BackgroundColor="LightGray" Padding="0,0,0,0" Margin="0,0,0,0" >
                         <Label Text="COMANDA" HorizontalOptions="Center" VerticalOptions="Center" TextColor="Black" ></Label>
                     </Frame>
-                    <Label  x:Name="NombTexto" FontSize="20" TextColor="#000" HorizontalOptions="Center" VerticalOptions="Center" Padding="0,0,0,0" Grid.Row="0" Grid.Column="3" BackgroundColor="Transparent"></Label>
+                    <Label x:Name="tiempoCajero" Text="Time" Grid.Row="0" Grid.Column="3"  FontSize="30" TextColor="Black" VerticalOptions="Center" HorizontalOptions="End"></Label>
                     <Button Text="SALIR"  Clicked="BtnSalir_Clicked" Grid.Row="0" Grid.Column="4" HorizontalOptions="End" BackgroundColor="Red" CornerRadius="0" TextColor="#FFFF"></Button>
 
 
@@ -55,14 +55,15 @@
 
 
 
-            <Frame  Grid.Row="1" Grid.Column="0" Padding="5,0,5,0" CornerRadius="5" Margin="10,0,0,0">
+            <Frame  Grid.Row="1" Grid.Column="0" Padding="50,0,50,0" CornerRadius="5" Margin="10,0,0,0">
                 <Grid >
-                    <Label HorizontalOptions="Center" VerticalOptions="Center" x:Name="OrdenTexto" FontSize="20" TextColor="#000" Grid.Row="0" Grid.Column="0"></Label>
+                    <Label HorizontalOptions="Center" VerticalOptions="Center" x:Name="OrdenTexto" FontSize="25" TextColor="#000" FontAttributes="Bold" Grid.Row="0" Grid.Column="0"></Label>
 
-                    <Label HorizontalOptions="Center" VerticalOptions="Center" x:Name="MesaTexto" Grid.Row="0" Grid.Column="1"  FontSize="20" TextColor="Black" ></Label>
+                    <Label HorizontalOptions="Center" VerticalOptions="Center" x:Name="MesaTexto" Grid.Row="0" Grid.Column="1"  FontSize="25" FontAttributes="Bold" TextColor="Black" ></Label>
 
                 </Grid>
             </Frame>
+
 
 
 
@@ -96,7 +97,7 @@
                         <!---LIST  VIEW-->
                         <Grid Grid.Row="1" Grid.Column="0">
                             <RefreshView x:Name="RefreshCart" Refreshing="RefreshCart_Refreshing">
-                                <ListView BackgroundColor="WhiteSmoke" x:Name="test2ListView" ItemSelected="SelectItem" >
+                                <ListView BackgroundColor="WhiteSmoke" x:Name="test2ListView"  >
                                     <ListView.ItemTemplate>
                                         <DataTemplate>
                                             <ViewCell>

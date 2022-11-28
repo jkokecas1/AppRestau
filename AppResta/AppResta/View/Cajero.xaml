@@ -34,14 +34,19 @@
 
                         <Image Source="klassylogo.png"  Grid.Row="0" Grid.Column="0"></Image>
                         <Label  Text="CAJERO" Grid.Row="0" Grid.Column="1"  FontSize="20" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center"></Label>
-                        <Label x:Name="tiempoCajero" Text="Time" Grid.Row="0" Grid.Column="2"  FontSize="20" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center"></Label>
+                        <Label x:Name="tiempoCajero" Text="Time" Grid.Row="0" Grid.Column="2"  FontSize="30" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center"></Label>
                         <Label x:Name="nombreEmpl"  Grid.Row="0" Grid.Column="3"  FontSize="20" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Center"></Label>
                         <Button Text="SALIR" x:Name="exit" Clicked="Button_Clicked" Grid.Row="0" Grid.Column="4" HorizontalOptions="End" CornerRadius="0" BackgroundColor="Red" TextColor="#FFF"></Button>
                     </Grid>
                 </Grid>
 
+
+
+
+
+
                 <Frame Grid.Row="1" Grid.Column="0" BackgroundColor="LightGray" CornerRadius="10" Margin="10,10,10,10" Padding="0,0,0,0">
-                    <xct:TabView  IsTabTransitionEnabled="False" TabStripPlacement="Top" TabStripBackgroundColor="WhiteSmoke" TabStripHeight="65" TabIndicatorColor="Red" TabContentBackgroundColor="Black"
+                    <xct:TabView  TabStripPlacement="Top" TabStripBackgroundColor="WhiteSmoke" TabStripHeight="65" TabIndicatorColor="Red" TabContentBackgroundColor="Black"
                                           IsSwipeEnabled="False" x:Name="Tab" TabIndicatorHeight="10" >
 
                         <xct:TabViewItem  Text="ORDENES ACTIVAS" TextColor="Black" TextColorSelected="Black" FontSize="20" FontAttributes="Bold" FontSizeSelected="30" FontFamilySelected="5">
@@ -155,8 +160,8 @@
 
                                 <Frame Grid.Row="0" Grid.Column="0" Padding="3,3,3,3" HorizontalOptions="Fill" VerticalOptions="Fill" >
                                     <Grid>
-                                        <SearchBar Placeholder="Buscar" CancelButtonColor="Orange" PlaceholderColor="Black" TextColor="Black" TextTransform="Lowercase"
-                                                   HorizontalTextAlignment="Center" FontSize="Medium" FontAttributes="Italic"/>
+                                        <DatePicker x:Name="Fecha_cajero" DateSelected="Fecha_cajero_DateSelected" MinimumDate="01/10/2022" MaximumDate="12/31/2030" HorizontalOptions="Center"/>
+
                                     </Grid>
                                 </Frame>
 
@@ -170,14 +175,14 @@
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
                                     <Label Grid.Row="0" Grid.Column="0" Text="# ORDEN"  TextColor="White" HorizontalOptions="Center" FontAttributes="Bold" VerticalOptions="Center" FontSize="22"/>
-                                    <Label Grid.Row="0" Grid.Column="1"  Text="CAJERO" TextColor="White" HorizontalOptions="Center" FontAttributes="Bold" VerticalOptions="Center" FontSize="22"/>
+                                    <Label Grid.Row="0" Grid.Column="1"  Text="MESERO" TextColor="White" HorizontalOptions="Center" FontAttributes="Bold" VerticalOptions="Center" FontSize="22"/>
                                     <Label Grid.Row="0" Grid.Column="2"  Text="MESA" TextColor="White" HorizontalOptions="Center" FontAttributes="Bold" VerticalOptions="Center" FontSize="22"/>
                                 </Grid>
 
                                 <Grid Grid.Row="2" Grid.Column="0" BackgroundColor="WhiteSmoke" >
-                                   
+                                    <RefreshView  IsVisible="false" >
 
-                                        <ListView x:Name="cocinaHistorial" SelectionMode="None"  RowHeight="60">
+                                        <ListView  SelectionMode="None" x:Name="cocinaHistorial" RowHeight="60">
                                             <ListView.ItemTemplate >
                                                 <DataTemplate  >
                                                     <ViewCell >
@@ -230,14 +235,13 @@
                                                 </DataTemplate>
                                             </ListView.ItemTemplate>
                                         </ListView>
-                                   
+                                    </RefreshView>
                                 </Grid>
                             </Grid>
 
                         </xct:TabViewItem>
                     </xct:TabView>
                 </Frame>
-
 
 
             </Grid>

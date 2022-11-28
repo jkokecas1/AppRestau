@@ -25,8 +25,7 @@ namespace AppResta.View
                 if (progress >= 1)
                 {
                     istimerRunning = false;
-                    Navigation.PopAsync(false);
-                    
+                    Navigation.PopAsync(false);  
                 }
                 else
                 {
@@ -34,6 +33,7 @@ namespace AppResta.View
                     progressbar.ProgressTo(progress, 500, Easing.Linear);
                     progressLabel.Text = $"{counter+75}/{progressmax+75}";
                     counter += 1;
+                   // ViewModel.LoginViewModel.init();
                 }
 
                 return istimerRunning;

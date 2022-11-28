@@ -34,6 +34,29 @@ namespace AppResta.Services
                 return 0;
             }
         }
+        public static string[] IdOrden(string mesa)
+        {
+
+            var client = new HttpClient();
+            string[] orden = new string[2];
+            client.BaseAddress = new Uri("http://192.168.1.112/resta/admin/mysql/orden/index.php?op=obtenerCarritoOrden&mesa=" + mesa);
+            HttpResponseMessage response = client.GetAsync(client.BaseAddress).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                var content = response.Content.ReadAsStringAsync().Result;
+                string json = content.ToString();
+                var jsonArray = JArray.Parse(json.ToString());
+
+                foreach (var item in jsonArray)
+                {
+                    orden[0] = item["ordern"].ToString();
+                    orden[1] = item["estado"].ToString();
+                }
+
+            }
+            //Console.WriteLine(ordenID);
+            return orden;
+        }
 
 
         public static List<Model.Ordenes> Ordene()

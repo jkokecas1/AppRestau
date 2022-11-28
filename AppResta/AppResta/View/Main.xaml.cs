@@ -17,6 +17,8 @@ namespace AppResta.View
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class Main : ContentPage
     {
+
+        // VARIABLEs
         int band = 0, ordenID;
         string mesaglb;
         public static List<Model.Cart> cart = new List<Model.Cart>();
@@ -29,14 +31,16 @@ namespace AppResta.View
 
         public static string[] mesa_orden;
         Model.Empleado empleado;
+        CollectionView mesasListView;
 
 
-        public Main(bool _Token, bool band, int idOrden = 0, Model.Empleado empleado= null, string mesa = "MES-0", List<Model.Cart> lsit=null, List<Model.Categorias> categoria = null)
-        //public Main(Object[] datos)
+
+        public Main(bool _Token, bool band, int idOrden = 0, Model.Empleado empleado= null, string mesa = "MES-0", List<Model.Cart> lsit=null, List<Model.Categorias> categoria = null,CollectionView mesasListView =null)
         {
             ordenID = idOrden;
             mesaglb = mesa;
             CATEGORIAS = categoria;
+            this.mesasListView = mesasListView;
             if (_Token == false)
             {
                 Navigation.PushAsync(new Login(false));
@@ -46,7 +50,7 @@ namespace AppResta.View
             {
 
                 InitializeComponent();
-               
+                tiempoCajero.Text = DateTime.Now.ToString("t");
                 // Refreshplatillos.IsRefreshing = true;
                 testListView.ItemsSource = CATEGORIAS;
 
@@ -60,7 +64,7 @@ namespace AppResta.View
                     if (lsit != null)
                         cart = lsit;
                     else
-                        cart = CartMesa(ordenID.ToString(), mesaglb);
+                        cart = Services.CartService.CartitoMesa(ordenID.ToString(), mesaglb);
 
                     test2ListView.ItemsSource = null;
                     test2ListView.ItemsSource = cart;
@@ -81,43 +85,29 @@ namespace AppResta.View
                 }
                 this.empleado = empleado;
 
-                BindingContext = new MainViewModel(Navigation, _Token);
+                BindingContext = new MainViewModel(Navigation, _Token, mesasListView);
                 MesaTexto.Text = "# Mesa:" + mesa;
-                NombTexto.Text = "Mesero: " + empleado.pin ;
+                //NombTexto.Text = "Mesero: " + empleado.pin ;
                 OrdenTexto.Text = "# Orden: " + ordenID.ToString();
 
             }
 
-            
+           
            
            // SUBCATEGORIAS = SubCategoria();
 
         }
 
 
-
-        public void SelectItem(object sender, SelectedItemChangedEventArgs e)
-        {
-            var itme = e.SelectedItem as Model.Cart;
-            Console.WriteLine(itme.id);
-
-
-
-        }
         //----- REFRESCA EL CONTENIDO DE LA LISTA DE CARRITO ------//
         private void RefreshCart_Refreshing(object sender, EventArgs e)
         {
-
-
             if (test2ListView.ItemsSource != null)
             {
                 Task.Delay(700);
                 ordenID = Int32.Parse(mesa_orden[0]);
-
                 cart.Clear();
-
-                cart = CartMesa(ordenID + "", mesaglb);
-
+                cart = Services.CartService.CartitoMesa(ordenID + "", mesaglb);
                 if (cart != null)
                 {
                     test2ListView.ItemsSource = null;
@@ -216,8 +206,6 @@ namespace AppResta.View
             else
             {
                 var carito = ((MenuItem)sender).CommandParameter.ToString();
-
-
                 DisplayAlert("Estas seguro de Eliminarlo" + carito, "OK", "CANCELAR");
                 for (int i = 0; i < cart.Count; i++)
                 {
@@ -229,13 +217,9 @@ namespace AppResta.View
 
                     }
                 }
-
                 test2ListView.ItemsSource = null;
                 test2ListView.ItemsSource = cart;
-
             }
-
-
             // Actualizar el estado del item seleccionado
 
         }
@@ -341,8 +325,10 @@ namespace AppResta.View
                     total += Double.Parse(item["precio"].ToString().Replace(",", "."));
                 }
             }*/
-            int ord = Int32.Parse(IdOrden(mesaglb)[1]);
-            string idO = IdOrden(mesaglb)[0];
+
+            string [] arrayOrden = Services.OrdenesService.IdOrden(mesaglb);
+            int ord = Int32.Parse(arrayOrden[1]);//IdOrden(mesaglb)[1]);
+            string idO = arrayOrden[0];//IdOrden(mesaglb)[0];
             //Console.WriteLine("Ordenar butno" + IdOrden(mesaglb)[1]);
             if (ord == 1 || ord == 2)
             {
@@ -387,7 +373,7 @@ namespace AppResta.View
                         }
                     }
                 }
-
+                View.Mesa.initUpdate(Services.MesasService.ObtenerMesas(), mesasListView);
 
             }
             else
@@ -460,7 +446,7 @@ namespace AppResta.View
                 {
 
                 }*/
-                mesa_orden = IdOrden(mesaglb);
+                mesa_orden = Services.OrdenesService.IdOrden(mesaglb); //IdOrden(mesaglb);
                 if (cart.Count == 0 && mesa_orden[1] != "3") // Caso 0: Carrito vacio
                 {
                     PopupNavigation.Instance.PushAsync(new ItemPlatillo(platillo, mesaglb, bandera: 0, cart, test2ListView, totalpago: totalpago, empleado: empleado));
@@ -486,19 +472,12 @@ namespace AppResta.View
                     }
                     else if (band == 0) // CASO 1.2
                     {
-
                         //Console.WriteLine("Ya exite un platillo y se agrega el otro");
                         // itemPlatillo = new ItemPlatillo(platillo, mesaglb, bandera: 2, cart, test2ListView);
-                        PopupNavigation.Instance.PushAsync(new ItemPlatillo(platillo, mesaglb, bandera: 2, cart, test2ListView,totalpago: totalpago, empleado: empleado ));
-
+                        PopupNavigation.Instance.PushAsync(new ItemPlatillo(platillo, mesaglb, bandera: 2, cart, test2ListView, totalpago: totalpago, empleado: empleado));
                     }
-
                 }
-
             }
-          
-
-
         }
 
         public static void actualizar(ListView test2ListView, Label totalpago)
@@ -519,7 +498,6 @@ namespace AppResta.View
 
         public void returnCategorias(object sender, EventArgs e)
         {
-            //Console.WriteLine(band);
             if (band == 1) {
                 tituloR.Text = "CATEGORIAS";
                 band = 0;
@@ -527,7 +505,6 @@ namespace AppResta.View
             }
             else if (band == 2)
             {
-              
                 tituloR.Text = "Categorias".ToUpper() +"/" + categoria.nombre;
                 testListView.ItemsSource = SubCategorias(categoria.id);
                 if (SubCategorias(categoria.id) != null) { 
@@ -539,18 +516,9 @@ namespace AppResta.View
                     tituloR.Text = "CATEGORIAS";
                     band = 0;
                     testListView.ItemsSource = CATEGORIAS;
-
-
                 }
                    
             }
-            
-            
-            //band = 0;
-
-
-            //testListView.ItemsSource = Categorias2();
-
         }
 
 
@@ -734,73 +702,9 @@ namespace AppResta.View
         }
 
 
-        public List<Model.Cart> CartMesa(string id, string mesa)
-        {
-
-            var sub = new List<Model.Cart>();
-            var client = new HttpClient();
-
-            client.BaseAddress = new Uri("http://192.168.1.112/resta/admin/mysql/orden/index.php?op=obtenerCarrito&idOrden=" + id + "&mesa=" + mesa);
-
-            HttpResponseMessage response = client.GetAsync(client.BaseAddress).Result;
-            if (response.IsSuccessStatusCode)
-            {
-                var content = response.Content.ReadAsStringAsync().Result;
-                string json = content.ToString();
-                var jsonArray = JArray.Parse(json.ToString());
-
-                foreach (var item in jsonArray)
-                {
-                    cartItem = new Model.Cart();
-                    cartItem.id = Int32.Parse(item["id"].ToString());
-                    cartItem.idItem = Int32.Parse(item["idItem"].ToString());
-                    cartItem.platillo = item["nombre"].ToString();
-                    cartItem.cantidad = Int32.Parse(item["cantidad"].ToString());
-                    cartItem.precio = Convert.ToDouble(item["precio"].ToString().Replace(",", "."));
-                    cartItem.total = (double)(cartItem.precio * cartItem.cantidad);
-                    cartItem.visible = "false";
-
-                    cart.Add(cartItem);
-
-                }
-                return cart;
-            }
-            else
-            {
-                return null;
-            }
-        }
-
-
-
-        public string[] IdOrden(string mesa)
-        {
-
-            var client = new HttpClient();
-            string[] orden = new string[2];
-            string ordenID = "";
-            client.BaseAddress = new Uri("http://192.168.1.112/resta/admin/mysql/orden/index.php?op=obtenerCarritoOrden&mesa=" + mesa);
-            HttpResponseMessage response = client.GetAsync(client.BaseAddress).Result;
-            if (response.IsSuccessStatusCode)
-            {
-                var content = response.Content.ReadAsStringAsync().Result;
-                string json = content.ToString();
-                var jsonArray = JArray.Parse(json.ToString());
-
-                foreach (var item in jsonArray)
-                {
-                    orden[0] = item["ordern"].ToString();
-                    orden[1] = item["estado"].ToString();
-                }
-
-            }
-            //Console.WriteLine(ordenID);
-            return orden;
-        }
-
         private void BtnSalir_Clicked(object sender, EventArgs e)
         {
-            Navigation.PopAsync(false);
+           
             Navigation.PopAsync(false);
         }
 

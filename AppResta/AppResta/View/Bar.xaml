@@ -105,33 +105,41 @@
                 <xct:TabViewItem
                    
                     Text="ORDENES ENTREGADAS" TextColor="Black" TextColorSelected="Black" FontSize="20" FontAttributes="Bold" FontSizeSelected="30" FontFamilySelected="5">
-                    <Grid BackgroundColor="LightGray"  ColumnSpacing="0" >
+                    <Grid RowSpacing="0" ColumnSpacing="0">
+
                         <Grid.RowDefinitions>
+
                             <RowDefinition Height="60"/>
+                            <RowDefinition Height="45"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-                        <Grid Grid.Row="0" Grid.Column="0" BackgroundColor="Gray" Padding="0,0,0,0">
+                        <Frame Grid.Row="0" Grid.Column="0" Padding="3,3,3,3" HorizontalOptions="Fill" VerticalOptions="Fill" >
+                            <Grid>
+                                <DatePicker x:Name="Fecha_cajero" DateSelected="Fecha_cajero_DateSelected" MinimumDate="01/10/2022" MaximumDate="12/31/2030" HorizontalOptions="Center"/>
+
+                            </Grid>
+                        </Frame>
+
+                        <Grid Grid.Row="1" Grid.Column="0" RowSpacing="0" ColumnSpacing="0" BackgroundColor="Gray" Padding="5,10,10,5">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*"/>
-
                             </Grid.RowDefinitions>
-
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="190"/>
-                                <ColumnDefinition Width="190"/>
+                                <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <Label Grid.Row="0" Grid.Column="0" Text="Orden #" TextColor="White" FontSize="25" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"/>
-                            <Label Grid.Row="0" Grid.Column="1" Text="Mesa" TextColor="White" FontSize="25" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"/>
-                            <Label Grid.Row="0" Grid.Column="2" Text="Mesero" TextColor="White" FontSize="25" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"/>
-                            <Label Grid.Row="0" Grid.Column="3" Text="Orden Terminada" TextColor="White" FontSize="25" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"/>
+                            <Label Grid.Row="0" Grid.Column="0" Text="# ORDEN"  TextColor="White" HorizontalOptions="Center" FontAttributes="Bold" VerticalOptions="Center" FontSize="22"/>
+                            <Label Grid.Row="0" Grid.Column="1"  Text="MESERO" TextColor="White" HorizontalOptions="Center" FontAttributes="Bold" VerticalOptions="Center" FontSize="22"/>
+                            <Label Grid.Row="0" Grid.Column="2"  Text="MESA" TextColor="White" HorizontalOptions="Center" FontAttributes="Bold" VerticalOptions="Center" FontSize="22"/>
                         </Grid>
-                        <ListView IsVisible="False" x:Name="barHistorialListView" SelectionMode="None" Grid.Row="1" Grid.Column="0" RowHeight="60" BackgroundColor="WhiteSmoke">
+
+
+                        <ListView IsVisible="False" x:Name="barHistorialListView" SelectionMode="None" Grid.Row="2" Grid.Column="0" RowHeight="60" BackgroundColor="WhiteSmoke">
                             <ListView.ItemTemplate >
                                 <DataTemplate  >
                                     <ViewCell >

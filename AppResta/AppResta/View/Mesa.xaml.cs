@@ -19,7 +19,7 @@ namespace AppResta.View
         bool internet;
         List<Model.Ordenes> list;
         List<Model.Cart> listMain, listMainAux;
-        List<Model.Mesas> mesa;
+        static List<Model.Mesas> mesa;
         List<Model.Categorias> categorias;
         Model.Empleado empleado;
         int iDorden;
@@ -28,7 +28,7 @@ namespace AppResta.View
         public Mesa(List<Model.Ordenes> orden =null, List<Model.Categorias> categorias2 = null, List<Model.Mesas> mesas = null, Model.Empleado empleado = null, bool interent = false)
         {
             InitializeComponent();
-
+            tiempoCajero.Text = DateTime.Now.ToString("t");
             this.internet = interent;
 
             Device.StartTimer(TimeSpan.FromSeconds(1.2), () =>
@@ -42,7 +42,7 @@ namespace AppResta.View
 
             BindingContext = new ViewModel.MesaViewModel(Navigation);
             nomb = empleado.nombre;
-            nombreEmpl.Text = "Bienvenido: " + empleado.nombre;
+            //nombreEmpl.Text = "Bienvenido: " + empleado.nombre;
             //puestoEmpl.Text = empleado.puesto;
 
             if (mesas != null)
@@ -81,6 +81,31 @@ namespace AppResta.View
             //{
             mesasListView.ItemsSource = mesa;
             iDorden = Services.OrdenesService.IDordene() +1;
+
+            //List<Model.Mesas> m = Mesas();
+
+            //  }
+
+        }
+        /*********************************************************************
+         *  METODO INIT:
+         *      INICIALIZA TODAS LAS ACCIONES
+         *********************************************************************/
+
+        public static void initUpdate(List<Model.Mesas> m, CollectionView mesasListView)
+        {
+            //List<Model.Mesas> mesas = await App.Database.GetMesaAsync();
+
+            //if (internet)
+            //{
+            if (m != null && mesasListView != null)
+                mesasListView.ItemsSource = m;
+            else {
+                mesasListView.ItemsSource = null;
+                mesasListView.ItemsSource = mesa;
+            }
+           
+            //iDorden = Services.OrdenesService.IDordene() + 1;
 
             //List<Model.Mesas> m = Mesas();
 
@@ -136,10 +161,10 @@ namespace AppResta.View
                 }
             
             if (Int32.Parse(mesas.id_orden) == 0)
-                Navigation.PushAsync(new Main(true, band: false, idOrden: iDorden, empleado, mesas.mesa, listMain, categorias), false);
+                Navigation.PushAsync(new Main(true, band: false, idOrden: iDorden, empleado, mesas.mesa, listMain, categorias, mesasListView), false);
             else {
                // listMain = Services.CartService.CartMesa(mesas.id_orden, mesas.mesa);
-                Navigation.PushAsync(new Main(true, band: true, idOrden: Int32.Parse(mesas.id_orden), empleado, mesas.mesa, listMain, categorias), false);
+                Navigation.PushAsync(new Main(true, band: true, idOrden: Int32.Parse(mesas.id_orden), empleado, mesas.mesa, listMain, categorias, mesasListView), false);
             }
 
            

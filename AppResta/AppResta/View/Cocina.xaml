@@ -91,74 +91,74 @@
                 </xct:TabViewItem>
 
                 <xct:TabViewItem Text="ORDENES ENTREGADAS" TextColor="Black" TextColorSelected="Black" FontSize="20" FontAttributes="Bold" FontSizeSelected="30" FontFamilySelected="5">
+                    <Grid RowSpacing="0" ColumnSpacing="0">
 
-                    <Grid BackgroundColor="LightGray"  ColumnSpacing="5">
                         <Grid.RowDefinitions>
+
+                            <RowDefinition Height="60"/>
+                            <RowDefinition Height="45"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Frame Grid.Row="0" Grid.Column="0" Padding="0,0,0,0" CornerRadius="15">
+
+                        <Frame Grid.Row="0" Grid.Column="0" Padding="3,3,3,3" HorizontalOptions="Fill" VerticalOptions="Fill" >
                             <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="60"/>
-                                    <RowDefinition Height="*"/>
-                                </Grid.RowDefinitions>
+                                <DatePicker x:Name="Fecha_cajero" DateSelected="Fecha_cajero_DateSelected" MinimumDate="01/10/2022" MaximumDate="12/31/2030" HorizontalOptions="Center" VerticalOptions="Center"/>
 
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Grid Grid.Row="0" Grid.Column="0" BackgroundColor="Gray">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="*"/>
-
-                                    </Grid.RowDefinitions>
-
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="190"/>
-                                        <ColumnDefinition Width="190"/>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Label Text="Orden #" TextColor="White" FontSize="20" FontAttributes="Bold" Grid.Column="0" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center"/>
-                                    <Label Text="Mesa" TextColor="White" FontSize="20" FontAttributes="Bold" Grid.Column="1" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center"/>
-                                    <Label Text="Mesero" TextColor="White" FontSize="20" FontAttributes="Bold" Grid.Column="2" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center"/>
-                                    <Label Text="Orden terminada" TextColor="White" FontSize="20" FontAttributes="Bold" Grid.Column="3" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center"/>
-                                </Grid>
-                                <ListView IsVisible="False" x:Name="cocinaHistorialList" SelectionMode="None" Grid.Row="1" Grid.Column="0" RowHeight="60" BackgroundColor="WhiteSmoke">
-                                    <ListView.ItemTemplate >
-                                        <DataTemplate  >
-                                            <ViewCell >
-                                                <Grid Padding="0,0,0,0">
-                                                    <Grid.RowDefinitions>
-                                                        <RowDefinition Height="*"/>
-
-                                                    </Grid.RowDefinitions>
-
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="190"/>
-                                                        <ColumnDefinition Width="190"/>
-                                                        <ColumnDefinition Width="*"/>
-                                                        <ColumnDefinition Width="*"/>
-
-
-                                                    </Grid.ColumnDefinitions>
-
-                                                    <Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="0" Grid.Row="0" Text="{Binding id}" TextColor="Black" FontSize="22" />
-                                                    <Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="1" Grid.Row="0" Text="{Binding mesa}" TextColor="Black" FontSize="22"/>
-                                                    <Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="2" Grid.Row="0" Text="{Binding mesero}" TextColor="Black" FontSize="22"/>
-                                                    <Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="3" Grid.Row="0" Text="{Binding fecha_cerada}" TextColor="Black" FontSize="22"/>
-                                                </Grid>
-
-
-                                            </ViewCell>
-                                        </DataTemplate>
-                                    </ListView.ItemTemplate>
-                                </ListView>
                             </Grid>
                         </Frame>
-                        <ActivityIndicator Grid.Row="0" Grid.Column="0" Scale=".1" x:Name="cargar2"  IsRunning="True" />
+
+                        <Grid Grid.Row="1" Grid.Column="0" BackgroundColor="Gray">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+
+                            </Grid.RowDefinitions>
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="190"/>
+                                <ColumnDefinition Width="190"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Text="Orden #" TextColor="White" FontSize="20" FontAttributes="Bold" Grid.Column="0" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center"/>
+                            <Label Text="Mesa" TextColor="White" FontSize="20" FontAttributes="Bold" Grid.Column="1" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center"/>
+                            <Label Text="Mesero" TextColor="White" FontSize="20" FontAttributes="Bold" Grid.Column="2" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center"/>
+                            <Label Text="Orden terminada" TextColor="White" FontSize="20" FontAttributes="Bold" Grid.Column="3" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </Grid>
+                        <ListView IsVisible="False" x:Name="cocinaHistorialList" SelectionMode="None" Grid.Row="2" Grid.Column="0" RowHeight="60" BackgroundColor="WhiteSmoke">
+                            <ListView.ItemTemplate >
+                                <DataTemplate  >
+                                    <ViewCell >
+                                        <Grid Padding="0,0,0,0">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*"/>
+
+                                            </Grid.RowDefinitions>
+
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="190"/>
+                                                <ColumnDefinition Width="190"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*"/>
+
+
+                                            </Grid.ColumnDefinitions>
+
+                                            <Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="0" Grid.Row="0" Text="{Binding id}" TextColor="Black" FontSize="22" />
+                                            <Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="1" Grid.Row="0" Text="{Binding mesa}" TextColor="Black" FontSize="22"/>
+                                            <Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="2" Grid.Row="0" Text="{Binding mesero}" TextColor="Black" FontSize="22"/>
+                                            <Label HorizontalOptions="Center" VerticalOptions="Center" Grid.Column="3" Grid.Row="0" Text="{Binding fecha_cerada}" TextColor="Black" FontSize="22"/>
+                                        </Grid>
+
+
+                                    </ViewCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+
+
                     </Grid>
                 </xct:TabViewItem>
             </xct:TabView>
