@@ -22,13 +22,15 @@ namespace AppResta.ViewModel
         string _expand;
 
         public List<Categorias> categoria;
+        CollectionView mesasListView;
         #endregion
 
         #region CONSTRUCTOR
-        public MainViewModel(INavigation navigation, bool _Token)
+        public MainViewModel(INavigation navigation, bool _Token, CollectionView mesasListView)
         {
             Navigation = navigation;
             this._Token = _Token;
+            this.mesasListView = mesasListView;
         }
 
         public MainViewModel()
@@ -79,7 +81,7 @@ namespace AppResta.ViewModel
         }
         public async Task Mesas()
         {
-            //await Navigation.PushAsync(new Mesa());
+            View.Mesa.initUpdate(null, mesasListView);
             await Navigation.PopAsync(false);
         }
         public async Task Orden()

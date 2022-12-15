@@ -7,10 +7,10 @@
             <Grid BackgroundColor="LightGray" x:Name="grild" IsVisible="False">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="78"/>
-                    <RowDefinition Height="150"/>
+                    <RowDefinition Height="200"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
+
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -29,7 +29,7 @@
 
 
                 <!--NUMERICOS-->
-                <Frame BackgroundColor="White" Grid.Row="1" Grid.Column="0" Grid.RowSpan="4" Grid.ColumnSpan="2" Padding="30,30,30,30" CornerRadius="10" Margin="10,5,0,10">
+                <Frame BackgroundColor="White" Grid.Row="1" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="2" Padding="30,30,30,30" CornerRadius="10" Margin="10,5,0,10">
                     <Grid >
                         <Grid>
                             <Grid.RowDefinitions>
@@ -83,9 +83,9 @@
                             <Button x:Name="propina10" Clicked="propina10_Clicked" Text="10%" TextColor="Black" BackgroundColor="White" BorderColor="Black" BorderWidth="1" CornerRadius="10" FontSize="20" Grid.Row="0" Grid.Column="2"/>
                             <Button x:Name="propina15" Clicked="propina15_Clicked" Text="15%" TextColor="Black" BackgroundColor="White" BorderColor="Black" BorderWidth="1" CornerRadius="10" FontSize="20" Grid.Row="0" Grid.Column="3"/>
                             <Button x:Name="propina20" Clicked="propina20_Clicked" Text="20%" TextColor="Black" BackgroundColor="White" BorderColor="Black" BorderWidth="1" CornerRadius="10" FontSize="20" Grid.Row="0" Grid.Column="4"/>
-                            <Button x:Name="propinaOtro" Clicked="propinaOtro_Clicked" Text="OTRO" TextColor="Black" BackgroundColor="White" BorderColor="Black" BorderWidth="1" CornerRadius="10" FontSize="20" Grid.Row="1" Grid.Column="0"/>
-                            <Frame BorderColor="Black" Grid.Row="1" Grid.Column="1" CornerRadius="5" Grid.ColumnSpan="3">
-                                <Entry HorizontalOptions="Center" VerticalOptions="Center" x:Name="TxtPropina" FontSize="5"></Entry>
+                            <Button x:Name="propinaOtro" Clicked="propinaOtro_Clicked" Text="OTRO" TextColor="Black" BackgroundColor="White" BorderColor="Black" BorderWidth="1" CornerRadius="10" FontSize="20" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"/>
+                            <Frame x:Name="frameentry" BorderColor="Black" Grid.Row="1" Grid.Column="2" CornerRadius="5" Grid.ColumnSpan="3" Padding="0,0,0,0">
+                                <Entry Completed="TxtPropina_Completed" VerticalOptions="Fill" HorizontalTextAlignment="Center" Keyboard="Numeric" x:Name="TxtPropina" Placeholder="ESCRIBA LA CANTIDAD" PlaceholderColor="Black" FontSize="25" MaxLength="5" HorizontalOptions="Fill"></Entry>
                             </Frame>
                         </Grid>
 
@@ -118,7 +118,7 @@
                 </Frame>
 
 
-                <!--EFECTIVO Y TARJETA-->
+                <!--Monto-->
                 <Frame Grid.Row="2" Grid.Column="3" BackgroundColor="White" CornerRadius="10" Padding="10,5,10,5" Margin="0,0,10,0">
                     <StackLayout>
 
@@ -126,12 +126,14 @@
 
                         <StackLayout x:Name="EfectivoGrild" HorizontalOptions="Start" VerticalOptions="Start" Orientation="Horizontal">
                             <Label Text="Efectivo:" TextColor="Black" FontSize="25" />
+                            <Label Text="$" TextColor="Black" FontSize="25" />
                             <Label x:Name="Efectivo" Text="0" TextColor="Black"  MaxLines="6" FontSize="25" />
                         </StackLayout>
 
 
                         <StackLayout x:Name="TarjetaGrild" HorizontalOptions="Start" VerticalOptions="Start" Orientation="Horizontal" >
                             <Label Text="Tarjeta:" TextColor="Black" FontSize="25" HorizontalOptions="Start" VerticalOptions="Center"/>
+                            <Label Text="$" TextColor="Black" FontSize="25" />
                             <Label x:Name="Tarjeta" TextColor="Black" Text="0"  HorizontalOptions="Center" VerticalOptions="Center" FontSize="25" />
                         </StackLayout>
                     </StackLayout>
@@ -196,6 +198,6 @@
             </Grid>
             <ActivityIndicator Grid.Row="0" Grid.Column="0" Scale=".1" x:Name="cargar"  IsRunning="True" />
         </Grid>
-      
+
     </ContentPage.Content>
 </ContentPage>

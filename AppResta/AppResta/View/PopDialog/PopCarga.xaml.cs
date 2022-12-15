@@ -10,12 +10,12 @@ using Xamarin.Forms.Xaml;
 namespace AppResta.View
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class PopQuestion : Rg.Plugins.Popup.Pages.PopupPage
+    public partial class PopCarga : Rg.Plugins.Popup.Pages.PopupPage
     {
-        public PopQuestion(string mensaje)
+        public PopCarga(string mensaje)
         {
             InitializeComponent();
-           
+            
         }
 
         private void cerrarPop(object sender, EventArgs e)

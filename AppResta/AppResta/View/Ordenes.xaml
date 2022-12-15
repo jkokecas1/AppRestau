@@ -5,8 +5,8 @@
              NavigationPage.HasNavigationBar="False">
 
     <ContentPage.Content>
-       
-            <Grid  RowSpacing="0" ColumnSpacing="0">
+
+        <Grid  RowSpacing="0" ColumnSpacing="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="60"/>
                 <RowDefinition Height="*"/>
@@ -27,7 +27,7 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="290"/>
+
                         <ColumnDefinition Width="*"/>
 
                     </Grid.ColumnDefinitions>
@@ -35,9 +35,8 @@
                     <Image Source="klassylogo.png" VerticalOptions="Start" Grid.Row="0" Grid.Column="0"></Image>
                     <Button Text="Mesas"  Command="{Binding Mesascommand}" Grid.Row="0" Grid.Column="1" CornerRadius="0" BackgroundColor="DimGray" TextColor="#FFF"></Button>
                     <Button Text="Ordenes" Command="{Binding Ordencommand}" Grid.Row="0" Grid.Column="2" CornerRadius="0" BackgroundColor="LightGray"></Button>
-                    <Button Text="Historial" Command="{Binding Historialcommand}" Grid.Row="0" Grid.Column="3" CornerRadius="0" BackgroundColor="DimGray" TextColor="#FFF"></Button>
-                    <Label x:Name="nombreEmpl" Grid.Row="0" Grid.Column="4"  FontSize="20" TextColor="Black"></Label>
-                    <Button Text="SALIR"  Clicked="BtnSalir_Clicked" Grid.Row="0" Grid.Column="5" HorizontalOptions="End" CornerRadius="0" BackgroundColor="Red" TextColor="#FFF"></Button>
+                    <Label x:Name="tiempoCajero" Text="Time" Grid.Row="0" Grid.Column="3"  FontSize="30" TextColor="Black" VerticalOptions="Center" HorizontalOptions="End"></Label>
+                    <Button Text="SALIR"  Clicked="BtnSalir_Clicked" Grid.Row="0" Grid.Column="4" HorizontalOptions="End" CornerRadius="0" BackgroundColor="Red" TextColor="#FFF"></Button>
                 </Grid>
             </Grid>
 
@@ -82,7 +81,7 @@
 
 
                             </Grid.ColumnDefinitions>
-                            
+
                             <Label Grid.Row="0" Grid.Column="0" Text="# ORDEN"  TextColor="White" HorizontalOptions="Center" FontAttributes="None" VerticalOptions="Center" FontSize="22"/>
                             <Label Grid.Row="0" Grid.Column="1"  Text="MESA" TextColor="White" HorizontalOptions="Center" FontAttributes="None" VerticalOptions="Center" FontSize="22"/>
 

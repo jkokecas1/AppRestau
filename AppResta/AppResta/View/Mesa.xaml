@@ -37,21 +37,15 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="300"/>
+                        <ColumnDefinition Width="*"/>
 
 
                     </Grid.ColumnDefinitions>
                     <Image Source="klassylogo.png" VerticalOptions="Start" Grid.Row="0" Grid.Column="0"></Image>
                     <Button Text="Mesas"  Grid.Row="0" Grid.Column="1" CornerRadius="0" BackgroundColor="LightGray" TextColor="#000"></Button>
                     <Button Text="Ordenes" Clicked="Button_Clicked" Grid.Row="0" Grid.Column="2" CornerRadius="0" BackgroundColor="DimGray" TextColor="#FFF"></Button>
-                    <Button Text="Historial" Command="{Binding Historialcommand}" Grid.Row="0" Grid.Column="3" CornerRadius="0" BackgroundColor="DimGray" TextColor="#FFF"></Button>
-                    <Grid Grid.Row="0" Grid.Column="4" Padding="0,0,0,0">
-                        <Label x:Name="nombreEmpl" Grid.Row="0" Grid.Column="0"  FontSize="20" TextColor="Black"></Label>
-                        <Label x:Name="puestoEmpl" Grid.Row="1" Grid.Column="0"  FontSize="20" TextColor="Black"></Label>
-
-                    </Grid>
-
-                    <Button Text="SALIR"  Command="{Binding NavLoginCommand}" Grid.Row="0" Grid.Column="5" HorizontalOptions="End" CornerRadius="0" BackgroundColor="Red" TextColor="#FFF"></Button>
+                    <Label x:Name="tiempoCajero" Text="Time" Grid.Row="0" Grid.Column="3"  FontSize="30" TextColor="Black" VerticalOptions="Center" HorizontalOptions="End"></Label>
+                    <Button Text="SALIR"  Command="{Binding NavLoginCommand}" Grid.Row="0" Grid.Column="4" HorizontalOptions="End" CornerRadius="0" BackgroundColor="Red" TextColor="#FFF"></Button>
                 </Grid>
             </Grid>
 
@@ -79,7 +73,7 @@
                     </Grid>
                 </Frame>
                 <Frame  Grid.Row="1" Grid.Column="0" Padding="0,0,0,0" CornerRadius="15">
-                    <RefreshView x:Name="RefreshMesas" Refreshing="RefreshMesas_Refreshing">
+                    <RefreshView x:Name="RefreshMesas" IsEnabled="False" >
 
                         <CollectionView x:Name="mesasListView" IsVisible="false" SelectionMode="Single"  SelectionChanged="select_Item">
                             <CollectionView.ItemsLayout>
@@ -113,7 +107,7 @@
 
                                                 <Grid Grid.Row="0"  Grid.Column="0">
                                                     <Label Grid.Row="0"  Grid.Column="0" Text="{Binding mesa}" HorizontalOptions="CenterAndExpand" VerticalOptions="Center" FontSize="22" FontAttributes="Bold" TextColor="Black"/>
-                                                   <!-- <Label Grid.Row="1"  Grid.Column="0" Text="{Binding ubicacion}" HorizontalOptions="CenterAndExpand" VerticalOptions="Center" FontSize="22" FontAttributes="Bold" TextColor="Black"/> -->
+                                                    <!-- <Label Grid.Row="1"  Grid.Column="0" Text="{Binding ubicacion}" HorizontalOptions="CenterAndExpand" VerticalOptions="Center" FontSize="22" FontAttributes="Bold" TextColor="Black"/> -->
                                                 </Grid>
                                             </Grid>
 

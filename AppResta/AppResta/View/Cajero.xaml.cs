@@ -15,30 +15,68 @@ namespace AppResta.View
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class Cajero : ContentPage
     {
-            static List<Model.Ordenes> ordenList;
-            public Cajero()
+
+        // VARIABLES    
+        List<Model.Ordenes> listordAux = new List<Model.Ordenes>();
+        static List<Model.Ordenes> ordenList;
+        Model.Empleado empleado;
+
+        // CONSTRUCTOR
+        public Cajero(List<Model.Ordenes> ordenes, Model.Empleado empleado)
         {
-            
+
             InitializeComponent();
+            tiempoCajero.Text = DateTime.Now.ToString("t");
+            this.empleado = empleado;
+            nombreEmpl.Text = empleado.pin + "";
             BindingContext = new ViewModel.OrdenesViewModel(Navigation);
             //btnNotification.Clicked += BtnNotification_Clicked;
-            Device.StartTimer(TimeSpan.FromSeconds(1.2), () => {
-                cargar.IsEnabled = false;
-                cargar.IsRunning = false;
-                cargar.IsVisible = false;
+            Device.StartTimer(TimeSpan.FromSeconds(0.4), () =>
+            {
+                //  cargar.IsEnabled = false;
+                // cargar.IsRunning = false;
+                // cargar.IsVisible = false;
                 RefreshOrdenes.IsVisible = true;
                 return false;
             });
-           
-            init();
-            // 
+            ordenList = ordenes;
+            init(ordenList);
+            ///cocinaHistorial.ItemsSource = Services.OrdenesService.OrdenecajeroEmpleado(empleado.id.ToString(), DateTime.Now.ToString("yyyy-MM-dd"));
+            Device.StartTimer(TimeSpan.FromSeconds(3), updateHistorial);
+            Device.StartTimer(TimeSpan.FromSeconds(60), updateTimeLive);
         }
 
-        public void init()
+
+        // METODOS
+
+        public void init(List<Model.Ordenes> ord)
         {
-            ordenList = Ordene();
-            if (ordenList != null)
-                ordenesListView.ItemsSource = ordenList;//await App.Database.GetOrdenesAsync(); //
+            tiempoCajero.Text = DateTime.Now.ToString("t");
+            cajeroHistorial.ItemsSource = Services.OrdenesService.OrdenecajeroEmpleado(empleado.id.ToString(), DateTime.Now.ToString("yyyy-MM-dd"));
+            if (ord != null) {
+                ordenesListView.ItemsSource = ord;//await App.Database.GetOrdenesAsync(); //
+                ordenList = ord;
+            }
+            
+        }
+
+        bool updateTimeLive()
+        {
+            Device.BeginInvokeOnMainThread(() => init(Services.OrdenesService.OrdenCaja()));
+            return true;
+        }
+
+
+        bool updateHistorial()
+        {
+            // init(Services.OrdenesService.OrdeneBar());
+            // cargar2.IsEnabled = false;
+            //cargar2.IsRunning = false;
+            //cargar2.IsVisible = false;
+            cajeroHistorial.IsVisible = true;
+            cajeroHistorial.ItemsSource = Services.OrdenesService.OrdenecajeroEmpleado(empleado.id.ToString(), DateTime.Now.ToString("yyyy-MM-dd")); ;
+           
+            return false;
         }
 
         private void Button_Pagar(object sender, EventArgs e)
@@ -46,7 +84,7 @@ namespace AppResta.View
             int id = Int32.Parse(((MenuItem)sender).CommandParameter.ToString());
 
 
-            Pago pago = new Pago(ordenList, id, ordenesListView);
+            Pago pago = new Pago(ordenList, id, ordenesListView, empleado);
             PopError error = new PopError("LA ORDEN AUN NO SE ESTA LISTA");
             foreach (Model.Ordenes orden in ordenList)
             {
@@ -80,57 +118,7 @@ namespace AppResta.View
 
         }
 
-        public static List<Model.Ordenes> Ordene()
-        {
-            Model.Ordenes orden;
-            List<Model.Ordenes> ordenList = new List<Model.Ordenes>();
-            var client = new HttpClient();
 
-            client.BaseAddress = new Uri("http://192.168.1.112/resta/admin/mysql/orden/index.php?op=obtenerOrden");
-            HttpResponseMessage response = client.GetAsync(client.BaseAddress).Result;
-            if (response.IsSuccessStatusCode)
-            {
-                var content = response.Content.ReadAsStringAsync().Result;
-                string json = content.ToString();
-                var jsonArray = JArray.Parse(json.ToString());
-
-                foreach (var item in jsonArray)
-                {
-
-                    orden = new Model.Ordenes();
-
-                    orden.id = Int32.Parse(item["id"].ToString());
-                    orden.fecha_orden = item["fecha_orden"].ToString().Remove(0, 10);
-                    if (item["fecha_start"].ToString() != "")
-                    {
-                        orden.fecha_start = item["fecha_start"].ToString().Remove(0, 10);
-                        orden.fecha_estimada = item["fecha_estimada"].ToString().Remove(0, 10);
-                    }
-                    //PLATILLOS
-                    orden.fecha_cerada = item["fecha_cerada"].ToString();
-                    switch (item["estado"].ToString())
-                    {
-                        case "1": orden.estado = "En espera"; orden.fecha_estimada = "#11111"; break;
-                        case "2": orden.estado = "Preparando... "; orden.fecha_estimada = "#11111"; break;
-                        case "3": orden.estado = "! Terminado !"; orden.fecha_estimada = "#ff0000"; break;
-                    }
-                    //BEBIDAS
-                    orden.mesero = item["mesero"].ToString();
-                    orden.mesa = item["mesa"].ToString();
-                  //  orden.totoalExtras = item["totoalExtras"].ToString();
-                   orden.total = item["total"].ToString();
-                    orden.pago = Int32.Parse(item["pago"].ToString());
-                    ordenList.Add(orden);
-                }
-                return ordenList;
-            }
-            else
-            {
-                return null;
-            }
-        }
-
-        
 
         public static double ExtrasItem(string id)
         {
@@ -164,13 +152,13 @@ namespace AppResta.View
             return totoal;
         }
 
-       
 
-        
+
+
         private void RefreshOrdenes_Refreshing(object sender, EventArgs e)
         {
             Task.Delay(100);
-            init();
+            init(Services.OrdenesService.OrdenCaja());
             //VIVRACION
             /* try
              {
@@ -200,7 +188,38 @@ namespace AppResta.View
 
         private void Button_Clicked(object sender, EventArgs e)
         {
-            Navigation.PopToRootAsync();
+            Navigation.PopAsync(false);
         }
+        
+        private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            listordAux.Clear();
+            SearchBar searchBar = (SearchBar)sender;
+           
+            if (searchBar.Text != "")
+            {
+               
+                for (int i = 0; i < ordenList.Count; i++)
+                {
+                    if (ordenList[i].mesero.ToLower().Contains(searchBar.Text.ToLower()) )
+                    {
+                        listordAux.Add(ordenList[i]);
+                    }
+                }
+
+                ordenesListView.ItemsSource = listordAux;
+
+            }
+            else {
+                ordenesListView.ItemsSource = ordenList;
+            }
+        }
+
+        private  void Fecha_cajero_DateSelected(object sender, DateChangedEventArgs e)
+        {
+            var fechamostrar = e.NewDate.ToString("yyyy-MM-dd");
+            cajeroHistorial.ItemsSource = Services.OrdenesService.OrdenecajeroEmpleado(empleado.id + "", fechamostrar);
+        }
+
     }
 }

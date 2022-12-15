@@ -3,7 +3,7 @@
 xmlns="http://xamarin.com/schemas/2014/forms"
 xmlns:popup="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-x:Class="AppResta.View.PopQuestion">
+x:Class="AppResta.View.PopCarga">
     <Frame BackgroundColor="WhiteSmoke" Padding="20,20,20,20" Margin="340,250,340,250" CornerRadius="20">
         <StackLayout>
             <Label>Hola</Label>

@@ -30,8 +30,6 @@ namespace AppResta
             bool internet;
            
           
-           
-
             if (Connectivity.NetworkAccess == NetworkAccess.Internet)
             {
                 internet = true;

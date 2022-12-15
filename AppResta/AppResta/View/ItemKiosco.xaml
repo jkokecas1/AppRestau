@@ -6,7 +6,7 @@ xmlns="http://xamarin.com/schemas/2014/forms"
 xmlns:popup="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 xmlns:input="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.InputKit"
-  x:Class="AppResta.View.ItemPlatillo">
+  x:Class="AppResta.View.ItemKiosco">
 
     <Frame BackgroundColor="WhiteSmoke" Padding="20,20,20,20" x:Name="frameitem" CornerRadius="20">
         <Grid RowSpacing="0">
@@ -34,7 +34,7 @@ xmlns:input="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.Input
 
                 </Grid.ColumnDefinitions>
                 <Label Grid.Row="0" Grid.Column="0" x:Name="nombPlatillo"  TextColor="Black" FontAttributes="Bold" FontSize="25" BackgroundColor="WhiteSmoke"/>
-                <ImageButton Grid.Row="0" Grid.Column="1" Clicked="cerrarPop" HorizontalOptions="End"  Source="cerrar.png" BackgroundColor="WhiteSmoke"/>
+                <ImageButton Grid.Row="0" Grid.Column="1"  HorizontalOptions="End"  Source="cerrar.png" Clicked="cerrarPop" BackgroundColor="WhiteSmoke"/>
 
             </Grid>
 
@@ -60,7 +60,7 @@ xmlns:input="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.Input
                         <Grid Grid.Row="0" Grid.Column="0" >
                             <Label x:Name="descPlatillo" TextColor="Black" BackgroundColor="WhiteSmoke" Padding="8,8,8,8" FontSize="20"/>
                         </Grid>
-                        <CollectionView Grid.Row="0" Grid.Column="1" x:Name="extrasListView" SelectionMode="Multiple" SelectionChanged="selectmultiple" >
+                        <CollectionView Grid.Row="0" Grid.Column="1" x:Name="extrasListView" SelectionMode="Multiple"  >
                             <CollectionView.ItemsLayout>
                                 <GridItemsLayout Orientation="Vertical" Span="2"/>
                             </CollectionView.ItemsLayout>
@@ -125,7 +125,7 @@ xmlns:input="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.Input
 
                     </Grid.ColumnDefinitions>
                     <Label Grid.Row="0" Grid.Column="1" HorizontalOptions="Start" VerticalOptions="Center" x:Name="valCantidad" Text="1" FontSize="Large"></Label>
-                    <Stepper x:Name="stepper" Grid.Row="0" Grid.Column="0" ValueChanged="cantidadPlatillo" Value="1" ></Stepper>
+                    <Stepper x:Name="stepper" Grid.Row="0" ValueChanged="cantidadPlatillo" Grid.Column="0" Value="1" ></Stepper>
                 </Grid>
                 <Button x:Name="btn_agregar" Grid.Row="0" Grid.Column="1" Clicked="agregarItemCart" Text="AGREGAR" TextColor="White" FontSize="20" BackgroundColor="Green" />
             </Grid>

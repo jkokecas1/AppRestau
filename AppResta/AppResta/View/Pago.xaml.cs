@@ -15,18 +15,25 @@ namespace AppResta.View
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class Pago : ContentPage
     {
+
+        // VARIABLES 
         List<Model.Ordenes> orden;
         Model.Pagos pago = new Model.Pagos();
         int id = 0;
         Model.Ordenes Ordenes;
         ListView ordenesListView;
+        Model.Empleado empleado;
 
-        public Pago(List<Model.Ordenes> orden, int id, ListView ordenesListView)
+
+        // CONSTRUCTOR
+        public Pago(List<Model.Ordenes> orden, int id, ListView ordenesListView, Model.Empleado empleado= null)
         {
+            InitializeComponent();
             this.id = id;
             this.orden = orden;
             this.ordenesListView = ordenesListView;
-            InitializeComponent();
+            this.empleado = empleado;
+           
 
             BindingContext = new ViewModel.PagoViewModel(Navigation);
 
@@ -40,10 +47,13 @@ namespace AppResta.View
             init();
         }
 
+
+        // METODOS
+
         public void init()
         {
-            Efectivo.Text = "$ 0";
-            Tarjeta.Text = "$ 0";
+            Efectivo.Text = "0";
+            Tarjeta.Text = "0";
             TarjetaGrild.IsVisible = false;
             tiketOrden.Text = "TICKET # :" + id;
             double[] totoales = new double[3];
@@ -138,11 +148,15 @@ namespace AppResta.View
         }
         
         double propina  = 0.0;
-        public void calcularPropona(int p)
+        public void calcularPropona(int p, int opc)
         {      
                // Console.WriteLine();
-                propina= ((Double.Parse(Ordenes.total) * Double.Parse(p + "")) / 100) ;
-            // total.Text = Ordenes.total;
+               if(opc == 1)
+                    propina= ((Double.Parse(Ordenes.total) * Double.Parse(p + "")) / 100) ;
+               else if(opc == 2)
+                    propina = Double.Parse(p + "");
+            //propina= ((Double.Parse(Ordenes.total) + Double.Parse(p + ""))) ;
+
             if (Ordenes.totoalExtras != null)
                 Subtotal.Text = propina + Double.Parse(Ordenes.total) + Double.Parse(Ordenes.totoalExtras) + "";
             else if (propina > 0.0)
@@ -151,7 +165,7 @@ namespace AppResta.View
                 Subtotal.Text = Ordenes.total;
 
             if (radioTarjeta.IsChecked)
-                    Tarjeta.Text ="$"+ Subtotal.Text;
+                    Tarjeta.Text = Subtotal.Text;
 
             
             //Console.WriteLine( Ordenes.total);
@@ -162,13 +176,14 @@ namespace AppResta.View
         {
 
 
-            if (Efectivo.Text == "" && Tarjeta.Text.Replace("$ ","") == "")
+            if (Efectivo.Text == "" && Tarjeta.Text== "")
             {
                 PopupNavigation.Instance.PushAsync(new PopError("VERIFICA LOS CAMPOS"));
             }
-            else if (Tarjeta.Text.Replace("$ ", "") != "" && Efectivo.Text == "0")
+            else if (Tarjeta.Text != "" && Efectivo.Text == "0")
             {
-                pago.monto = Double.Parse(Tarjeta.Text.Replace("$ ", "") + "");
+
+                pago.monto = Double.Parse(Tarjeta.Text + "");
                 pago.idcart = Ordenes.id;
                 pago.tipoPago = "2"; // TARJETA
                 pago.propina = propina+"";
@@ -181,29 +196,32 @@ namespace AppResta.View
                 else
                 {
                     Console.WriteLine(pago.tipoPago + "Tarjeta");
-                    PopupNavigation.Instance.PushAsync(new ConfirmarPago(pago, this, ordenesListView));
+                    PopupNavigation.Instance.PushAsync(new ConfirmarPago(pago, this, ordenesListView, empleado));
                 }
             }
-            else if (Efectivo.Text != "" && Tarjeta.Text.Replace("$ ", "") == "0")
+            else if (Efectivo.Text!= "" && Tarjeta.Text == "0" )
             {
-                pago.monto = Double.Parse(Efectivo.Text + "");
-                pago.idcart = Ordenes.id;
-                pago.tipoPago = "1"; // EFECTIVO
-                pago.propina = propina+"";
-                pago.total =  Subtotal.Text;
-                if (pago.monto < Double.Parse(Subtotal.Text))
-                {
-                    PopupNavigation.Instance.PushAsync(new PopError("VERIFICA LOS CAMPOS"));
+                if (Efectivo.Text != "") {
+                    pago.monto = Double.Parse(Efectivo.Text + "");
+                    pago.idcart = Ordenes.id;
+                    pago.tipoPago = "1"; // EFECTIVO
+                    pago.propina = propina + "";
+                    pago.total = Subtotal.Text;
+                    if (pago.monto < Double.Parse(Subtotal.Text))
+                    {
+                        PopupNavigation.Instance.PushAsync(new PopError("VERIFICA LOS CAMPOS"));
+                    }
+                    else
+                    {
+                        Console.WriteLine(pago.tipoPago + "EFECTIVO");
+                        PopupNavigation.Instance.PushAsync(new ConfirmarPago(pago, this, ordenesListView,empleado));
+                    }
                 }
-                else
-                {
-                    Console.WriteLine(pago.tipoPago + "EFECTIVO");
-                    PopupNavigation.Instance.PushAsync(new ConfirmarPago(pago, this, ordenesListView));
-                }
+               
             }
-            else if (Efectivo.Text != "" && Tarjeta.Text.Replace("$ ", "") != "")
+            else if (Efectivo.Text!= "" && Tarjeta.Text != "")
             {
-                int monto = Int32.Parse(Efectivo.Text + "") + Int32.Parse(Tarjeta.Text.Replace("$ ", "") + "");
+                int monto = Int32.Parse(Efectivo.Text + "") + Int32.Parse(Tarjeta.Text + "");
                 //Console.WriteLine(monto);
                 pago.monto = Double.Parse(monto.ToString());
                 pago.idcart = Ordenes.id;
@@ -218,7 +236,7 @@ namespace AppResta.View
                 else
                 {
                    // Console.WriteLine(pago.tipoPago + "AMBOS");
-                    PopupNavigation.Instance.PushAsync(new ConfirmarPago(pago, this, ordenesListView));
+                    PopupNavigation.Instance.PushAsync(new ConfirmarPago(pago, this, ordenesListView, empleado));
                 }
             }
 
@@ -341,7 +359,9 @@ namespace AppResta.View
             propina20.BorderWidth = 1;
             propinaOtro.BorderWidth = 1;
 
-            calcularPropona(0);
+            TxtPropina.IsEnabled = false; TxtPropina.Text = "";
+
+            calcularPropona(0,1);
 
         }
 
@@ -360,7 +380,8 @@ namespace AppResta.View
             propina15.BorderWidth = 1;
             propina20.BorderWidth = 1;
             propinaOtro.BorderWidth = 1;
-            calcularPropona(5);
+            TxtPropina.IsEnabled = false; TxtPropina.Text = "";
+            calcularPropona(5, 1);
         }
 
         private void propina10_Clicked(object sender, EventArgs e)
@@ -378,7 +399,8 @@ namespace AppResta.View
             propina15.BorderWidth = 1;
             propina20.BorderWidth = 1;
             propinaOtro.BorderWidth = 1;
-            calcularPropona(10);
+            TxtPropina.IsEnabled = false; TxtPropina.Text = "";
+            calcularPropona(10, 1);
         }
 
         private void propina15_Clicked(object sender, EventArgs e)
@@ -396,7 +418,8 @@ namespace AppResta.View
             propina15.BorderWidth = 3;
             propina20.BorderWidth = 1;
             propinaOtro.BorderWidth = 1;
-            calcularPropona(15);
+            TxtPropina.IsEnabled = false; TxtPropina.Text = "";
+            calcularPropona(15, 1);
         }
 
         private void propina20_Clicked(object sender, EventArgs e)
@@ -414,8 +437,8 @@ namespace AppResta.View
             propina15.BorderWidth = 1;
             propina20.BorderWidth = 3;
             propinaOtro.BorderWidth = 1;
-
-            calcularPropona(20);
+            TxtPropina.IsEnabled = false; TxtPropina.Text = "";
+            calcularPropona(20, 1);
         }
 
         private void Button_Clicked(object sender, EventArgs e)
@@ -438,6 +461,16 @@ namespace AppResta.View
             propina15.BorderWidth = 1;
             propina20.BorderWidth = 1;
             propinaOtro.BorderWidth = 3;
+            TxtPropina.IsEnabled = true;
+            calcularPropona(0,1);
+        }
+
+        private void TxtPropina_Completed(object sender, EventArgs e)
+        {
+            string propinapesos = ((Entry)sender).Text;
+            var numero = Convert.ToInt32(propinapesos);
+
+            calcularPropona(numero,2);
         }
     }
 }

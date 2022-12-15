@@ -67,11 +67,6 @@ namespace AppResta.ViewModel
 
         #region PROCESOS
 
-
-
-
-
-
         public async Task Orden()
         {
          

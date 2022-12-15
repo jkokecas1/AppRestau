@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               NavigationPage.HasNavigationBar="False"
+             x:Class="AppResta.View.MainKiosko">
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                
+                <RowDefinition Height="*"/>                
+                <RowDefinition Height="200"/>
+
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                
+            </Grid.ColumnDefinitions>
+            <Image  Source="comida" Aspect="AspectFill"/>
+            
+            <Label Grid.Row="1" Grid.Column="0" Text="ORDENA AQUI" FontSize="35" TextColor="Red" HorizontalOptions="Center" VerticalOptions="Center"/>
+            <Button Grid.Row="0" Grid.Column="0" Text="TOCA PARA ORDENAR" TextColor="White" FontSize="35" Clicked="Button_Clicked" BackgroundColor="Transparent"/>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

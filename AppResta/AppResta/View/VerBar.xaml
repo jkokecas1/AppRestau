@@ -1,89 +1,31 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<popup:PopupPage
-xmlns="http://xamarin.com/schemas/2014/forms"
-xmlns:popup="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
-xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-x:Class="AppResta.View.VerOrden">
+<popup:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+                 xmlns:popup="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AppResta.View.VerBar">
 
-
-
-
-
-    <Frame BackgroundColor="WhiteSmoke" BorderColor="White" CornerRadius="10" Margin="70,20,70,20">
+    <Frame BackgroundColor="WhiteSmoke" BorderColor="White" CornerRadius="10" Margin="300,20,300,20">
         <Grid RowSpacing="0">
-
-
-
             <Grid.RowDefinitions>
-                <RowDefinition Height="50"/>
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="60"/>
-
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
-
             </Grid.ColumnDefinitions>
 
 
-            <Grid Grid.Row="0" Grid.Column="0" BackgroundColor="Black" Padding="4,8,4,8" >
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="100"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="35"/>
-
-                </Grid.ColumnDefinitions>
-
-                <Label TextTransform="Uppercase" Grid.Row="0" Grid.Column="0" Text="Orden" TextColor="White" FontSize="25" HorizontalOptions="Center" FontAttributes="Bold" BackgroundColor="Transparent" />
-                <Label TextTransform="Uppercase" Grid.Row="0" Grid.Column="1" Text="Hora tomada" TextColor="White" FontSize="25" FontAttributes="Bold" HorizontalOptions="Center" BackgroundColor="Transparent"/>
-                <Label TextTransform="Uppercase" Grid.Row="0" Grid.Column="2" x:Name="labelEspera" Text="Tiempo de espera" TextColor="White" FontSize="25" FontAttributes="Bold" HorizontalOptions="Center" BackgroundColor="Transparent"/>
-                <Label TextTransform="Uppercase" Grid.Row="0" Grid.Column="3" Text="Hora estimada" TextColor="White" FontSize="25" FontAttributes="Bold" BackgroundColor="Transparent" HorizontalOptions="Center"/>
-                <ImageButton Grid.Row="0" Grid.Column="4" Clicked="cerrarPop" HorizontalOptions="End"  Source="cerrar.png" BackgroundColor="Transparent"/>
-
-            </Grid>
-
-            <Grid Grid.Row="1" Grid.Column="0" Padding="4,3,4,10" BackgroundColor="Black">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="100"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="35"/>
-
-                </Grid.ColumnDefinitions>
-                <Label TextTransform="Uppercase" Grid.Row="0" Grid.Column="0" x:Name="numeroOrden" HorizontalOptions="Center" TextColor="White" FontAttributes="Bold" FontSize="25" VerticalOptions="Center"/>
-               <Label TextTransform="Uppercase" Grid.Row="0" Grid.Column="1" x:Name="HoraInicioOrden" TextColor="White" HorizontalOptions="Center" FontAttributes="None" FontSize="20" VerticalOptions="Center"/>
-                <Label Grid.Row="0" Grid.Column="2" x:Name="CronometroOrden" HorizontalOptions="Center" TextColor="White" FontAttributes="Bold" FontSize="20" VerticalOptions="Start"/>
-                <Label TextTransform="Uppercase" Grid.Row="0" Grid.Column="3" x:Name="HoraEstimadaOrden" TextColor="White" FontAttributes="None" HorizontalOptions="Center" FontSize="20" VerticalOptions="Center"/>
-                <Label TextTransform="Uppercase" Grid.Row="0" Grid.Column="4"/>
-
+            <Grid Grid.Row="0" Grid.Column="0"  BackgroundColor="Black" Padding="4,8,4,8" >
+                <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" x:Name="numeroOrden" HorizontalOptions="Center" TextColor="White" FontAttributes="Bold" FontSize="25" BackgroundColor="Transparent"/>
+                <ImageButton Grid.Row="0" Grid.Column="2" Clicked="cerrarPop" HorizontalOptions="End"  Source="cerrar.png" BackgroundColor="Transparent"/>
             </Grid>
 
 
-
-
-
-
-
-            <Grid Grid.Row="2" Grid.Column="0">
-
-
-
-
-                <CollectionView SelectionMode="None"  x:Name="ordenlist">
+            <Grid Grid.Row="1" Grid.Column="0">
+                <CollectionView SelectionMode="None"  x:Name="barlist">
                     <CollectionView.ItemsLayout>
-                        <GridItemsLayout Orientation="Vertical" Span="3"/>
+                        <GridItemsLayout Orientation="Vertical" Span="1"/>
                     </CollectionView.ItemsLayout>
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
@@ -92,10 +34,9 @@ x:Class="AppResta.View.VerOrden">
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="200"/>
+                                    <RowDefinition Height="150"/>
                                 </Grid.RowDefinitions>
                                 <Frame HasShadow="True" Padding="5" CornerRadius="10" >
-
                                     <Grid BackgroundColor="White" RowSpacing="0" Padding="9,9,9,9">
                                         <Grid.RowDefinitions >
                                             <RowDefinition Height="50"/>
@@ -114,7 +55,6 @@ x:Class="AppResta.View.VerOrden">
                                         <Grid Grid.Row="0"  Grid.Column="1" Grid.ColumnSpan="2" BackgroundColor="White" HorizontalOptions="Start" Padding="0,0,0,0">
                                             <Label Text="{Binding platillo}" TextColor="Black" FontAttributes="Bold" FontSize="20" />
                                         </Grid>
-
 
                                         <Grid Grid.Row="1"  Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="White" VerticalOptions="Center" Padding="0,0,0,0">
                                             <Grid.RowDefinitions >
@@ -143,30 +83,15 @@ x:Class="AppResta.View.VerOrden">
                                         </Grid>
 
                                     </Grid>
-
-
-
                                 </Frame>
                             </Grid>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
-
                 </CollectionView>
-
             </Grid>
 
-
-            <Grid Grid.Row="3" Grid.Column="0" BackgroundColor="WhiteSmoke" Padding="8,8,8,8">
-                <!-- 
-                <Picker x:Name="horas" Grid.Row="0" Grid.Column="0" Title="SELECIONA EL TIEMPO ESTIMADO" SelectedIndexChanged="OnPickerSelectedIndexChanged" HorizontalTextAlignment="Center">
-                    <Picker.Items>
-
-                    </Picker.Items>
-                </Picker>
-
-                <Button x:Name="btnIniciar" Grid.Column="1"  Text="Confirmar"  BackgroundColor="Green" TextColor="White" Clicked="Button_Iniciar" />
--->
-                <Button Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3"  Text="Listo para recoleccion" BackgroundColor="White" BorderColor="Green" BorderWidth="2" TextColor="Black" Clicked="Button_Terminar"/>
+            <Grid Grid.Row="2" Grid.Column="0"  BackgroundColor="WhiteSmoke" Padding="8,8,8,8">
+                <Button Grid.Row="0" Grid.Column="0" x:Name="btnListo" Clicked="btnListo_Clicked"  Text="Listo para recoleccion" BackgroundColor="White" BorderColor="Black" BorderWidth="2" TextColor="Black" />
             </Grid>
 
         </Grid>

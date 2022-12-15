@@ -4,8 +4,6 @@
              x:Class="AppResta.View.Login"
                NavigationPage.HasNavigationBar="False">
     <ContentPage.Content>
-
-        
         <Grid  RowSpacing="0" ColumnSpacing="0" BackgroundColor="LightGray">
             <Grid.RowDefinitions>
                 <RowDefinition Height="70"/>
@@ -14,51 +12,31 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-
-
             <Grid Grid.Row="0" Grid.Column="0" BackgroundColor="AliceBlue" Padding="0,0,0,0">
                 <Grid.RowDefinitions>
-                                     
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
-
                 </Grid.ColumnDefinitions>
-
                 <Grid Grid.Row="0" Grid.Column="0">
                     <Image Grid.Row="0" Grid.Column="0" BackgroundColor="Transparent" Source="klassylogo.png" VerticalOptions="Center"  Aspect="AspectFit"/>
-
                 </Grid>
-
                 <Grid Grid.Row="0" Grid.Column="1">
-                   
-                    
                     <Label  Text="Ingresa tu NIP" FontSize="40" TextColor="Black" FontAttributes="Bold" HorizontalTextAlignment="Center" VerticalOptions="Center"/>
-
                 </Grid>
-                
-                
-
-
             </Grid>
-            
             <Frame Grid.Row="1" Grid.Column="0" CornerRadius="10" Padding="10,10,10,10" Margin="10,10,10,10">
-                
-                <Grid> 
+                <Grid>
                     <Grid Grid.Row="0" Grid.Column="0">
                         <StackLayout Orientation="Vertical">
                             <Label Text="ROL: CAJERO, NIP: 1112" FontSize="25"></Label>
                             <Label Text="ROL: MESERO, NIP: 7894" FontSize="25"></Label>
                             <Label Text="ROL: COCINERO, NIP: 8785" FontSize="25"></Label>
-
                         </StackLayout>
                         <Entry Text="{Binding Pin}" IsReadOnly="True" TextColor="Black" Placeholder="PIN" WidthRequest="270" HeightRequest="70" IsPassword="True" HorizontalOptions="Center" VerticalOptions="Center" ReturnType="Send" ClearButtonVisibility="WhileEditing" HorizontalTextAlignment="Center" FontSize="50" CharacterSpacing="10" MaxLength="4" />
-
                     </Grid>
-
-
                     <Grid Grid.Row="1" Grid.Column="0" Grid.RowSpan="4" Padding="60,0,60,10" Scale=".9" >
                         <Button BackgroundColor="#F1F1F1" TextColor="Black" CornerRadius="40" Grid.Row="0" Grid.Column="0" Text="1"  FontSize="40" FontAttributes="Bold" Command="{ Binding Num1Command}" Padding="0,0,0,0" />
                         <Button BackgroundColor="#F1F1F1" TextColor="Black" CornerRadius="40" Grid.Row="0" Grid.Column="1" Text="2" FontSize="40" FontAttributes="Bold" Command="{ Binding Num2Command}" Padding="0,0,0,0"/>
@@ -73,11 +51,8 @@
                         <Button BackgroundColor="#F1F1F1" TextColor="Black" CornerRadius="40" Grid.Row="3" Grid.Column="1" Text="0" FontSize="40" FontAttributes="Bold"  Command="{ Binding Num0Command}"/>
                         <Button BackgroundColor="Blue" TextColor="White" CornerRadius="40" Grid.Row="3" Grid.Column="2" Text="Entrar" FontSize="40" FontAttributes="Bold" Command="{Binding NavMainCommand}"/>
                     </Grid>
-
                 </Grid>
             </Frame>
-            
         </Grid>
-
     </ContentPage.Content>
 </ContentPage>

@@ -1,16 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="AppResta.View.SplashCarga"
+             x:Class="AppResta.View.SplashCarga" BackgroundColor="White"
              NavigationPage.HasNavigationBar="False">
-    <ContentPage.Content>
-        <StackLayout VerticalOptions="CenterAndExpand" Orientation="Vertical" Spacing="50">
-            <Label x:Name="progressLabel" Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+    <ContentPage.Content >
 
-            <ProgressBar ProgressColor="Green" HeightRequest="20" 
-                         WidthRequest="400" x:Name="progressbar"/>
-   </StackLayout>
+        <StackLayout Orientation="Vertical" Scale="1.5" VerticalOptions="Center" BackgroundColor="White">
+            <Image Source="klassylogo.png" HorizontalOptions="Center" VerticalOptions="Center" Aspect="Fill" BackgroundColor="White"/>
+            <Label x:Name="progressLabel" TextColor="Black" FontSize="30" HorizontalOptions="Center" BackgroundColor="White"/>
+            <ProgressBar ProgressColor="Green" HeightRequest="20"  HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="White"
+                         WidthRequest="300" x:Name="progressbar"/>
+        </StackLayout>
+
+
     </ContentPage.Content>
 </ContentPage>

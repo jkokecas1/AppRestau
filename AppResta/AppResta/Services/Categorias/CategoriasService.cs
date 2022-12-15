@@ -49,49 +49,6 @@ namespace AppResta.Services.Categorias
             {
                 return null;
             }
-        }/*
-        public async Task<Model.Categorias> Categorias()
-        {
-            Model.Categorias categoria = new Model.Categorias();
-            var userInfo = new List<Model.Categorias>();
-            var client = new HttpClient();
-
-            client.BaseAddress = new Uri("http://192.168.1.112/resta/admin/mysql/categoria/index.php?op=obtenerCategorias");
-            HttpResponseMessage response = client.GetAsync(client.BaseAddress).Result;
-            if (response.IsSuccessStatusCode)
-            {
-                string content = response.Content.ReadAsStringAsync().Result;
-                userInfo = JsonConvert.DeserializeObject<List<Model.Categorias>>(content);
-                return await Task.FromResult(userInfo.ToArray);
-
-            }
-            else
-            {
-                return null;
-            }
-            /* if (response.IsSuccessStatusCode)
-             {
-                 var content = response.Content.ReadAsStringAsync().Result;
-                 string json = content.ToString();
-                 var jsonObject = JObject.Parse(json);
-
-                 var jsonArray = JArray.Parse(jsonObject.ToString());
-                 foreach (var item in jsonArray) {
-                     int ids = Int32.Parse(item[""].ToString()); 
-                     string nombre = item[""].ToString();
-                     string estado = item[""].ToString();
-
-                     categoria.id = ids;
-                     categoria.nombre = nombre;
-                     categoria.estatus = estado;
-                 }
-
-                 return Task.FromResult(categoria);
-             }
-             else
-             {
-                 return null;
-             }
-        }*/
+        }
     }
 }

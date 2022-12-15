@@ -1,0 +1,287 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+              NavigationPage.HasNavigationBar="False"
+             x:Class="AppResta.View.Kiosco"
+             >
+    <ContentPage.Content>
+
+
+        <AbsoluteLayout BackgroundColor="LightGray">
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="70"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="160"/>
+
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Row="0" Grid.Column="0"  BackgroundColor="AliceBlue" Padding="5,10,5,0">
+                    <Grid Padding="0,0,6,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Image Source="klassylogo.png" VerticalOptions="Start" Grid.Row="0" Grid.Column="0"></Image>
+                        <Label x:Name="tiempoCajero" Text="Time" Grid.Row="0" Grid.Column="1"  FontSize="30" TextColor="Black" VerticalOptions="Center" HorizontalOptions="Start"></Label>
+                    </Grid>
+                </Grid>
+
+                <!--STACKLAYOUT-->
+
+
+                <StackLayout Grid.Row="1" Grid.Column="0" Orientation="Vertical"   Margin="10,0,10,0" >
+
+
+                    <StackLayout  Orientation="Horizontal"   x:Name="stack">
+
+                        <!--CATEGORIAS-->
+                        <Frame  BackgroundColor="White" Padding="2,2,2,2" CornerRadius="5" WidthRequest="200">
+                            <Grid >
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="50"/>
+                                    <RowDefinition Height="*"/>
+
+
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+
+                                </Grid.ColumnDefinitions>
+                                <Label TextColor="Black" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" x:Name="tituloR" Text="CATEGORIAS" FontSize="25"   Padding="0,0,0,0" Grid.Column="0" Grid.Row="0" BackgroundColor="White" >
+                                    <!--Clicked="returnCategorias"-->
+                                </Label>
+                                <RefreshView Grid.Row="1" Grid.Column="0" IsRefreshing="False">
+                                    <CollectionView x:Name="categoriasListView" SelectionMode="Single" SelectionChanged="categoriasListView_SelectionChanged" >
+                                        <!--SelectionChanged="select_Item"-->
+
+                                        <CollectionView.ItemsLayout>
+                                            <GridItemsLayout Orientation="Vertical" Span="1"/>
+                                        </CollectionView.ItemsLayout>
+                                        <CollectionView.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid Padding="5,5,5,5" >
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="70"/>
+                                                    </Grid.RowDefinitions>
+                                                    <Frame BackgroundColor="Orange" HasShadow="True" Padding="4,4,4,4" CornerRadius="5">
+                                                        <Grid  BackgroundColor="White" Padding="0,0,0,0">
+                                                            <Label HorizontalOptions="Center" Text="{Binding nombre}" VerticalOptions="Center" FontSize="20" FontAttributes="Bold" TextColor="Black"/>
+                                                        </Grid>
+
+                                                    </Frame>
+
+                                                </Grid>
+                                            </DataTemplate>
+                                        </CollectionView.ItemTemplate>
+                                    </CollectionView>
+                                </RefreshView>
+                            </Grid>
+                        </Frame>
+
+
+                        <!--PRODUCTOS-->
+                        <Frame  Padding="5,5,5,5" CornerRadius="5" >
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="50"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Row="0" Grid.Column="0" Text="PRODUCTOS" TextColor="Black" HorizontalOptions="Center" FontSize="25" FontAttributes="Bold" VerticalOptions="Center" />
+                                <CollectionView Grid.Row="1" Grid.Column="0" BackgroundColor="White" SelectionMode="Single"  x:Name="platillosListView" SelectionChanged="platillosListView_SelectionChanged">
+                                    <CollectionView.ItemsLayout>
+                                        <GridItemsLayout Orientation="Vertical" Span="2"/>
+                                    </CollectionView.ItemsLayout>
+                                    <CollectionView.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid Padding="5">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="180"/>
+                                                </Grid.RowDefinitions>
+                                                <Frame HasShadow="True" Padding="5" CornerRadius="10">
+                                                    <Grid BackgroundColor="White"  Padding="9,9,9,9">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="*" />
+                                                        </Grid.ColumnDefinitions>
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition Height="20"/>
+                                                            <RowDefinition Height="*"/>
+                                                        </Grid.RowDefinitions>
+
+                                                        <Label Grid.Row="0"  Grid.Column="0" HorizontalOptions="Center"  Text="{Binding nombre}" VerticalOptions="Center" FontSize="20" FontAttributes="Bold" TextColor="Black"/>
+                                                        <!--Text="{Binding nombre}" -->
+                                                        <Image Grid.Row="1"  Grid.Column="0" Source="bebidas" Aspect="Fill"></Image>
+                                                        <!--Source="{Binding imgurl}"-->
+                                                    </Grid>
+
+                                                </Frame>
+
+                                            </Grid>
+                                        </DataTemplate>
+                                    </CollectionView.ItemTemplate>
+                                </CollectionView>
+
+                            </Grid>
+                        </Frame>
+                    </StackLayout>
+
+
+
+
+                    <Frame CornerRadius="5" Padding="0,0,0,0" x:Name="carrito" IsVisible="true" TranslationY="400">
+                        <Grid RowSpacing="0" Grid.Row="0" Grid.Column="0" ColumnSpacing="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="45"/>
+                                <RowDefinition Height="*"/>
+
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+
+                            <Grid BackgroundColor="WhiteSmoke" Grid.Row="0" Grid.Column="0" Padding="20,10,40,0">
+                                <Label Grid.Row="0" Grid.Column="0" HorizontalOptions="Start" Text="CANTIDAD" TextColor="Black" FontSize="Body"/>
+                                <Label Grid.Row="0" Grid.Column="1" HorizontalOptions="Start" Text="NOMBRE" TextColor="Black"  FontSize="Body"/>
+                                <Label Grid.Row="0" Grid.Column="2" HorizontalOptions="Start" Text="PRECIO" TextColor="Black" FontSize="Body"/>
+                                <!--
+                            <Label Grid.Row="0" Grid.Column="3" HorizontalOptions="Center" Text="Cantidad extras" TextColor="Black" FontSize="Body"/>
+                            <Label Grid.Row="0" Grid.Column="4" HorizontalOptions="Center" Text="Precio extras" TextColor="Black" FontSize="Body"/>
+                            -->
+                                <Label Grid.Row="0" Grid.Column="3" HorizontalOptions="Start" Text="TOTAL" TextColor="Black" FontSize="Body"/>
+                            </Grid>
+
+                            <!---LIST  VIEW-->
+                            <Grid Grid.Row="1" Grid.Column="0">
+                                <RefreshView x:Name="RefreshCart" >
+                                    <!--Refreshing="RefreshCart_Refreshing"-->
+
+                                    <ListView BackgroundColor="WhiteSmoke" x:Name="caritoListView"  >
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate>
+                                                <ViewCell>
+                                                    <!--<ViewCell.ContextActions>
+                                                <MenuItem Clicked="MenuItem_Clicked"
+                                                CommandParameter="{Binding .}"
+                                                Text="More" />        
+                                                <MenuItem Clicked="MenuItem_Clicked_1"
+                                                CommandParameter="{Binding .}"
+                                                Text="Delete" IsDestructive="True" />
+                                            </ViewCell.ContextActions>-->
+
+
+
+                                                    <SwipeView>
+                                                        <SwipeView.RightItems>
+                                                            <SwipeItems  SwipeBehaviorOnInvoked="Close">
+                                                                <SwipeItem Text="Borrar"
+                                                                           CommandParameter="{Binding idItem}"
+                                                                           IconImageSource="borrar.png"
+                                                                           BackgroundColor="Red"
+                                                                          />
+                                                                <SwipeItem Text="Editar"    
+                                                                           CommandParameter="{Binding platillo}"
+                                                                      
+                                                                           IconImageSource="editar.png"
+                                                                           BackgroundColor="Green"
+                                                                          />
+
+                                                            </SwipeItems>
+                                                        </SwipeView.RightItems>
+                                                        <Grid Padding="20,0,0,0" BackgroundColor="WhiteSmoke">
+
+                                                            <StackLayout Grid.Column="0" Grid.Row="0"   VerticalOptions="Center" Orientation="Vertical" BackgroundColor="WhiteSmoke">
+                                                                <Label Text="{Binding cantidad}"  TextColor="Black" FontSize="15"/>
+                                                            </StackLayout>
+                                                            <StackLayout Grid.Column="1" Grid.Row="0" VerticalOptions="Center" Orientation="Vertical">
+                                                                <Label Text="{Binding platillo}" TextColor="Black" FontSize="15"/>
+                                                            </StackLayout>
+                                                            <StackLayout   Grid.Column="2" Grid.Row="0"  VerticalOptions="Center" Orientation="Vertical">
+                                                                <Label Text="{Binding precio}" TextColor="Black" FontSize="15"/>
+                                                            </StackLayout>
+                                                            <!--
+                                                        <StackLayout  Grid.Column="3" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical">
+                                                            <Label Text="{Binding precio}" TextColor="Black" FontSize="15"/>
+                                                        </StackLayout>
+                                                        <StackLayout  Grid.Column="4" Grid.Row="0" HorizontalOptions="Center" VerticalOptions="Center" Orientation="Vertical">
+                                                            <Label Text="{Binding precio}" TextColor="Black" FontSize="15"/>
+                                                        </StackLayout> -->
+                                                            <StackLayout  Grid.Column="3" Grid.Row="0"  VerticalOptions="Center" Orientation="Vertical">
+                                                                <Label Text="{Binding total}" TextColor="Black" FontSize="15"/>
+                                                            </StackLayout>
+
+                                                        </Grid>
+                                                    </SwipeView>
+
+
+
+
+                                                </ViewCell>
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                    </ListView>
+                                </RefreshView>
+
+                            </Grid>
+
+                            <!--END LIST  x:Name="test2ListView"-->
+                        </Grid>
+
+                    </Frame>
+                </StackLayout>
+
+
+
+
+                <Frame CornerRadius="5" Grid.Row="2 " Grid.Column="0" Margin="10,0,10,10" Padding="10,10,10,10">
+                    <Grid >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+
+
+
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="20"/>
+                            <ColumnDefinition Width="190"/>
+                            <ColumnDefinition Width="*"/>
+
+
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="TOTAL A PAGAR" FontAttributes="Bold" TextColor="Black" VerticalOptions="Center" FontSize="25"/>
+                        <Label Text="$" FontSize="35" TextColor="Black" Grid.Row="1" Grid.Column="0" HorizontalOptions="End" FontAttributes="Bold" VerticalOptions="Start"/>
+                        <Label x:Name="totalpago"  Grid.Row="1" Grid.Column="1" HorizontalOptions="Start"  FontSize="35" TextColor="Black" FontAttributes="Bold" VerticalOptions="Start"/>
+
+                        <!--<Label x:Name="cantidadCarrito" Grid.Row="0" Grid.RowSpan="2"  Grid.Column="2" Text="0" HorizontalOptions="CenterAndExpand"  FontSize="30" TextColor="Black"/>-->
+                        <Button ImageSource="carrito" Grid.Row="0" Grid.RowSpan="2"  Grid.Column="2" BackgroundColor="Transparent" Text="0" FontSize="30" x:Name="cantidadCarrito"  Clicked="Expandir_Clicked" BorderColor="Blue" BorderWidth="5"  CornerRadius="10"/>
+
+                        <Button x:Name="btnOrdenar" CornerRadius="10" Grid.Row="0" Grid.Column="3"   Text="PAGAR" FontSize="25" TextColor="White"
+                            BackgroundColor="Green" WidthRequest="200" Clicked="btnOrdenar_Clicked" />
+                        <!-- Clicked="Oredenar_orden"-->
+                        <Button Grid.Row="1" Grid.Column="3" Text="CANCELAR" Clicked="Button_Clicked" BackgroundColor="Red" CornerRadius="10" TextColor="White"/>
+                    </Grid>
+                </Frame>
+            </Grid>
+        </AbsoluteLayout>
+
+
+    </ContentPage.Content>
+</ContentPage>

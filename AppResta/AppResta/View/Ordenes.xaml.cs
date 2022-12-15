@@ -23,11 +23,12 @@ namespace AppResta.View
         public Ordenes(Main mainPage = null, List<Model.Ordenes> ord = null)
         {
             InitializeComponent();
+            tiempoCajero.Text = DateTime.Now.ToString("t");
             if (ord != null)
                 ordenesListView.ItemsSource = ord;
             else
                 ordenesListView.ItemsSource = Ordene();
-            Device.StartTimer(TimeSpan.FromSeconds(0.4), () => {
+            Device.StartTimer(TimeSpan.FromSeconds(0.3), () => {
                 cargar.IsEnabled = false;
                 cargar.IsRunning = false;
                 cargar.IsVisible = false;
@@ -35,7 +36,7 @@ namespace AppResta.View
                 return false;
             });
             BindingContext = new ViewModel.OrdenesViewModel(Navigation);
-
+            
         }
 
         public static void init(ListView ordenesListView)
@@ -109,7 +110,7 @@ namespace AppResta.View
                     if (item["fecha_start"].ToString() != "")
                     {
                         orden.fecha_start = item["fecha_start"].ToString().Remove(0, 10);
-                        orden.fecha_estimada = item["fecha_estimada"].ToString().Remove(0, 10);
+                        //orden.fecha_estimada = item["fecha_estimada"].ToString().Remove(0, 10);
                     }
                     //PLATILLOS
                    // orden.fecha_cerada = ObtenerNumeorDeItems(orden.id, 1);// + "/" + ObtenerNumeorDeItemsPlatillos(orden.id, 1);

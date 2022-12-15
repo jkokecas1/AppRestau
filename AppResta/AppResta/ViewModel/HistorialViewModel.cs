@@ -91,7 +91,7 @@ namespace AppResta.ViewModel
         public async Task IrComanda()
         {
             Object[] datos = { true, "", "", "" };
-            await Navigation.PushAsync(new Main(false));
+           // await Navigation.PushAsync(new Main(false));
 
         }
         public void ProcesoSimple()

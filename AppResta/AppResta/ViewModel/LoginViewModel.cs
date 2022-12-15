@@ -1,4 +1,26 @@
-﻿
+﻿/*:-----------------------------------------------------------------------------
+*:                          PRACTICANTES 
+*:                          AW SOFTWARE
+*: 
+*:                           Ago – Dic 
+*: 
+*: 
+*:                  Clase para controlar la vista de login
+*: 
+*: 
+*: Archivo      :   LoginViewModel.cs
+*: Autor        :   Jorge Gerardo Moreno Castillo
+*:                  Jaen
+*:              
+*: Fecha        :   20/SEP/2022
+*: Compilador   :   Microsoft Visual Studio Community 2022 (64-bit) - Current Version 17.2.6
+*: Descripción  :   Esta clase implementa los procesos y metodos para controlar la vista
+*: Ult.Modif.   :   2022/01/12
+*: Fecha Modificó Modificacion
+*:=============================================================================
+*: 24/SEP/2022 Jorge - Se creo GetAllOrdenAsync() obtner el carrito que se va apagar
+*:----------------------------------------------------------------------------
+*/
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -28,10 +50,15 @@ namespace AppResta.ViewModel
         string _Pin;
         bool _IsInternet;
 
-        List<Model.Mesas> mesas;
-        List<Model.Ordenes> ordenes;
-        List<Model.Ordenes> ordenesBar;
-        List<Model.Ordenes> ordenesCocina;
+        public static List<Model.Mesas> mesas;
+        public static List<Model.Ordenes> ordenes;
+        public static List<Model.Ordenes> ordenesBar;
+        public static List<Model.Ordenes> ordenesCocina;
+        public static List<Model.Ordenes> ordenesCaja;
+        public static List<Model.Categorias> categorias;
+        public static List<Model.SubCategorias> subcategorias;
+        public static List<Model.Cart> ordenesCocinaCart;
+        public static List<Model.Platillos> ordenesPlatillos;
 
         #endregion
 
@@ -52,11 +79,27 @@ namespace AppResta.ViewModel
             Num9Command = new Command(() => Pin += "9");
             
             BorrarCommand = new Command(() => Pin = validarPIN());
-            mesas = Services.LoginService.Mesas();
+            //init();
+           /* Device.StartTimer(TimeSpan.FromSeconds(180), () => {
+                init();
+                Console.WriteLine("SE ACTUALIZARON LOS DATOS"+ DateTime.Now.ToString("t"));
+                return true;
+            });*/
+        }
+
+        public static void init() {
+            mesas = Services.MesasService.Mesas();
             ordenes = Services.OrdenesService.Ordene();
             ordenesBar = Services.OrdenesService.OrdeneBar();
             ordenesCocina = Services.OrdenesService.OrdeneCocina();
+            ordenesCocinaCart = Services.CartService.Carts(DateTime.Now.ToString("yyyy-MM-dd") + "-00:00:00");
+            ordenesCaja = Services.OrdenesService.OrdenCaja();
+            categorias = Services.CartService.Categorias2();
+            subcategorias = Services.CartService.SubCategorias();
+            ordenesPlatillos = Services.CartService.Platillos("");
         }
+        
+        
         #endregion
 
         #region OBJETOS
@@ -116,34 +159,32 @@ namespace AppResta.ViewModel
 
         }
 
-        string nombre;
         public async Task IsExisteAcount()
         {
-
+            //Console.WriteLine(DateTime.Now.ToString("T"));
+            //init();
             if (Pin == null)
             {
                 await DisplayAlert("Error", "User not exist", "Ok");
-
             }
             List<Empleado> empleado;
             if (IsInternet)
             {
-                empleado = await App.Database.GetEmpleadoAsync();
-                //empleado = _loginRespository.Login(Pin);
+                 empleado = await App.Database.GetEmpleadoAsync();
+                //empleado = Services.LoginService.Login();//_loginRespository.Login(Pin);
             }
             else {
-                Console.WriteLine("No internet" + IsInternet);
-               
                 empleado = await App.Database.GetEmpleadoAsync();
             }
-
-            
             Model.Empleado emp = new Empleado(); ;
             if (empleado != null)
             {
+                
                 foreach (Empleado item in empleado)
                 {
+                   
                     if (Pin == item.pin) {
+                        //Console.WriteLine(item.pin);
                         emp.id = item.id;
                         emp.nombre = item.nombre;
                         emp.pin = item.pin;
@@ -153,29 +194,34 @@ namespace AppResta.ViewModel
                     }
                     
                 }
-
                 if (emp.puesto == "Cajero")
                 {
-
                     //Cajero
-                    await Navigation.PushAsync(new Cajero(), false);
+                    await Navigation.PushAsync(new Cajero(ordenesCaja, emp), false);
                 }
                 else if (emp.puesto == "Mesero")
                 {
 
-                    await Navigation.PushAsync(new Mesa(mesas, empleado: emp, interent: IsInternet), false);
+                    await Navigation.PushAsync(new Mesa(orden: ordenes, categorias2: categorias,subcategorias, mesas: mesas, empleado: emp, interent: IsInternet,platillos: ordenesPlatillos), false);
                 }
                 else if (emp.puesto == "Cocinero")
                 {
 
                     //Cocinero
-                    await Navigation.PushAsync(new Cocina(orden: ordenesCocina), false);
+                    await Navigation.PushAsync(new Cocina(orden: ordenesCocina, emp,listCat: ordenesCocinaCart), false);
                 }
                 else if (emp.puesto == "Barra")
                 {
 
                     // Barra
-                    await Navigation.PushAsync(new Bar(orden: ordenesBar), false);
+                    await Navigation.PushAsync(new Bar(orden: ordenesBar, emp), false);
+
+                }
+                else if (emp.puesto == "Kiosco")
+                {
+
+                    // Barra
+                    await Navigation.PushAsync(new MainKiosko(emp), false);
 
                 }
                 else {
